@@ -1,0 +1,49 @@
+[project]
+name = "ai-scrivener"
+version = "0.1.0"
+description = "AI assistant for officials on 1C:Enterprise with a RAG sidecar"
+requires-python = ">=3.12"
+dependencies = []
+
+[dependency-groups]
+dev = [
+  "jsonschema>=4.23",
+  "mypy>=1.14",
+  "pre-commit>=4.0",
+  "pytest>=8.3",
+  "pyyaml>=6.0",
+  "ruff>=0.9",
+  "types-pyyaml>=6.0",
+  "yamllint>=1.35",
+]
+
+[tool.uv]
+package = false
+python-preference = "only-system"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["scripts", "tests", "rag-service/src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "S", "RUF", "PLR2004"]
+ignore = ["RUF001"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "PLR2004"]
+"scripts/config/validate.py" = ["S506"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["scripts"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["scripts", "tests"]
+ignore_missing_imports = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

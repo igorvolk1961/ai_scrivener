@@ -1,0 +1,84 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-json
+      - id: check-added-large-files
+        args:
+          - --maxkb=512
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: mixed-line-ending
+        args:
+          - --fix=lf
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        entry: uv run ruff check --force-exclude
+        language: system
+        types_or:
+          - python
+          - pyi
+        require_serial: true
+      - id: ruff-format
+        name: ruff format
+        entry: uv run ruff format --check
+        language: system
+        types_or:
+          - python
+          - pyi
+      - id: mypy
+        name: mypy
+        entry: uv run mypy
+        language: system
+        types_or:
+          - python
+          - pyi
+        pass_filenames: false
+      - id: yamllint
+        name: yamllint
+        entry: uv run yamllint -c .yamllint.yaml
+        language: system
+        types:
+          - yaml
+      - id: config-schema
+        name: config schema
+        entry: uv run python -m scripts.config.validate
+        language: system
+        pass_filenames: false
+      - id: requirements-traceability
+        name: requirements traceability
+        entry: uv run python -m scripts.requirements.check --check
+        language: system
+        files: ^(docs/requirements/|docs/implementation_plan.md|scripts/requirements/|config/)
+        pass_filenames: false
+      - id: no-unapproved-stubs
+        name: no unapproved stubs
+        entry: uv run python -m scripts.checks.no_stubs
+        language: system
+        files: \.(py|bsl|os)$
+        pass_filenames: false
+      - id: no-hardcoded-parameters
+        name: no hardcoded numeric parameters
+        entry: uv run python -m scripts.checks.no_hardcoded_parameters
+        language: system
+        files: \.(py|bsl|os)$
+        pass_filenames: false
+      - id: bsl-lint
+        name: bsl language server
+        entry: bash scripts/precommit/bsl_lint.sh
+        language: system
+        files: \.(bsl|os)$
+        pass_filenames: true
+      - id: pytest
+        name: pytest
+        entry: uv run pytest
+        language: system
+        types_or:
+          - python
+          - pyi
+        pass_filenames: false

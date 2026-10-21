@@ -1,0 +1,330 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-scrivener.local/schemas/parameters.schema.json",
+  "title": "ai_scrivener numeric parameters",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "service",
+    "http",
+    "placeholder_resolution",
+    "llm",
+    "rag",
+    "gigachat",
+    "scheduler",
+    "ui"
+  ],
+  "properties": {
+    "version": {
+      "const": 1
+    },
+    "service": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["port", "workers", "graceful_shutdown_seconds"],
+      "properties": {
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "workers": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 64
+        },
+        "graceful_shutdown_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 600
+        }
+      }
+    },
+    "http": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "connect_timeout_seconds",
+        "read_timeout_seconds",
+        "max_retries",
+        "retry_backoff_seconds",
+        "retry_status_codes"
+      ],
+      "properties": {
+        "connect_timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 300
+        },
+        "read_timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 300
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "retry_backoff_seconds": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 60
+          },
+          "minItems": 1,
+          "maxItems": 10
+        },
+        "retry_status_codes": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 599
+          },
+          "minItems": 1,
+          "maxItems": 20,
+          "uniqueItems": true
+        }
+      }
+    },
+    "placeholder_resolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_depth", "max_requests_per_task", "max_parallel_per_task"],
+      "properties": {
+        "max_depth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "max_requests_per_task": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "max_parallel_per_task": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 16
+        }
+      }
+    },
+    "llm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "timeout_seconds",
+        "max_retries",
+        "retry_backoff_seconds",
+        "temperature_structured",
+        "temperature_text",
+        "max_output_tokens"
+      ],
+      "properties": {
+        "timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 300
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "retry_backoff_seconds": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 60
+          },
+          "minItems": 1,
+          "maxItems": 10
+        },
+        "temperature_structured": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "temperature_text": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_output_tokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 131072
+        }
+      }
+    },
+    "rag": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "top_k",
+        "timeout_seconds",
+        "embedding_batch_size",
+        "embedding_dimension",
+        "chunk_size_chars",
+        "chunk_overlap_chars",
+        "index_sync_interval_minutes",
+        "search_min_score"
+      ],
+      "properties": {
+        "top_k": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 300
+        },
+        "embedding_batch_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "embedding_dimension": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 8192
+        },
+        "chunk_size_chars": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 20000
+        },
+        "chunk_overlap_chars": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5000
+        },
+        "index_sync_interval_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1440
+        },
+        "search_min_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "gigachat": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "token_refresh_skew_seconds",
+        "request_timeout_seconds",
+        "max_retries",
+        "retry_backoff_seconds"
+      ],
+      "properties": {
+        "token_refresh_skew_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 600
+        },
+        "request_timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 300
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "retry_backoff_seconds": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 60
+          },
+          "minItems": 1,
+          "maxItems": 10
+        }
+      }
+    },
+    "scheduler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "orchestration_interval_seconds",
+        "waiting_list_interval_seconds",
+        "deadline_check_interval_seconds",
+        "timer_interval_seconds",
+        "batch_size",
+        "lock_timeout_seconds",
+        "stale_task_seconds"
+      ],
+      "properties": {
+        "orchestration_interval_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "waiting_list_interval_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "deadline_check_interval_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "timer_interval_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "batch_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "lock_timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "stale_task_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        }
+      }
+    },
+    "ui": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["response_time_seconds", "refresh_seconds", "page_size"],
+      "properties": {
+        "response_time_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 60
+        },
+        "refresh_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "page_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        }
+      }
+    }
+  }
+}

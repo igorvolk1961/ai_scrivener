@@ -1,0 +1,17 @@
+{
+  "$schema": "https://1c-syntax.github.io/bsl-language-server/configuration/schema.json",
+  "language": "ru",
+  "diagnostics": {
+    "parameters": {
+      "MagicNumber": {
+        "allowedNumbers": [
+          0,
+          1
+        ]
+      }
+    },
+    "severity": {
+      "MagicNumber": "error"
+    }
+  }
+}

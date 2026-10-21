@@ -1,0 +1,62 @@
+version: 1
+service:
+  port: 8080
+  workers: 1
+  graceful_shutdown_seconds: 10
+http:
+  connect_timeout_seconds: 5
+  read_timeout_seconds: 30
+  max_retries: 3
+  retry_backoff_seconds:
+    - 1
+    - 2
+    - 4
+  retry_status_codes:
+    - 429
+    - 500
+    - 502
+    - 503
+    - 504
+placeholder_resolution:
+  max_depth: 5
+  max_requests_per_task: 50
+  max_parallel_per_task: 1
+llm:
+  timeout_seconds: 30
+  max_retries: 3
+  retry_backoff_seconds:
+    - 1
+    - 2
+    - 4
+  temperature_structured: 0.3
+  temperature_text: 0.7
+  max_output_tokens: 4096
+rag:
+  top_k: 10
+  timeout_seconds: 30
+  embedding_batch_size: 32
+  embedding_dimension: null
+  chunk_size_chars: 1000
+  chunk_overlap_chars: 150
+  index_sync_interval_minutes: 5
+  search_min_score: 0.0
+gigachat:
+  token_refresh_skew_seconds: 60
+  request_timeout_seconds: 30
+  max_retries: 3
+  retry_backoff_seconds:
+    - 1
+    - 2
+    - 4
+scheduler:
+  orchestration_interval_seconds: 10
+  waiting_list_interval_seconds: 60
+  deadline_check_interval_seconds: 60
+  timer_interval_seconds: 60
+  batch_size: 20
+  lock_timeout_seconds: 30
+  stale_task_seconds: 300
+ui:
+  response_time_seconds: 2
+  refresh_seconds: 30
+  page_size: 100
