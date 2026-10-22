@@ -80,6 +80,18 @@ repos:
         language: system
         files: \.(bsl|os)$
         pass_filenames: true
+      - id: extension-manifest
+        name: extension manifest
+        entry: uv run python -m scripts.git.check_extension_manifest
+        language: system
+        files: ^(src/Configuration/Configuration\.mdo|DT-INF/PROJECT\.PMF|src/.*\.mdo)$
+        pass_filenames: false
+      - id: forbid-1c-binaries
+        name: forbid 1C binary artifacts
+        entry: bash scripts/git/forbid_1c_binaries.sh
+        language: system
+        files: \.(cfe|cf|dt|CD|1CD)$
+        pass_filenames: true
       - id: pytest
         name: pytest
         entry: uv run pytest

@@ -340,4 +340,5 @@ docker compose -f deploy/docker-compose.yml down
 - `docs/development.md` — установка, лицензия, восстановление базы, импорт в EDT.
 - `docs/implementation_plan.md` — архитектура расширения и маппинг объектов.
 - `docs/postgresql.md` — вариант PostgreSQL для 1С, расширение `mchar` и серверный кластер.
+- `docs/versioning.md` — источник истины, артефакты, пересборка базы и релизный цикл.
 - `docs/requirements/traceability_matrix.md` — требования и сценарии проверки.

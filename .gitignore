@@ -13,8 +13,8 @@ __pycache__/
 *.tmp
 coverage.xml
 htmlcov/
-dist/
-build/
+/dist/
+/build/
 *.egg-info/
 .idea/
 .qdrant/
@@ -23,5 +23,8 @@ qdrant_storage/
 *.cf
 *.cfe
 *.CD
+*.1CD
+*.lic
 1Cv8*
 base/
+artifacts/

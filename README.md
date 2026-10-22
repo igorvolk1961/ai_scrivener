@@ -12,6 +12,7 @@
 - `docs/development.md` — инженерные правила и локальные проверки.
 - `docs/runbook.md` — как самому запускать платформу, базу, Конфигуратор, EDT, расширение и RAG-сервис.
 - `docs/postgresql.md` — PostgreSQL для 1С: требования, `mchar`, серверный кластер и ограничения.
+- `docs/versioning.md` — источник истины, артефакты, пересборка базы и релизный цикл.
 
 ## Требования и конфигурация
 
@@ -48,6 +49,9 @@ bash scripts/run/1c.sh pg-designer
 bash scripts/run/1c.sh pg-db          # psql к базе 1С
 bash scripts/run/1c-pg-server.sh      # PostgreSQL + кластер 1С в одном терминале
 bash scripts/run/1c-pg-server.sh stop # остановить PostgreSQL и кластер
+
+./scripts/build/export_extension.sh   # src → EDT-копия → XML
+./scripts/build/load_extension.sh server # XML → серверная база
 ```
 
 Пользователь базы — `Администратор`, пароль пустой. Подробная инструкция со всеми путями, EDT, расширением и RAG — в `docs/runbook.md`.

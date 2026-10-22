@@ -18,6 +18,8 @@ REQUIRED_HOOKS = {
     "no-unapproved-stubs",
     "no-hardcoded-parameters",
     "bsl-lint",
+    "extension-manifest",
+    "forbid-1c-binaries",
     "pytest",
     "pytest-rag",
 }

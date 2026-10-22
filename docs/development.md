@@ -294,3 +294,21 @@ Community-лицензия — это «Лицензия для разработ
 ```
 
 Пустой TSV-отчёт означает отсутствие ошибок. В репозитории `src/` хранятся исходники расширения; `DT-INF/PROJECT.PMF` содержит `Base-Project: DocMng_2_1_38_11`. Проект базовой конфигурации, `.dt`, `.cf` и `.cfe` в Git не коммитятся.
+
+## 13. Контроль версий
+
+Источник истины — `src/` в Git, а не Конфигуратор. Рабочая база — тестовая среда.
+
+```bash
+./scripts/build/export_extension.sh      # src → EDT-копия → artifacts/extension-xml
+./scripts/build/load_extension.sh server # XML → серверная база
+./scripts/build/dump_extension.sh server # расширение из базы → artifacts/base-extension-xml
+```
+
+Проверки:
+
+- `make check` — общие проверки, тесты, манифест расширения;
+- хук `forbid-1c-binaries` не даёт закоммитить `.cfe`, `.cf`, `.dt`, `.1CD`;
+- `.gitattributes` фиксирует LF для текста и binary для артефактов 1С.
+
+Полные правила, checksum базы и релизный цикл — в `docs/versioning.md`.
