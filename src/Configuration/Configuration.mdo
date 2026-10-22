@@ -30,5 +30,5 @@
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>
   <enums>Enum.АИС_СпособыЗаполнения</enums>
   <enums>Enum.АИС_СостоянияЗадач</enums>
-  <informationRegisters>InformationRegister.АИС_ЗадачиРеакции</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_КонтекстЗадачИИ</informationRegisters>
 </mdclass:Configuration>

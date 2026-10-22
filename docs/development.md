@@ -311,4 +311,4 @@ Community-лицензия — это «Лицензия для разработ
 - хук `forbid-1c-binaries` не даёт закоммитить `.cfe`, `.cf`, `.dt`, `.1CD`;
 - `.gitattributes` фиксирует LF для текста и binary для артефактов 1С.
 
-Полные правила, checksum базы и релизный цикл — в `docs/versioning.md`.
+Полные правила, checksum базы и релизный цикл — в `docs/versioning.md`. Дедуплицированная модель данных — в `docs/data-model.md`.

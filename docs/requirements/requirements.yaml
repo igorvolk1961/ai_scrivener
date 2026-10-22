@@ -26,7 +26,7 @@ requirements:
     implementation:
       - docs/implementation_plan.md#5.1
       - docs/implementation_plan.md#5.1
-      - src/Configuration/InformationRegisters/АИС_НазначенияДолжностей
+      - src/InformationRegisters/АИС_НазначенияДолжностей
     tests:
       - TEST-FR-001-01
     test_files:
@@ -74,7 +74,7 @@ requirements:
     design:
       - docs/implementation_plan.md#5.3
     implementation:
-      - src/Configuration/Catalogs/АИС_ДолжностныеОбязанности
+      - src/Catalogs/АИС_ДолжностныеОбязанности
     tests:
       - TEST-FR-003-01
     test_files:
@@ -125,8 +125,8 @@ requirements:
     design:
       - docs/implementation_plan.md#5.3
     implementation:
-      - src/Configuration/Catalogs/АИС_ТипыТриггеров
-      - src/Configuration/Catalogs/АИС_ТипыДействий
+      - src/Catalogs/АИС_ТипыТриггеров
+      - src/Catalogs/АИС_ТипыДействий
       - docs/implementation_plan.md#5.1
     tests:
       - TEST-FR-005-01
@@ -135,23 +135,24 @@ requirements:
     status: planned
   - id: FR-006
     type: functional
-    title: Нормативные сроки и ручное переопределение
+    title: Нормативы ИИ-ответа и ручное переопределение
     description: >-
-      Нормативные сроки задаются по паре «тип триггера — тип действия» и могут
-      быть переопределены вручную при постановке задачи.
+      Нормативное время ИИ-ответа задаётся по паре «тип триггера — тип действия».
+      Срок пользовательской задачи задаётся в штатной `Задача.ЗадачаИсполнителя`
+      и не дублируется в регистре ИИ.
     priority: must
     approval: approved
     source:
       - docs/raw_specification.md#4.3.3
     acceptance:
-      - Для пары типов хранится нормативное время.
-      - Задача получает срок из норматива или ручного переопределения.
+      - Для пары типов хранится нормативное время ИИ-ответа.
+      - Срок базовой задачи задаётся отдельно и не перезаписывается нормативом ИИ.
       - Изменение норматива не меняет уже созданные задачи.
     design:
       - docs/implementation_plan.md#5.5
     implementation:
-      - src/Configuration/InformationRegisters/АИС_НормативныеСроки
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/InformationRegisters/АИС_НормативыИИ
+      - src/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-FR-006-01
     test_files:
@@ -168,15 +169,15 @@ requirements:
     source:
       - docs/raw_specification.md#4.3.4
     acceptance:
-      - Расписание хранится в справочнике или документе.
+      - Расписание хранится в регистре `АИС_РасписаниеТриггеров`.
       - Регламентное задание создаёт не более одного триггера на срабатывание.
       - Следующий запуск рассчитывается и сохраняется.
     design:
       - docs/implementation_plan.md#5.4
       - docs/implementation_plan.md#10
     implementation:
-      - src/Configuration/Documents/АИС_РасписаниеТаймеров
-      - src/Configuration/ScheduledJobs/АИС_ГенерацияТриггеровПоТаймеру
+      - src/InformationRegisters/АИС_РасписаниеТриггеров
+      - src/ScheduledJobs/АИС_ГенерацияТриггеровПоТаймеру
     tests:
       - TEST-FR-007-01
     test_files:
@@ -193,15 +194,15 @@ requirements:
     source:
       - docs/raw_specification.md#4.4.1
     acceptance:
-      - Проведённый входящий документ создаёт ровно одну задачу.
-      - Задача содержит ДЛ, должность, тип триггера и источник.
+      - Проведённый входящий документ создаёт ровно одну базовую задачу и одну запись `АИС_КонтекстЗадачИИ`.
+      - Базовая задача содержит ДЛ и должность; ИИ-контекст — тип триггера и источник.
       - Повторное проведение не создаёт дубль.
     design:
       - docs/implementation_plan.md#6.2
       - docs/implementation_plan.md#6.5
     implementation:
       - docs/implementation_plan.md#5.1
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-FR-008-01
       - TEST-FR-008-02
@@ -212,8 +213,9 @@ requirements:
     type: functional
     title: Входящее распоряжение и произвольное событие
     description: >-
-      Распоряжение от вышестоящего ДЛ и произвольное событие регистрируются как
-      документы и создают задачи с соответствующим типом триггера.
+      Распоряжение от вышестоящего ДЛ регистрируется как `ВнутреннийДокумент`,
+      произвольное событие — как бизнес-событие/триггер; создаётся базовая задача
+      и запись `АИС_КонтекстЗадачИИ` с типом триггера.
     priority: must
     approval: approved
     source:
@@ -227,7 +229,7 @@ requirements:
       - docs/implementation_plan.md#5.4
     implementation:
       - docs/implementation_plan.md#5.1
-      - src/Configuration/Documents/АИС_ПроизвольноеСобытие
+      - docs/data-model.md
     tests:
       - TEST-FR-009-01
     test_files:
@@ -252,8 +254,8 @@ requirements:
       - docs/implementation_plan.md#5.5
       - docs/implementation_plan.md#6.1
     implementation:
-      - src/Configuration/InformationRegisters/АИС_ЗадачиРеакции
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/InformationRegisters/АИС_КонтекстЗадачИИ
+      - src/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-FR-010-01
       - TEST-FR-010-02
@@ -277,7 +279,7 @@ requirements:
     design:
       - docs/implementation_plan.md#5.5
     implementation:
-      - src/Configuration/InformationRegisters/АИС_СостоянияПлейсхолдеров
+      - src/InformationRegisters/АИС_СостоянияПлейсхолдеров
     tests:
       - TEST-FR-011-01
     test_files:
@@ -302,8 +304,8 @@ requirements:
       - docs/implementation_plan.md#5.5
       - docs/implementation_plan.md#6.4
     implementation:
-      - src/Configuration/InformationRegisters/АИС_ЛистОжидания
-      - src/Configuration/CommonModules/АИС_РаботаСЛистомОжидания
+      - src/InformationRegisters/АИС_ЛистОжидания
+      - src/CommonModules/АИС_РаботаСЛистомОжидания
     tests:
       - TEST-FR-012-01
       - TEST-FR-012-02
@@ -327,8 +329,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.4
     implementation:
-      - src/Configuration/ScheduledJobs/АИС_ОбработкаЛистаОжидания
-      - src/Configuration/CommonModules/АИС_РаботаСЛистомОжидания
+      - src/ScheduledJobs/АИС_ОбработкаЛистаОжидания
+      - src/CommonModules/АИС_РаботаСЛистомОжидания
     tests:
       - TEST-FR-013-01
     test_files:
@@ -352,9 +354,9 @@ requirements:
       - docs/implementation_plan.md#6.4
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/Documents/АИС_ДокладОСрывеСроков
-      - src/Configuration/ScheduledJobs/АИС_ПроверкаСроковЗадач
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - docs/data-model.md
+      - src/ScheduledJobs/АИС_ПроверкаСроковЗадач
+      - src/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-FR-014-01
       - TEST-FR-014-02
@@ -379,7 +381,7 @@ requirements:
     design:
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/CommonModules/АИС_ИнтеграцияСLLM
+      - src/CommonModules/АИС_ИнтеграцияСLLM
     tests:
       - TEST-FR-015-01
       - TEST-FR-015-02
@@ -388,23 +390,24 @@ requirements:
     status: planned
   - id: FR-016
     type: functional
-    title: Справочник промпт-шаблонов
+    title: Параметры промптов
     description: >-
-      Промпты хранятся в справочнике с версией, моделью, температурой, лимитом
-      токенов и ожидаемой JSON-схемой.
+      Текст промпта хранится в штатном `ШаблоныТекстов`; версия, модель,
+      температура, лимит токенов и ожидаемая JSON-схема — в `АИС_ПромптПараметры`.
     priority: must
     approval: approved
     source:
       - docs/raw_specification.md#4.8.2
     acceptance:
-      - Промпт можно изменить без изменения кода.
+      - Текст промпта можно изменить без изменения кода.
+      - Параметры модели и JSON-схема хранятся отдельно от текста.
       - Версия и активность сохраняются.
       - Аудит ссылается на версию промпта.
     design:
       - docs/implementation_plan.md#5.3
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/Catalogs/АИС_ПромптШаблоны
+      - src/Catalogs/АИС_ПромптПараметры
     tests:
       - TEST-FR-016-01
     test_files:
@@ -430,7 +433,7 @@ requirements:
     implementation:
       - rag-service/src/rag_service/main.py
       - rag-service/src/rag_service/qdrant_store.py
-      - src/Configuration/CommonModules/АИС_ИнтеграцияСRAG
+      - src/CommonModules/АИС_ИнтеграцияСRAG
     tests:
       - TEST-FR-017-01
       - TEST-FR-017-02
@@ -454,8 +457,8 @@ requirements:
     design:
       - docs/implementation_plan.md#7.5
     implementation:
-      - src/Configuration/CommonModules/АИС_ИнтеграцияСRAG
-      - src/Configuration/ScheduledJobs/АИС_ИндексацияRAG
+      - src/CommonModules/АИС_ИнтеграцияСRAG
+      - src/ScheduledJobs/АИС_ИндексацияRAG
     tests:
       - TEST-FR-018-01
     test_files:
@@ -479,8 +482,8 @@ requirements:
       - docs/implementation_plan.md#6.2
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
-      - src/Configuration/CommonModules/АИС_ИнтеграцияСRAG
+      - src/CommonModules/АИС_ОркестраторЗадач
+      - src/CommonModules/АИС_ИнтеграцияСRAG
     tests:
       - TEST-FR-019-01
       - TEST-FR-019-02
@@ -505,7 +508,7 @@ requirements:
     design:
       - docs/implementation_plan.md#6.3
     implementation:
-      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
+      - src/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
       - TEST-FR-020-01
       - TEST-FR-020-02
@@ -516,22 +519,24 @@ requirements:
     type: functional
     title: Запрос к другому ДЛ
     description: >-
-      Для источника «Другое ДЛ» создаётся запрос и запись листа ожидания,
-      задача приостанавливается и возобновляется после ответа.
+      Для источника «Другое ДЛ» создаётся базовая `Задача.ЗадачаИсполнителя`
+      и запись `АИС_ЛистОжидания`; ИИ-состояние переходит в `Ожидание` и
+      возобновляется после ответа.
     priority: must
     approval: approved
     source:
       - docs/raw_specification.md#4.9.1
     acceptance:
-      - Создаётся запрос с уникальным ID.
-      - Задача переходит в «Ожидание».
-      - Ответ возобновляет задачу без дублей.
+      - Создаётся базовая задача с уникальным ID.
+      - ИИ-состояние переходит в «Ожидание», состояние задачи остаётся штатным.
+      - Ответ фиксируется в базовой задаче и истории.
+      - Повторный ответ не создаёт дубль.
     design:
       - docs/implementation_plan.md#6.3
       - docs/implementation_plan.md#6.4
     implementation:
-      - src/Configuration/Documents/АИС_ЗапросКДЛ
-      - src/Configuration/CommonModules/АИС_РаботаСЛистомОжидания
+      - docs/data-model.md
+      - src/CommonModules/АИС_РаботаСЛистомОжидания
     tests:
       - TEST-FR-021-01
     test_files:
@@ -554,8 +559,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.3
     implementation:
-      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
-      - src/Configuration/Catalogs/АИС_ИсточникиДанных
+      - src/CommonModules/АИС_РазрешительПлейсхолдеров
+      - docs/data-model.md
     tests:
       - TEST-FR-022-01
     test_files:
@@ -580,7 +585,7 @@ requirements:
       - docs/implementation_plan.md#6.3
     implementation:
       - config/parameters.yaml
-      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
+      - src/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
       - TEST-FR-023-01
     test_files:
@@ -603,7 +608,7 @@ requirements:
     design:
       - docs/implementation_plan.md#6.2
     implementation:
-      - src/Configuration/CommonModules/АИС_ГенераторДокументов
+      - src/CommonModules/АИС_ГенераторДокументов
       - docs/implementation_plan.md#5.1
     tests:
       - TEST-FR-024-01
@@ -653,7 +658,7 @@ requirements:
     design:
       - docs/implementation_plan.md#5.4
     implementation:
-      - src/Configuration/Documents/АИС_РезультатВнешнегоДействия
+      - docs/data-model.md
     tests:
       - TEST-FR-026-01
     test_files:
@@ -676,7 +681,7 @@ requirements:
     design:
       - docs/implementation_plan.md#6.4
     implementation:
-      - src/Configuration/Documents/АИС_РезультатВнешнегоЗапроса
+      - docs/data-model.md
     tests:
       - TEST-FR-027-01
     test_files:
@@ -700,8 +705,8 @@ requirements:
       - docs/implementation_plan.md#5.5
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/InformationRegisters/АИС_ИсторияДействийИИ
-      - src/Configuration/CommonModules/АИС_АудитДействийИИ
+      - src/InformationRegisters/АИС_ИсторияДействийИИ
+      - src/CommonModules/АИС_АудитДействийИИ
     tests:
       - TEST-FR-028-01
       - TEST-FR-028-02
@@ -725,7 +730,7 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/Reports/АИС_ЖурналЗадачи
+      - src/Reports/АИС_ЖурналЗадачи
     tests:
       - TEST-FR-029-01
     test_files:
@@ -748,7 +753,7 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/DataProcessors/АИС_РабочееМестоДЛ
+      - src/DataProcessors/АИС_РабочееМестоДЛ
     tests:
       - TEST-FR-030-01
     test_files:
@@ -771,7 +776,7 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/DataProcessors/АИС_ФормаЗадачи
+      - src/DataProcessors/АИС_ФормаЗадачи
     tests:
       - TEST-FR-031-01
     test_files:
@@ -796,7 +801,7 @@ requirements:
       - docs/implementation_plan.md#9
     implementation:
       - docs/implementation_plan.md#5.1
-      - src/Configuration/DataProcessors/АИС_ФормаПроектаДокумента
+      - src/DataProcessors/АИС_ФормаПроектаДокумента
     tests:
       - TEST-FR-032-01
     test_files:
@@ -819,8 +824,8 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/DataProcessors/АИС_АдминПанель
-      - src/Configuration/DataProcessors/АИС_ТестИнтеграцииСLLM
+      - src/DataProcessors/АИС_АдминПанель
+      - src/DataProcessors/АИС_ТестИнтеграцииСLLM
     tests:
       - TEST-FR-033-01
     test_files:
@@ -844,8 +849,8 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/Reports/АИС_СтатистикаЗадач
-      - src/Configuration/Reports/АИС_АнализСрывовСроков
+      - src/Reports/АИС_СтатистикаЗадач
+      - src/Reports/АИС_АнализСрывовСроков
     tests:
       - TEST-FR-034-01
     test_files:
@@ -868,8 +873,8 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
-      - src/Configuration/DataProcessors/АИС_РабочееМестоДЛ
+      - src/CommonModules/АИС_ОркестраторЗадач
+      - src/DataProcessors/АИС_РабочееМестоДЛ
     tests:
       - TEST-FR-035-01
     test_files:
@@ -892,8 +897,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.5
     implementation:
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
-      - src/Configuration/InformationRegisters/АИС_ЗадачиРеакции
+      - src/CommonModules/АИС_ОркестраторЗадач
+      - src/InformationRegisters/АИС_КонтекстЗадачИИ
     tests:
       - TEST-FR-036-01
     test_files:
@@ -918,8 +923,8 @@ requirements:
       - docs/implementation_plan.md#6.3
       - docs/implementation_plan.md#6.5
     implementation:
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
-      - src/Configuration/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
+      - src/CommonModules/АИС_ОркестраторЗадач
+      - src/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
     tests:
       - TEST-FR-037-01
     test_files:
@@ -943,7 +948,7 @@ requirements:
     design:
       - docs/implementation_plan.md#5.4
     implementation:
-      - src/Configuration/HTTPServices/АИС_ПриемСобытий
+      - src/HTTPServices/АИС_ПриемСобытий
     tests:
       - TEST-FR-038-01
     test_files:
@@ -966,7 +971,7 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/DataProcessors/АИС_РабочееМестоДЛ
+      - src/DataProcessors/АИС_РабочееМестоДЛ
     tests:
       - TEST-FR-039-01
     test_files:
@@ -990,7 +995,7 @@ requirements:
       - docs/implementation_plan.md#6.3
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
+      - src/CommonModules/АИС_РазрешительПлейсхолдеров
       - rag-service/src/rag_service/api/search.py
     tests:
       - TEST-FR-040-01
@@ -1016,7 +1021,7 @@ requirements:
       - docs/implementation_plan.md#9
     implementation:
       - rag-service/src/rag_service/qdrant_store.py
-      - src/Configuration/CommonModules/АИС_ИнтеграцияСRAG
+      - src/CommonModules/АИС_ИнтеграцияСRAG
     tests:
       - TEST-FR-041-01
     test_files:
@@ -1070,8 +1075,8 @@ requirements:
       - docs/implementation_plan.md#9
       - docs/implementation_plan.md#11
     implementation:
-      - src/Configuration/DataProcessors/АИС_РабочееМестоДЛ
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/DataProcessors/АИС_РабочееМестоДЛ
+      - src/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-NFR-001-01
     test_files:
@@ -1094,7 +1099,7 @@ requirements:
     design:
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/CommonModules/АИС_ИнтеграцияСLLM
+      - src/CommonModules/АИС_ИнтеграцияСLLM
     tests:
       - TEST-NFR-002-01
     test_files:
@@ -1117,7 +1122,7 @@ requirements:
     design:
       - docs/implementation_plan.md#6.3
     implementation:
-      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
+      - src/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
       - TEST-NFR-003-01
     test_files:
@@ -1141,8 +1146,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.5
     implementation:
-      - src/Configuration/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
+      - src/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-NFR-004-01
     test_files:
@@ -1165,8 +1170,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.5
     implementation:
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
-      - src/Configuration/CommonModules/АИС_АудитДействийИИ
+      - src/CommonModules/АИС_ОркестраторЗадач
+      - src/CommonModules/АИС_АудитДействийИИ
     tests:
       - TEST-NFR-005-01
     test_files:
@@ -1190,8 +1195,8 @@ requirements:
       - docs/implementation_plan.md#6.1
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/CommonModules/АИС_ИнтеграцияСLLM
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/CommonModules/АИС_ИнтеграцияСLLM
+      - src/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-NFR-006-01
     test_files:
@@ -1214,7 +1219,7 @@ requirements:
     design:
       - docs/implementation_plan.md#5.5
     implementation:
-      - src/Configuration/InformationRegisters/АИС_ЛистОжидания
+      - src/InformationRegisters/АИС_ЛистОжидания
     tests:
       - TEST-NFR-007-01
     test_files:
@@ -1237,7 +1242,7 @@ requirements:
     design:
       - docs/implementation_plan.md#5.7
     implementation:
-      - src/Configuration/CommonModules/АИС_СервисныеФункции
+      - src/CommonModules/АИС_СервисныеФункции
       - rag-service/.env.example
     tests:
       - TEST-NFR-008-01
@@ -1262,9 +1267,9 @@ requirements:
     design:
       - docs/implementation_plan.md#5.8
     implementation:
-      - src/Configuration/Roles/АИС_ДолжностноеЛицо
-      - src/Configuration/Roles/АИС_ВышестоящееДолжностноеЛицо
-      - src/Configuration/Roles/АИС_АдминистраторСистемы
+      - src/Roles/АИС_ДолжностноеЛицо
+      - src/Roles/АИС_ВышестоящееДолжностноеЛицо
+      - src/Roles/АИС_АдминистраторСистемы
     tests:
       - TEST-NFR-009-01
       - TEST-NFR-009-02
@@ -1287,7 +1292,7 @@ requirements:
     design:
       - docs/implementation_plan.md#5.8
     implementation:
-      - src/Configuration/Roles/АИС_Аудитор
+      - src/Roles/АИС_Аудитор
     tests:
       - TEST-NFR-010-01
     test_files:
@@ -1312,7 +1317,7 @@ requirements:
       - docs/implementation_plan.md#6.5
       - docs/implementation_plan.md#11
     implementation:
-      - src/Configuration/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
+      - src/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
       - config/parameters.yaml
     tests:
       - TEST-NFR-011-01
@@ -1336,7 +1341,7 @@ requirements:
     design:
       - docs/implementation_plan.md#3
     implementation:
-      - src/Configuration/HTTPServices/АИС_ПриемСобытий
+      - src/HTTPServices/АИС_ПриемСобытий
       - docs/implementation_plan.md
     tests:
       - TEST-NFR-012-01
@@ -1361,8 +1366,8 @@ requirements:
       - docs/implementation_plan.md#5.5
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/InformationRegisters/АИС_ИсторияДействийИИ
-      - src/Configuration/CommonModules/АИС_АудитДействийИИ
+      - src/InformationRegisters/АИС_ИсторияДействийИИ
+      - src/CommonModules/АИС_АудитДействийИИ
     tests:
       - TEST-NFR-013-01
     test_files:
@@ -1596,7 +1601,7 @@ requirements:
       - docs/implementation_plan.md#7.6
     implementation:
       - rag-service/src/rag_service/main.py
-      - src/Configuration/CommonModules/АИС_АудитДействийИИ
+      - src/CommonModules/АИС_АудитДействийИИ
     tests:
       - TEST-NFR-022-01
     test_files:
@@ -1644,7 +1649,7 @@ requirements:
     design:
       - docs/implementation_plan.md#6.3
     implementation:
-      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
+      - src/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
       - TEST-NFR-024-01
     test_files:
@@ -1668,8 +1673,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.1
     implementation:
-      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
-      - src/Configuration/CommonModules/АИС_ИнтеграцияСRAG
+      - src/CommonModules/АИС_ОркестраторЗадач
+      - src/CommonModules/АИС_ИнтеграцияСRAG
     tests:
       - TEST-NFR-025-01
     test_files:
@@ -1693,7 +1698,7 @@ requirements:
       - docs/implementation_plan.md#8
     implementation:
       - config/parameters.yaml
-      - src/Configuration/CommonModules/АИС_ИнтеграцияСLLM
+      - src/CommonModules/АИС_ИнтеграцияСLLM
       - rag-service/src/rag_service/config.py
     tests:
       - TEST-NFR-026-01
@@ -1717,7 +1722,7 @@ requirements:
     design:
       - docs/implementation_plan.md#12
     implementation:
-      - src/Configuration/CommonModules/АИС_ИнтеграцияСLLM
+      - src/CommonModules/АИС_ИнтеграцияСLLM
       - rag-service/src/rag_service/gigachat.py
     tests:
       - TEST-NFR-027-01

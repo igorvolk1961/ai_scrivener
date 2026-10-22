@@ -9,10 +9,10 @@
     <recordType typeId="f22efab7-6fe5-4a1b-8ebf-20aa94848f4b" valueTypeId="c239fae4-a3c9-48fb-8564-4797acd0196e"/>
     <recordManagerType typeId="983b487b-140e-4b3b-b317-ea7f43850b1d" valueTypeId="9bda7b78-24ad-41d0-b3bc-74fe8ccd3236"/>
   </producedTypes>
-  <name>АИС_ЗадачиРеакции</name>
+  <name>АИС_КонтекстЗадачИИ</name>
   <synonym>
     <key>ru</key>
-    <value>Задачи реагирования ИИ-помощника</value>
+    <value>ИИ-контекст задач реагирования</value>
   </synonym>
   <editType>InDialog</editType>
   <standardAttributes>
@@ -49,36 +49,6 @@
     <maxValue xsi:type="core:UndefinedValue"/>
   </standardAttributes>
   <dataLockControlMode>Managed</dataLockControlMode>
-  <resources uuid="88450b31-f623-439c-a6ac-a3a23167034a">
-    <name>ДЛ</name>
-    <synonym>
-      <key>ru</key>
-      <value>Должностное лицо</value>
-    </synonym>
-    <type>
-      <types>CatalogRef.Пользователи</types>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="40c81e47-91ca-44f2-b4cd-1a1f78c0f3c3">
-    <name>Должность</name>
-    <synonym>
-      <key>ru</key>
-      <value>Должность</value>
-    </synonym>
-    <type>
-      <types>CatalogRef.Должности</types>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
   <resources uuid="45dc8ccc-4664-4a40-a63b-bef4701fa42d">
     <name>ТипТриггера</name>
     <synonym>
@@ -110,10 +80,10 @@
     <fillValue xsi:type="core:UndefinedValue"/>
   </resources>
   <resources uuid="4ff037cb-d917-42fd-b9c9-793073f2469c">
-    <name>Состояние</name>
+    <name>СостояниеИИ</name>
     <synonym>
       <key>ru</key>
-      <value>Состояние</value>
+      <value>Состояние ИИ-оркестрации</value>
     </synonym>
     <type>
       <types>EnumRef.АИС_СостоянияЗадач</types>
@@ -123,58 +93,6 @@
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="61518665-3961-4282-8808-1fa37f2784f2">
-    <name>НормативныйСрок</name>
-    <synonym>
-      <key>ru</key>
-      <value>Нормативный срок, мин</value>
-    </synonym>
-    <type>
-      <types>Number</types>
-      <numberQualifiers>
-        <precision>10</precision>
-      </numberQualifiers>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="b134d13b-c122-4618-badd-66255b7648b6">
-    <name>ФактическоеЗавершение</name>
-    <synonym>
-      <key>ru</key>
-      <value>Фактическое завершение</value>
-    </synonym>
-    <type>
-      <types>Date</types>
-      <dateQualifiers/>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="95640084-a7d7-4cba-9f7c-3a8ab4695688">
-    <name>Результат</name>
-    <synonym>
-      <key>ru</key>
-      <value>Результат</value>
-    </synonym>
-    <type>
-      <types>String</types>
-      <stringQualifiers>
-        <length>100</length>
-      </stringQualifiers>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:StringValue"/>
   </resources>
   <resources uuid="7ad1df7d-c4f3-440a-9a4e-d50161fb1d2c">
     <name>КлючИдемпотентности</name>
@@ -296,6 +214,21 @@
     <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
   </resources>
+  <resources uuid="e9d4bf87-3552-45a6-b91d-4fe4470046bd">
+    <name>ПроектДокумента</name>
+    <synonym>
+      <key>ru</key>
+      <value>Проект документа</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.ИсходящиеДокументы</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:UndefinedValue"/>
+  </resources>
   <resources uuid="9b219690-e7d9-4da4-9046-cfcec5f20b2a">
     <name>РодительскаяЗадача</name>
     <synonym>
@@ -303,16 +236,13 @@
       <value>Родительская задача</value>
     </synonym>
     <type>
-      <types>String</types>
-      <stringQualifiers>
-        <length>36</length>
-      </stringQualifiers>
+      <types>TaskRef.ЗадачаИсполнителя</types>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:StringValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
   </resources>
   <resources uuid="ca5a2c30-ca41-40a5-998e-840bc38ff3fc">
     <name>ПризнакЭскалации</name>
@@ -380,16 +310,13 @@
     <fillValue xsi:type="core:UndefinedValue"/>
   </resources>
   <dimensions uuid="76002714-e936-45cd-b0bd-a7c46c6f6f70">
-    <name>ИдентификаторЗадачи</name>
+    <name>Задача</name>
     <synonym>
       <key>ru</key>
-      <value>Идентификатор задачи</value>
+      <value>Базовая задача</value>
     </synonym>
     <type>
-      <types>String</types>
-      <stringQualifiers>
-        <length>36</length>
-      </stringQualifiers>
+      <types>TaskRef.ЗадачаИсполнителя</types>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
