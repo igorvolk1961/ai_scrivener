@@ -1,0 +1,24 @@
+services:
+  postgres:
+    # 1C-specific PostgreSQL build with the mchar extension.
+    # Standard postgres:15/16 fails with: extension "mchar" is not available.
+    image: kustoff/1c-postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: ${POSTGRES_USER:-ai_scrivener}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ai_scrivener_dev}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U $${POSTGRES_USER} -d postgres
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pg_data:

@@ -1,6 +1,6 @@
 meta:
   version: 1
-  updated: "2026-10-21"
+  updated: "2026-10-22"
   source_of_truth: docs/requirements/requirements.yaml
 requirements:
   - id: FR-001
@@ -21,12 +21,12 @@ requirements:
       - История назначений сохраняется.
       - Неактивные ДЛ и должности не участвуют в новых назначениях.
     design:
-      - docs/implementation_plan.md#5.2
-      - docs/implementation_plan.md#5.4
+      - docs/implementation_plan.md#5.3
+      - docs/implementation_plan.md#5.5
     implementation:
-      - src/Configuration/Catalogs/ДолжностныеЛица
-      - src/Configuration/Catalogs/Должности
-      - src/Configuration/InformationRegisters/НазначенияДолжностей
+      - docs/implementation_plan.md#5.1
+      - docs/implementation_plan.md#5.1
+      - src/Configuration/InformationRegisters/АИС_НазначенияДолжностей
     tests:
       - TEST-FR-001-01
     test_files:
@@ -47,11 +47,11 @@ requirements:
       - Для активной должности определяется вышестоящая должность и её ДЛ.
       - Циклы в иерархии запрещены.
     design:
-      - docs/implementation_plan.md#5.2
-      - docs/implementation_plan.md#5.7
+      - docs/implementation_plan.md#5.3
+      - docs/implementation_plan.md#5.8
     implementation:
-      - src/Configuration/Catalogs/Должности
-      - src/Configuration/CommonModules/ПользователиИПрава
+      - docs/implementation_plan.md#5.1
+      - docs/implementation_plan.md#5.8
     tests:
       - TEST-FR-002-01
     test_files:
@@ -72,9 +72,9 @@ requirements:
       - Обязанность привязана к должности и паре типов.
       - Для пары можно определить приоритетное правило.
     design:
-      - docs/implementation_plan.md#5.2
+      - docs/implementation_plan.md#5.3
     implementation:
-      - src/Configuration/Catalogs/ДолжностныеОбязанности
+      - src/Configuration/Catalogs/АИС_ДолжностныеОбязанности
     tests:
       - TEST-FR-003-01
     test_files:
@@ -96,10 +96,10 @@ requirements:
       - Для плейсхолдера заданы тип, обязательность и источник.
       - Шаблон имеет версию и признак активности.
     design:
-      - docs/implementation_plan.md#5.2
+      - docs/implementation_plan.md#5.3
       - docs/implementation_plan.md#6.3
     implementation:
-      - src/Configuration/Catalogs/ШаблоныДокументов
+      - docs/implementation_plan.md#5.1
     tests:
       - TEST-FR-004-01
       - TEST-FR-004-02
@@ -123,11 +123,11 @@ requirements:
       - Новые типы можно добавить через справочник.
       - Неактивные типы не используются в новых задачах.
     design:
-      - docs/implementation_plan.md#5.2
+      - docs/implementation_plan.md#5.3
     implementation:
-      - src/Configuration/Catalogs/ТипыТриггеров
-      - src/Configuration/Catalogs/ТипыДействий
-      - src/Configuration/Catalogs/ТипыДокументов
+      - src/Configuration/Catalogs/АИС_ТипыТриггеров
+      - src/Configuration/Catalogs/АИС_ТипыДействий
+      - docs/implementation_plan.md#5.1
     tests:
       - TEST-FR-005-01
     test_files:
@@ -148,10 +148,10 @@ requirements:
       - Задача получает срок из норматива или ручного переопределения.
       - Изменение норматива не меняет уже созданные задачи.
     design:
-      - docs/implementation_plan.md#5.4
+      - docs/implementation_plan.md#5.5
     implementation:
-      - src/Configuration/InformationRegisters/НормативныеСроки
-      - src/Configuration/CommonModules/ОркестраторЗадач
+      - src/Configuration/InformationRegisters/АИС_НормативныеСроки
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-FR-006-01
     test_files:
@@ -172,11 +172,11 @@ requirements:
       - Регламентное задание создаёт не более одного триггера на срабатывание.
       - Следующий запуск рассчитывается и сохраняется.
     design:
-      - docs/implementation_plan.md#5.3
+      - docs/implementation_plan.md#5.4
       - docs/implementation_plan.md#10
     implementation:
-      - src/Configuration/Documents/РасписаниеТаймеров
-      - src/Configuration/ScheduledJobs/ГенерацияТриггеровПоТаймеру
+      - src/Configuration/Documents/АИС_РасписаниеТаймеров
+      - src/Configuration/ScheduledJobs/АИС_ГенерацияТриггеровПоТаймеру
     tests:
       - TEST-FR-007-01
     test_files:
@@ -200,8 +200,8 @@ requirements:
       - docs/implementation_plan.md#6.2
       - docs/implementation_plan.md#6.5
     implementation:
-      - src/Configuration/Documents/ВходящийДокумент
-      - src/Configuration/CommonModules/ОркестраторЗадач
+      - docs/implementation_plan.md#5.1
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-FR-008-01
       - TEST-FR-008-02
@@ -224,10 +224,10 @@ requirements:
       - Произвольное событие содержит описание и адресата.
       - Оба документа создают задачу без дублей.
     design:
-      - docs/implementation_plan.md#5.3
+      - docs/implementation_plan.md#5.4
     implementation:
-      - src/Configuration/Documents/РаспоряжениеВходящее
-      - src/Configuration/Documents/ПроизвольноеСобытие
+      - docs/implementation_plan.md#5.1
+      - src/Configuration/Documents/АИС_ПроизвольноеСобытие
     tests:
       - TEST-FR-009-01
     test_files:
@@ -249,11 +249,11 @@ requirements:
       - Недопустимый переход отклоняется.
       - Каждый переход фиксируется в аудите.
     design:
-      - docs/implementation_plan.md#5.4
+      - docs/implementation_plan.md#5.5
       - docs/implementation_plan.md#6.1
     implementation:
-      - src/Configuration/InformationRegisters/ЗадачиРеагирования
-      - src/Configuration/CommonModules/ОркестраторЗадач
+      - src/Configuration/InformationRegisters/АИС_ЗадачиРеакции
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-FR-010-01
       - TEST-FR-010-02
@@ -275,9 +275,9 @@ requirements:
       - Значение и ошибка сохраняются.
       - Связь с листом ожидания однозначна.
     design:
-      - docs/implementation_plan.md#5.4
+      - docs/implementation_plan.md#5.5
     implementation:
-      - src/Configuration/InformationRegisters/СостоянияПлейсхолдеров
+      - src/Configuration/InformationRegisters/АИС_СостоянияПлейсхолдеров
     tests:
       - TEST-FR-011-01
     test_files:
@@ -299,11 +299,11 @@ requirements:
       - Ответ идемпотентно заполняет плейсхолдер.
       - Родительская задача возобновляется.
     design:
-      - docs/implementation_plan.md#5.4
+      - docs/implementation_plan.md#5.5
       - docs/implementation_plan.md#6.4
     implementation:
-      - src/Configuration/InformationRegisters/ЛистОжидания
-      - src/Configuration/CommonModules/РаботаСЛистомОжидания
+      - src/Configuration/InformationRegisters/АИС_ЛистОжидания
+      - src/Configuration/CommonModules/АИС_РаботаСЛистомОжидания
     tests:
       - TEST-FR-012-01
       - TEST-FR-012-02
@@ -327,8 +327,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.4
     implementation:
-      - src/Configuration/ScheduledJobs/ОбработкаЛистаОжидания
-      - src/Configuration/CommonModules/РаботаСЛистомОжидания
+      - src/Configuration/ScheduledJobs/АИС_ОбработкаЛистаОжидания
+      - src/Configuration/CommonModules/АИС_РаботаСЛистомОжидания
     tests:
       - TEST-FR-013-01
     test_files:
@@ -352,9 +352,9 @@ requirements:
       - docs/implementation_plan.md#6.4
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/Documents/ДокладОСрывеСроков
-      - src/Configuration/ScheduledJobs/ПроверкаСроковЗадач
-      - src/Configuration/CommonModules/ОркестраторЗадач
+      - src/Configuration/Documents/АИС_ДокладОСрывеСроков
+      - src/Configuration/ScheduledJobs/АИС_ПроверкаСроковЗадач
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-FR-014-01
       - TEST-FR-014-02
@@ -379,7 +379,7 @@ requirements:
     design:
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/CommonModules/ИнтеграцияСLLM
+      - src/Configuration/CommonModules/АИС_ИнтеграцияСLLM
     tests:
       - TEST-FR-015-01
       - TEST-FR-015-02
@@ -401,10 +401,10 @@ requirements:
       - Версия и активность сохраняются.
       - Аудит ссылается на версию промпта.
     design:
-      - docs/implementation_plan.md#5.2
+      - docs/implementation_plan.md#5.3
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/Catalogs/ПромптШаблоны
+      - src/Configuration/Catalogs/АИС_ПромптШаблоны
     tests:
       - TEST-FR-016-01
     test_files:
@@ -428,15 +428,15 @@ requirements:
       - docs/implementation_plan.md#7.2
       - docs/implementation_plan.md#7.3
     implementation:
-      - rag-service/src/rag_service/api/search.py
+      - rag-service/src/rag_service/main.py
       - rag-service/src/rag_service/qdrant_store.py
-      - src/Configuration/CommonModules/ИнтеграцияСRAG
+      - src/Configuration/CommonModules/АИС_ИнтеграцияСRAG
     tests:
       - TEST-FR-017-01
       - TEST-FR-017-02
     test_files:
-      - tests/rag/test_search.py
-    status: planned
+      - rag-service/tests/test_api.py
+    status: in_progress
   - id: FR-018
     type: functional
     title: Синхронизация RAG-индекса из 1С
@@ -454,8 +454,8 @@ requirements:
     design:
       - docs/implementation_plan.md#7.5
     implementation:
-      - src/Configuration/CommonModules/ИнтеграцияСRAG
-      - src/Configuration/ScheduledJobs/ИндексацияRAG
+      - src/Configuration/CommonModules/АИС_ИнтеграцияСRAG
+      - src/Configuration/ScheduledJobs/АИС_ИндексацияRAG
     tests:
       - TEST-FR-018-01
     test_files:
@@ -479,8 +479,8 @@ requirements:
       - docs/implementation_plan.md#6.2
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/CommonModules/ОркестраторЗадач
-      - src/Configuration/CommonModules/ИнтеграцияСRAG
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/Configuration/CommonModules/АИС_ИнтеграцияСRAG
     tests:
       - TEST-FR-019-01
       - TEST-FR-019-02
@@ -505,7 +505,7 @@ requirements:
     design:
       - docs/implementation_plan.md#6.3
     implementation:
-      - src/Configuration/CommonModules/РазрешительПлейсхолдеров
+      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
       - TEST-FR-020-01
       - TEST-FR-020-02
@@ -530,8 +530,8 @@ requirements:
       - docs/implementation_plan.md#6.3
       - docs/implementation_plan.md#6.4
     implementation:
-      - src/Configuration/Documents/ЗапросКДЛ
-      - src/Configuration/CommonModules/РаботаСЛистомОжидания
+      - src/Configuration/Documents/АИС_ЗапросКДЛ
+      - src/Configuration/CommonModules/АИС_РаботаСЛистомОжидания
     tests:
       - TEST-FR-021-01
     test_files:
@@ -554,8 +554,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.3
     implementation:
-      - src/Configuration/CommonModules/РазрешительПлейсхолдеров
-      - src/Configuration/Catalogs/ИсточникиДанных
+      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
+      - src/Configuration/Catalogs/АИС_ИсточникиДанных
     tests:
       - TEST-FR-022-01
     test_files:
@@ -580,7 +580,7 @@ requirements:
       - docs/implementation_plan.md#6.3
     implementation:
       - config/parameters.yaml
-      - src/Configuration/CommonModules/РазрешительПлейсхолдеров
+      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
       - TEST-FR-023-01
     test_files:
@@ -603,8 +603,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.2
     implementation:
-      - src/Configuration/CommonModules/ГенераторДокументов
-      - src/Configuration/Documents/ИсходящийДокумент
+      - src/Configuration/CommonModules/АИС_ГенераторДокументов
+      - docs/implementation_plan.md#5.1
     tests:
       - TEST-FR-024-01
       - TEST-FR-024-02
@@ -627,10 +627,10 @@ requirements:
       - Доклад содержит вид и адресата.
       - Документы связаны с задачей.
     design:
-      - docs/implementation_plan.md#5.3
+      - docs/implementation_plan.md#5.4
     implementation:
-      - src/Configuration/Documents/РаспоряжениеИсходящее
-      - src/Configuration/Documents/Доклад
+      - docs/implementation_plan.md#5.1
+      - docs/implementation_plan.md#5.1
     tests:
       - TEST-FR-025-01
     test_files:
@@ -651,9 +651,9 @@ requirements:
       - Задача возобновляется только из ожидания по этому действию.
       - Файлы сохраняются.
     design:
-      - docs/implementation_plan.md#5.3
+      - docs/implementation_plan.md#5.4
     implementation:
-      - src/Configuration/Documents/РезультатВнешнегоДействия
+      - src/Configuration/Documents/АИС_РезультатВнешнегоДействия
     tests:
       - TEST-FR-026-01
     test_files:
@@ -676,7 +676,7 @@ requirements:
     design:
       - docs/implementation_plan.md#6.4
     implementation:
-      - src/Configuration/Documents/РезультатВнешнегоЗапроса
+      - src/Configuration/Documents/АИС_РезультатВнешнегоЗапроса
     tests:
       - TEST-FR-027-01
     test_files:
@@ -697,11 +697,11 @@ requirements:
       - Промпт и ответ сохраняются полностью.
       - Ошибки и длительность сохраняются.
     design:
-      - docs/implementation_plan.md#5.4
+      - docs/implementation_plan.md#5.5
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/InformationRegisters/ИсторияДействийИИ
-      - src/Configuration/CommonModules/АудитДействийИИ
+      - src/Configuration/InformationRegisters/АИС_ИсторияДействийИИ
+      - src/Configuration/CommonModules/АИС_АудитДействийИИ
     tests:
       - TEST-FR-028-01
       - TEST-FR-028-02
@@ -725,7 +725,7 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/Reports/ЖурналЗадачи
+      - src/Configuration/Reports/АИС_ЖурналЗадачи
     tests:
       - TEST-FR-029-01
     test_files:
@@ -748,7 +748,7 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/DataProcessors/МояПанельДЛ
+      - src/Configuration/DataProcessors/АИС_РабочееМестоДЛ
     tests:
       - TEST-FR-030-01
     test_files:
@@ -771,7 +771,7 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/DataProcessors/МояПанельДЛ
+      - src/Configuration/DataProcessors/АИС_ФормаЗадачи
     tests:
       - TEST-FR-031-01
     test_files:
@@ -795,8 +795,8 @@ requirements:
       - docs/implementation_plan.md#6.2
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/Documents/ИсходящийДокумент
-      - src/Configuration/DataProcessors/МояПанельДЛ
+      - docs/implementation_plan.md#5.1
+      - src/Configuration/DataProcessors/АИС_ФормаПроектаДокумента
     tests:
       - TEST-FR-032-01
     test_files:
@@ -819,8 +819,8 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/DataProcessors/АдминПанель
-      - src/Configuration/DataProcessors/ТестИнтеграцииСLLM
+      - src/Configuration/DataProcessors/АИС_АдминПанель
+      - src/Configuration/DataProcessors/АИС_ТестИнтеграцииСLLM
     tests:
       - TEST-FR-033-01
     test_files:
@@ -844,8 +844,8 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/Reports/СтатистикаЗадач
-      - src/Configuration/Reports/АнализСрывовСроков
+      - src/Configuration/Reports/АИС_СтатистикаЗадач
+      - src/Configuration/Reports/АИС_АнализСрывовСроков
     tests:
       - TEST-FR-034-01
     test_files:
@@ -868,8 +868,8 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/CommonModules/ОркестраторЗадач
-      - src/Configuration/DataProcessors/МояПанельДЛ
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/Configuration/DataProcessors/АИС_РабочееМестоДЛ
     tests:
       - TEST-FR-035-01
     test_files:
@@ -892,8 +892,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.5
     implementation:
-      - src/Configuration/CommonModules/ОркестраторЗадач
-      - src/Configuration/InformationRegisters/ЗадачиРеагирования
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/Configuration/InformationRegisters/АИС_ЗадачиРеакции
     tests:
       - TEST-FR-036-01
     test_files:
@@ -918,8 +918,8 @@ requirements:
       - docs/implementation_plan.md#6.3
       - docs/implementation_plan.md#6.5
     implementation:
-      - src/Configuration/CommonModules/ОркестраторЗадач
-      - src/Configuration/ScheduledJobs/ОркестрацияАктивныхЗадач
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/Configuration/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
     tests:
       - TEST-FR-037-01
     test_files:
@@ -935,15 +935,15 @@ requirements:
     approval: approved
     source:
       - docs/raw_specification.md#4.4.3
-      - docs/implementation_plan.md#5.3
+      - docs/implementation_plan.md#5.4
     acceptance:
       - Запрос без токена отклоняется.
       - Повторный ключ не создаёт дубль.
       - Событие создаёт задачу.
     design:
-      - docs/implementation_plan.md#5.3
+      - docs/implementation_plan.md#5.4
     implementation:
-      - src/Configuration/HTTPServices/ПриемСобытий
+      - src/Configuration/HTTPServices/АИС_ПриемСобытий
     tests:
       - TEST-FR-038-01
     test_files:
@@ -966,7 +966,7 @@ requirements:
     design:
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/DataProcessors/МояПанельДЛ
+      - src/Configuration/DataProcessors/АИС_РабочееМестоДЛ
     tests:
       - TEST-FR-039-01
     test_files:
@@ -990,7 +990,7 @@ requirements:
       - docs/implementation_plan.md#6.3
       - docs/implementation_plan.md#9
     implementation:
-      - src/Configuration/CommonModules/РазрешительПлейсхолдеров
+      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
       - rag-service/src/rag_service/api/search.py
     tests:
       - TEST-FR-040-01
@@ -1016,11 +1016,40 @@ requirements:
       - docs/implementation_plan.md#9
     implementation:
       - rag-service/src/rag_service/qdrant_store.py
-      - src/Configuration/CommonModules/ИнтеграцияСRAG
+      - src/Configuration/CommonModules/АИС_ИнтеграцияСRAG
     tests:
       - TEST-FR-041-01
     test_files:
       - tests/rag/test_acl.py
+    status: planned
+  - id: FR-042
+    type: functional
+    title: Интеграция с объектами 1С:Документооборот
+    description: >-
+      Расширение переиспользует штатные объекты Документооборота ПРОФ для
+      пользователей и физических лиц, должностей, структуры предприятия,
+      справочников входящих, исходящих и внутренних документов, задач
+      исполнителя и файлов; новые объекты создаются только для ИИ-специфичных
+      данных и получают префикс `АИС_`.
+    priority: must
+    approval: proposed
+    source:
+      - docs/implementation_plan.md#5.1
+    acceptance:
+      - Составлен и согласован маппинг объектов спецификации на объекты базы.
+      - Штатные объекты не дублируются в расширении.
+      - Новые объекты имеют префикс `АИС_`.
+      - Расширение применяется к демо-базе без изменения базовой конфигурации.
+    design:
+      - docs/implementation_plan.md#5.1
+      - docs/implementation_plan.md#5.9
+    implementation:
+      - docs/implementation_plan.md#5.1
+      - src/Configuration/Configuration.mdo
+    tests:
+      - TEST-FR-042-01
+    test_files:
+      - tests/1c/test_base_object_reuse.md
     status: planned
   - id: NFR-001
     type: nonfunctional
@@ -1041,8 +1070,8 @@ requirements:
       - docs/implementation_plan.md#9
       - docs/implementation_plan.md#11
     implementation:
-      - src/Configuration/DataProcessors/МояПанельДЛ
-      - src/Configuration/CommonModules/ОркестраторЗадач
+      - src/Configuration/DataProcessors/АИС_РабочееМестоДЛ
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-NFR-001-01
     test_files:
@@ -1065,7 +1094,7 @@ requirements:
     design:
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/CommonModules/ИнтеграцияСLLM
+      - src/Configuration/CommonModules/АИС_ИнтеграцияСLLM
     tests:
       - TEST-NFR-002-01
     test_files:
@@ -1088,7 +1117,7 @@ requirements:
     design:
       - docs/implementation_plan.md#6.3
     implementation:
-      - src/Configuration/CommonModules/РазрешительПлейсхолдеров
+      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
       - TEST-NFR-003-01
     test_files:
@@ -1112,8 +1141,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.5
     implementation:
-      - src/Configuration/ScheduledJobs/ОркестрацияАктивныхЗадач
-      - src/Configuration/CommonModules/ОркестраторЗадач
+      - src/Configuration/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-NFR-004-01
     test_files:
@@ -1136,8 +1165,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.5
     implementation:
-      - src/Configuration/CommonModules/ОркестраторЗадач
-      - src/Configuration/CommonModules/АудитДействийИИ
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/Configuration/CommonModules/АИС_АудитДействийИИ
     tests:
       - TEST-NFR-005-01
     test_files:
@@ -1161,8 +1190,8 @@ requirements:
       - docs/implementation_plan.md#6.1
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/CommonModules/ИнтеграцияСLLM
-      - src/Configuration/CommonModules/ОркестраторЗадач
+      - src/Configuration/CommonModules/АИС_ИнтеграцияСLLM
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-NFR-006-01
     test_files:
@@ -1183,9 +1212,9 @@ requirements:
       - Просроченные запросы обрабатываются.
       - Ответы не теряются.
     design:
-      - docs/implementation_plan.md#5.4
+      - docs/implementation_plan.md#5.5
     implementation:
-      - src/Configuration/InformationRegisters/ЛистОжидания
+      - src/Configuration/InformationRegisters/АИС_ЛистОжидания
     tests:
       - TEST-NFR-007-01
     test_files:
@@ -1206,9 +1235,9 @@ requirements:
       - Секреты не пишутся в аудит.
       - Ротация не требует изменения кода.
     design:
-      - docs/implementation_plan.md#5.6
+      - docs/implementation_plan.md#5.7
     implementation:
-      - src/Configuration/CommonModules/СервисныеФункции
+      - src/Configuration/CommonModules/АИС_СервисныеФункции
       - rag-service/.env.example
     tests:
       - TEST-NFR-008-01
@@ -1231,11 +1260,11 @@ requirements:
       - Администратор не видит задачи.
       - Вышестоящее ДЛ видит только адресованные доклады.
     design:
-      - docs/implementation_plan.md#5.7
+      - docs/implementation_plan.md#5.8
     implementation:
-      - src/Configuration/Roles/ДолжностноеЛицо
-      - src/Configuration/Roles/ВышестоящееДолжностноеЛицо
-      - src/Configuration/Roles/АдминистраторСистемы
+      - src/Configuration/Roles/АИС_ДолжностноеЛицо
+      - src/Configuration/Roles/АИС_ВышестоящееДолжностноеЛицо
+      - src/Configuration/Roles/АИС_АдминистраторСистемы
     tests:
       - TEST-NFR-009-01
       - TEST-NFR-009-02
@@ -1256,9 +1285,9 @@ requirements:
       - Аудитор не может изменить или удалить запись.
       - Попытка изменения отклоняется.
     design:
-      - docs/implementation_plan.md#5.7
+      - docs/implementation_plan.md#5.8
     implementation:
-      - src/Configuration/Roles/Аудитор
+      - src/Configuration/Roles/АИС_Аудитор
     tests:
       - TEST-NFR-010-01
     test_files:
@@ -1283,7 +1312,7 @@ requirements:
       - docs/implementation_plan.md#6.5
       - docs/implementation_plan.md#11
     implementation:
-      - src/Configuration/ScheduledJobs/ОркестрацияАктивныхЗадач
+      - src/Configuration/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
       - config/parameters.yaml
     tests:
       - TEST-NFR-011-01
@@ -1307,7 +1336,7 @@ requirements:
     design:
       - docs/implementation_plan.md#3
     implementation:
-      - src/Configuration/HTTPServices/ПриемСобытий
+      - src/Configuration/HTTPServices/АИС_ПриемСобытий
       - docs/implementation_plan.md
     tests:
       - TEST-NFR-012-01
@@ -1329,11 +1358,11 @@ requirements:
       - Версия промпта и модель сохранены.
       - Журнал задачи воспроизводит порядок действий.
     design:
-      - docs/implementation_plan.md#5.4
+      - docs/implementation_plan.md#5.5
       - docs/implementation_plan.md#8
     implementation:
-      - src/Configuration/InformationRegisters/ИсторияДействийИИ
-      - src/Configuration/CommonModules/АудитДействийИИ
+      - src/Configuration/InformationRegisters/АИС_ИсторияДействийИИ
+      - src/Configuration/CommonModules/АИС_АудитДействийИИ
     tests:
       - TEST-NFR-013-01
     test_files:
@@ -1546,8 +1575,8 @@ requirements:
     tests:
       - TEST-NFR-021-01
     test_files:
-      - tests/rag/test_stateless.md
-    status: planned
+      - rag-service/tests/test_api.py
+    status: implemented
   - id: NFR-022
     type: nonfunctional
     title: Структурированные логи без чувствительных данных
@@ -1567,7 +1596,7 @@ requirements:
       - docs/implementation_plan.md#7.6
     implementation:
       - rag-service/src/rag_service/main.py
-      - src/Configuration/CommonModules/АудитДействийИИ
+      - src/Configuration/CommonModules/АИС_АудитДействийИИ
     tests:
       - TEST-NFR-022-01
     test_files:
@@ -1615,7 +1644,7 @@ requirements:
     design:
       - docs/implementation_plan.md#6.3
     implementation:
-      - src/Configuration/CommonModules/РазрешительПлейсхолдеров
+      - src/Configuration/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
       - TEST-NFR-024-01
     test_files:
@@ -1639,8 +1668,8 @@ requirements:
     design:
       - docs/implementation_plan.md#6.1
     implementation:
-      - src/Configuration/CommonModules/ОркестраторЗадач
-      - src/Configuration/CommonModules/ИнтеграцияСRAG
+      - src/Configuration/CommonModules/АИС_ОркестраторЗадач
+      - src/Configuration/CommonModules/АИС_ИнтеграцияСRAG
     tests:
       - TEST-NFR-025-01
     test_files:
@@ -1664,7 +1693,7 @@ requirements:
       - docs/implementation_plan.md#8
     implementation:
       - config/parameters.yaml
-      - src/Configuration/CommonModules/ИнтеграцияСLLM
+      - src/Configuration/CommonModules/АИС_ИнтеграцияСLLM
       - rag-service/src/rag_service/config.py
     tests:
       - TEST-NFR-026-01
@@ -1688,7 +1717,7 @@ requirements:
     design:
       - docs/implementation_plan.md#12
     implementation:
-      - src/Configuration/CommonModules/ИнтеграцияСLLM
+      - src/Configuration/CommonModules/АИС_ИнтеграцияСLLM
       - rag-service/src/rag_service/gigachat.py
     tests:
       - TEST-NFR-027-01
@@ -1713,12 +1742,13 @@ requirements:
       - docs/implementation_plan.md#11
     implementation:
       - tests/
+      - rag-service/tests/
       - pyproject.toml
     tests:
       - TEST-NFR-028-01
     test_files:
-      - tests/rag/test_search.py
-    status: planned
+      - rag-service/tests/test_gigachat.py
+    status: in_progress
   - id: NFR-029
     type: nonfunctional
     title: Типизация и единый стиль кода
@@ -1745,25 +1775,56 @@ requirements:
     status: implemented
   - id: NFR-030
     type: nonfunctional
-    title: Совместимость с 1С 8.3.27 и EDT 2026.1.3
+    title: Совместимость с 1С:Документооборот ПРОФ 2.1.38.11 и EDT 2026.1.3
     description: >-
-      Конфигурация разрабатывается в EDT 2026.1.3 и проверяется на платформе
-      1С:Предприятие 8.3.27 в режиме совместимости 8.3.27.
+      Расширение разрабатывается в EDT 2026.1.3 и применяется к базовой
+      конфигурации 1С:Документооборот ПРОФ 2.1.38.11 (`ДокументооборотПРОФ`)
+      на платформе 8.3.27.
     priority: must
     approval: approved
     source:
       - docs/raw_specification.md#1.3
       - docs/implementation_plan.md#2
     acceptance:
-      - Проект открывается в EDT 2026.1.3.
+      - Проект расширения открывается в EDT 2026.1.3.
+      - Режим совместимости расширения равен режиму совместимости базы.
+      - Расширение применяется к демо-базе 2.1.38.11 без изменения базовой конфигурации.
       - Проверка конфигурации проходит на 8.3.27.
-      - Используются только возможности 8.3.27.
     design:
+      - docs/implementation_plan.md#2
       - docs/implementation_plan.md#10
+      - docs/development.md#12
     implementation:
       - src/Configuration/Configuration.mdo
     tests:
       - TEST-NFR-030-01
     test_files:
       - tests/1c/test_configuration_check.md
+    status: planned
+  - id: NFR-031
+    type: nonfunctional
+    title: Расширение не изменяет конфигурацию базы
+    description: >-
+      Все изменения поставляются файлом `.cfe`; базовая конфигурация
+      1С:Документооборот остаётся неизменной, расширение применяется и снимается
+      без правки базовых объектов.
+    priority: must
+    approval: proposed
+    source:
+      - docs/implementation_plan.md#2
+      - docs/implementation_plan.md#5.9
+    acceptance:
+      - Базовая конфигурация не изменяется при применении расширения.
+      - Расширение применяется к чистой копии демо-базы.
+      - Расширение снимается без потери доменных данных.
+      - Проверка выполняется на копии базы, а не на исходной демо-базе.
+    design:
+      - docs/implementation_plan.md#5.9
+      - docs/development.md#12
+    implementation:
+      - src/Configuration/Configuration.mdo
+    tests:
+      - TEST-NFR-031-01
+    test_files:
+      - tests/1c/test_extension_apply.md
     status: planned

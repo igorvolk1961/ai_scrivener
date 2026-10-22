@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="78768bce-c643-4e62-96a7-d359a87a5163">
+  <producedTypes>
+    <refType typeId="ab3d4b06-c218-45af-b5b0-47da4d786be3" valueTypeId="aa3081ee-8d68-481b-a5fa-c858b3da44fb"/>
+    <listType typeId="dd564de0-5be5-4f4b-93b5-bb85d71fba52" valueTypeId="4157cf5b-8b62-4ced-adef-7c743022b173"/>
+    <managerType typeId="11e4dc0b-8b63-4d15-ba95-26b32f905a08" valueTypeId="9b64e5fc-c9e4-44f5-b9dd-863f45420e5c"/>
+  </producedTypes>
+  <name>АИС_СостоянияЗадач</name>
+  <synonym>
+    <key>ru</key>
+    <value>Состояния задач ИИ-помощника</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="44b656c3-3461-4413-a61f-f018af173c1d">
+    <name>Инициация</name>
+    <synonym>
+      <key>ru</key>
+      <value>Инициация</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="acb1705f-3166-43a7-878b-5d27dab4b2ae">
+    <name>ПоискШаблона</name>
+    <synonym>
+      <key>ru</key>
+      <value>Поиск шаблона</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="0d7bc786-8dff-4340-94fe-fe5aa78c6e8c">
+    <name>РазрешениеПлейсхолдеров</name>
+    <synonym>
+      <key>ru</key>
+      <value>Разрешение плейсхолдеров</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="49c6befb-cb7a-45cb-ba0c-5b64e107c058">
+    <name>Ожидание</name>
+    <synonym>
+      <key>ru</key>
+      <value>Ожидание</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="b04ae400-7835-478e-9192-12a749d03ee1">
+    <name>Генерация</name>
+    <synonym>
+      <key>ru</key>
+      <value>Генерация</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="c663208e-3ad1-4683-8969-e1cbbf742a0d">
+    <name>ВерификацияДЛ</name>
+    <synonym>
+      <key>ru</key>
+      <value>Верификация ДЛ</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="7d61fe16-dc48-4a3a-9295-9bb1fb939383">
+    <name>Завершена</name>
+    <synonym>
+      <key>ru</key>
+      <value>Завершена</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="38f4a23b-b0f7-41a3-87ec-d005df0920b5">
+    <name>Эскалация</name>
+    <synonym>
+      <key>ru</key>
+      <value>Эскалация</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

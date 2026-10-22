@@ -39,6 +39,12 @@ repos:
           - python
           - pyi
         pass_filenames: false
+      - id: mypy-rag
+        name: mypy-rag
+        entry: uv run --project rag-service mypy
+        language: system
+        files: ^rag-service/.*\.py$
+        pass_filenames: false
       - id: yamllint
         name: yamllint
         entry: uv run yamllint -c .yamllint.yaml
@@ -81,4 +87,10 @@ repos:
         types_or:
           - python
           - pyi
+        pass_filenames: false
+      - id: pytest-rag
+        name: pytest-rag
+        entry: uv run --project rag-service pytest -c rag-service/pyproject.toml rag-service/tests
+        language: system
+        files: ^rag-service/.*\.py$
         pass_filenames: false

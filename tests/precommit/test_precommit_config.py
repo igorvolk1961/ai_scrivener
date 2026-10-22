@@ -11,6 +11,7 @@ REQUIRED_HOOKS = {
     "ruff",
     "ruff-format",
     "mypy",
+    "mypy-rag",
     "yamllint",
     "config-schema",
     "requirements-traceability",
@@ -18,6 +19,7 @@ REQUIRED_HOOKS = {
     "no-hardcoded-parameters",
     "bsl-lint",
     "pytest",
+    "pytest-rag",
 }
 
 

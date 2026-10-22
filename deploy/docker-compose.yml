@@ -1,0 +1,32 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.16.3
+    restart: unless-stopped
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  rag-service:
+    build:
+      context: ..
+      dockerfile: rag-service/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ../rag-service/.env
+    environment:
+      RAG_GIGACHAT_CA_BUNDLE: /app/config/russian_trusted_root_ca.pem
+    depends_on:
+      - qdrant
+    ports:
+      - "127.0.0.1:8080:8080"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  qdrant_data:

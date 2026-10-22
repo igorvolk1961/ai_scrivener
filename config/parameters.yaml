@@ -35,7 +35,7 @@ rag:
   top_k: 10
   timeout_seconds: 30
   embedding_batch_size: 32
-  embedding_dimension: null
+  embedding_dimension: 2560
   chunk_size_chars: 1000
   chunk_overlap_chars: 150
   index_sync_interval_minutes: 5

@@ -3,7 +3,7 @@
 
 Источник истины: `docs/requirements/requirements.yaml`. Документ генерируется, вручную не редактируется.
 
-Всего требований: 41.
+Всего требований: 42.
 
 ## must
 
@@ -19,7 +19,7 @@
 
 **Источники:** `docs/raw_specification.md#4.1.1`, `docs/raw_specification.md#4.1.2`, `docs/raw_specification.md#4.1.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.2`, `docs/implementation_plan.md#5.4`
+**Проектирование:** `docs/implementation_plan.md#5.3`, `docs/implementation_plan.md#5.5`
 
 **Критерии приёмки:**
 
@@ -39,7 +39,7 @@
 
 **Источники:** `docs/raw_specification.md#4.1.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.2`, `docs/implementation_plan.md#5.7`
+**Проектирование:** `docs/implementation_plan.md#5.3`, `docs/implementation_plan.md#5.8`
 
 **Критерии приёмки:**
 
@@ -59,7 +59,7 @@
 
 **Источники:** `docs/raw_specification.md#4.1.4`
 
-**Проектирование:** `docs/implementation_plan.md#5.2`
+**Проектирование:** `docs/implementation_plan.md#5.3`
 
 **Критерии приёмки:**
 
@@ -79,7 +79,7 @@
 
 **Источники:** `docs/raw_specification.md#4.2.1`
 
-**Проектирование:** `docs/implementation_plan.md#5.2`, `docs/implementation_plan.md#6.3`
+**Проектирование:** `docs/implementation_plan.md#5.3`, `docs/implementation_plan.md#6.3`
 
 **Критерии приёмки:**
 
@@ -99,7 +99,7 @@
 
 **Источники:** `docs/raw_specification.md#4.2.2`, `docs/raw_specification.md#4.3.1`, `docs/raw_specification.md#4.3.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.2`
+**Проектирование:** `docs/implementation_plan.md#5.3`
 
 **Критерии приёмки:**
 
@@ -119,7 +119,7 @@
 
 **Источники:** `docs/raw_specification.md#4.3.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.4`
+**Проектирование:** `docs/implementation_plan.md#5.5`
 
 **Критерии приёмки:**
 
@@ -139,7 +139,7 @@
 
 **Источники:** `docs/raw_specification.md#4.3.4`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`, `docs/implementation_plan.md#10`
+**Проектирование:** `docs/implementation_plan.md#5.4`, `docs/implementation_plan.md#10`
 
 **Критерии приёмки:**
 
@@ -179,7 +179,7 @@
 
 **Источники:** `docs/raw_specification.md#4.4.2`, `docs/raw_specification.md#4.4.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`
+**Проектирование:** `docs/implementation_plan.md#5.4`
 
 **Критерии приёмки:**
 
@@ -199,7 +199,7 @@
 
 **Источники:** `docs/raw_specification.md#4.5.1`
 
-**Проектирование:** `docs/implementation_plan.md#5.4`, `docs/implementation_plan.md#6.1`
+**Проектирование:** `docs/implementation_plan.md#5.5`, `docs/implementation_plan.md#6.1`
 
 **Критерии приёмки:**
 
@@ -219,7 +219,7 @@
 
 **Источники:** `docs/raw_specification.md#4.5.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.4`
+**Проектирование:** `docs/implementation_plan.md#5.5`
 
 **Критерии приёмки:**
 
@@ -239,7 +239,7 @@
 
 **Источники:** `docs/raw_specification.md#4.6.1`, `docs/raw_specification.md#4.6.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.4`, `docs/implementation_plan.md#6.4`
+**Проектирование:** `docs/implementation_plan.md#5.5`, `docs/implementation_plan.md#6.4`
 
 **Критерии приёмки:**
 
@@ -319,7 +319,7 @@
 
 **Источники:** `docs/raw_specification.md#4.8.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.2`, `docs/implementation_plan.md#8`
+**Проектирование:** `docs/implementation_plan.md#5.3`, `docs/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -333,7 +333,7 @@
 
 **Согласование:** approved
 
-**Статус:** planned
+**Статус:** in_progress
 
 RAG-сервис индексирует шаблоны и должностные обязанности в Qdrant и возвращает релевантные фрагменты с метаданными и оценкой.
 
@@ -499,7 +499,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.12.1`
 
-**Проектирование:** `docs/implementation_plan.md#5.4`, `docs/implementation_plan.md#8`
+**Проектирование:** `docs/implementation_plan.md#5.5`, `docs/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -667,6 +667,27 @@ RAG-сервис индексирует шаблоны и должностные
 - Устаревший результат не применяется.
 - Пул заданий ограничен настройкой.
 
+### FR-042 — Интеграция с объектами 1С:Документооборот
+
+**Приоритет:** must
+
+**Согласование:** proposed
+
+**Статус:** planned
+
+Расширение переиспользует штатные объекты Документооборота ПРОФ для пользователей и физических лиц, должностей, структуры предприятия, справочников входящих, исходящих и внутренних документов, задач исполнителя и файлов; новые объекты создаются только для ИИ-специфичных данных и получают префикс `АИС_`.
+
+**Источники:** `docs/implementation_plan.md#5.1`
+
+**Проектирование:** `docs/implementation_plan.md#5.1`, `docs/implementation_plan.md#5.9`
+
+**Критерии приёмки:**
+
+- Составлен и согласован маппинг объектов спецификации на объекты базы.
+- Штатные объекты не дублируются в расширении.
+- Новые объекты имеют префикс `АИС_`.
+- Расширение применяется к демо-базе без изменения базовой конфигурации.
+
 
 ## should
 
@@ -702,7 +723,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.10.2`, `docs/raw_specification.md#4.10.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`
+**Проектирование:** `docs/implementation_plan.md#5.4`
 
 **Критерии приёмки:**
 
@@ -722,7 +743,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.11.1`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`
+**Проектирование:** `docs/implementation_plan.md#5.4`
 
 **Критерии приёмки:**
 
@@ -783,9 +804,9 @@ RAG-сервис индексирует шаблоны и должностные
 
 HTTP-сервис принимает события из внешних каналов с токеном, идемпотентностью и созданием документа/задачи.
 
-**Источники:** `docs/raw_specification.md#4.4.3`, `docs/implementation_plan.md#5.3`
+**Источники:** `docs/raw_specification.md#4.4.3`, `docs/implementation_plan.md#5.4`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`
+**Проектирование:** `docs/implementation_plan.md#5.4`
 
 **Критерии приёмки:**
 

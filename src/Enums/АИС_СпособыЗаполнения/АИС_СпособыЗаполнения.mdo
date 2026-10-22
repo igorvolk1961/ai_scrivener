@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="4886eca7-1801-4a1b-a1c7-3f9d20944181">
+  <producedTypes>
+    <refType typeId="39b4cbd8-ea9d-4990-a873-9b53e9415ebc" valueTypeId="9448c8d4-27a0-42aa-b187-474cc705a89a"/>
+    <listType typeId="8bce7ec9-6bc4-48a4-aff0-add18b4dabcb" valueTypeId="c287a899-b181-4e5e-bf44-3accc22084dc"/>
+    <managerType typeId="b755e20d-2623-4277-88c9-72b420b3b603" valueTypeId="e91b5f4a-01b0-4d5f-8d63-c52476cd7023"/>
+  </producedTypes>
+  <name>АИС_СпособыЗаполнения</name>
+  <synonym>
+    <key>ru</key>
+    <value>Способы заполнения плейсхолдеров</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="f075820e-e312-489b-805e-53b18d68b374">
+    <name>ПрямоеПоле</name>
+    <synonym>
+      <key>ru</key>
+      <value>Прямое поле</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="f582a030-9c2b-4379-bd3e-0b4900b15364">
+    <name>ЗапросВБД</name>
+    <synonym>
+      <key>ru</key>
+      <value>Запрос в БД</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="1731e490-ae78-4c1b-8837-43807057f00c">
+    <name>ЗапросКДЛ</name>
+    <synonym>
+      <key>ru</key>
+      <value>Запрос к ДЛ</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="e0d4f0d2-27af-4e2d-9392-522fb4f1401d">
+    <name>РасчетныйСервис</name>
+    <synonym>
+      <key>ru</key>
+      <value>Расчётный сервис</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="564f4d73-cbf8-405c-8f19-7b96aed7025b">
+    <name>ВнешнийAPI</name>
+    <synonym>
+      <key>ru</key>
+      <value>Внешний API</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="b37c7431-20b0-4558-8432-4e0a38816d43">
+    <name>RAGКонтекст</name>
+    <synonym>
+      <key>ru</key>
+      <value>RAG-контекст</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="8a3bf6e5-7adb-4455-8007-453118259aa6">
+    <name>РучнойВвод</name>
+    <synonym>
+      <key>ru</key>
+      <value>Ручной ввод</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

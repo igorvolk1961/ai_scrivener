@@ -55,7 +55,7 @@ IMPLEMENTATION_PREFIXES = (
     "Makefile",
     ".pre-commit-config.yaml",
 )
-TEST_FILE_PREFIX = "tests/"
+TEST_FILE_PREFIXES = ("tests/", "rag-service/tests/")
 
 
 @dataclass(frozen=True)
@@ -187,7 +187,7 @@ def validate_requirement(requirement: Requirement, root: Path) -> list[str]:
         seen_tests.add(test_id)
     _check_prefix(requirement.design, (DESIGN_PREFIX,), "design", errors)
     _check_prefix(requirement.implementation, IMPLEMENTATION_PREFIXES, "implementation", errors)
-    _check_prefix(requirement.test_files, (TEST_FILE_PREFIX,), "test file", errors)
+    _check_prefix(requirement.test_files, TEST_FILE_PREFIXES, "test file", errors)
     _check_existing_paths(root, requirement.design, "design", errors, must_exist=True)
     terminal = requirement.status in {"implemented", "verified"}
     _check_existing_paths(
