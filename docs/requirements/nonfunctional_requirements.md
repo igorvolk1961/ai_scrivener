@@ -139,7 +139,7 @@
 
 **Источники:** `docs/raw_specification.md#5.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.5`
+**Проектирование:** `docs/implementation_plan.md#5.3`
 
 **Критерии приёмки:**
 
