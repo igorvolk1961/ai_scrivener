@@ -36,6 +36,6 @@
 ## Связанные документы
 
 - `docs/raw_specification.md` §3 — исходное определение ролей (теперь ссылается сюда).
-- `docs/glossary.md` — термины, используемые ролями.
-- `docs/use-cases.md` — сценарии по каждой роли.
+- `docs/system-analysis/glossary.md` — термины, используемые ролями.
+- `docs/system-analysis/use-cases.md` — сценарии по каждой роли.
 - `docs/design-decisions.md` §9 — правила доступа и RLS.

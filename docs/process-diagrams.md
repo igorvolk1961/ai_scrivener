@@ -16,6 +16,18 @@
 | DeepSeek | выбор шаблона, анализ, генерация текста |
 | Внешние источники | БД 1С, другое ДЛ, внешний API, расчётный сервис |
 
+### 1.1. Условные обозначения
+
+Цветом выделены операции; участники процесса и объекты показаны нейтрально.
+
+| Обозначение | Категория |
+|---|---|
+| Синий | Операция, реализуемая штатной конфигурацией 1С:Документооборот |
+| Оранжевый | Операция, реализуемая расширением `ai_scrivener` |
+| Серый пунктир | Ручная операция |
+| Фиолетовый | Внешний AI-сервис или источник, вызываемый расширением |
+| Белый | Участник процесса, не операция |
+
 ## 2. Процесс 1. Обработка входящего документа
 
 ### 2.1. AS-IS
@@ -34,21 +46,30 @@ flowchart TD
     TASK["Штатная задача"]
     APPR["Согласование / утверждение"]
     SIGN["Подпись и регистрация"]
-    REPORT["Доклад / отчёт"]
   end
-  A["Входящий документ"] --> SEC
+  A["Входящий документ"]
+  SEARCH["Вручную ищет шаблон и инструкцию"]
+  ASK["Вручную запрашивает данные"]
+  PREP["Вручную готовит проект"]
+  TRACK["Сам следит за сроком"]
+  REPORT["Вручную готовит доклад"]
+  A --> SEC
   SEC --> REG --> CARD --> DL
   DL --> TASK
   TASK --> DL
-  DL -->|"вручную ищет шаблон и инструкцию"| DL
-  DL -->|"устно или письмом запрашивает данные"| COL
+  DL --> SEARCH --> DL
+  DL --> ASK --> COL
   COL -->|"ответ по телефону / email"| DL
-  DL -->|"вручную готовит проект"| CARD
-  CARD --> APPR --> SIGN
-  SIGN --> SUP
-  DL -->|"сам следит за сроком"| TASK
-  TASK -->|"срок истёк"| REPORT
-  REPORT --> SUP
+  DL --> PREP --> CARD
+  CARD --> APPR --> SIGN --> SUP
+  DL --> TRACK --> TASK
+  TASK -->|"срок истёк"| REPORT --> SUP
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  classDef actor fill:#FFFFFF,stroke:#BDBDBD,color:#424242
+  class SEC,DL,COL,SUP,A actor
+  class REG,CARD,TASK,APPR,SIGN base
+  class SEARCH,ASK,PREP,TRACK,REPORT manual
 ```
 
 Типовые потери AS-IS:
@@ -69,6 +90,7 @@ flowchart TD
     OUT["ИсходящиеДокументы"]
     BP["Бизнес-процессы согласования"]
     REPORT["ВнутренниеДокументы: доклад о срыве"]
+    SEND["Отправка доклада (штатно)"]
   end
   subgraph E1["Расширение ai_scrivener"]
     CTX["АИС_КонтекстЗадачИИ"]
@@ -77,6 +99,8 @@ flowchart TD
     WAIT["АИС_ЛистОжидания"]
     AUDIT["АИС_ИсторияДействийИИ"]
     NORM["АИС_НормативыИИ"]
+    DEADLINE["АИС_ПроверкаСроковЗадач"]
+    ESCALATE["Сформировать доклад о срыве"]
   end
   subgraph AI1["RAG и LLM"]
     RAG["RAG top-k"]
@@ -84,9 +108,11 @@ flowchart TD
   end
   subgraph SRC["Источники данных"]
     DB["БД 1С"]
-    DL2["Другое ДЛ"]
+    DL2["Другое ДЛ (источник сведений)"]
     API["Внешний API / расчёт"]
   end
+  VERIFY["ДЛ проверяет и редактирует проект"]
+  CONFIRM["Вышестоящее ДЛ подтверждает доклад"]
   IN -->|"событие"| TASK
   TASK --> CTX --> ORCH
   ORCH --> RAG --> LLM
@@ -98,12 +124,21 @@ flowchart TD
   DL2 -->|"ответ"| WAIT
   API --> RES
   RES -->|"все плейсхолдеры заполнены"| ORCH
-  ORCH --> OUT --> BP
+  ORCH --> OUT --> VERIFY --> BP
   BP -->|"подпись и регистрация"| OUT
   ORCH --> AUDIT
   NORM --> ORCH
-  TASK -->|"срок истёк"| REPORT
-  REPORT --> AUDIT
+  TASK -->|"срок истёк"| DEADLINE --> ESCALATE --> REPORT --> CONFIRM --> SEND --> AUDIT
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef ext fill:#FFF3E0,stroke:#E65100,color:#BF360C
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  classDef ai fill:#F3E5F5,stroke:#6A1B9A,color:#4A148C
+  classDef actor fill:#FFFFFF,stroke:#BDBDBD,color:#424242
+  class IN,TASK,OUT,BP,REPORT,SEND,DB base
+  class CTX,ORCH,RES,WAIT,AUDIT,NORM,DEADLINE,ESCALATE ext
+  class VERIFY,CONFIRM manual
+  class RAG,LLM,API ai
+  class DL2 actor
 ```
 
 ### 2.3. Различия
@@ -115,7 +150,7 @@ flowchart TD
 | Сбор данных | письма, звонки, память | БД, лист ожидания, API, расчётный сервис |
 | Подготовка проекта | вручную | генерация в `ИсходящиеДокументы` |
 | Сроки | ручной контроль | `СрокИсполнения` задачи + `АИС_НормативыИИ` |
-| Эскалация | вручную | регламентное задание + `ВнутреннийДокумент` |
+| Эскалация | вручную | регламентное задание + `ВнутреннийДокумент` + подтверждение |
 | Аудит | история задач и переписка | `АИС_ИсторияДействийИИ` + история задачи |
 
 ## 3. Процесс 2. Выбор шаблона и заполнение плейсхолдеров
@@ -132,6 +167,10 @@ flowchart TD
   F --> G["Проверяет вручную"]
   G -->|"не хватает данных"| E
   G -->|"готово"| H["Проект документа"]
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  class A,B,C,D,E,F,G manual
+  class H base
 ```
 
 ### 3.2. TO-BE
@@ -147,20 +186,33 @@ flowchart TD
   F --> G{"Способ заполнения"}
   G -->|"прямое поле"| H["Значение из источника"]
   G -->|"БД"| I["Утверждённый запрос 1С"]
-  G -->|"другое ДЛ"| J["Задача + АИС_ЛистОжидания"]
+  G -->|"другое ДЛ (факт)"| J["Запрос сведений + АИС_ЛистОжидания"]
+  G -->|"решение ДЛ"| R["Решение ДЛ: прецеденты RAG + ответ ДЛ"]
   G -->|"API / расчёт"| K["HTTP / расчётный сервис"]
   H --> L["Записать значение"]
   I --> L
   J --> M["Ожидание ответа"]
+  R --> L
   K --> L
   M -->|"ответ"| L
   L --> N{"Все обязательные заполнены?"}
   N -->|"нет"| G
-  N -->|"да"| O["Генерация текста"]
+  N -->|"да"| O["Генерация текста (LLM)"]
   O --> P["Проект в ИсходящиеДокументы"]
+  P --> V["ДЛ проверяет и редактирует проект"]
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef ext fill:#FFF3E0,stroke:#E65100,color:#BF360C
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  classDef ai fill:#F3E5F5,stroke:#6A1B9A,color:#4A148C
+  class A,D,F,G,H,I,J,L,M,N,R ext
+  class B,C,O,K ai
+  class E,V manual
+  class P base
 ```
 
 Ключевое отличие: ИИ не исполняет произвольный запрос к БД. Он выбирает утверждённый шаблон запроса и заполняет только параметры; значения проверяются по типам.
+
+Ветка «решение ДЛ» соответствует `docs/design-decisions.md` §17: ДЛ формулирует управленческое решение, а не сообщает известный факт. Значение `РешениеДЛ` ещё не добавлено в `АИС_СпособыЗаполнения` — это задача синхронизации метаданных.
 
 ## 4. Процесс 3. Запрос к другому ДЛ
 
@@ -175,6 +227,8 @@ flowchart TD
   C -->|"ответ"| E["Вручную переносит ответ в документ"]
   E --> F["Продолжает подготовку"]
   C -->|"срок вышел"| G["ДЛ или руководитель выясняет причину"]
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  class A,B,C,D,E,F,G manual
 ```
 
 Недостатки: нет единого реестра запросов, срока и ответа; невозможна автоматическая эскалация.
@@ -188,13 +242,27 @@ flowchart TD
   C --> D["СостояниеИИ = Ожидание"]
   D --> E["Отправить запрос"]
   E --> F{"Ответ получен?"}
-  F -->|"да"| G["Заполнить результат задачи"]
+  F -->|"да"| G["Другое ДЛ заполняет результат задачи"]
   G --> H["Заполнить плейсхолдер"]
   H --> I["Возобновить АИС_КонтекстЗадачИИ"]
   F -->|"нет, срок истёк"| J["Состояние = СрокИстек"]
-  J --> K["Триггер ИстечениеСрокаОжидания"]
-  K --> L["Эскалация"]
+  J --> K["АИС_ОбработкаЛистаОжидания: триггер ИстечениеСрокаОжидания"]
+  K --> L["АИС_ОркестраторЗадач: обработка триггера"]
+  L --> P{"СрокИсполнения задачи истёк?"}
+  P -->|"нет"| Q["Напоминание ДЛ, ожидание продолжается"]
+  P -->|"да"| R["Эскалация: сформировать доклад"]
+  R --> M["Вышестоящее ДЛ подтверждает доклад"]
+  M --> N["Отправка доклада (штатно)"]
+  N --> O["Аудит"]
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef ext fill:#FFF3E0,stroke:#E65100,color:#BF360C
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  class A,B,C,D,E,F,H,I,J,K,L,O,P,Q,R ext
+  class G,M manual
+  class N base
 ```
+
+Запрос факта и запрос решения различаются: для `РешениеДЛ` истечение срока создаёт напоминание, а не доклад о срыве; реальная эскалация требует истечения штатного `СрокИсполнения` (`docs/design-decisions.md` §17). Истечение `СрокОжидания` само по себе не равно срыву срока задачи (`raw_specification.md` §4.6.2, §4.7.1).
 
 ## 5. Процесс 4. Контроль сроков и эскалация
 
@@ -209,13 +277,17 @@ flowchart TD
   D --> E["Готовит доклад в Word / 1С"]
   E --> F["Отправляет вышестоящему"]
   F --> G["Меры принимаются вручную"]
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  class A base
+  class B,C,D,E,F,G manual
 ```
 
 ### 5.2. TO-BE
 
 ```mermaid
 flowchart TD
-  A["Задачи в работе"] --> B["Регламентное задание проверки сроков"]
+  A["Задачи в работе"] --> B["АИС_ПроверкаСроковЗадач"]
   B --> C{"Срок задачи истёк?"}
   C -->|"нет"| A
   C -->|"да"| D["Собрать таймлайн: запросы, ответы, плейсхолдеры"]
@@ -226,9 +298,21 @@ flowchart TD
   G --> H
   H --> I["Вид: Доклад о срыве сроков"]
   I --> J["Адресат: вышестоящее ДЛ, копия: исполнитель"]
-  J --> K["СостояниеИИ = Эскалация"]
+  J --> M["Вышестоящее ДЛ проверяет и подтверждает доклад"]
+  M --> N["Отправка доклада (штатно)"]
+  N --> K["СостояниеИИ = Эскалация"]
   K --> L["Аудит в АИС_ИсторияДействийИИ"]
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef ext fill:#FFF3E0,stroke:#E65100,color:#BF360C
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  classDef ai fill:#F3E5F5,stroke:#6A1B9A,color:#4A148C
+  class A,I,J,N base
+  class B,C,D,F,G,H,K,L ext
+  class M manual
+  class E ai
 ```
+
+Доклад создаётся со статусом `Проект`; отправка без подтверждения запрещена (`docs/design-decisions.md` §14).
 
 ## 6. Процесс 5. Аудит и прослеживаемость
 
@@ -238,9 +322,13 @@ flowchart TD
 flowchart TD
   A["Действия по документу"] --> B["История задач и документов в 1С"]
   A --> C["Письма, звонки, файлы вне системы"]
-  B --> D["Руччная реконструкция событий"]
+  B --> D["Ручная реконструкция событий"]
   C --> D
   D --> E["Выводы зависят от полноты переписки"]
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  class A,B base
+  class C,D,E manual
 ```
 
 ### 6.2. TO-BE
@@ -255,6 +343,10 @@ flowchart TD
   E --> G["АИС_ЖурналЗадачи"]
   F --> G
   G --> H["Воспроизводимый таймлайн"]
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef ext fill:#FFF3E0,stroke:#E65100,color:#BF360C
+  class C,D,F base
+  class A,B,E,G,H ext
 ```
 
 ## 7. Процесс 6. Коллективная разработка исходящего документа
@@ -279,17 +371,26 @@ flowchart TD
     BP["Обработка исходящего документа"]
     V["Визы согласования"]
   end
+  PREP1["Подготовка раздела 1 вручную"]
+  PREP2["Подготовка раздела 2 вручную"]
+  ASSEMBLE["Ручная сборка разделов"]
   RESP --> WG
   RESP --> T1
   RESP --> T2
-  T1 --> AU1
-  T2 --> AU2
-  AU1 -->|"раздел в отдельном файле или по очереди в общем"| F
-  AU2 --> F
-  F -->|"ручная сборка разделов"| RESP
+  T1 --> AU1 --> PREP1
+  T2 --> AU2 --> PREP2
+  PREP1 -->|"раздел в отдельном файле или по очереди в общем"| F
+  PREP2 --> F
+  F --> ASSEMBLE --> RESP
   RESP --> BP
   BP --> V
   V --> APP
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  classDef actor fill:#FFFFFF,stroke:#BDBDBD,color:#424242
+  class RESP,AU1,AU2,APP actor
+  class WG,T1,T2,F,BP,V base
+  class PREP1,PREP2,ASSEMBLE manual
 ```
 
 Как это устроено в базе:
@@ -336,23 +437,34 @@ flowchart TD
     ORCH["АИС_ОркестраторЗадач"]
     CTX["АИС_КонтекстЗадачИИ"]
   end
+  PREP1["Подготовка раздела 1 вручную"]
+  PREP2["Подготовка раздела 2 вручную"]
+  CONFIRM["ДЛ подтверждает версию и хеш"]
   RESP --> SECT
   SECT --> T1
   SECT --> T2
-  T1 --> AU1
-  T2 --> AU2
-  AU1 -->|"черновик или готовый файл"| F
-  AU2 --> F
+  T1 --> AU1 --> PREP1
+  T2 --> AU2 --> PREP2
+  PREP1 -->|"черновик или готовый файл"| F
+  PREP2 --> F
   AU1 -->|"статус раздела"| STATE
   AU2 -->|"статус раздела"| STATE
   SECT -->|"запрос подтверждения версии"| WAIT
-  WAIT -->|"подтверждение / отклонение"| AU1
-  AU1 -->|"подтверждено"| SECT
+  WAIT --> CONFIRM
+  CONFIRM -->|"подтверждение / отклонение"| SECT
   STATE --> ORCH
   SECT --> ORCH
   ORCH --> CTX
   ORCH -->|"все обязательные разделы подтверждены"| OUT
   OUT --> BP
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef ext fill:#FFF3E0,stroke:#E65100,color:#BF360C
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  classDef actor fill:#FFFFFF,stroke:#BDBDBD,color:#424242
+  class RESP,AU1,AU2 actor
+  class OUT,T1,T2,F,BP base
+  class SECT,STATE,WAIT,ORCH,CTX ext
+  class PREP1,PREP2,CONFIRM manual
 ```
 
 Модель:
@@ -395,17 +507,24 @@ flowchart TD
     FILE["Файл шаблона"]
     RULES["Правила автозаполнения"]
     LINK["Связь правил с шаблоном"]
-    TEST["Ручная проверка"]
-    PUB["Публикация и индексация"]
+    PUB["Публикация шаблона"]
   end
+  SEARCH["Вручную находит термы и строки"]
+  TEST["Ручная проверка"]
   METHOD --> CARD
   METHOD --> FILE
-  METHOD -->|"вручную находит термы и строки"| RULES
+  METHOD --> SEARCH --> RULES
   RULES -->|"тип, формат, выражение"| LINK
   LINK --> TEST
   TEST -->|"ошибка"| RULES
   TEST -->|"успех"| APPROVER
   APPROVER --> PUB
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  classDef actor fill:#FFFFFF,stroke:#BDBDBD,color:#424242
+  class METHOD,APPROVER actor
+  class CARD,FILE,RULES,LINK,PUB base
+  class SEARCH,TEST manual
 ```
 
 Потери AS-IS:
@@ -428,18 +547,21 @@ flowchart TD
     UPLOAD["Загрузка DOCX или описание"]
     CARD2["Карточка шаблона"]
     RULES2["Правила автозаполнения"]
-    TEST2["Тестовое заполнение"]
-    PUB2["Публикация и индексация"]
+    PUBLISH["Публикация шаблона"]
   end
   subgraph M9["Мастер шаблонов"]
     EXTRACT["Извлечение структуры"]
     AI["AI-анализ: плейсхолдеры, списки, разделы, падежи"]
     COMPARE["Сравнение с существующими"]
-    DECIDE{"Решение пользователя"}
-    TABLE["Таблица проверки и ручная правка"]
     GEN["Генерация правил и ТЧ АИС_Плейсхолдеры"]
+    TEST2["Тестовое заполнение"]
     VALID["Проверка шаблона"]
+    INDEX["Индексация RAG (upsert)"]
   end
+  DECIDE{"Решение пользователя"}
+  TABLE["Таблица проверки и ручная правка"]
+  LLM["DeepSeek"]
+  RAG["RAG-сервис"]
   METHOD2 --> UPLOAD --> EXTRACT --> AI --> COMPARE --> DECIDE
   DECIDE -->|"обновить / объединить / создать / отклонить"| TABLE
   TABLE --> REVIEW
@@ -449,8 +571,19 @@ flowchart TD
   GEN --> RULES2
   RULES2 --> TEST2 --> VALID
   VALID -->|"ошибка"| TABLE
-  VALID -->|"успех"| PUB2
-  PUB2 -->|"RAG"| AI
+  VALID -->|"успех"| PUBLISH --> INDEX
+  INDEX --> RAG
+  AI --> LLM
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef ext fill:#FFF3E0,stroke:#E65100,color:#BF360C
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  classDef ai fill:#F3E5F5,stroke:#6A1B9A,color:#4A148C
+  classDef actor fill:#FFFFFF,stroke:#BDBDBD,color:#424242
+  class METHOD2,REVIEW actor
+  class UPLOAD,CARD2,RULES2,PUBLISH base
+  class EXTRACT,AI,COMPARE,GEN,TEST2,VALID,INDEX ext
+  class DECIDE,TABLE manual
+  class LLM,RAG ai
 ```
 
 Ключевые изменения:
@@ -464,8 +597,10 @@ flowchart TD
 | Сравнение с существующими | не выполняется, появляются копии | diff, оценка, рекомендация, решение пользователя |
 | Ручная правка | нет | принять/отклонить/добавить/удалить/изменить плейсхолдер |
 | Проверка | вручную | тестовое заполнение + валидация |
-| Публикация | вручную | статус, версия, индексация |
+| Публикация | вручную | статус, версия, синхронный upsert в RAG |
 | Сопровождение | тяжёлое | версии и переиндексация |
+
+Публикация шаблона синхронно вызывает `upsert` в RAG-сервис; регламентная индексация остаётся догоняющей синхронизацией раз в 5 минут (`docs/design-decisions.md` §18).
 
 ## 9. Процесс 8. Вычитка документа
 
@@ -479,15 +614,24 @@ flowchart TD
   end
   subgraph B10["1С:Документооборот"]
     DOC["Проект документа"]
-    EDIT["Ручные правки"]
     SIGN["Согласование и подпись"]
   end
+  READ["Читает документ вручную"]
+  EDIT["Ручные правки"]
+  ASK["Просит коллегу проверить"]
+  REMARKS["Замечания в переписке"]
   DL --> DOC
-  DOC -->|"читает вручную"| DL
+  DOC --> READ --> DL
   DL -->|"орфография, пунктуация, смысл"| EDIT
-  DL -->|"просит проверить"| COL
-  COL -->|"замечания в переписке"| DL
+  DL --> ASK --> COL
+  COL -->|"замечания в переписке"| REMARKS --> DL
   EDIT --> SIGN
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef manual fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
+  classDef actor fill:#FFFFFF,stroke:#BDBDBD,color:#424242
+  class DL,COL actor
+  class DOC,SIGN base
+  class READ,EDIT,ASK,REMARKS manual
 ```
 
 Проблемы AS-IS:
@@ -507,28 +651,35 @@ flowchart TD
   end
   subgraph B11["1С:Документооборот"]
     DOC2["Проект документа"]
+    SIGN2["Согласование и подпись"]
+  end
+  subgraph E11["Расширение ai_scrivener"]
     QUICK["Быстрая проверка без LLM"]
     PANEL["Панель замечаний"]
     APPLY["Применение принятых замечаний"]
-    SIGN2["Согласование и подпись"]
-  end
-  subgraph C11["Контроль LLM"]
     QUOTA["Проверка квоты в страницах"]
     QUEUE["Очередь / деградация"]
-    LLM["LLM: грамматика, стиль, смысл, логика"]
   end
+  LLM["LLM: грамматика, стиль, смысл, логика"]
   DL2 --> DOC2 --> QUICK
   QUICK -->|"ошибки"| PANEL
   QUICK -->|"чисто"| SIGN2
   DL2 -->|"глубокая вычитка"| QUOTA
-  QUOTA -->|"лимит есть"| LLM
+  QUOTA -->|"лимит есть"| QUEUE --> LLM
   QUOTA -->|"лимита нет"| PANEL
   LLM -->|"замечания с цитатами"| PANEL
-  QUEUE --> LLM
   PANEL -->|"принять / отклонить"| APPLY
   APPLY --> QUICK
   PANEL -->|"всё отклонено"| SIGN2
   SIGN2 -->|"перед подписью"| QUICK
+  classDef base fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+  classDef ext fill:#FFF3E0,stroke:#E65100,color:#BF360C
+  classDef ai fill:#F3E5F5,stroke:#6A1B9A,color:#4A148C
+  classDef actor fill:#FFFFFF,stroke:#BDBDBD,color:#424242
+  class DL2 actor
+  class DOC2,SIGN2 base
+  class QUICK,PANEL,APPLY,QUOTA,QUEUE ext
+  class LLM ai
 ```
 
 Ключевые изменения:
@@ -550,7 +701,7 @@ flowchart TD
 | Сбор данных | письма, звонки, память | утверждённые запросы, лист ожидания, API |
 | Запрос к ДЛ | без реестра и срока | задача + лист ожидания + автоматическое возобновление |
 | Сроки | ручной контроль | регламентная проверка + нормативы ИИ |
-| Эскалация | ручной доклад | анализ таймлайна + внутренний документ |
+| Эскалация | ручной доклад | анализ таймлайна + внутренний документ + подтверждение |
 | Аудит | частичная реконструкция | полный аудит промптов, ответов и переходов |
 | Коллективная разработка | рабочая группа, задачи и файлы без разрезов | разделы как плейсхолдеры, подтверждение версии/хеша, `АИС_РазделыДокумента` |
 | Создание шаблонов | ручная карточка и десятки правил | импорт DOCX, AI-разметка, автогенерация правил, проверка человеком |
@@ -563,3 +714,22 @@ flowchart TD
 - В TO-BE пользовательские задачи и документы остаются штатными объектами Документооборота.
 - Новые документы не создаются: запросы к ДЛ, ответы и доклады выражаются через базовую задачу и `ВнутренниеДокументы`.
 - RAG/LLM не заменяют бизнес-процессы согласования, утверждения и подписания.
+
+## 12. Результаты сверки диаграмм с документацией
+
+При сверке исправлены:
+
+- добавлен обязательный шаг подтверждения доклада о срыве перед отправкой (`design-decisions.md` §14);
+- добавлена ветка `РешениеДЛ` в процесс заполнения плейсхолдеров (`design-decisions.md` §17);
+- разделены публикация шаблона и индексация RAG; публикация синхронно вызывает `upsert` (`design-decisions.md` §18);
+- быстрая проверка, панель замечаний и применение замечаний отнесены к расширению, а не к штатной конфигурации;
+- ручные операции выделены в отдельные узлы и не смешиваются со штатными операциями 1С.
+
+Выявленные расхождения с фактическим кодом (не с проектной документацией):
+
+- значение `РешениеДЛ` ещё не добавлено в `АИС_СпособыЗаполнения`;
+- ресурс `СсылкаНаРаздел` ещё не добавлен в `АИС_СостоянияПлейсхолдеров`;
+- ТЧ `АИС_Плейсхолдеры` в штатных справочниках шаблонов ещё не создана;
+- компоненты расширения на BSL, перечисленные в TO-BE, ещё не реализованы.
+
+Эти пункты входят в план синхронизации и завершения Этапа 2.

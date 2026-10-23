@@ -23,4 +23,4 @@
 
 - `docs/raw_specification.md` §2 — исходное определение (теперь ссылается сюда).
 - `docs/data-model.md` — объекты, которыми термины реализованы.
-- `docs/stakeholder-map.md` — роли, использующие эти термины.
+- `docs/system-analysis/stakeholder-map.md` — роли, использующие эти термины.
