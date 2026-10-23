@@ -1,6 +1,6 @@
 meta:
   version: 1
-  updated: "2026-10-22"
+  updated: "2026-10-23"
   source_of_truth: docs/requirements/requirements.yaml
 requirements:
   - id: FR-001
@@ -1037,7 +1037,7 @@ requirements:
       исполнителя и файлов; новые объекты создаются только для ИИ-специфичных
       данных и получают префикс `АИС_`.
     priority: must
-    approval: proposed
+    approval: approved
     source:
       - docs/implementation_plan.md#5.1
     acceptance:
@@ -1067,7 +1067,7 @@ requirements:
       версии/хеша. Подтверждение фиксируется в штатной задаче и
       `АИС_ИсторияДействийИИ`.
     priority: must
-    approval: proposed
+    approval: approved
     source:
       - docs/raw_specification.md#4.5.4
       - docs/raw_specification.md#4.6.1
@@ -1090,6 +1090,131 @@ requirements:
       - TEST-FR-043-02
     test_files:
       - tests/1c/test_document_sections.md
+    status: planned
+  - id: FR-044
+    type: functional
+    title: Мастер шаблонов
+    description: >-
+      Создание шаблонов автоматизируется: импорт DOCX/текста или описание
+      словами, извлечение структуры, AI-анализ плейсхолдеров, разделов, списков,
+      типов, источников и падежей, проверка человеком, автогенерация
+      `ПравилаАвтозаполненияФайлов` и ТЧ `АИС_Плейсхолдеры`, тестовое
+      заполнение, публикация и индексация RAG.
+    priority: must
+    approval: approved
+    source:
+      - docs/raw_specification.md#4.14
+      - docs/raw_specification.md#8
+    acceptance:
+      - Шаблон из DOCX создаётся без ручного заполнения каждого правила.
+      - Человек проверяет и утверждает таблицу плейсхолдеров.
+      - Человек может принять или отклонить каждый плейсхолдер, добавить/удалить его и изменить параметры.
+      - Можно отклонить всю ИИ-разметку и перейти в ручной режим.
+      - Базовые правила автозаполнения создаются автоматически.
+      - Тестовое заполнение проходит до публикации.
+      - Опубликованный шаблон индексируется в RAG.
+      - ИИ не публикует шаблон без подтверждения человека.
+    design:
+      - docs/template-factory.md
+      - docs/data-model.md#14-мастер-шаблонов
+      - docs/implementation_plan.md#510-мастер-шаблонов
+    implementation:
+      - src/DataProcessors/АИС_МастерШаблонов
+      - src/CommonModules/АИС_ГенераторПравилШаблона
+      - src/CommonModules/АИС_ПроверкаШаблона
+      - src/Catalogs/ШаблоныВходящихДокументов
+      - src/Catalogs/ШаблоныИсходящихДокументов
+      - src/Catalogs/ШаблоныВнутреннихДокументов
+      - src/InformationRegisters/АИС_СтатусыШаблонов
+      - src/Enums/АИС_СостоянияШаблонов
+    tests:
+      - TEST-FR-044-01
+      - TEST-FR-044-02
+      - TEST-FR-044-03
+      - TEST-FR-044-04
+    test_files:
+      - tests/1c/test_template_factory.md
+    status: planned
+  - id: FR-045
+    type: functional
+    title: Сравнение и объединение шаблонов
+    description: >-
+      Перед созданием нового шаблона система находит похожие активные шаблоны,
+      сравнивает текст, плейсхолдеры, структуру и метаданные, показывает diff и
+      оценку сходства, предлагает обновить существующий, объединить или создать
+      новый. Окончательное решение принимает пользователь; решение и различия
+      записываются в `АИС_СравненияШаблонов`.
+    priority: must
+    approval: approved
+    source:
+      - docs/raw_specification.md#4.14.6
+      - docs/raw_specification.md#4.14.7
+    acceptance:
+      - Находятся похожие активные шаблоны.
+      - Сравниваются текст, плейсхолдеры, структура и метаданные.
+      - Показываются добавленные, удалённые и изменённые плейсхолдеры.
+      - "Выдаётся рекомендация: обновить, объединить, создать новый или ручное решение."
+      - Пользователь принимает окончательное решение.
+      - Обновление создаёт новую версию и переиндексирует RAG.
+      - Создание нового требует причины и подтверждения.
+    design:
+      - docs/template-factory.md#15-сравнение-шаблонов
+      - docs/template-factory.md#16-алгоритм-сравнения
+      - docs/data-model.md#14-мастер-шаблонов
+      - docs/implementation_plan.md#510-мастер-шаблонов
+    implementation:
+      - src/CommonModules/АИС_СравнениеШаблонов
+      - src/InformationRegisters/АИС_СравненияШаблонов
+      - src/Enums/АИС_РекомендацииПоШаблонам
+      - src/DataProcessors/АИС_МастерШаблонов
+    tests:
+      - TEST-FR-045-01
+      - TEST-FR-045-02
+      - TEST-FR-045-03
+      - TEST-FR-045-04
+    test_files:
+      - tests/1c/test_template_comparison.md
+    status: planned
+  - id: FR-046
+    type: functional
+    title: Вычитка документов
+    description: >-
+      Проект документа проверяется в два уровня: быстрая детерминированная
+      проверка без LLM и глубокая LLM-вычитка по кнопке. Глубокая проверка
+      возвращает замечания с цитатами, позициями, важностью и предложениями;
+      пользователь принимает или отклоняет каждое. Замечания не применяются
+      автоматически, принятые применяются детерминированно и аудируются.
+    priority: must
+    approval: approved
+    source:
+      - docs/raw_specification.md#4.15
+      - docs/raw_specification.md#4.15.5
+    acceptance:
+      - Быстрая проверка работает без LLM и не расходует квоту.
+      - Глубокая проверка запускается по кнопке.
+      - Каждое замечание содержит цитату, которая существует в тексте.
+      - Замечания не применяются автоматически.
+      - Принятые замечания применяются и аудируются.
+      - После изменений выполняется повторная быстрая проверка.
+    design:
+      - docs/proofreading.md
+      - docs/data-model.md#15-вычитка-документов
+      - docs/implementation_plan.md#511-вычитка-документов
+    implementation:
+      - src/CommonModules/АИС_ПроверкаДокумента
+      - src/DataProcessors/АИС_ПанельЗамечаний
+      - src/InformationRegisters/АИС_ПроверкиДокументов
+      - src/InformationRegisters/АИС_ЗамечанияПроверки
+      - src/Enums/АИС_РежимыПроверки
+      - src/Enums/АИС_ТипыЗамечаний
+      - src/Enums/АИС_ВажностиЗамечаний
+    tests:
+      - TEST-FR-046-01
+      - TEST-FR-046-02
+      - TEST-FR-046-03
+      - TEST-FR-046-04
+    test_files:
+      - tests/1c/test_proofreading.md
     status: planned
   - id: NFR-001
     type: nonfunctional
@@ -1849,7 +1974,7 @@ requirements:
       1С:Документооборот остаётся неизменной, расширение применяется и снимается
       без правки базовых объектов.
     priority: must
-    approval: proposed
+    approval: approved
     source:
       - docs/implementation_plan.md#2
       - docs/implementation_plan.md#5.9
@@ -1867,4 +1992,35 @@ requirements:
       - TEST-NFR-031-01
     test_files:
       - tests/1c/test_extension_apply.md
+    status: planned
+  - id: NFR-032
+    type: nonfunctional
+    title: Лимиты LLM-вычитки на пользователя
+    description: >-
+      Глубокая LLM-вычитка ограничивается лимитом страниц на период. Лимит
+      задаётся администратором по роли, подразделению или пользователю;
+      пользователь видит остаток в страницах, а не в токенах. Проверка квоты
+      выполняется на сервере 1С.
+    priority: must
+    approval: approved
+    source:
+      - docs/raw_specification.md#4.15.3
+    acceptance:
+      - Администратор задаёт лимит страниц на период.
+      - Пользователь видит остаток в страницах.
+      - Быстрая проверка квоту не расходует.
+      - Глубокая проверка блокируется при исчерпании квоты.
+      - Проверка квоты выполняется на сервере 1С.
+      - При перегрузке локальной LLM есть очередь или деградация до быстрой проверки.
+    design:
+      - docs/proofreading.md#5-квоты
+      - docs/implementation_plan.md#511-вычитка-документов
+    implementation:
+      - src/InformationRegisters/АИС_ЛимитыВычитки
+      - src/CommonModules/АИС_ПроверкаДокумента
+    tests:
+      - TEST-NFR-032-01
+      - TEST-NFR-032-02
+    test_files:
+      - tests/1c/test_llm_quotas.md
     status: planned

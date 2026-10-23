@@ -365,4 +365,7 @@ docker compose -f deploy/docker-compose.yml down
 - `docs/versioning.md` — источник истины, артефакты, пересборка базы и релизный цикл.
 - `docs/data-model.md` — дедуплицированная модель данных расширения.
 - `docs/process-diagrams.md` — процессы AS-IS и TO-BE.
+- `docs/template-factory.md` — мастер шаблонов.
+- `docs/proofreading.md` — вычитка документов и квоты LLM.
+- `docs/design-decisions.md` — завершённые проектные решения.
 - `docs/requirements/traceability_matrix.md` — требования и сценарии проверки.
