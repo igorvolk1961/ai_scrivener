@@ -28,7 +28,6 @@
   <usePurposes>PersonalComputer</usePurposes>
   <dataLockControlMode>Managed</dataLockControlMode>
   <scriptVariant>Russian</scriptVariant>
-  <defaultRoles>Role.АИС_ДолжностноеЛицо</defaultRoles>
   <defaultLanguage>Language.Русский</defaultLanguage>
   <languages uuid="017232e9-8658-4ffa-bdca-c4865219f998" extendedConfigurationObject="f85e5a81-dc92-4a3e-b85d-2544ec13c70d">
     <name>Русский</name>
