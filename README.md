@@ -5,6 +5,10 @@
 ## Документы
 
 - `docs/raw_specification.md` — исходная спецификация.
+- `docs/view-and-scope.md` — видение и границы проекта (Vision & Scope).
+- `docs/glossary.md` — глоссарий.
+- `docs/stakeholder-map.md` — карта стейкхолдеров.
+- `docs/use-cases.md` — варианты использования.
 - `docs/implementation_plan.md` — план реализации.
 - `docs/requirements/functional_requirements.md` — функциональные требования.
 - `docs/requirements/nonfunctional_requirements.md` — нефункциональные требования.
