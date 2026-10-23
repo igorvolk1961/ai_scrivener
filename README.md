@@ -10,14 +10,9 @@
 - `docs/system-analysis/stakeholder-map.md` — карта стейкхолдеров.
 - `docs/system-analysis/use-cases.md` — варианты использования.
 - `docs/system-analysis/c4-model.md` — C4-модель: контекст, контейнеры и компоненты.
-- `docs/implementation_plan.md` — план реализации.
 - `docs/requirements/functional_requirements.md` — функциональные требования.
 - `docs/requirements/nonfunctional_requirements.md` — нефункциональные требования.
 - `docs/requirements/traceability_matrix.md` — матрица трассируемости.
-- `docs/development.md` — инженерные правила и локальные проверки.
-- `docs/runbook.md` — как самому запускать платформу, базу, Конфигуратор, EDT, расширение и RAG-сервис.
-- `docs/postgresql.md` — PostgreSQL для 1С: требования, `mchar`, серверный кластер и ограничения.
-- `docs/versioning.md` — источник истины, артефакты, пересборка базы и релизный цикл.
 - `docs/data-model.md` — дедуплицированная модель: какие объекты базы переиспользуются и что создаётся в расширении.
 - `docs/process-diagrams.md` — процессные диаграммы AS-IS и TO-BE.
 - `docs/template-factory.md` — мастер шаблонов: импорт DOCX, AI-разметка, автогенерация правил.
@@ -26,8 +21,16 @@
 
 ## Планы и ревью
 
+- `plans/implementation_plan.md` — план реализации.
 - `plans/` — рабочие планы: `stage2-plan.md`, `remediation-plan.md` и планы сессий.
 - `reviews/` — результаты ревью внешними ИИ-агентами: `critical-review.md`.
+
+## Руководства
+
+- `guides/development.md` — инженерные правила и локальные проверки.
+- `guides/runbook.md` — как самому запускать платформу, базу, Конфигуратор, EDT, расширение и RAG-сервис.
+- `guides/postgresql.md` — PostgreSQL для 1С: требования, `mchar`, серверный кластер и ограничения.
+- `guides/versioning.md` — источник истины, артефакты, пересборка базы и релизный цикл.
 
 ## Требования и конфигурация
 
@@ -35,7 +38,7 @@
 
 Все настраиваемые числовые параметры хранятся в `config/parameters.yaml` и проверяются по `config/parameters.schema.json`.
 
-Согласованные заглушки — только через `TODO.md`: заглушка в коде без ссылки на существующую запись `TODO.md#T-NNN` блокируется пре-коммитом (`docs/development.md` §4).
+Согласованные заглушки — только через `TODO.md`: заглушка в коде без ссылки на существующую запись `TODO.md#T-NNN` блокируется пре-коммитом (`guides/development.md` §4).
 
 ## Проверки
 
@@ -71,7 +74,7 @@ bash scripts/run/1c-pg-server.sh stop # остановить PostgreSQL и кл�
 ./scripts/build/load_extension.sh server # XML → серверная база
 ```
 
-Пользователь базы — `Администратор`, пароль пустой. Подробная инструкция со всеми путями, EDT, расширением и RAG — в `docs/runbook.md`.
+Пользователь базы — `Администратор`, пароль пустой. Подробная инструкция со всеми путями, EDT, расширением и RAG — в `guides/runbook.md`.
 
 ## Статус
 
@@ -81,7 +84,7 @@ bash scripts/run/1c-pg-server.sh stop # остановить PostgreSQL и кл�
 
 Проектирование завершено: решения по шаблонам, сравнению, разделам, вычитке и квотам зафиксированы в `docs/design-decisions.md`.
 
-Полный порядок запуска платформы, базы, Конфигуратора, EDT, расширения и RAG-сервиса — в `docs/runbook.md`.
+Полный порядок запуска платформы, базы, Конфигуратора, EDT, расширения и RAG-сервиса — в `guides/runbook.md`.
 
 Установка 1C:EDT требует прав администратора:
 
@@ -89,4 +92,4 @@ bash scripts/run/1c-pg-server.sh stop # остановить PostgreSQL и кл�
 sudo bash scripts/setup/install_edt.sh
 ```
 
-EDT 2026.1.3 установлен. Импорт базовой конфигурации, создание расширения и проверки описаны в `docs/development.md`.
+EDT 2026.1.3 установлен. Импорт базовой конфигурации, создание расширения и проверки описаны в `guides/development.md`.

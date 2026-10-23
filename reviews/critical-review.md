@@ -1,6 +1,6 @@
 # Критический обзор документации
 
-Дата: 2026-10-23. Обзор выполнен по полному корпусу документации (`README.md`, `docs/raw_specification.md`, `docs/implementation_plan.md`, `docs/data-model.md`, `docs/design-decisions.md`, `docs/process-diagrams.md`, `docs/template-factory.md`, `docs/proofreading.md`, `docs/requirements/*`) и по фактическому состоянию кода (`src/`, `rag-service/`).
+Дата: 2026-10-23. Обзор выполнен по полному корпусу документации (`README.md`, `docs/raw_specification.md`, `plans/implementation_plan.md`, `docs/data-model.md`, `docs/design-decisions.md`, `docs/process-diagrams.md`, `docs/template-factory.md`, `docs/proofreading.md`, `docs/requirements/*`) и по фактическому состоянию кода (`src/`, `rag-service/`).
 
 Цель — зафиксировать замечания по пяти осям: дублирование штатного функционала 1С:Документооборот, недостающие звенья в проектировании, реализуемость с учётом ограничений наивного RAG, сложность де-факто мультиагентной архитектуры, и отсутствие модели для управленческих решений/экспертного мнения как категории плейсхолдера. Документ не блокирует реализацию; решения по пунктам фиксируются либо здесь (статус `закрыт`), либо переносятся в `docs/design-decisions.md`.
 

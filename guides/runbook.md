@@ -43,7 +43,7 @@ export PROJ=/home/igorvolk/PycharmProjects/ai_scrivener
 "$ONEC"
 ```
 
-Если окно запуска открылось без сообщения о лицензии — всё готово. Если появилось «Не найдена лицензия», активируйте community-лицензию по разделу `12.1` в `docs/development.md`.
+Если окно запуска открылось без сообщения о лицензии — всё готово. Если появилось «Не найдена лицензия», активируйте community-лицензию по разделу `12.1` в `guides/development.md`.
 
 Клиент запускайте от пользователя `igorvolk`, без `sudo`. Лицензия ищется в домашнем каталоге пользователя.
 
@@ -120,7 +120,7 @@ bash scripts/run/1c.sh check      # CheckConfig
 ./scripts/run/1c.sh pg-db
 ```
 
-Строка подключения: `/Slocalhost:1541/ai_scrivener`, пользователь `Администратор`, пароль пустой. Подробности — в `docs/postgresql.md`.
+Строка подключения: `/Slocalhost:1541/ai_scrivener`, пользователь `Администратор`, пароль пустой. Подробности — в `guides/postgresql.md`.
 
 ## 3. Расширение в Конфигураторе
 
@@ -359,10 +359,10 @@ docker compose -f deploy/docker-compose.yml down
 
 ## 10. Связанные документы
 
-- `docs/development.md` — установка, лицензия, восстановление базы, импорт в EDT.
-- `docs/implementation_plan.md` — архитектура расширения и маппинг объектов.
-- `docs/postgresql.md` — вариант PostgreSQL для 1С, расширение `mchar` и серверный кластер.
-- `docs/versioning.md` — источник истины, артефакты, пересборка базы и релизный цикл.
+- `guides/development.md` — установка, лицензия, восстановление базы, импорт в EDT.
+- `plans/implementation_plan.md` — архитектура расширения и маппинг объектов.
+- `guides/postgresql.md` — вариант PostgreSQL для 1С, расширение `mchar` и серверный кластер.
+- `guides/versioning.md` — источник истины, артефакты, пересборка базы и релизный цикл.
 - `docs/data-model.md` — дедуплицированная модель данных расширения.
 - `docs/process-diagrams.md` — процессы AS-IS и TO-BE.
 - `docs/template-factory.md` — мастер шаблонов.

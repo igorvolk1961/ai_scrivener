@@ -19,7 +19,7 @@
 
 **Источники:** `docs/raw_specification.md#5.1`, `docs/raw_specification.md#8`
 
-**Проектирование:** `docs/implementation_plan.md#9`, `docs/implementation_plan.md#11`
+**Проектирование:** `plans/implementation_plan.md#9`, `plans/implementation_plan.md#11`
 
 **Критерии приёмки:**
 
@@ -39,7 +39,7 @@
 
 **Источники:** `docs/raw_specification.md#5.1`
 
-**Проектирование:** `docs/implementation_plan.md#8`
+**Проектирование:** `plans/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -59,7 +59,7 @@
 
 **Источники:** `docs/raw_specification.md#5.1`
 
-**Проектирование:** `docs/implementation_plan.md#6.3`
+**Проектирование:** `plans/implementation_plan.md#6.3`
 
 **Критерии приёмки:**
 
@@ -79,7 +79,7 @@
 
 **Источники:** `docs/raw_specification.md#5.1`, `docs/raw_specification.md#5.2`
 
-**Проектирование:** `docs/implementation_plan.md#6.5`
+**Проектирование:** `plans/implementation_plan.md#6.5`
 
 **Критерии приёмки:**
 
@@ -99,7 +99,7 @@
 
 **Источники:** `docs/raw_specification.md#5.2`
 
-**Проектирование:** `docs/implementation_plan.md#6.5`
+**Проектирование:** `plans/implementation_plan.md#6.5`
 
 **Критерии приёмки:**
 
@@ -119,7 +119,7 @@
 
 **Источники:** `docs/raw_specification.md#5.2`
 
-**Проектирование:** `docs/implementation_plan.md#6.1`, `docs/implementation_plan.md#8`
+**Проектирование:** `plans/implementation_plan.md#6.1`, `plans/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -139,7 +139,7 @@
 
 **Источники:** `docs/raw_specification.md#5.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`
+**Проектирование:** `plans/implementation_plan.md#5.3`
 
 **Критерии приёмки:**
 
@@ -159,7 +159,7 @@ API-ключи и service-token хранятся в защищённом хра�
 
 **Источники:** `docs/raw_specification.md#5.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.7`
+**Проектирование:** `plans/implementation_plan.md#5.7`
 
 **Критерии приёмки:**
 
@@ -179,7 +179,7 @@ API-ключи и service-token хранятся в защищённом хра�
 
 **Источники:** `docs/raw_specification.md#3`, `docs/raw_specification.md#5.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.8`
+**Проектирование:** `plans/implementation_plan.md#5.8`
 
 **Критерии приёмки:**
 
@@ -199,7 +199,7 @@ API-ключи и service-token хранятся в защищённом хра�
 
 **Источники:** `docs/raw_specification.md#5.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.8`
+**Проектирование:** `plans/implementation_plan.md#5.8`
 
 **Критерии приёмки:**
 
@@ -219,7 +219,7 @@ API-ключи и service-token хранятся в защищённом хра�
 
 **Источники:** `docs/raw_specification.md#5.4`, `docs/raw_specification.md#8`
 
-**Проектирование:** `docs/implementation_plan.md#6.5`, `docs/implementation_plan.md#11`
+**Проектирование:** `plans/implementation_plan.md#6.5`, `plans/implementation_plan.md#11`
 
 **Критерии приёмки:**
 
@@ -239,7 +239,7 @@ API-ключи и service-token хранятся в защищённом хра�
 
 **Источники:** `docs/raw_specification.md#5.5`
 
-**Проектирование:** `docs/implementation_plan.md#5.5`, `docs/implementation_plan.md#8`
+**Проектирование:** `plans/implementation_plan.md#5.5`, `plans/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -259,7 +259,7 @@ API-ключи и service-token хранятся в защищённом хра�
 
 **Источники:** `user-requirement:2026-10-21`
 
-**Проектирование:** `docs/development.md`, `docs/implementation_plan.md#13`
+**Проектирование:** `guides/development.md`, `plans/implementation_plan.md#13`
 
 **Критерии приёмки:**
 
@@ -281,7 +281,7 @@ API-ключи и service-token хранятся в защищённом хра�
 
 **Источники:** `user-requirement:2026-10-21`, `user-requirement:2026-10-23`
 
-**Проектирование:** `docs/development.md`
+**Проектирование:** `guides/development.md`
 
 **Критерии приёмки:**
 
@@ -302,7 +302,7 @@ API-ключи и service-token хранятся в защищённом хра�
 
 **Источники:** `user-requirement:2026-10-21`
 
-**Проектирование:** `docs/development.md`, `docs/implementation_plan.md#11`
+**Проектирование:** `guides/development.md`, `plans/implementation_plan.md#11`
 
 **Критерии приёмки:**
 
@@ -322,7 +322,7 @@ API-ключи и service-token хранятся в защищённом хра�
 
 **Источники:** `user-requirement:2026-10-21`
 
-**Проектирование:** `docs/development.md`
+**Проектирование:** `guides/development.md`
 
 **Критерии приёмки:**
 
@@ -382,7 +382,7 @@ API-ключи и service-token хранятся в защищённом хра�
 
 **Источники:** `user-requirement:2026-10-21`, `docs/raw_specification.md#5.3`
 
-**Проектирование:** `docs/development.md`
+**Проектирование:** `guides/development.md`
 
 **Критерии приёмки:**
 
@@ -400,9 +400,9 @@ API-ключи и service-token хранятся в защищённом хра�
 
 RAG-сервис не хранит доменное состояние; источником истины остаётся 1С, Qdrant хранит только индекс.
 
-**Источники:** `docs/implementation_plan.md#7.1`
+**Источники:** `plans/implementation_plan.md#7.1`
 
-**Проектирование:** `docs/implementation_plan.md#7`
+**Проектирование:** `plans/implementation_plan.md#7`
 
 **Критерии приёмки:**
 
@@ -420,9 +420,9 @@ RAG-сервис не хранит доменное состояние; исто
 
 RAG-сервис и 1С логируют идентификаторы, коды ошибок и метрики, но не тексты документов и не секреты.
 
-**Источники:** `docs/implementation_plan.md#7.6`, `docs/raw_specification.md#5.5`
+**Источники:** `plans/implementation_plan.md#7.6`, `docs/raw_specification.md#5.5`
 
-**Проектирование:** `docs/implementation_plan.md#7.6`
+**Проектирование:** `plans/implementation_plan.md#7.6`
 
 **Критерии приёмки:**
 
@@ -442,7 +442,7 @@ config/parameters.yaml проверяется по JSON-схеме и перек
 
 **Источники:** `user-requirement:2026-10-21`
 
-**Проектирование:** `docs/development.md`
+**Проектирование:** `guides/development.md`
 
 **Критерии приёмки:**
 
@@ -460,9 +460,9 @@ config/parameters.yaml проверяется по JSON-схеме и перек
 
 LLM не исполняет сгенерированный текст запроса; она выбирает утверждённый шаблон и заполняет только разрешённые параметры.
 
-**Источники:** `docs/implementation_plan.md#2`, `docs/implementation_plan.md#6.3`
+**Источники:** `plans/implementation_plan.md#2`, `plans/implementation_plan.md#6.3`
 
-**Проектирование:** `docs/implementation_plan.md#6.3`
+**Проектирование:** `plans/implementation_plan.md#6.3`
 
 **Критерии приёмки:**
 
@@ -480,9 +480,9 @@ LLM не исполняет сгенерированный текст запро
 
 При недоступности LLM или RAG задача не теряется; используется детерминированный fallback или ручное вмешательство.
 
-**Источники:** `docs/implementation_plan.md#6.1`, `docs/implementation_plan.md#7.6`
+**Источники:** `plans/implementation_plan.md#6.1`, `plans/implementation_plan.md#7.6`
 
-**Проектирование:** `docs/implementation_plan.md#6.1`
+**Проектирование:** `plans/implementation_plan.md#6.1`
 
 **Критерии приёмки:**
 
@@ -500,9 +500,9 @@ LLM не исполняет сгенерированный текст запро
 
 Таймауты и повторы для DeepSeek, RAG и GigaChat задаются в конфигурации.
 
-**Источники:** `docs/implementation_plan.md#8`, `docs/implementation_plan.md#13`
+**Источники:** `plans/implementation_plan.md#8`, `plans/implementation_plan.md#13`
 
-**Проектирование:** `docs/implementation_plan.md#8`
+**Проектирование:** `plans/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -520,9 +520,9 @@ LLM не исполняет сгенерированный текст запро
 
 HTTP-клиенты проверяют TLS-сертификаты; корневые сертификаты GigaChat и DeepSeek устанавливаются на сервере.
 
-**Источники:** `docs/implementation_plan.md#12`
+**Источники:** `plans/implementation_plan.md#12`
 
-**Проектирование:** `docs/implementation_plan.md#12`
+**Проектирование:** `plans/implementation_plan.md#12`
 
 **Критерии приёмки:**
 
@@ -540,9 +540,9 @@ HTTP-клиенты проверяют TLS-сертификаты; корнев�
 
 Тесты не ходят в реальные DeepSeek, GigaChat и Qdrant; используются mock, respx и локальный Qdrant.
 
-**Источники:** `docs/implementation_plan.md#11`
+**Источники:** `plans/implementation_plan.md#11`
 
-**Проектирование:** `docs/implementation_plan.md#11`
+**Проектирование:** `plans/implementation_plan.md#11`
 
 **Критерии приёмки:**
 
@@ -562,7 +562,7 @@ Python-код проверяется ruff и mypy в strict-режиме; фор
 
 **Источники:** `user-requirement:2026-10-21`
 
-**Проектирование:** `docs/development.md`
+**Проектирование:** `guides/development.md`
 
 **Критерии приёмки:**
 
@@ -580,9 +580,9 @@ Python-код проверяется ruff и mypy в strict-режиме; фор
 
 Расширение разрабатывается в EDT 2026.1.3 и применяется к базовой конфигурации 1С:Документооборот ПРОФ 2.1.38.11 (`ДокументооборотПРОФ`) на платформе 8.3.27.
 
-**Источники:** `docs/raw_specification.md#1.3`, `docs/implementation_plan.md#2`
+**Источники:** `docs/raw_specification.md#1.3`, `plans/implementation_plan.md#2`
 
-**Проектирование:** `docs/implementation_plan.md#2`, `docs/implementation_plan.md#10`, `docs/development.md#12`
+**Проектирование:** `plans/implementation_plan.md#2`, `plans/implementation_plan.md#10`, `guides/development.md#12`
 
 **Критерии приёмки:**
 
@@ -601,9 +601,9 @@ Python-код проверяется ruff и mypy в strict-режиме; фор
 
 Все изменения поставляются файлом `.cfe`; базовая конфигурация 1С:Документооборот остаётся неизменной, расширение применяется и снимается без правки базовых объектов.
 
-**Источники:** `docs/implementation_plan.md#2`, `docs/implementation_plan.md#5.9`
+**Источники:** `plans/implementation_plan.md#2`, `plans/implementation_plan.md#5.9`
 
-**Проектирование:** `docs/implementation_plan.md#5.9`, `docs/development.md#12`
+**Проектирование:** `plans/implementation_plan.md#5.9`, `guides/development.md#12`
 
 **Критерии приёмки:**
 
@@ -624,7 +624,7 @@ Python-код проверяется ruff и mypy в strict-режиме; фор
 
 **Источники:** `docs/raw_specification.md#4.15.3`
 
-**Проектирование:** `docs/proofreading.md#5-квоты`, `docs/implementation_plan.md#511-вычитка-документов`
+**Проектирование:** `docs/proofreading.md#5-квоты`, `plans/implementation_plan.md#511-вычитка-документов`
 
 **Критерии приёмки:**
 
@@ -650,7 +650,7 @@ Python-код проверяется ruff и mypy в strict-режиме; фор
 
 **Источники:** `docs/raw_specification.md#5.4`
 
-**Проектирование:** `docs/implementation_plan.md#3`
+**Проектирование:** `plans/implementation_plan.md#3`
 
 **Критерии приёмки:**
 

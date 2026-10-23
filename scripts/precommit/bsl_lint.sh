@@ -6,7 +6,7 @@ if [[ $# -eq 0 ]]; then
 fi
 
 if ! command -v bsl-language-server >/dev/null 2>&1; then
-  printf '%s\n' "bsl-language-server is required for BSL linting. See docs/development.md." >&2
+  printf '%s\n' "bsl-language-server is required for BSL linting. See guides/development.md." >&2
   exit 1
 fi
 

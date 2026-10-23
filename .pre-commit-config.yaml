@@ -60,7 +60,7 @@ repos:
         name: requirements traceability
         entry: uv run python -m scripts.requirements.check --check
         language: system
-        files: ^(docs/requirements/|docs/implementation_plan.md|scripts/requirements/|config/)
+        files: ^(docs/requirements/|plans/implementation_plan.md|guides/|scripts/requirements/|config/)
         pass_filenames: false
       - id: no-unapproved-stubs
         name: no unapproved stubs

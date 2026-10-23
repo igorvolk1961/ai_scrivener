@@ -24,10 +24,10 @@ requirements:
       - Функция объединения возвращает постоянную должность и должности всех замещаемых на дату лиц без дублей.
       - Новый хранимый регистр назначений не создаётся.
     design:
-      - docs/implementation_plan.md#5.1
-      - docs/implementation_plan.md#5.3
+      - plans/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.3
     implementation:
-      - docs/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
     tests:
       - TEST-FR-001-01
     test_files:
@@ -48,11 +48,11 @@ requirements:
       - Для активной должности определяется вышестоящая должность и её ДЛ.
       - Циклы в иерархии запрещены.
     design:
-      - docs/implementation_plan.md#5.3
-      - docs/implementation_plan.md#5.8
+      - plans/implementation_plan.md#5.3
+      - plans/implementation_plan.md#5.8
     implementation:
-      - docs/implementation_plan.md#5.1
-      - docs/implementation_plan.md#5.8
+      - plans/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.8
     tests:
       - TEST-FR-002-01
     test_files:
@@ -77,7 +77,7 @@ requirements:
       - Обязанность резолвится по объединённому набору действующих должностей ДЛ (FR-001), а не только по постоянной должности.
       - Для триггера «Распоряжение» действие может определяться текстом распоряжения напрямую, без обязательного совпадения с правилом каталога.
     design:
-      - docs/implementation_plan.md#5.3
+      - plans/implementation_plan.md#5.3
     implementation:
       - src/Catalogs/АИС_ДолжностныеОбязанности
     tests:
@@ -101,10 +101,10 @@ requirements:
       - Для плейсхолдера заданы тип, обязательность и источник.
       - Шаблон имеет версию и признак активности.
     design:
-      - docs/implementation_plan.md#5.3
-      - docs/implementation_plan.md#6.3
+      - plans/implementation_plan.md#5.3
+      - plans/implementation_plan.md#6.3
     implementation:
-      - docs/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
     tests:
       - TEST-FR-004-01
       - TEST-FR-004-02
@@ -133,11 +133,11 @@ requirements:
       - Новый тип действия указывает соответствующий справочник шаблонов (или не указывает — для действий без документа) через реквизит, а не через логику в BSL.
       - Неактивные типы не используются в новых задачах.
     design:
-      - docs/implementation_plan.md#5.3
+      - plans/implementation_plan.md#5.3
     implementation:
       - src/Catalogs/АИС_ТипыТриггеров
       - src/Catalogs/АИС_ТипыДействий
-      - docs/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
     tests:
       - TEST-FR-005-01
     test_files:
@@ -159,7 +159,7 @@ requirements:
       - Срок базовой задачи задаётся отдельно и не перезаписывается нормативом ИИ.
       - Изменение норматива не меняет уже созданные задачи.
     design:
-      - docs/implementation_plan.md#5.5
+      - plans/implementation_plan.md#5.5
     implementation:
       - src/InformationRegisters/АИС_НормативыИИ
       - src/CommonModules/АИС_ОркестраторЗадач
@@ -188,8 +188,8 @@ requirements:
       - Если периодичность обнаружена, фиксация расписания становится обязательным условием закрытия задачи по распоряжению (или явной отметки ДЛ, что текст распознан неверно), а не только подсказкой.
       - Если признаков периодичности нет, дополнительное подтверждение не запрашивается.
     design:
-      - docs/implementation_plan.md#5.4
-      - docs/implementation_plan.md#10
+      - plans/implementation_plan.md#5.4
+      - plans/implementation_plan.md#10
     implementation:
       - src/Catalogs/АИС_РасписаниеТриггеров
       - src/ScheduledJobs/АИС_ГенерацияТриггеровПоТаймеру
@@ -218,10 +218,10 @@ requirements:
       - Если исполнитель не определён однозначно (ноль или больше одного), задача не создаётся без ручного выбора.
       - Повторное проведение не создаёт дубль.
     design:
-      - docs/implementation_plan.md#6.2
-      - docs/implementation_plan.md#6.5
+      - plans/implementation_plan.md#6.2
+      - plans/implementation_plan.md#6.5
     implementation:
-      - docs/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
       - src/CommonModules/АИС_ОркестраторЗадач
     tests:
       - TEST-FR-008-01
@@ -251,9 +251,9 @@ requirements:
       - LLM-классификация произвольного события определяет тип действия, включая вариант «простой поиск информации».
       - Оба случая создают задачу без дублей.
     design:
-      - docs/implementation_plan.md#5.4
+      - plans/implementation_plan.md#5.4
     implementation:
-      - docs/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
       - docs/data-model.md
     tests:
       - TEST-FR-009-01
@@ -276,8 +276,8 @@ requirements:
       - Недопустимый переход отклоняется.
       - Каждый переход фиксируется в аудите.
     design:
-      - docs/implementation_plan.md#5.5
-      - docs/implementation_plan.md#6.1
+      - plans/implementation_plan.md#5.5
+      - plans/implementation_plan.md#6.1
     implementation:
       - src/InformationRegisters/АИС_КонтекстЗадачИИ
       - src/CommonModules/АИС_ОркестраторЗадач
@@ -302,7 +302,7 @@ requirements:
       - Значение и ошибка сохраняются.
       - Связь с листом ожидания однозначна.
     design:
-      - docs/implementation_plan.md#5.5
+      - plans/implementation_plan.md#5.5
     implementation:
       - src/InformationRegisters/АИС_СостоянияПлейсхолдеров
     tests:
@@ -326,8 +326,8 @@ requirements:
       - Ответ идемпотентно заполняет плейсхолдер.
       - Родительская задача возобновляется.
     design:
-      - docs/implementation_plan.md#5.3
-      - docs/implementation_plan.md#6.4
+      - plans/implementation_plan.md#5.3
+      - plans/implementation_plan.md#6.4
     implementation:
       - src/Catalogs/АИС_ЛистОжидания
       - src/CommonModules/АИС_РаботаСЛистомОжидания
@@ -352,7 +352,7 @@ requirements:
       - Создаётся триггер с ссылкой на запрос и задачу.
       - Непросроченные запросы не меняются.
     design:
-      - docs/implementation_plan.md#6.4
+      - plans/implementation_plan.md#6.4
     implementation:
       - src/ScheduledJobs/АИС_ОбработкаЛистаОжидания
       - src/CommonModules/АИС_РаботаСЛистомОжидания
@@ -376,8 +376,8 @@ requirements:
       - Доклад содержит причины и план мероприятий.
       - При сбое LLM доклад создаётся с детерминированным таймлайном.
     design:
-      - docs/implementation_plan.md#6.4
-      - docs/implementation_plan.md#8
+      - plans/implementation_plan.md#6.4
+      - plans/implementation_plan.md#8
     implementation:
       - docs/data-model.md
       - src/ScheduledJobs/АИС_ПроверкаСроковЗадач
@@ -398,13 +398,13 @@ requirements:
     approval: approved
     source:
       - docs/raw_specification.md#4.8.1
-      - docs/implementation_plan.md#8
+      - plans/implementation_plan.md#8
     acceptance:
       - Промпт и параметры модели передаются в DeepSeek.
       - Ответ валидируется по ожидаемой схеме.
       - Ошибки и токены попадают в аудит.
     design:
-      - docs/implementation_plan.md#8
+      - plans/implementation_plan.md#8
     implementation:
       - src/CommonModules/АИС_ИнтеграцияСLLM
     tests:
@@ -429,8 +429,8 @@ requirements:
       - Версия и активность сохраняются.
       - Аудит ссылается на версию промпта.
     design:
-      - docs/implementation_plan.md#5.3
-      - docs/implementation_plan.md#8
+      - plans/implementation_plan.md#5.3
+      - plans/implementation_plan.md#8
     implementation:
       - src/Catalogs/АИС_ПромптПараметры
     tests:
@@ -447,14 +447,14 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#7
+      - plans/implementation_plan.md#7
     acceptance:
       - Поиск возвращает top-k с source_id и score.
       - Фильтры по типу источника и активности работают.
       - При недоступности RAG 1С использует fallback.
     design:
-      - docs/implementation_plan.md#7.2
-      - docs/implementation_plan.md#7.3
+      - plans/implementation_plan.md#7.2
+      - plans/implementation_plan.md#7.3
     implementation:
       - rag-service/src/rag_service/main.py
       - rag-service/src/rag_service/qdrant_store.py
@@ -474,13 +474,13 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#7.5
+      - plans/implementation_plan.md#7.5
     acceptance:
       - Изменённые записи индексируются повторно.
       - Полная переиндексация удаляет устаревшие точки.
       - Ошибка индексации не блокирует сохранение шаблона.
     design:
-      - docs/implementation_plan.md#7.5
+      - plans/implementation_plan.md#7.5
     implementation:
       - src/CommonModules/АИС_ИнтеграцияСRAG
       - src/ScheduledJobs/АИС_ИндексацияRAG
@@ -501,7 +501,7 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#6.2
+      - plans/implementation_plan.md#6.2
       - docs/raw_specification.md#4.1.4
     acceptance:
       - RAG получает только кандидатов из справочника шаблонов, соответствующего типу действия.
@@ -510,8 +510,8 @@ requirements:
       - Низкая уверенность переводит задачу в ручной выбор.
       - Недоступность RAG не роняет задачу.
     design:
-      - docs/implementation_plan.md#6.2
-      - docs/implementation_plan.md#8
+      - plans/implementation_plan.md#6.2
+      - plans/implementation_plan.md#8
     implementation:
       - src/CommonModules/АИС_ОркестраторЗадач
       - src/CommonModules/АИС_ИнтеграцияСRAG
@@ -531,13 +531,13 @@ requirements:
     approval: approved
     source:
       - docs/raw_specification.md#4.9.1
-      - docs/implementation_plan.md#2
+      - plans/implementation_plan.md#2
     acceptance:
       - Прямое поле не вызывает LLM.
       - Произвольный текст запроса от LLM не исполняется.
       - Пустой или неоднозначный результат обрабатывается как ошибка.
     design:
-      - docs/implementation_plan.md#6.3
+      - plans/implementation_plan.md#6.3
     implementation:
       - src/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
@@ -563,8 +563,8 @@ requirements:
       - Ответ фиксируется в базовой задаче и истории.
       - Повторный ответ не создаёт дубль.
     design:
-      - docs/implementation_plan.md#6.3
-      - docs/implementation_plan.md#6.4
+      - plans/implementation_plan.md#6.3
+      - plans/implementation_plan.md#6.4
     implementation:
       - docs/data-model.md
       - src/CommonModules/АИС_РаботаСЛистомОжидания
@@ -588,7 +588,7 @@ requirements:
       - Ответ внешнего API валидируется по схеме.
       - Ошибки источника не теряют задачу.
     design:
-      - docs/implementation_plan.md#6.3
+      - plans/implementation_plan.md#6.3
     implementation:
       - src/CommonModules/АИС_РазрешительПлейсхолдеров
       - docs/data-model.md
@@ -607,13 +607,13 @@ requirements:
     approval: approved
     source:
       - docs/raw_specification.md#4.9.2
-      - docs/implementation_plan.md#6.3
+      - plans/implementation_plan.md#6.3
     acceptance:
       - Лимиты читаются из config/parameters.yaml.
       - Превышение глубины или числа запросов запускает эскалацию.
       - Изменение лимита не требует изменения кода.
     design:
-      - docs/implementation_plan.md#6.3
+      - plans/implementation_plan.md#6.3
     implementation:
       - config/parameters.yaml
       - src/CommonModules/АИС_РазрешительПлейсхолдеров
@@ -637,10 +637,10 @@ requirements:
       - Проект создаётся со статусом «Проект».
       - ДЛ может редактировать и подписать проект.
     design:
-      - docs/implementation_plan.md#6.2
+      - plans/implementation_plan.md#6.2
     implementation:
       - src/CommonModules/АИС_ГенераторДокументов
-      - docs/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
     tests:
       - TEST-FR-024-01
       - TEST-FR-024-02
@@ -663,10 +663,10 @@ requirements:
       - Доклад содержит вид и адресата.
       - Документы связаны с задачей.
     design:
-      - docs/implementation_plan.md#5.4
+      - plans/implementation_plan.md#5.4
     implementation:
-      - docs/implementation_plan.md#5.1
-      - docs/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
     tests:
       - TEST-FR-025-01
     test_files:
@@ -687,7 +687,7 @@ requirements:
       - Задача возобновляется только из ожидания по этому действию.
       - Файлы сохраняются.
     design:
-      - docs/implementation_plan.md#5.4
+      - plans/implementation_plan.md#5.4
     implementation:
       - docs/data-model.md
     tests:
@@ -710,7 +710,7 @@ requirements:
       - Повторный ответ не меняет состояние.
       - Ответ сохраняется в аудите.
     design:
-      - docs/implementation_plan.md#6.4
+      - plans/implementation_plan.md#6.4
     implementation:
       - docs/data-model.md
     tests:
@@ -733,8 +733,8 @@ requirements:
       - Промпт и ответ сохраняются полностью.
       - Ошибки и длительность сохраняются.
     design:
-      - docs/implementation_plan.md#5.5
-      - docs/implementation_plan.md#8
+      - plans/implementation_plan.md#5.5
+      - plans/implementation_plan.md#8
     implementation:
       - src/InformationRegisters/АИС_ИсторияДействийИИ
       - src/CommonModules/АИС_АудитДействийИИ
@@ -759,7 +759,7 @@ requirements:
       - Видны промпты, ответы и ошибки.
       - Журнал доступен аудитору только для чтения.
     design:
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#9
     implementation:
       - src/Reports/АИС_ЖурналЗадачи
     tests:
@@ -782,7 +782,7 @@ requirements:
       - Фильтры по состоянию, сроку и типу работают.
       - Просроченные задачи выделены.
     design:
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#9
     implementation:
       - src/DataProcessors/АИС_РабочееМестоДЛ
     tests:
@@ -805,7 +805,7 @@ requirements:
       - Кнопки «Возобновить», «Эскалация», «Завершить вручную» работают по правам.
       - Действия пишутся в аудит.
     design:
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#9
     implementation:
       - src/DataProcessors/АИС_ФормаЗадачи
     tests:
@@ -828,10 +828,10 @@ requirements:
       - Панель источников соответствует плейсхолдерам.
       - Подпись меняет статус и завершает задачу.
     design:
-      - docs/implementation_plan.md#6.2
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#6.2
+      - plans/implementation_plan.md#9
     implementation:
-      - docs/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
       - src/DataProcessors/АИС_ФормаПроектаДокумента
     tests:
       - TEST-FR-032-01
@@ -853,7 +853,7 @@ requirements:
       - Health и тест интеграций доступны.
       - Задачи ДЛ недоступны администратору.
     design:
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#9
     implementation:
       - src/DataProcessors/АИС_АдминПанель
       - src/DataProcessors/АИС_ТестИнтеграцииСLLM
@@ -872,13 +872,13 @@ requirements:
     approval: approved
     source:
       - docs/raw_specification.md#4.13.4
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#9
     acceptance:
       - Статистика фильтруется по периоду и типу.
       - Журнал задачи доступен по ID.
       - Отчёт по срывам содержит причины и мероприятия.
     design:
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#9
     implementation:
       - src/Reports/АИС_СтатистикаЗадач
       - src/Reports/АИС_АнализСрывовСроков
@@ -902,7 +902,7 @@ requirements:
       - Ручное завершение требует комментария.
       - Все действия аудируются.
     design:
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#9
     implementation:
       - src/CommonModules/АИС_ОркестраторЗадач
       - src/DataProcessors/АИС_РабочееМестоДЛ
@@ -920,13 +920,13 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#6.5
+      - plans/implementation_plan.md#6.5
     acceptance:
       - Ключ идемпотентности уникален.
       - Повторный ответ не меняет плейсхолдер.
       - Дубликаты фиксируются в аудите.
     design:
-      - docs/implementation_plan.md#6.5
+      - plans/implementation_plan.md#6.5
     implementation:
       - src/CommonModules/АИС_ОркестраторЗадач
       - src/InformationRegisters/АИС_КонтекстЗадачИИ
@@ -944,15 +944,15 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#6.3
-      - docs/implementation_plan.md#6.5
+      - plans/implementation_plan.md#6.3
+      - plans/implementation_plan.md#6.5
     acceptance:
       - Одна задача не обрабатывается двумя заданиями.
       - Устаревший результат не применяется.
       - Пул заданий ограничен настройкой.
     design:
-      - docs/implementation_plan.md#6.3
-      - docs/implementation_plan.md#6.5
+      - plans/implementation_plan.md#6.3
+      - plans/implementation_plan.md#6.5
     implementation:
       - src/CommonModules/АИС_ОркестраторЗадач
       - src/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
@@ -971,13 +971,13 @@ requirements:
     approval: approved
     source:
       - docs/raw_specification.md#4.4.3
-      - docs/implementation_plan.md#5.4
+      - plans/implementation_plan.md#5.4
     acceptance:
       - Запрос без токена отклоняется.
       - Повторный ключ не создаёт дубль.
       - Событие создаёт задачу.
     design:
-      - docs/implementation_plan.md#5.4
+      - plans/implementation_plan.md#5.4
     implementation:
       - src/HTTPServices/АИС_ПриемСобытий
     tests:
@@ -1000,7 +1000,7 @@ requirements:
       - Просрочка определяется по нормативному сроку.
       - Уведомление не раскрывает чужие задачи.
     design:
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#9
     implementation:
       - src/DataProcessors/АИС_РабочееМестоДЛ
     tests:
@@ -1017,14 +1017,14 @@ requirements:
     priority: could
     approval: proposed
     source:
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#9
     acceptance:
       - Значение сопровождается цитатой и confidence.
       - Низкая уверенность требует ручного ввода.
       - Без подтверждения ДЛ значение не используется в подписанном документе.
     design:
-      - docs/implementation_plan.md#6.3
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#6.3
+      - plans/implementation_plan.md#9
     implementation:
       - src/CommonModules/АИС_РазрешительПлейсхолдеров
       - rag-service/src/rag_service/api/search.py
@@ -1042,14 +1042,14 @@ requirements:
     priority: could
     approval: proposed
     source:
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#9
     acceptance:
       - Каждая точка содержит position_ids.
       - Поиск фильтрует по ACL.
       - Пользователь не получает чужие фрагменты.
     design:
-      - docs/implementation_plan.md#7.3
-      - docs/implementation_plan.md#9
+      - plans/implementation_plan.md#7.3
+      - plans/implementation_plan.md#9
     implementation:
       - rag-service/src/rag_service/qdrant_store.py
       - src/CommonModules/АИС_ИнтеграцияСRAG
@@ -1070,17 +1070,17 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
     acceptance:
       - Составлен и согласован маппинг объектов спецификации на объекты базы.
       - Штатные объекты не дублируются в расширении.
       - Новые объекты имеют префикс `АИС_`.
       - Расширение применяется к демо-базе без изменения базовой конфигурации.
     design:
-      - docs/implementation_plan.md#5.1
-      - docs/implementation_plan.md#5.9
+      - plans/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.9
     implementation:
-      - docs/implementation_plan.md#5.1
+      - plans/implementation_plan.md#5.1
       - src/Configuration/Configuration.mdo
     tests:
       - TEST-FR-042-01
@@ -1110,7 +1110,7 @@ requirements:
       - Сборка блокируется, пока обязательные разделы не подтверждены.
     design:
       - docs/data-model.md#13-разделы-документа-как-специализированные-плейсхолдеры
-      - docs/implementation_plan.md#5.3
+      - plans/implementation_plan.md#5.3
     implementation:
       - src/Enums/АИС_СостоянияРазделов
       - src/Catalogs/АИС_РазделыДокумента
@@ -1148,7 +1148,7 @@ requirements:
     design:
       - docs/template-factory.md
       - docs/data-model.md#14-мастер-шаблонов
-      - docs/implementation_plan.md#510-мастер-шаблонов
+      - plans/implementation_plan.md#510-мастер-шаблонов
     implementation:
       - src/DataProcessors/АИС_МастерШаблонов
       - src/CommonModules/АИС_ГенераторПравилШаблона
@@ -1192,7 +1192,7 @@ requirements:
       - docs/template-factory.md#15-сравнение-шаблонов
       - docs/template-factory.md#16-алгоритм-сравнения
       - docs/data-model.md#14-мастер-шаблонов
-      - docs/implementation_plan.md#510-мастер-шаблонов
+      - plans/implementation_plan.md#510-мастер-шаблонов
     implementation:
       - src/CommonModules/АИС_СравнениеШаблонов
       - src/InformationRegisters/АИС_СравненияШаблонов
@@ -1230,7 +1230,7 @@ requirements:
     design:
       - docs/proofreading.md
       - docs/data-model.md#15-вычитка-документов
-      - docs/implementation_plan.md#511-вычитка-документов
+      - plans/implementation_plan.md#511-вычитка-документов
     implementation:
       - src/CommonModules/АИС_ПроверкаДокумента
       - src/DataProcessors/АИС_ПанельЗамечаний
@@ -1263,8 +1263,8 @@ requirements:
       - LLM-вызовы не блокируют UI.
       - Длительная операция показывает прогресс.
     design:
-      - docs/implementation_plan.md#9
-      - docs/implementation_plan.md#11
+      - plans/implementation_plan.md#9
+      - plans/implementation_plan.md#11
     implementation:
       - src/DataProcessors/АИС_РабочееМестоДЛ
       - src/CommonModules/АИС_ОркестраторЗадач
@@ -1288,7 +1288,7 @@ requirements:
       - Сетевые задержки учитываются отдельно.
       - Превышение логируется.
     design:
-      - docs/implementation_plan.md#8
+      - plans/implementation_plan.md#8
     implementation:
       - src/CommonModules/АИС_ИнтеграцияСLLM
     tests:
@@ -1311,7 +1311,7 @@ requirements:
       - Прямые поля и запросы к БД укладываются в лимит.
       - Превышение логируется.
     design:
-      - docs/implementation_plan.md#6.3
+      - plans/implementation_plan.md#6.3
     implementation:
       - src/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
@@ -1335,7 +1335,7 @@ requirements:
       - Пакет ограничен настройкой.
       - UI-операции не ждут регламентное задание.
     design:
-      - docs/implementation_plan.md#6.5
+      - plans/implementation_plan.md#6.5
     implementation:
       - src/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
       - src/CommonModules/АИС_ОркестраторЗадач
@@ -1359,7 +1359,7 @@ requirements:
       - Ошибка откатывает набор записей.
       - Аудит не теряется при ошибке.
     design:
-      - docs/implementation_plan.md#6.5
+      - plans/implementation_plan.md#6.5
     implementation:
       - src/CommonModules/АИС_ОркестраторЗадач
       - src/CommonModules/АИС_АудитДействийИИ
@@ -1383,8 +1383,8 @@ requirements:
       - Повтор не создаёт дубль.
       - Ошибка видна в аудите и UI.
     design:
-      - docs/implementation_plan.md#6.1
-      - docs/implementation_plan.md#8
+      - plans/implementation_plan.md#6.1
+      - plans/implementation_plan.md#8
     implementation:
       - src/CommonModules/АИС_ИнтеграцияСLLM
       - src/CommonModules/АИС_ОркестраторЗадач
@@ -1408,7 +1408,7 @@ requirements:
       - Просроченные запросы обрабатываются.
       - Ответы не теряются.
     design:
-      - docs/implementation_plan.md#5.3
+      - plans/implementation_plan.md#5.3
     implementation:
       - src/Catalogs/АИС_ЛистОжидания
     tests:
@@ -1431,7 +1431,7 @@ requirements:
       - Секреты не пишутся в аудит.
       - Ротация не требует изменения кода.
     design:
-      - docs/implementation_plan.md#5.7
+      - plans/implementation_plan.md#5.7
     implementation:
       - src/CommonModules/АИС_СервисныеФункции
       - rag-service/.env.example
@@ -1456,7 +1456,7 @@ requirements:
       - Администратор не видит задачи.
       - Вышестоящее ДЛ видит только адресованные доклады.
     design:
-      - docs/implementation_plan.md#5.8
+      - plans/implementation_plan.md#5.8
     implementation:
       - src/Roles/АИС_ДолжностноеЛицо
       - src/Roles/АИС_ВышестоящееДолжностноеЛицо
@@ -1481,7 +1481,7 @@ requirements:
       - Аудитор не может изменить или удалить запись.
       - Попытка изменения отклоняется.
     design:
-      - docs/implementation_plan.md#5.8
+      - plans/implementation_plan.md#5.8
     implementation:
       - src/Roles/АИС_Аудитор
     tests:
@@ -1505,8 +1505,8 @@ requirements:
       - Нет зависших блокировок.
       - Время отклика UI не превышает 2 секунды.
     design:
-      - docs/implementation_plan.md#6.5
-      - docs/implementation_plan.md#11
+      - plans/implementation_plan.md#6.5
+      - plans/implementation_plan.md#11
     implementation:
       - src/ScheduledJobs/АИС_ОркестрацияАктивныхЗадач
       - config/parameters.yaml
@@ -1530,10 +1530,10 @@ requirements:
       - HTTP-контракты описаны.
       - Схема 1С не меняется при выносе.
     design:
-      - docs/implementation_plan.md#3
+      - plans/implementation_plan.md#3
     implementation:
       - src/HTTPServices/АИС_ПриемСобытий
-      - docs/implementation_plan.md
+      - plans/implementation_plan.md
     tests:
       - TEST-NFR-012-01
     test_files:
@@ -1554,8 +1554,8 @@ requirements:
       - Версия промпта и модель сохранены.
       - Журнал задачи воспроизводит порядок действий.
     design:
-      - docs/implementation_plan.md#5.5
-      - docs/implementation_plan.md#8
+      - plans/implementation_plan.md#5.5
+      - plans/implementation_plan.md#8
     implementation:
       - src/InformationRegisters/АИС_ИсторияДействийИИ
       - src/CommonModules/АИС_АудитДействийИИ
@@ -1582,8 +1582,8 @@ requirements:
       - Протокольные и алгоритмические константы явно отделены от параметров.
       - Структурные числа инструментальных скриптов и тестов не относятся к параметрам приложения.
     design:
-      - docs/development.md
-      - docs/implementation_plan.md#13
+      - guides/development.md
+      - plans/implementation_plan.md#13
     implementation:
       - config/parameters.yaml
       - config/parameters.schema.json
@@ -1615,7 +1615,7 @@ requirements:
       - Маркер со ссылкой на отсутствующую или несуществующую запись TODO.md тоже блокируется.
       - Запись в TODO.md без маркера, ссылающегося на неё, не имеет эффекта — не ослабляет проверку.
     design:
-      - docs/development.md
+      - guides/development.md
     implementation:
       - scripts/checks/no_stubs.py
     tests:
@@ -1638,8 +1638,8 @@ requirements:
       - Тесты изолируют внешние сервисы.
       - Пре-коммит запускает быстрые тесты.
     design:
-      - docs/development.md
-      - docs/implementation_plan.md#11
+      - guides/development.md
+      - plans/implementation_plan.md#11
     implementation:
       - tests/
       - pyproject.toml
@@ -1667,7 +1667,7 @@ requirements:
       - Хук BSL запускается при появлении BSL-файлов.
       - Хуки можно запустить через make lint.
     design:
-      - docs/development.md
+      - guides/development.md
     implementation:
       - .pre-commit-config.yaml
       - Makefile
@@ -1745,10 +1745,10 @@ requirements:
       - .env не коммитится.
       - В документации нет реальных ключей.
     design:
-      - docs/development.md
+      - guides/development.md
     implementation:
       - .pre-commit-config.yaml
-      - docs/development.md
+      - guides/development.md
     tests:
       - TEST-NFR-020-01
     test_files:
@@ -1763,13 +1763,13 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#7.1
+      - plans/implementation_plan.md#7.1
     acceptance:
       - Сервис не пишет в собственную БД.
       - Индекс можно восстановить из 1С.
       - Перезапуск не теряет доменные данные.
     design:
-      - docs/implementation_plan.md#7
+      - plans/implementation_plan.md#7
     implementation:
       - rag-service/src/rag_service/main.py
     tests:
@@ -1786,14 +1786,14 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#7.6
+      - plans/implementation_plan.md#7.6
       - docs/raw_specification.md#5.5
     acceptance:
       - Логи содержат correlation ID.
       - Тексты документов не логируются.
       - Секреты маскируются.
     design:
-      - docs/implementation_plan.md#7.6
+      - plans/implementation_plan.md#7.6
     implementation:
       - rag-service/src/rag_service/main.py
       - src/CommonModules/АИС_АудитДействийИИ
@@ -1817,7 +1817,7 @@ requirements:
       - Некорректные значения отклоняются.
       - Перекрёстные ограничения проверяются.
     design:
-      - docs/development.md
+      - guides/development.md
     implementation:
       - config/parameters.schema.json
       - scripts/config/validate.py
@@ -1835,14 +1835,14 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#2
-      - docs/implementation_plan.md#6.3
+      - plans/implementation_plan.md#2
+      - plans/implementation_plan.md#6.3
     acceptance:
       - В коде нет исполнения текста запроса от LLM.
       - Параметры валидируются по именам и типам.
       - Нарушение блокируется тестом.
     design:
-      - docs/implementation_plan.md#6.3
+      - plans/implementation_plan.md#6.3
     implementation:
       - src/CommonModules/АИС_РазрешительПлейсхолдеров
     tests:
@@ -1859,14 +1859,14 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#6.1
-      - docs/implementation_plan.md#7.6
+      - plans/implementation_plan.md#6.1
+      - plans/implementation_plan.md#7.6
     acceptance:
       - RAG fallback использует список шаблонов из 1С.
       - LLM fallback сохраняет задачу.
       - Fallback фиксируется в аудите.
     design:
-      - docs/implementation_plan.md#6.1
+      - plans/implementation_plan.md#6.1
     implementation:
       - src/CommonModules/АИС_ОркестраторЗадач
       - src/CommonModules/АИС_ИнтеграцияСRAG
@@ -1883,14 +1883,14 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#8
-      - docs/implementation_plan.md#13
+      - plans/implementation_plan.md#8
+      - plans/implementation_plan.md#13
     acceptance:
       - Таймауты читаются из конфигурации.
       - Повторы и backoff настраиваются.
       - Изменение не требует правки кода.
     design:
-      - docs/implementation_plan.md#8
+      - plans/implementation_plan.md#8
     implementation:
       - config/parameters.yaml
       - src/CommonModules/АИС_ИнтеграцияСLLM
@@ -1909,13 +1909,13 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#12
+      - plans/implementation_plan.md#12
     acceptance:
       - Проверка сертификата не отключается.
       - Ошибка TLS диагностируется.
       - Тест интеграции проверяет соединение.
     design:
-      - docs/implementation_plan.md#12
+      - plans/implementation_plan.md#12
     implementation:
       - src/CommonModules/АИС_ИнтеграцияСLLM
       - rag-service/src/rag_service/gigachat.py
@@ -1933,13 +1933,13 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#11
+      - plans/implementation_plan.md#11
     acceptance:
       - Юнит-тесты не требуют сети.
       - Интеграционные тесты используют контейнер.
       - Секреты не нужны для тестов.
     design:
-      - docs/implementation_plan.md#11
+      - plans/implementation_plan.md#11
     implementation:
       - tests/
       - rag-service/tests/
@@ -1964,7 +1964,7 @@ requirements:
       - Строгий режим mypy для scripts и tests.
       - Форматирование проверяется.
     design:
-      - docs/development.md
+      - guides/development.md
     implementation:
       - pyproject.toml
       - .pre-commit-config.yaml
@@ -1984,16 +1984,16 @@ requirements:
     approval: approved
     source:
       - docs/raw_specification.md#1.3
-      - docs/implementation_plan.md#2
+      - plans/implementation_plan.md#2
     acceptance:
       - Проект расширения открывается в EDT 2026.1.3.
       - Режим совместимости расширения равен режиму совместимости базы.
       - Расширение применяется к демо-базе 2.1.38.11 без изменения базовой конфигурации.
       - Проверка конфигурации проходит на 8.3.27.
     design:
-      - docs/implementation_plan.md#2
-      - docs/implementation_plan.md#10
-      - docs/development.md#12
+      - plans/implementation_plan.md#2
+      - plans/implementation_plan.md#10
+      - guides/development.md#12
     implementation:
       - src/Configuration/Configuration.mdo
     tests:
@@ -2011,16 +2011,16 @@ requirements:
     priority: must
     approval: approved
     source:
-      - docs/implementation_plan.md#2
-      - docs/implementation_plan.md#5.9
+      - plans/implementation_plan.md#2
+      - plans/implementation_plan.md#5.9
     acceptance:
       - Базовая конфигурация не изменяется при применении расширения.
       - Расширение применяется к чистой копии демо-базы.
       - Расширение снимается без потери доменных данных.
       - Проверка выполняется на копии базы, а не на исходной демо-базе.
     design:
-      - docs/implementation_plan.md#5.9
-      - docs/development.md#12
+      - plans/implementation_plan.md#5.9
+      - guides/development.md#12
     implementation:
       - src/Configuration/Configuration.mdo
     tests:
@@ -2049,7 +2049,7 @@ requirements:
       - При перегрузке локальной LLM есть очередь или деградация до быстрой проверки.
     design:
       - docs/proofreading.md#5-квоты
-      - docs/implementation_plan.md#511-вычитка-документов
+      - plans/implementation_plan.md#511-вычитка-документов
     implementation:
       - src/InformationRegisters/АИС_ЛимитыВычитки
       - src/CommonModules/АИС_ПроверкаДокумента

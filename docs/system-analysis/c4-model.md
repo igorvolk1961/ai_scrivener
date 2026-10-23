@@ -330,7 +330,7 @@ flowchart LR
 
 ## Связанные документы
 
-- `docs/implementation_plan.md` §3, §7, §8 — архитектура, RAG-сервис, интеграция с LLM.
+- `plans/implementation_plan.md` §3, §7, §8 — архитектура, RAG-сервис, интеграция с LLM.
 - `docs/data-model.md` — объекты расширения и повторно используемые объекты базы.
 - `docs/process-diagrams.md` — процессы AS-IS и TO-BE.
 - `docs/system-analysis/view-and-scope.md` — границы проекта.

@@ -19,7 +19,7 @@
 
 **Источники:** `docs/raw_specification.md#4.1.1`, `docs/raw_specification.md#4.1.2`, `docs/raw_specification.md#4.1.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.1`, `docs/implementation_plan.md#5.3`
+**Проектирование:** `plans/implementation_plan.md#5.1`, `plans/implementation_plan.md#5.3`
 
 **Критерии приёмки:**
 
@@ -40,7 +40,7 @@
 
 **Источники:** `docs/raw_specification.md#4.1.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`, `docs/implementation_plan.md#5.8`
+**Проектирование:** `plans/implementation_plan.md#5.3`, `plans/implementation_plan.md#5.8`
 
 **Критерии приёмки:**
 
@@ -60,7 +60,7 @@
 
 **Источники:** `docs/raw_specification.md#4.1.4`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`
+**Проектирование:** `plans/implementation_plan.md#5.3`
 
 **Критерии приёмки:**
 
@@ -84,7 +84,7 @@
 
 **Источники:** `docs/raw_specification.md#4.2.1`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`, `docs/implementation_plan.md#6.3`
+**Проектирование:** `plans/implementation_plan.md#5.3`, `plans/implementation_plan.md#6.3`
 
 **Критерии приёмки:**
 
@@ -104,7 +104,7 @@
 
 **Источники:** `docs/raw_specification.md#4.2.2`, `docs/raw_specification.md#4.3.1`, `docs/raw_specification.md#4.3.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`
+**Проектирование:** `plans/implementation_plan.md#5.3`
 
 **Критерии приёмки:**
 
@@ -125,7 +125,7 @@
 
 **Источники:** `docs/raw_specification.md#4.3.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.5`
+**Проектирование:** `plans/implementation_plan.md#5.5`
 
 **Критерии приёмки:**
 
@@ -145,7 +145,7 @@
 
 **Источники:** `docs/raw_specification.md#4.3.4`
 
-**Проектирование:** `docs/implementation_plan.md#5.4`, `docs/implementation_plan.md#10`
+**Проектирование:** `plans/implementation_plan.md#5.4`, `plans/implementation_plan.md#10`
 
 **Критерии приёмки:**
 
@@ -170,7 +170,7 @@
 
 **Источники:** `docs/raw_specification.md#4.4.1`, `docs/raw_specification.md#4.1.5`
 
-**Проектирование:** `docs/implementation_plan.md#6.2`, `docs/implementation_plan.md#6.5`
+**Проектирование:** `plans/implementation_plan.md#6.2`, `plans/implementation_plan.md#6.5`
 
 **Критерии приёмки:**
 
@@ -192,7 +192,7 @@
 
 **Источники:** `docs/raw_specification.md#4.4.2`, `docs/raw_specification.md#4.4.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.4`
+**Проектирование:** `plans/implementation_plan.md#5.4`
 
 **Критерии приёмки:**
 
@@ -213,7 +213,7 @@
 
 **Источники:** `docs/raw_specification.md#4.5.1`
 
-**Проектирование:** `docs/implementation_plan.md#5.5`, `docs/implementation_plan.md#6.1`
+**Проектирование:** `plans/implementation_plan.md#5.5`, `plans/implementation_plan.md#6.1`
 
 **Критерии приёмки:**
 
@@ -233,7 +233,7 @@
 
 **Источники:** `docs/raw_specification.md#4.5.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.5`
+**Проектирование:** `plans/implementation_plan.md#5.5`
 
 **Критерии приёмки:**
 
@@ -253,7 +253,7 @@
 
 **Источники:** `docs/raw_specification.md#4.6.1`, `docs/raw_specification.md#4.6.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`, `docs/implementation_plan.md#6.4`
+**Проектирование:** `plans/implementation_plan.md#5.3`, `plans/implementation_plan.md#6.4`
 
 **Критерии приёмки:**
 
@@ -273,7 +273,7 @@
 
 **Источники:** `docs/raw_specification.md#4.6.2`
 
-**Проектирование:** `docs/implementation_plan.md#6.4`
+**Проектирование:** `plans/implementation_plan.md#6.4`
 
 **Критерии приёмки:**
 
@@ -293,7 +293,7 @@
 
 **Источники:** `docs/raw_specification.md#4.7.1`
 
-**Проектирование:** `docs/implementation_plan.md#6.4`, `docs/implementation_plan.md#8`
+**Проектирование:** `plans/implementation_plan.md#6.4`, `plans/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -311,9 +311,9 @@
 
 Общий модуль отправляет промпты в DeepSeek, поддерживает JSON-режим, таймауты, повторы, учёт токенов и возвращает структурированный результат.
 
-**Источники:** `docs/raw_specification.md#4.8.1`, `docs/implementation_plan.md#8`
+**Источники:** `docs/raw_specification.md#4.8.1`, `plans/implementation_plan.md#8`
 
-**Проектирование:** `docs/implementation_plan.md#8`
+**Проектирование:** `plans/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -333,7 +333,7 @@
 
 **Источники:** `docs/raw_specification.md#4.8.2`
 
-**Проектирование:** `docs/implementation_plan.md#5.3`, `docs/implementation_plan.md#8`
+**Проектирование:** `plans/implementation_plan.md#5.3`, `plans/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -352,9 +352,9 @@
 
 RAG-сервис индексирует шаблоны и должностные обязанности в Qdrant и возвращает релевантные фрагменты с метаданными и оценкой.
 
-**Источники:** `docs/implementation_plan.md#7`
+**Источники:** `plans/implementation_plan.md#7`
 
-**Проектирование:** `docs/implementation_plan.md#7.2`, `docs/implementation_plan.md#7.3`
+**Проектирование:** `plans/implementation_plan.md#7.2`, `plans/implementation_plan.md#7.3`
 
 **Критерии приёмки:**
 
@@ -372,9 +372,9 @@ RAG-сервис индексирует шаблоны и должностные
 
 1С передаёт изменённые шаблоны и обязанности в RAG-сервис, поддерживает дельта-индексацию, полную переиндексацию и удаление устаревших точек.
 
-**Источники:** `docs/implementation_plan.md#7.5`
+**Источники:** `plans/implementation_plan.md#7.5`
 
-**Проектирование:** `docs/implementation_plan.md#7.5`
+**Проектирование:** `plans/implementation_plan.md#7.5`
 
 **Критерии приёмки:**
 
@@ -392,9 +392,9 @@ RAG-сервис индексирует шаблоны и должностные
 
 Кандидаты шаблона сначала сужаются детерминированно (тип действия → нужный справочник шаблонов; требуемый вид документа из обязанности, если задан), затем оркестратор получает top-k кандидатов из RAG внутри этого набора, передаёт их DeepSeek и выбирает шаблон; при низкой уверенности или ошибке используется ручной выбор.
 
-**Источники:** `docs/implementation_plan.md#6.2`, `docs/raw_specification.md#4.1.4`
+**Источники:** `plans/implementation_plan.md#6.2`, `docs/raw_specification.md#4.1.4`
 
-**Проектирование:** `docs/implementation_plan.md#6.2`, `docs/implementation_plan.md#8`
+**Проектирование:** `plans/implementation_plan.md#6.2`, `plans/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -414,9 +414,9 @@ RAG-сервис индексирует шаблоны и должностные
 
 Прямые поля заполняются из источника триггера; запросы к БД выполняются по утверждённым шаблонам с параметрами, которые заполняет LLM.
 
-**Источники:** `docs/raw_specification.md#4.9.1`, `docs/implementation_plan.md#2`
+**Источники:** `docs/raw_specification.md#4.9.1`, `plans/implementation_plan.md#2`
 
-**Проектирование:** `docs/implementation_plan.md#6.3`
+**Проектирование:** `plans/implementation_plan.md#6.3`
 
 **Критерии приёмки:**
 
@@ -436,7 +436,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.9.1`
 
-**Проектирование:** `docs/implementation_plan.md#6.3`, `docs/implementation_plan.md#6.4`
+**Проектирование:** `plans/implementation_plan.md#6.3`, `plans/implementation_plan.md#6.4`
 
 **Критерии приёмки:**
 
@@ -455,9 +455,9 @@ RAG-сервис индексирует шаблоны и должностные
 
 Глубина рекурсии, число запросов на задачу и параллелизм берутся из конфигурационного файла; при превышении задача переводится в эскалацию.
 
-**Источники:** `docs/raw_specification.md#4.9.2`, `docs/implementation_plan.md#6.3`
+**Источники:** `docs/raw_specification.md#4.9.2`, `plans/implementation_plan.md#6.3`
 
-**Проектирование:** `docs/implementation_plan.md#6.3`
+**Проектирование:** `plans/implementation_plan.md#6.3`
 
 **Критерии приёмки:**
 
@@ -477,7 +477,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.10.1`
 
-**Проектирование:** `docs/implementation_plan.md#6.2`
+**Проектирование:** `plans/implementation_plan.md#6.2`
 
 **Критерии приёмки:**
 
@@ -497,7 +497,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.11.2`
 
-**Проектирование:** `docs/implementation_plan.md#6.4`
+**Проектирование:** `plans/implementation_plan.md#6.4`
 
 **Критерии приёмки:**
 
@@ -517,7 +517,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.12.1`
 
-**Проектирование:** `docs/implementation_plan.md#5.5`, `docs/implementation_plan.md#8`
+**Проектирование:** `plans/implementation_plan.md#5.5`, `plans/implementation_plan.md#8`
 
 **Критерии приёмки:**
 
@@ -537,7 +537,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.12.2`
 
-**Проектирование:** `docs/implementation_plan.md#9`
+**Проектирование:** `plans/implementation_plan.md#9`
 
 **Критерии приёмки:**
 
@@ -557,7 +557,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.13.1`
 
-**Проектирование:** `docs/implementation_plan.md#9`
+**Проектирование:** `plans/implementation_plan.md#9`
 
 **Критерии приёмки:**
 
@@ -577,7 +577,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.13.2`
 
-**Проектирование:** `docs/implementation_plan.md#9`
+**Проектирование:** `plans/implementation_plan.md#9`
 
 **Критерии приёмки:**
 
@@ -597,7 +597,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.13.3`
 
-**Проектирование:** `docs/implementation_plan.md#6.2`, `docs/implementation_plan.md#9`
+**Проектирование:** `plans/implementation_plan.md#6.2`, `plans/implementation_plan.md#9`
 
 **Критерии приёмки:**
 
@@ -617,7 +617,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.13.4`
 
-**Проектирование:** `docs/implementation_plan.md#9`
+**Проектирование:** `plans/implementation_plan.md#9`
 
 **Критерии приёмки:**
 
@@ -637,7 +637,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.13.2`
 
-**Проектирование:** `docs/implementation_plan.md#9`
+**Проектирование:** `plans/implementation_plan.md#9`
 
 **Критерии приёмки:**
 
@@ -655,9 +655,9 @@ RAG-сервис индексирует шаблоны и должностные
 
 Повторная регистрация триггера или ответа не создаёт дублей и не меняет состояние задачи повторно.
 
-**Источники:** `docs/implementation_plan.md#6.5`
+**Источники:** `plans/implementation_plan.md#6.5`
 
-**Проектирование:** `docs/implementation_plan.md#6.5`
+**Проектирование:** `plans/implementation_plan.md#6.5`
 
 **Критерии приёмки:**
 
@@ -675,9 +675,9 @@ RAG-сервис индексирует шаблоны и должностные
 
 Несколько фоновых заданий обрабатывают разные задачи параллельно; одна задача защищена блокировкой и версией от одновременной обработки.
 
-**Источники:** `docs/implementation_plan.md#6.3`, `docs/implementation_plan.md#6.5`
+**Источники:** `plans/implementation_plan.md#6.3`, `plans/implementation_plan.md#6.5`
 
-**Проектирование:** `docs/implementation_plan.md#6.3`, `docs/implementation_plan.md#6.5`
+**Проектирование:** `plans/implementation_plan.md#6.3`, `plans/implementation_plan.md#6.5`
 
 **Критерии приёмки:**
 
@@ -695,9 +695,9 @@ RAG-сервис индексирует шаблоны и должностные
 
 Расширение переиспользует штатные объекты Документооборота ПРОФ для пользователей и физических лиц, должностей, структуры предприятия, справочников входящих, исходящих и внутренних документов, задач исполнителя и файлов; новые объекты создаются только для ИИ-специфичных данных и получают префикс `АИС_`.
 
-**Источники:** `docs/implementation_plan.md#5.1`
+**Источники:** `plans/implementation_plan.md#5.1`
 
-**Проектирование:** `docs/implementation_plan.md#5.1`, `docs/implementation_plan.md#5.9`
+**Проектирование:** `plans/implementation_plan.md#5.1`, `plans/implementation_plan.md#5.9`
 
 **Критерии приёмки:**
 
@@ -718,7 +718,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.5.4`, `docs/raw_specification.md#4.6.1`
 
-**Проектирование:** `docs/data-model.md#13-разделы-документа-как-специализированные-плейсхолдеры`, `docs/implementation_plan.md#5.3`
+**Проектирование:** `docs/data-model.md#13-разделы-документа-как-специализированные-плейсхолдеры`, `plans/implementation_plan.md#5.3`
 
 **Критерии приёмки:**
 
@@ -740,7 +740,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.14`, `docs/raw_specification.md#8`
 
-**Проектирование:** `docs/template-factory.md`, `docs/data-model.md#14-мастер-шаблонов`, `docs/implementation_plan.md#510-мастер-шаблонов`
+**Проектирование:** `docs/template-factory.md`, `docs/data-model.md#14-мастер-шаблонов`, `plans/implementation_plan.md#510-мастер-шаблонов`
 
 **Критерии приёмки:**
 
@@ -765,7 +765,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.14.6`, `docs/raw_specification.md#4.14.7`
 
-**Проектирование:** `docs/template-factory.md#15-сравнение-шаблонов`, `docs/template-factory.md#16-алгоритм-сравнения`, `docs/data-model.md#14-мастер-шаблонов`, `docs/implementation_plan.md#510-мастер-шаблонов`
+**Проектирование:** `docs/template-factory.md#15-сравнение-шаблонов`, `docs/template-factory.md#16-алгоритм-сравнения`, `docs/data-model.md#14-мастер-шаблонов`, `plans/implementation_plan.md#510-мастер-шаблонов`
 
 **Критерии приёмки:**
 
@@ -789,7 +789,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.15`, `docs/raw_specification.md#4.15.5`
 
-**Проектирование:** `docs/proofreading.md`, `docs/data-model.md#15-вычитка-документов`, `docs/implementation_plan.md#511-вычитка-документов`
+**Проектирование:** `docs/proofreading.md`, `docs/data-model.md#15-вычитка-документов`, `plans/implementation_plan.md#511-вычитка-документов`
 
 **Критерии приёмки:**
 
@@ -815,7 +815,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.9.1`
 
-**Проектирование:** `docs/implementation_plan.md#6.3`
+**Проектирование:** `plans/implementation_plan.md#6.3`
 
 **Критерии приёмки:**
 
@@ -835,7 +835,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.10.2`, `docs/raw_specification.md#4.10.3`
 
-**Проектирование:** `docs/implementation_plan.md#5.4`
+**Проектирование:** `plans/implementation_plan.md#5.4`
 
 **Критерии приёмки:**
 
@@ -855,7 +855,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.11.1`
 
-**Проектирование:** `docs/implementation_plan.md#5.4`
+**Проектирование:** `plans/implementation_plan.md#5.4`
 
 **Критерии приёмки:**
 
@@ -873,9 +873,9 @@ RAG-сервис индексирует шаблоны и должностные
 
 Отчёты показывают статистику задач, журнал задачи и анализ срывов сроков без раскрытия лишних данных.
 
-**Источники:** `docs/raw_specification.md#4.13.4`, `docs/implementation_plan.md#9`
+**Источники:** `docs/raw_specification.md#4.13.4`, `plans/implementation_plan.md#9`
 
-**Проектирование:** `docs/implementation_plan.md#9`
+**Проектирование:** `plans/implementation_plan.md#9`
 
 **Критерии приёмки:**
 
@@ -895,7 +895,7 @@ RAG-сервис индексирует шаблоны и должностные
 
 **Источники:** `docs/raw_specification.md#4.13.1`
 
-**Проектирование:** `docs/implementation_plan.md#9`
+**Проектирование:** `plans/implementation_plan.md#9`
 
 **Критерии приёмки:**
 
@@ -916,9 +916,9 @@ RAG-сервис индексирует шаблоны и должностные
 
 HTTP-сервис принимает события из внешних каналов с токеном, идемпотентностью и созданием документа/задачи.
 
-**Источники:** `docs/raw_specification.md#4.4.3`, `docs/implementation_plan.md#5.4`
+**Источники:** `docs/raw_specification.md#4.4.3`, `plans/implementation_plan.md#5.4`
 
-**Проектирование:** `docs/implementation_plan.md#5.4`
+**Проектирование:** `plans/implementation_plan.md#5.4`
 
 **Критерии приёмки:**
 
@@ -936,9 +936,9 @@ HTTP-сервис принимает события из внешних кана
 
 Для неструктурированных плейсхолдеров LLM извлекает значение из RAG-фрагментов с цитатой и уверенностью; ДЛ обязан подтвердить значение.
 
-**Источники:** `docs/implementation_plan.md#9`
+**Источники:** `plans/implementation_plan.md#9`
 
-**Проектирование:** `docs/implementation_plan.md#6.3`, `docs/implementation_plan.md#9`
+**Проектирование:** `plans/implementation_plan.md#6.3`, `plans/implementation_plan.md#9`
 
 **Критерии приёмки:**
 
@@ -956,9 +956,9 @@ HTTP-сервис принимает события из внешних кана
 
 Документы индексируются в Qdrant с ACL по должностям; поиск фильтрует фрагменты по доступным должностям пользователя.
 
-**Источники:** `docs/implementation_plan.md#9`
+**Источники:** `plans/implementation_plan.md#9`
 
-**Проектирование:** `docs/implementation_plan.md#7.3`, `docs/implementation_plan.md#9`
+**Проектирование:** `plans/implementation_plan.md#7.3`, `plans/implementation_plan.md#9`
 
 **Критерии приёмки:**
 

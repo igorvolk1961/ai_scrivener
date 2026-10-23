@@ -37,7 +37,7 @@ REQUIRED_FIELDS = (
     "status",
 )
 ALLOWED_FIELDS = frozenset(REQUIRED_FIELDS)
-DESIGN_PREFIX = "docs/"
+DESIGN_PREFIXES = ("docs/", "plans/", "guides/")
 IMPLEMENTATION_PREFIXES = (
     "src/",
     "src",
@@ -51,6 +51,10 @@ IMPLEMENTATION_PREFIXES = (
     "tests",
     "docs/",
     "docs",
+    "plans/",
+    "plans",
+    "guides/",
+    "guides",
     "pyproject.toml",
     "Makefile",
     ".pre-commit-config.yaml",
@@ -131,8 +135,9 @@ def _check_existing_paths(
 ) -> None:
     for ref in refs:
         path = _path_for_ref(ref)
-        if not str(path).startswith(DESIGN_PREFIX) and label == "design":
-            errors.append(f"{label} reference must be under {DESIGN_PREFIX}: {ref}")
+        if not str(path).startswith(DESIGN_PREFIXES) and label == "design":
+            prefixes = ", ".join(DESIGN_PREFIXES)
+            errors.append(f"{label} reference must be under one of {prefixes}: {ref}")
         if must_exist and not (root / path).exists():
             errors.append(f"{label} path does not exist: {ref}")
 
@@ -185,7 +190,7 @@ def validate_requirement(requirement: Requirement, root: Path) -> list[str]:
         if test_id in seen_tests:
             errors.append(f"{requirement.id}: duplicate test id: {test_id}")
         seen_tests.add(test_id)
-    _check_prefix(requirement.design, (DESIGN_PREFIX,), "design", errors)
+    _check_prefix(requirement.design, DESIGN_PREFIXES, "design", errors)
     _check_prefix(requirement.implementation, IMPLEMENTATION_PREFIXES, "implementation", errors)
     _check_prefix(requirement.test_files, TEST_FILE_PREFIXES, "test file", errors)
     _check_existing_paths(root, requirement.design, "design", errors, must_exist=True)

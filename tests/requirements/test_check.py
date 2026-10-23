@@ -22,7 +22,7 @@ def _requirement() -> dict[str, Any]:
         "approval": "approved",
         "source": ["docs/raw_specification.md#1"],
         "acceptance": ["Acceptance criterion."],
-        "design": ["docs/implementation_plan.md#1"],
+        "design": ["plans/implementation_plan.md#1"],
         "implementation": ["src/Configuration/Test"],
         "tests": ["TEST-FR-001-01"],
         "test_files": ["tests/test_placeholder.py"],
@@ -36,7 +36,10 @@ def _document(requirement: dict[str, Any]) -> dict[str, Any]:
 
 def _prepare_root(root: Path) -> None:
     (root / "docs").mkdir(parents=True)
-    (root / "docs/implementation_plan.md").write_text("plan\n", encoding="utf-8")
+    (root / "plans").mkdir()
+    (root / "plans/implementation_plan.md").write_text("plan\n", encoding="utf-8")
+    (root / "guides").mkdir()
+    (root / "guides/development.md").write_text("guide\n", encoding="utf-8")
 
 
 def test_valid_planned_requirement_passes(tmp_path: Path) -> None:
@@ -44,6 +47,14 @@ def test_valid_planned_requirement_passes(tmp_path: Path) -> None:
     requirements, errors = parse_document(_document(_requirement()), tmp_path)
     assert errors == []
     assert [item.id for item in requirements] == ["FR-001"]
+
+
+def test_guide_design_reference_passes(tmp_path: Path) -> None:
+    _prepare_root(tmp_path)
+    requirement = _requirement()
+    requirement["design"] = ["guides/development.md#1"]
+    _, errors = parse_document(_document(requirement), tmp_path)
+    assert errors == []
 
 
 def test_duplicate_requirement_id_is_rejected(tmp_path: Path) -> None:
