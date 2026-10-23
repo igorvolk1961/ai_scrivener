@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DefinedType xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="1b594fbe-a4cf-425e-aadd-9ee6c3d78ef7">
+  <producedTypes>
+    <containerType typeId="f61a2f06-5da8-4346-80f3-3db2be571354" valueTypeId="99cd164a-47ee-4ef4-b4e1-8af98d7d1153"/>
+  </producedTypes>
+  <name>АИС_ИсточникТриггера</name>
+  <synonym>
+    <key>ru</key>
+    <value>Источник триггера</value>
+  </synonym>
+  <type>
+    <types>CatalogRef.ВходящиеДокументы</types>
+    <types>CatalogRef.ВнутренниеДокументы</types>
+    <types>CatalogRef.ВидыБизнесСобытий</types>
+  </type>
+</mdclass:DefinedType>

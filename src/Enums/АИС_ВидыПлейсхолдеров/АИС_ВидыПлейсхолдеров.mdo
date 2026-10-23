@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="9da027d9-28c5-48f8-8106-dc52be5303fe">
+  <producedTypes>
+    <refType typeId="6f08cede-360f-49ba-b67d-40089dbe2611" valueTypeId="170a2962-931e-4a71-b43e-801178a9ecc1"/>
+    <listType typeId="06d0e5b4-89a1-4f0f-be0f-0947baa1a09f" valueTypeId="a1515d42-e60b-4750-87fa-2e0f76b53df7"/>
+    <managerType typeId="8292c347-84c3-4b89-8e66-11d82c47e83c" valueTypeId="8840e27f-d407-4cd3-8795-cfb45e346b65"/>
+  </producedTypes>
+  <name>АИС_ВидыПлейсхолдеров</name>
+  <synonym>
+    <key>ru</key>
+    <value>Виды плейсхолдеров</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="142fef7b-ed6c-4cf1-9e44-2002f4a69d4e">
+    <name>Значение</name>
+    <synonym>
+      <key>ru</key>
+      <value>Значение</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="6730e88e-e5be-4604-bd83-696c8bfa5527">
+    <name>Раздел</name>
+    <synonym>
+      <key>ru</key>
+      <value>Раздел</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

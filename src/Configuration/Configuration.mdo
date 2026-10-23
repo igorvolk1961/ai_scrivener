@@ -41,9 +41,24 @@
   <roles>Role.АИС_ОсновнаяРоль</roles>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>
+  <catalogs>Catalog.АИС_ПромптПараметры</catalogs>
+  <catalogs>Catalog.АИС_ДолжностныеОбязанности</catalogs>
+  <catalogs>Catalog.АИС_РазделыДокумента</catalogs>
+  <catalogs>Catalog.АИС_ЛистОжидания</catalogs>
+  <catalogs>Catalog.АИС_РасписаниеТриггеров</catalogs>
+  <definedTypes>DefinedType.АИС_АдресатЗапроса</definedTypes>
+  <definedTypes>DefinedType.АИС_РезультатЗадачи</definedTypes>
+  <definedTypes>DefinedType.АИС_ИсточникТриггера</definedTypes>
   <enums>Enum.АИС_СпособыЗаполнения</enums>
   <enums>Enum.АИС_СостоянияЗадач</enums>
   <enums>Enum.АИС_СостоянияРазделов</enums>
+  <enums>Enum.АИС_ВидыПлейсхолдеров</enums>
+  <enums>Enum.АИС_СтатусыПлейсхолдеров</enums>
+  <enums>Enum.АИС_ТипыЗапросовЛистаОжидания</enums>
+  <enums>Enum.АИС_ТипыИсточниковОжидания</enums>
+  <enums>Enum.АИС_СостоянияЗапросовОжидания</enums>
   <informationRegisters>InformationRegister.АИС_КонтекстЗадачИИ</informationRegisters>
-  <informationRegisters>InformationRegister.АИС_РазделыДокумента</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_СостоянияПлейсхолдеров</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_НормативыИИ</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_ИсторияДействийИИ</informationRegisters>
 </mdclass:Configuration>

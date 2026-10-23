@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="01972372-dd00-4ab9-b6a7-dfde560988c1">
+  <producedTypes>
+    <refType typeId="dcd15c67-4673-40db-b994-d256093919a1" valueTypeId="2de5913d-2377-4402-a7ab-0d576c1ff4ff"/>
+    <listType typeId="134a093a-bfca-4483-9996-fd093569ba8a" valueTypeId="ef8739a8-a410-43de-a128-16f115e4a2b2"/>
+    <managerType typeId="ad0cf8f8-f8a2-4b51-a74c-6ac9581e4716" valueTypeId="4b5fb5fc-4d50-4d82-a75d-6c03f5ab7ae7"/>
+  </producedTypes>
+  <name>АИС_СтатусыПлейсхолдеров</name>
+  <synonym>
+    <key>ru</key>
+    <value>Статусы плейсхолдеров</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="83d6aa48-da8b-4be2-8b2d-1531f51c8e07">
+    <name>ТребуетсяЗапрос</name>
+    <synonym>
+      <key>ru</key>
+      <value>Требуется запрос</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="e6e33e63-317e-4550-a80a-8f2a72c6cc00">
+    <name>Запрошен</name>
+    <synonym>
+      <key>ru</key>
+      <value>Запрошен</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="e4bc2aaf-61cd-43bd-9e6f-9e279797cb26">
+    <name>Ожидает</name>
+    <synonym>
+      <key>ru</key>
+      <value>Ожидает</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="c536c20c-6719-4037-9e06-9cd9aed96640">
+    <name>Заполнен</name>
+    <synonym>
+      <key>ru</key>
+      <value>Заполнен</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="07384413-6ff0-4ed1-a56b-79872be3da18">
+    <name>НеМожетБытьЗаполнен</name>
+    <synonym>
+      <key>ru</key>
+      <value>Не может быть заполнен</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

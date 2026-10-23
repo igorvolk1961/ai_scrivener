@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="9d0cc631-2572-43d0-97ed-ec9b6f780b89">
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="98f74375-126a-4add-b36c-eed94c0f342d">
   <producedTypes>
-    <selectionType typeId="42fe127c-5c59-45d0-9af3-1a3d471a784c" valueTypeId="0090d7c9-75e7-4733-bc0c-129f5f250126"/>
-    <listType typeId="c0f077ce-d379-40e8-b94e-8617afef76a4" valueTypeId="a8f8acc1-a1c1-4319-9152-d6b086eeb15b"/>
-    <managerType typeId="8273ec18-5d60-49db-9d12-75444f4015cd" valueTypeId="50c9c950-5ff1-4100-8ae4-8f207981bc2a"/>
-    <recordSetType typeId="a7587ad7-73f8-4736-a7cd-be5f1e559cb3" valueTypeId="edf83786-2704-44c0-9e8d-efb4f8a2df4c"/>
-    <recordKeyType typeId="ea2280dd-a131-4bb6-8362-3c877df7cc63" valueTypeId="6f013551-7358-469d-97bb-ce1f68297860"/>
-    <recordType typeId="38490c82-4617-480b-94da-cd2d7546b390" valueTypeId="87be73ab-1364-49d0-917a-b4d7ae4550be"/>
-    <recordManagerType typeId="9e63426f-a786-4934-927c-3fde72cd42ec" valueTypeId="861323b6-9ca2-4855-9643-123211f9e1aa"/>
+    <objectType typeId="e661f37a-b295-4fb5-bb35-c76bc607ba9a" valueTypeId="aecb5136-4ab8-426f-acc3-ef2416ff908d"/>
+    <refType typeId="7b73db10-e112-43fc-8282-53af22744fd1" valueTypeId="a561a03f-443f-44de-8da8-abe8de6d632e"/>
+    <selectionType typeId="d63a7633-4786-46fd-82d6-0d8c46f6559d" valueTypeId="14ea42b8-fe12-4067-9614-a5b825c8bc92"/>
+    <listType typeId="b1bf13ca-4555-416b-ab2c-3047d1b73179" valueTypeId="bdacdf54-6c04-4af7-af84-0c6ccf00b69f"/>
+    <managerType typeId="067220df-4875-4283-81bd-223852a906b9" valueTypeId="92f91b9f-5c96-47b8-acca-06262ca94ece"/>
   </producedTypes>
   <name>АИС_РазделыДокумента</name>
   <synonym>
     <key>ru</key>
     <value>Разделы документа</value>
   </synonym>
-  <editType>InDialog</editType>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Catalog.АИС_РазделыДокумента.StandardAttribute.Description</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
   <standardAttributes>
     <dataHistory>Use</dataHistory>
-    <name>Active</name>
+    <name>PredefinedDataName</name>
     <fillValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
     <minValue xsi:type="core:UndefinedValue"/>
@@ -25,7 +25,7 @@
   </standardAttributes>
   <standardAttributes>
     <dataHistory>Use</dataHistory>
-    <name>LineNumber</name>
+    <name>Predefined</name>
     <fillValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
     <minValue xsi:type="core:UndefinedValue"/>
@@ -33,7 +33,7 @@
   </standardAttributes>
   <standardAttributes>
     <dataHistory>Use</dataHistory>
-    <name>Recorder</name>
+    <name>Ref</name>
     <fillValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
     <minValue xsi:type="core:UndefinedValue"/>
@@ -41,15 +41,89 @@
   </standardAttributes>
   <standardAttributes>
     <dataHistory>Use</dataHistory>
-    <name>Period</name>
+    <name>DeletionMark</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>IsFolder</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Owner</name>
+    <fillFromFillingValue>true</fillFromFillingValue>
     <fillValue xsi:type="core:UndefinedValue"/>
     <fillChecking>ShowError</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
   </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Parent</name>
+    <fillFromFillingValue>true</fillFromFillingValue>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Description</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>ShowError</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Code</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <createOnInput>Use</createOnInput>
   <dataLockControlMode>Managed</dataLockControlMode>
-  <resources uuid="da22cb97-8a6a-48a7-8461-d7ff014ef696">
+  <fullTextSearch>Use</fullTextSearch>
+  <objectPresentation>
+    <key>ru</key>
+    <value>Раздел документа</value>
+  </objectPresentation>
+  <owners>Catalog.ИсходящиеДокументы</owners>
+  <descriptionLength>150</descriptionLength>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <attributes uuid="4657a5a2-4f6d-4038-87fc-d579502bf99b">
+    <name>Раздел</name>
+    <synonym>
+      <key>ru</key>
+      <value>Код раздела</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>100</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>ShowError</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="359162dd-32f4-467f-957d-d46053c56bc6">
     <name>Заголовок</name>
     <synonym>
       <key>ru</key>
@@ -63,11 +137,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:StringValue"/>
-  </resources>
-  <resources uuid="b03d4d07-d2a8-427c-82d3-ef4eeda4f331">
+  </attributes>
+  <attributes uuid="b0da3c6e-1281-4413-9e96-3d255af699ed">
     <name>Порядок</name>
     <synonym>
       <key>ru</key>
@@ -81,11 +155,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="43ebee35-faea-4362-b9b1-5c21c76cf8e3">
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="c016ef59-389d-4986-b689-8526f42ca7d4">
     <name>Обязательный</name>
     <synonym>
       <key>ru</key>
@@ -96,11 +170,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:BooleanValue"/>
-  </resources>
-  <resources uuid="c28a8635-30d0-4953-93f1-2fe0beb452a3">
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="814b454b-06dc-495b-91b2-53e504cb950c">
     <name>Формат</name>
     <synonym>
       <key>ru</key>
@@ -114,11 +188,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:StringValue"/>
-  </resources>
-  <resources uuid="d4158f76-89aa-42c1-8742-5b85c1b8317c">
+  </attributes>
+  <attributes uuid="a7e0f0cf-ca17-4208-8439-bd300e9f9b5d">
     <name>Источник</name>
     <synonym>
       <key>ru</key>
@@ -132,11 +206,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:StringValue"/>
-  </resources>
-  <resources uuid="de5f5409-0435-4a40-8935-7e59fdc84426">
+  </attributes>
+  <attributes uuid="d604f840-278f-431a-aa30-7d13e08fa0d6">
     <name>Файл</name>
     <synonym>
       <key>ru</key>
@@ -147,11 +221,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="42a01f56-4d5f-42ef-9d6a-e145a48f255c">
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="48a2303b-0df0-4550-bced-8d943c06ef79">
     <name>Версия</name>
     <synonym>
       <key>ru</key>
@@ -165,11 +239,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:StringValue"/>
-  </resources>
-  <resources uuid="0af1e323-2d9a-4916-a7e6-43d68f34d1b1">
+  </attributes>
+  <attributes uuid="07a30ec1-3bc5-467f-a003-7ff790075ecb">
     <name>Хеш</name>
     <synonym>
       <key>ru</key>
@@ -183,11 +257,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:StringValue"/>
-  </resources>
-  <resources uuid="496b4628-036b-4324-bef0-b562d80a7f95">
+  </attributes>
+  <attributes uuid="94c748b8-8957-456b-b3f3-7ae3a8312261">
     <name>Ответственный</name>
     <synonym>
       <key>ru</key>
@@ -198,11 +272,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="2faf2164-45bc-4170-9302-6804b22c9b75">
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="dc7d4536-93cc-4a26-b0c6-86fbb45cd263">
     <name>Задача</name>
     <synonym>
       <key>ru</key>
@@ -213,11 +287,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="84026c3d-2aea-41a7-a73c-dd469417743e">
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="8658a3b0-944e-4312-84db-d8e0fdd328bc">
     <name>Статус</name>
     <synonym>
       <key>ru</key>
@@ -228,11 +302,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="4e9508d2-b8e6-4385-a722-fc7401e877a9">
+    <fillChecking>ShowError</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="2a060bba-5c51-4019-a64c-8060bf670aa3">
     <name>Подтвердил</name>
     <synonym>
       <key>ru</key>
@@ -243,11 +317,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="3a263748-cc68-4580-9364-5419dac3e4e0">
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="c09ed061-771b-4cf9-be0b-79a307382f48">
     <name>ДатаПодтверждения</name>
     <synonym>
       <key>ru</key>
@@ -259,11 +333,11 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="a7f26062-6548-461e-aa97-26b6c935c5ba">
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="87ea9556-c899-4afb-8a5b-06aac626650d">
     <name>Комментарий</name>
     <synonym>
       <key>ru</key>
@@ -277,47 +351,8 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:StringValue"/>
-  </resources>
-  <dimensions uuid="3dd3898a-dc94-42ff-9e33-7805b5f3d7f2">
-    <name>Документ</name>
-    <synonym>
-      <key>ru</key>
-      <value>Документ</value>
-    </synonym>
-    <type>
-      <types>CatalogRef.ИсходящиеДокументы</types>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillFromFillingValue>true</fillFromFillingValue>
     <fillValue xsi:type="core:UndefinedValue"/>
-    <master>true</master>
-    <mainFilter>true</mainFilter>
-  </dimensions>
-  <dimensions uuid="05b661d8-31ec-4fd2-9418-48bb2c4a89e8">
-    <name>Раздел</name>
-    <synonym>
-      <key>ru</key>
-      <value>Раздел</value>
-    </synonym>
-    <type>
-      <types>String</types>
-      <stringQualifiers>
-        <length>100</length>
-      </stringQualifiers>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillFromFillingValue>true</fillFromFillingValue>
-    <fillValue xsi:type="core:StringValue"/>
-    <master>true</master>
-    <mainFilter>false</mainFilter>
-  </dimensions>
-</mdclass:InformationRegister>
+  </attributes>
+</mdclass:Catalog>

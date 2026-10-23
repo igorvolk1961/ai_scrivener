@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="b12272d8-44c8-4cc8-8ce4-fb76d5b35250">
+  <producedTypes>
+    <selectionType typeId="106cac30-6954-4fe4-819f-d006396d6787" valueTypeId="703df13a-3437-4288-bed9-2080cba68285"/>
+    <listType typeId="72fb3ddf-f677-4caa-a2de-73a419d4a705" valueTypeId="ed09d776-b6ae-4b62-bb8b-97837a17442b"/>
+    <managerType typeId="33c49ad7-8a03-4a86-8b95-1f10aa545da3" valueTypeId="fce3b40a-8c8a-4fbe-ac1a-3c6ac7f1c90d"/>
+    <recordSetType typeId="f1e30a88-4403-46a8-ab20-2d58e6fc618c" valueTypeId="241babf3-9285-46d7-bbd2-f1d33d1fc875"/>
+    <recordKeyType typeId="3043d46e-c75d-4444-8faa-c9500e8dca97" valueTypeId="5363449b-282f-426d-a7c8-5b38b049aef1"/>
+    <recordType typeId="46fd5215-6172-4405-862a-acef49502f35" valueTypeId="5b5ee406-41ca-486f-a301-82a4324d4b39"/>
+    <recordManagerType typeId="e26a46cc-7e7d-49e1-ace8-661fec732737" valueTypeId="b64a9c1e-5aa2-4e8e-a992-f6c272409b60"/>
+  </producedTypes>
+  <name>АИС_НормативыИИ</name>
+  <synonym>
+    <key>ru</key>
+    <value>Нормативы ИИ-ответа</value>
+  </synonym>
+  <editType>InDialog</editType>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Active</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>LineNumber</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Recorder</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Period</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>ShowError</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <resources uuid="2106a0c5-b35c-488f-a8fe-0cb5f91ee847">
+    <name>НормативноеВремя</name>
+    <synonym>
+      <key>ru</key>
+      <value>Нормативное время ИИ-ответа, мин</value>
+    </synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers>
+        <precision>6</precision>
+      </numberQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:UndefinedValue"/>
+  </resources>
+  <dimensions uuid="ad3bb0b8-395b-4f5c-a8fa-d6a511b4f24b">
+    <name>ТипТриггера</name>
+    <synonym>
+      <key>ru</key>
+      <value>Тип триггера</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.АИС_ТипыТриггеров</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillFromFillingValue>true</fillFromFillingValue>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <master>true</master>
+    <mainFilter>true</mainFilter>
+  </dimensions>
+  <dimensions uuid="5116d67d-38b9-47bf-b888-06235e01b26f">
+    <name>ТипДействия</name>
+    <synonym>
+      <key>ru</key>
+      <value>Тип действия</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.АИС_ТипыДействий</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillFromFillingValue>true</fillFromFillingValue>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <master>true</master>
+    <mainFilter>false</mainFilter>
+  </dimensions>
+</mdclass:InformationRegister>

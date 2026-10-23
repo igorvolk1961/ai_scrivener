@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DefinedType xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="1d97fd86-5ef9-42e2-95a2-37d1159f3937">
+  <producedTypes>
+    <containerType typeId="5287be34-7cd1-4993-a4d8-a84823ba05f0" valueTypeId="8c76b4f0-7462-4499-9469-68ef124fc632"/>
+  </producedTypes>
+  <name>АИС_РезультатЗадачи</name>
+  <synonym>
+    <key>ru</key>
+    <value>Результат задачи</value>
+  </synonym>
+  <type>
+    <types>CatalogRef.ИсходящиеДокументы</types>
+    <types>CatalogRef.ВнутренниеДокументы</types>
+  </type>
+</mdclass:DefinedType>

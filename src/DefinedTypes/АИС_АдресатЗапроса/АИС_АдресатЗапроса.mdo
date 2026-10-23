@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DefinedType xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="2ee41ef1-b692-4ba8-bfaa-ded826097ee7">
+  <producedTypes>
+    <containerType typeId="7d633682-f5fe-49e2-9ec7-4f9d21130cb9" valueTypeId="fcfe81ce-d843-4f8b-987a-514324ff1081"/>
+  </producedTypes>
+  <name>АИС_АдресатЗапроса</name>
+  <synonym>
+    <key>ru</key>
+    <value>Адресат запроса</value>
+  </synonym>
+  <type>
+    <types>CatalogRef.Пользователи</types>
+    <types>CatalogRef.Должности</types>
+    <types>CatalogRef.СтруктураПредприятия</types>
+  </type>
+</mdclass:DefinedType>
