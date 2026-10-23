@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="dd221b2e-1688-48d6-aa7b-213a71ac0cd0">
+  <name>УстановкаПараметровСеанса</name>
+  <synonym>
+    <key>ru</key>
+    <value>Установка параметров сеанса</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+  <serverCall>false</serverCall>
+</mdclass:CommonModule>

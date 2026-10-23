@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Rights xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://v8.1c.ru/8.2/roles" xsi:type="Rights">
+	<setForNewObjects>false</setForNewObjects>
+	<setForAttributesByDefault>false</setForAttributesByDefault>
+	<independentRightsOfChildObjects>false</independentRightsOfChildObjects>
+	<object>
+		<name>Catalog.АИС_ТипыДействий</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.АИС_ТипыТриггеров</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.АИС_ДолжностныеОбязанности</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.АИС_РазделыДокумента</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача = НЕОПРЕДЕЛЕНО
+    ИЛИ Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Insert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача = НЕОПРЕДЕЛЕНО
+    ИЛИ Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.АИС_ЛистОжидания</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача = НЕОПРЕДЕЛЕНО
+    ИЛИ Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Insert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача = НЕОПРЕДЕЛЕНО
+    ИЛИ Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.АИС_РасписаниеТриггеров</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.АИС_КонтекстЗадачИИ</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.АИС_СостоянияПлейсхолдеров</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.АИС_НормативыИИ</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>InformationRegister.АИС_ИсторияДействийИИ</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Задача В
+    (ВЫБРАТЬ
+        Задачи.Ссылка
+    ИЗ
+        Задача.ЗадачаИсполнителя КАК Задачи
+    ГДЕ
+        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+</Rights>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Role xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="c1b956b3-e413-4a49-b529-ef0ccaab6549">
+  <name>АИС_СервисныйПользователь</name>
+</mdclass:Role>

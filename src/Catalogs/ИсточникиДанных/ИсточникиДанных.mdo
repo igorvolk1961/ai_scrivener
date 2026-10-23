@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="094b0c88-d186-4492-8352-56139309db98">
+  <name>ИсточникиДанных</name>
+  <synonym>
+    <key>ru</key>
+    <value>Источники данных</value>
+  </synonym>
+  <objectBelonging>Adopted</objectBelonging>
+  <extendedConfigurationObject>ef5366cd-d647-4cfc-9d3d-1c5c944d49b3</extendedConfigurationObject>
+  <attributes uuid="5ef5cece-e7c9-48cb-8ccb-99fb1c352ada">
+    <name>URL</name>
+    <synonym>
+      <key>ru</key>
+      <value>URL</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>1000</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="5e5a86ef-3237-4190-b8e9-cc856c20f424">
+    <name>JSONСхемаОтвета</name>
+    <synonym>
+      <key>ru</key>
+      <value>JSON-схема ответа</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="9509a591-6d0c-496e-9add-283f50ef2b1d">
+    <name>ТаймаутСекунд</name>
+    <synonym>
+      <key>ru</key>
+      <value>Таймаут, секунд</value>
+    </synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers>
+        <precision>5</precision>
+        <nonNegative>true</nonNegative>
+      </numberQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+</mdclass:Catalog>

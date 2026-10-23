@@ -28,7 +28,7 @@
   <usePurposes>PersonalComputer</usePurposes>
   <dataLockControlMode>Managed</dataLockControlMode>
   <scriptVariant>Russian</scriptVariant>
-  <defaultRoles>Role.АИС_ОсновнаяРоль</defaultRoles>
+  <defaultRoles>Role.АИС_ДолжностноеЛицо</defaultRoles>
   <defaultLanguage>Language.Русский</defaultLanguage>
   <languages uuid="017232e9-8658-4ffa-bdca-c4865219f998" extendedConfigurationObject="f85e5a81-dc92-4a3e-b85d-2544ec13c70d">
     <name>Русский</name>
@@ -39,7 +39,13 @@
     </extension>
     <languageCode>ru</languageCode>
   </languages>
-  <roles>Role.АИС_ОсновнаяРоль</roles>
+  <roles>Role.АИС_АдминистраторСистемы</roles>
+  <roles>Role.АИС_ДолжностноеЛицо</roles>
+  <roles>Role.АИС_ВышестоящееДолжностноеЛицо</roles>
+  <roles>Role.АИС_Аудитор</roles>
+  <roles>Role.АИС_СервисныйПользователь</roles>
+  <sessionParameters>SessionParameter.АИС_ТекущееДЛ</sessionParameters>
+  <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>
   <catalogs>Catalog.АИС_ПромптПараметры</catalogs>
@@ -47,6 +53,10 @@
   <catalogs>Catalog.АИС_РазделыДокумента</catalogs>
   <catalogs>Catalog.АИС_ЛистОжидания</catalogs>
   <catalogs>Catalog.АИС_РасписаниеТриггеров</catalogs>
+  <catalogs>Catalog.ШаблоныИсходящихДокументов</catalogs>
+  <catalogs>Catalog.ШаблоныВходящихДокументов</catalogs>
+  <catalogs>Catalog.ШаблоныВнутреннихДокументов</catalogs>
+  <catalogs>Catalog.ИсточникиДанных</catalogs>
   <definedTypes>DefinedType.АИС_АдресатЗапроса</definedTypes>
   <definedTypes>DefinedType.АИС_РезультатЗадачи</definedTypes>
   <definedTypes>DefinedType.АИС_ИсточникТриггера</definedTypes>
