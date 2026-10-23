@@ -46,7 +46,7 @@
 
 ## 5. Установка
 
-Требования: системный Python 3.12, uv, Docker, pre-commit, 1C:EDT 2026.1.3, платформа 1С:Предприятие 8.3.27 Community, демо-база 1С:Документооборот 2.1.38.11 из `DocMng_2_1_38_11_new.dt`.
+Требования: системный Python 3.12, uv, Docker, pre-commit, 1C:EDT 2026.1.3, платформа 1С:Предприятие 8.3.27 Community, демо-база 1С:Документооборот 2.1.38.11 из `DocMng_2_1_38_11_new.dt`. Для отладки UI через `scripts/debug/screenshot_ocr.sh` нужны Tesseract (`rus+eng`), GStreamer и X11-утилита `xwininfo`.
 
 В `pyproject.toml` включён `python-preference = "only-system"`: uv-managed интерпретатор в текущей среде даёт сбой `hashlib`/`pre-commit`. Используется системный Python 3.12.
 
@@ -56,6 +56,8 @@ uv run pre-commit install
 ```
 
 Для BSL-проверки установить `bsl-language-server` и добавить его в `PATH`. Без него пре-коммит с BSL-файлами завершится ошибкой с указанием дальнейших действий.
+
+Схема среды разработки и роли инструментов — `guides/dev-environment.md`.
 
 ## 6. Команды
 
