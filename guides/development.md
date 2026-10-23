@@ -134,18 +134,18 @@ sudo bash scripts/setup/install_edt.sh
 
 ```bash
 "/home/igorvolk/.local/share/1C/1cedtstart/installations/1C_EDT 2026.1 (2)/1cedt/1cedtcli" \
-  -data /home/igorvolk/.edt-workspace/ai_scrivener_cli \
+  -data /home/igorvolk/.edt-workspace/docmng_base \
   -timeout 300 \
-  -command build --project-list /home/igorvolk/PycharmProjects/ai_scrivener
+  -command build -y true "ai_scrivener_build"
 
 "/home/igorvolk/.local/share/1C/1cedtstart/installations/1C_EDT 2026.1 (2)/1cedt/1cedtcli" \
-  -data /home/igorvolk/.edt-workspace/ai_scrivener_cli \
+  -data /home/igorvolk/.edt-workspace/docmng_base \
   -timeout 180 \
   -command validate --file /tmp/kilo/validate_ai_scrivener.tsv \
-  --project-list /home/igorvolk/PycharmProjects/ai_scrivener
+  --project-name-list "ai_scrivener_build"
 ```
 
-Пустой TSV-отчёт означает отсутствие ошибок. Команды `build` и `validate` проверяют модель EDT; `CheckConfig` и применение `.cfe` выполняются на локальной демо-базе (раздел 12).
+Имя проекта — то, которое зарегистрировано в рабочей области EDT (`ai_scrivener_build` в `docmng_base`). TSV без строк уровня «Ошибка» или «Критическая» означает отсутствие ошибок; minor style warnings допустимы. Команды `build` и `validate` проверяют модель EDT; `CheckConfig` и применение `.cfe` выполняются на локальной демо-базе (раздел 12).
 
 ## 11. RAG-сервис
 
@@ -297,7 +297,7 @@ Community-лицензия — это «Лицензия для разработ
   --project-name-list "ai_scrivener"
 ```
 
-Пустой TSV-отчёт означает отсутствие ошибок. В репозитории `src/` хранятся исходники расширения; `DT-INF/PROJECT.PMF` содержит `Base-Project: DocMng_2_1_38_11`. Проект базовой конфигурации, `.dt`, `.cf` и `.cfe` в Git не коммитятся.
+TSV без строк уровня «Ошибка» или «Критическая» означает отсутствие ошибок; minor style warnings допустимы. В репозитории `src/` хранятся исходники расширения; `DT-INF/PROJECT.PMF` содержит `Base-Project: DocMng_2_1_38_11`. Проект базовой конфигурации, `.dt`, `.cf` и `.cfe` в Git не коммитятся.
 
 ## 13. Контроль версий
 

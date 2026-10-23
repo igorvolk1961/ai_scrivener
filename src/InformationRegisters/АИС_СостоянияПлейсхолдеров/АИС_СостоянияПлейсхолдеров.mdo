@@ -64,6 +64,21 @@
     <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
   </resources>
+  <resources uuid="4996a203-648e-4936-bb4b-4ad05b7d1f71">
+    <name>СсылкаНаРаздел</name>
+    <synonym>
+      <key>ru</key>
+      <value>Ссылка на раздел</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.АИС_РазделыДокумента</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:UndefinedValue"/>
+  </resources>
   <resources uuid="5514a117-8d6f-4316-8eaa-fc35a667e0c5">
     <name>Состояние</name>
     <synonym>

@@ -26,6 +26,7 @@
   <configurationExtensionPurpose>AddOn</configurationExtensionPurpose>
   <defaultRunMode>ManagedApplication</defaultRunMode>
   <usePurposes>PersonalComputer</usePurposes>
+  <dataLockControlMode>Managed</dataLockControlMode>
   <scriptVariant>Russian</scriptVariant>
   <defaultRoles>Role.АИС_ОсновнаяРоль</defaultRoles>
   <defaultLanguage>Language.Русский</defaultLanguage>

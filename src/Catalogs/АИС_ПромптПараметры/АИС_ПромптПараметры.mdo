@@ -100,28 +100,11 @@
   </objectPresentation>
   <descriptionLength>150</descriptionLength>
   <codeType>String</codeType>
+  <codeLength>50</codeLength>
   <codeAllowedLength>Variable</codeAllowedLength>
   <defaultPresentation>AsDescription</defaultPresentation>
   <editType>InDialog</editType>
   <choiceMode>BothWays</choiceMode>
-  <attributes uuid="21ef7b74-b6cd-4123-9516-19598fcd5231">
-    <name>Код</name>
-    <synonym>
-      <key>ru</key>
-      <value>Код промпта</value>
-    </synonym>
-    <type>
-      <types>String</types>
-      <stringQualifiers>
-        <length>100</length>
-      </stringQualifiers>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fillValue xsi:type="core:UndefinedValue"/>
-    <fillChecking>ShowError</fillChecking>
-    <fullTextSearch>Use</fullTextSearch>
-  </attributes>
   <attributes uuid="4b72e5bb-b1ae-4c35-a5d7-cb54aa7bd9bb">
     <name>ТекстПромпта</name>
     <synonym>

@@ -49,6 +49,13 @@
       <value>Запрос к ДЛ</value>
     </synonym>
   </enumValues>
+  <enumValues uuid="355a8b51-5ec2-4227-90a0-1b86e4adbbb6">
+    <name>РешениеДЛ</name>
+    <synonym>
+      <key>ru</key>
+      <value>Решение ДЛ</value>
+    </synonym>
+  </enumValues>
   <enumValues uuid="e0d4f0d2-27af-4e2d-9392-522fb4f1401d">
     <name>РасчетныйСервис</name>
     <synonym>

@@ -35,6 +35,13 @@
       <value>Значение</value>
     </synonym>
   </enumValues>
+  <enumValues uuid="c88ccd7f-1d93-4b22-920e-6f52b7e750ef">
+    <name>Список</name>
+    <synonym>
+      <key>ru</key>
+      <value>Список</value>
+    </synonym>
+  </enumValues>
   <enumValues uuid="6730e88e-e5be-4604-bd83-696c8bfa5527">
     <name>Раздел</name>
     <synonym>
