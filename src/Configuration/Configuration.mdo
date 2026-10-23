@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mdclass:Configuration xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="6f1e2d3c-4b5a-4c7d-8e9f-0a1b2c3d4e5f">
+<mdclass:Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="ffd051e4-c455-4f69-8e4b-49c1c12b921a">
   <name>ai_scrivener</name>
   <synonym>
     <key>ru</key>
     <value>AI Scrivener</value>
   </synonym>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:ConfigurationExtension">
+    <defaultRunMode>Checked</defaultRunMode>
+    <usePurposes>Checked</usePurposes>
+    <defaultLanguage>Checked</defaultLanguage>
+    <interfaceCompatibilityMode>Checked</interfaceCompatibilityMode>
+    <defaultRoles>Extended</defaultRoles>
+  </extension>
+  <containedObjects classId="9cd510cd-abfc-11d4-9434-004095e12fc7" objectId="eba41563-d7e8-4fb7-ae4e-1d8134d33557"/>
+  <containedObjects classId="9fcd25a0-4822-11d4-9414-008048da11f9" objectId="cad486e0-b0d5-4b24-9d39-f304df1e08ec"/>
+  <containedObjects classId="e3687481-0a87-462c-a166-9f34594f9bba" objectId="4945f3db-10d6-4d93-a059-3dca4b7fbb69"/>
+  <containedObjects classId="9de14907-ec23-4a07-96f0-85521cb6b53b" objectId="3bc920c0-41e2-4923-9c65-349b90abd9cf"/>
+  <containedObjects classId="51f2d5d8-ea4d-4064-8892-82951750031e" objectId="781f5538-8847-447f-8128-9722606eaa6d"/>
+  <containedObjects classId="e68182ea-4237-4383-967f-90c1e3370bc7" objectId="7b597002-283b-4f0f-98de-cd84fa212666"/>
+  <containedObjects classId="fb282519-d103-4dd3-bc12-cb271d631dfc" objectId="b0905588-f3f1-4e1a-9169-34ad4bbdcb7e"/>
+  <keepMappingToExtendedConfigurationObjectsByIDs>true</keepMappingToExtendedConfigurationObjectsByIDs>
   <namePrefix>АИС_</namePrefix>
   <configurationExtensionCompatibilityMode>8.3.27</configurationExtensionCompatibilityMode>
+  <configurationExtensionPurpose>AddOn</configurationExtensionPurpose>
   <defaultRunMode>ManagedApplication</defaultRunMode>
   <usePurposes>PersonalComputer</usePurposes>
   <scriptVariant>Russian</scriptVariant>
-  <vendor>ai_scrivener</vendor>
-  <version>0.1.0</version>
-  <usedMobileApplicationFunctionalities>
-    <functionality>
-      <use>true</use>
-    </functionality>
-    <functionality>
-      <functionality>OSBackup</functionality>
-      <use>true</use>
-    </functionality>
-  </usedMobileApplicationFunctionalities>
-  <dataLockControlMode>Managed</dataLockControlMode>
-  <objectAutonumerationMode>NotAutoFree</objectAutonumerationMode>
-  <modalityUseMode>DontUse</modalityUseMode>
-  <synchronousPlatformExtensionAndAddInCallUseMode>DontUse</synchronousPlatformExtensionAndAddInCallUseMode>
-  <compatibilityMode>8.3.27</compatibilityMode>
+  <defaultRoles>Role.АИС_ОсновнаяРоль</defaultRoles>
+  <defaultLanguage>Language.Русский</defaultLanguage>
+  <languages uuid="017232e9-8658-4ffa-bdca-c4865219f998" extendedConfigurationObject="f85e5a81-dc92-4a3e-b85d-2544ec13c70d">
+    <name>Русский</name>
+    <objectBelonging>Adopted</objectBelonging>
+    <extension xsi:type="mdclassExtension:LanguageExtension">
+      <extendedConfigurationObject>Checked</extendedConfigurationObject>
+      <languageCode>Checked</languageCode>
+    </extension>
+    <languageCode>ru</languageCode>
+  </languages>
+  <roles>Role.АИС_ОсновнаяРоль</roles>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>
   <enums>Enum.АИС_СпособыЗаполнения</enums>
   <enums>Enum.АИС_СостоянияЗадач</enums>
+  <enums>Enum.АИС_СостоянияРазделов</enums>
   <informationRegisters>InformationRegister.АИС_КонтекстЗадачИИ</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_РазделыДокумента</informationRegisters>
 </mdclass:Configuration>
