@@ -8,7 +8,7 @@
 - `docs/system-analysis/view-and-scope.md` — видение и границы проекта (Vision & Scope).
 - `docs/system-analysis/glossary.md` — глоссарий.
 - `docs/system-analysis/stakeholder-map.md` — карта стейкхолдеров.
-- `docs/system-analysis/use-cases.md` — варианты использования и диаграмма UC.
+- `docs/system-analysis/use-cases.md` — варианты использования и диаграммы UC.
 - `docs/system-analysis/c4-model.md` — C4-модель: контекст, контейнеры и компоненты.
 - `docs/requirements/functional_requirements.md` — функциональные требования.
 - `docs/requirements/nonfunctional_requirements.md` — нефункциональные требования.
