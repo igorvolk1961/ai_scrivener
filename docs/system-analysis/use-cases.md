@@ -133,6 +133,7 @@ flowchart LR
   SUP2 -->|"отдаёт распоряжение"| P08
   SCHED2 -->|"запускает проверку сроков"| P04
 
+  linkStyle 0,2,4,6,8,10,12,14 stroke:#E65100,stroke-width:2px
   classDef ai fill:#FFF3E0,stroke:#E65100,color:#BF360C,stroke-width:2px
   classDef human fill:#FFFFFF,stroke:#BDBDBD,color:#424242
   classDef systemActor fill:#F5F5F5,stroke:#757575,color:#212121,stroke-dasharray: 4 3
