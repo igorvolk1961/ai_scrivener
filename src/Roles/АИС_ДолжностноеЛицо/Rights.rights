@@ -8,15 +8,6 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -28,15 +19,6 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -48,15 +30,6 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -68,16 +41,6 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача = НЕОПРЕДЕЛЕНО
-    ИЛИ Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -90,16 +53,6 @@
 		<right>
 			<name>Update</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача = НЕОПРЕДЕЛЕНО
-    ИЛИ Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 	</object>
 	<object>
@@ -107,16 +60,6 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача = НЕОПРЕДЕЛЕНО
-    ИЛИ Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -129,16 +72,6 @@
 		<right>
 			<name>Update</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача = НЕОПРЕДЕЛЕНО
-    ИЛИ Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 	</object>
 	<object>
@@ -146,15 +79,6 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -166,15 +90,6 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -183,15 +98,6 @@
 		<right>
 			<name>Update</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 	</object>
 	<object>
@@ -199,15 +105,6 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -216,15 +113,6 @@
 		<right>
 			<name>Update</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 	</object>
 	<object>
@@ -232,15 +120,6 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>
@@ -252,15 +131,6 @@
 		<right>
 			<name>Read</name>
 			<value>true</value>
-			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
-			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>

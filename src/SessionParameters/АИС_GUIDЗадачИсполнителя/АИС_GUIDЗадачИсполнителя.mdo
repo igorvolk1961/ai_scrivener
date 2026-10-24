@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:SessionParameter xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="e95bf72c-cce4-4ae3-b7c4-db205c99c77a">
+  <name>АИС_GUIDЗадачИсполнителя</name>
+  <synonym>
+    <key>ru</key>
+    <value>GUID задач исполнителя</value>
+  </synonym>
+  <type>
+    <types>String</types>
+  </type>
+</mdclass:SessionParameter>

@@ -44,9 +44,12 @@
   <roles>Role.АИС_Аудитор</roles>
   <roles>Role.АИС_СервисныйПользователь</roles>
   <sessionParameters>SessionParameter.АИС_ТекущееДЛ</sessionParameters>
+  <sessionParameters>SessionParameter.АИС_GUIDЗадачИсполнителя</sessionParameters>
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <commonModules>CommonModule.АИС_ДемоДанные</commonModules>
+  <commonModules>CommonModule.АИС_ПроверкаДоступа</commonModules>
   <dataProcessors>DataProcessor.АИС_ЗаполнитьДемоДанные</dataProcessors>
+  <scheduledJobs>ScheduledJob.АИС_РазовоеЗаполнениеДемоДанных</scheduledJobs>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>
   <catalogs>Catalog.АИС_ПромптПараметры</catalogs>
@@ -58,9 +61,6 @@
   <catalogs>Catalog.ШаблоныВходящихДокументов</catalogs>
   <catalogs>Catalog.ШаблоныВнутреннихДокументов</catalogs>
   <catalogs>Catalog.ИсточникиДанных</catalogs>
-  <definedTypes>DefinedType.АИС_АдресатЗапроса</definedTypes>
-  <definedTypes>DefinedType.АИС_РезультатЗадачи</definedTypes>
-  <definedTypes>DefinedType.АИС_ИсточникТриггера</definedTypes>
   <enums>Enum.АИС_СпособыЗаполнения</enums>
   <enums>Enum.АИС_СостоянияЗадач</enums>
   <enums>Enum.АИС_СостоянияРазделов</enums>

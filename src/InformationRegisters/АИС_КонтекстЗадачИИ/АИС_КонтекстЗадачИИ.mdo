@@ -236,7 +236,10 @@
       <value>Родительская задача</value>
     </synonym>
     <type>
-      <types>TaskRef.ЗадачаИсполнителя</types>
+      <types>String</types>
+      <stringQualifiers>
+        <length>36</length>
+      </stringQualifiers>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
@@ -316,7 +319,10 @@
       <value>Базовая задача</value>
     </synonym>
     <type>
-      <types>TaskRef.ЗадачаИсполнителя</types>
+      <types>String</types>
+      <stringQualifiers>
+        <length>36</length>
+      </stringQualifiers>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>

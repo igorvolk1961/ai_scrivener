@@ -111,7 +111,10 @@
       <value>Задача-владелец</value>
     </synonym>
     <type>
-      <types>TaskRef.ЗадачаИсполнителя</types>
+      <types>String</types>
+      <stringQualifiers>
+        <length>36</length>
+      </stringQualifiers>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
@@ -174,7 +177,9 @@
       <value>Адресат</value>
     </synonym>
     <type>
-      <types>DefinedType.АИС_АдресатЗапроса</types>
+      <types>CatalogRef.Пользователи</types>
+      <types>CatalogRef.Должности</types>
+      <types>CatalogRef.СтруктураПредприятия</types>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
