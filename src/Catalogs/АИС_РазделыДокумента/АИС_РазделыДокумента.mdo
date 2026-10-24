@@ -98,7 +98,9 @@
     <key>ru</key>
     <value>Раздел документа</value>
   </objectPresentation>
-  <owners>Catalog.ИсходящиеДокументы</owners>
+  <owners>Catalog.ШаблоныИсходящихДокументов</owners>
+  <owners>Catalog.ШаблоныВходящихДокументов</owners>
+  <owners>Catalog.ШаблоныВнутреннихДокументов</owners>
   <descriptionLength>150</descriptionLength>
   <codeType>String</codeType>
   <codeAllowedLength>Variable</codeAllowedLength>
@@ -203,6 +205,23 @@
       <stringQualifiers>
         <length>50</length>
       </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="0b3faa0e-597d-4b96-bf3e-43ca7c5df77b">
+    <name>Документ</name>
+    <synonym>
+      <key>ru</key>
+      <value>Документ</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.ИсходящиеДокументы</types>
+      <types>CatalogRef.ВходящиеДокументы</types>
+      <types>CatalogRef.ВнутренниеДокументы</types>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
