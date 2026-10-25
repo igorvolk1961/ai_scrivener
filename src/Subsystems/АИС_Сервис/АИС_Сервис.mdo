@@ -7,4 +7,14 @@
   </synonym>
   <includeInCommandInterface>true</includeInCommandInterface>
   <content>DataProcessor.АИС_ЗаполнитьДемоДанные</content>
+  <content>Catalog.АИС_ТипыДействий</content>
+  <content>Catalog.АИС_ТипыТриггеров</content>
+  <content>Catalog.АИС_ПромптПараметры</content>
+  <content>Catalog.АИС_ДолжностныеОбязанности</content>
+  <content>Catalog.АИС_РасписаниеТриггеров</content>
+  <content>Catalog.АИС_ЛистОжидания</content>
+  <content>InformationRegister.АИС_НормативыИИ</content>
+  <content>InformationRegister.АИС_ИсторияДействийИИ</content>
+  <content>InformationRegister.АИС_КонтекстЗадачИИ</content>
+  <content>InformationRegister.АИС_СостоянияПлейсхолдеров</content>
 </mdclass:Subsystem>

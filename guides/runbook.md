@@ -111,6 +111,54 @@ bash scripts/run/1c.sh check      # CheckConfig
 
 Или раздельно: PostgreSQL через Compose, кластер 1С — командой `ragent`.
 
+### 2.5. Веб-клиент через автономный сервер (для Playwright)
+
+Толстый/тонкий клиент — десктопное приложение, им нельзя управлять программно (нет `xdotool`/инструмента ввода). Автономный сервер `ibsrv` поднимает ту же базу с веб-клиентом на чистом HTML/JS без Apache — его может водить Playwright: заходить под разными демо-пользователями, кликать, читать DOM — без участия человека.
+
+```bash
+mkdir -p /tmp/kilo/standalone-server
+/opt/1cv8/x86_64/8.3.27.2342/ibcmd server config init \
+  -o /tmp/kilo/standalone-server/server.json \
+  --http-address=localhost --http-port=8314 --http-base=/ai_scrivener \
+  --database-path="$IB" --name=ai_scrivener
+
+/opt/1cv8/x86_64/8.3.27.2342/ibsrv \
+  --config=/tmp/kilo/standalone-server/server.json \
+  --data=/tmp/kilo/standalone-server/data &
+```
+
+База доступна на `http://localhost:8314/ai_scrivener/`. Проверка:
+
+```bash
+curl -sI http://localhost:8314/ai_scrivener/
+```
+
+Playwright (headless Chromium, отдельный venv, чтобы не трогать `uv`-окружение проекта):
+
+```bash
+python3 -m venv /tmp/kilo/pw-venv
+/tmp/kilo/pw-venv/bin/pip install --quiet playwright
+/tmp/kilo/pw-venv/bin/playwright install chromium
+```
+
+Логин (поле пользователя — первый `input` на странице, пароль у демо-пользователей пустой, кнопка `#authWindow_basic_okButton`):
+
+```python
+from playwright.sync_api import sync_playwright
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page()
+    page.goto("http://localhost:8314/ai_scrivener/")
+    page.wait_for_timeout(2000)
+    page.locator("input").nth(0).fill("ДЛ1")
+    page.locator("#authWindow_basic_okButton").click()
+    page.wait_for_timeout(6000)
+    page.screenshot(path="/tmp/kilo/web.png")
+    browser.close()
+```
+
+Это рабочий интерфейс один в один с толстым клиентом (те же формы, списки, поиск Ctrl+Shift+F) — проверено на демо-пользователях B5 (вход, поиск задач, просмотр форм). Остановка сервера — `kill` по PID из `pgrep -af ibsrv`.
+
 Запуск клиента:
 
 ```bash
@@ -342,7 +390,7 @@ cat /tmp/kilo/check.log
 - по умолчанию берётся первое окно `1cv8`;
 - для отдельного диалога укажите его ID из `--list`.
 
-OCR читает заголовки, поля, ошибки и пункты меню, но не понимает иконки и вёрстку. Для веб-клиента надёжнее DOM через Playwright, но для десктопного 1С это рабочий способ показать состояние экрана.
+OCR читает заголовки, поля, ошибки и пункты меню, но не понимает иконки и вёрстку. Для десктопного 1С это рабочий способ показать состояние экрана; для автоматизации кликов и форм — автономный сервер + Playwright (раздел 2.5), это даёт полноценный DOM и реальный клик вместо чтения скриншота.
 
 ## 9. Остановка
 

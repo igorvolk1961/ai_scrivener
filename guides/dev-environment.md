@@ -34,6 +34,8 @@ flowchart TB
       XWIN["X11<br/>xwininfo"]
       TESS["Tesseract OCR<br/>rus+eng"]
       SCREEN[("Скриншот окна 1С")]
+      IBSRV["ibsrv<br/>автономный сервер"]
+      PWR["Playwright<br/>headless Chromium"]
     end
     ENV["Локальные секреты<br/>.env_0 → .env"]
     ART["Локальные артефакты<br/>.dt, .cfe, extension-xml"]
@@ -77,6 +79,9 @@ flowchart TB
   SCREEN --> TESS
   TESS -->|"OCR-текст"| KILO
   TESS -->|"OCR-текст"| CLAUDE
+  PLATFORM --> IBSRV
+  IBSRV -->|"веб-клиент HTML/JS"| PWR
+  PWR -->|"DOM, клики, скриншоты"| CLAUDE
   PLATFORM -.->|"будущая интеграция"| DS
   ENV -.-> RAG
   ENV -.-> PLATFORM
@@ -93,7 +98,7 @@ flowchart TB
   class DEV human
   class KILO,CLAUDE agent
   class REPO repo
-  class UV,CHECKS,BSL,OCR,GST,XWIN,TESS tool
+  class UV,CHECKS,BSL,OCR,GST,XWIN,TESS,IBSRV,PWR tool
   class EDT,PLATFORM onec
   class FILEBASE,PGBASE,QD,ART,ENV,SCREEN storage
   class DS,ANT,GC,GH external
@@ -119,6 +124,8 @@ flowchart TB
 | GStreamer `gst-launch-1.0` | Захват X11-окна в PNG | Рабочая станция |
 | `xwininfo` | Поиск ID окна 1С | Рабочая станция |
 | Tesseract OCR | Распознавание русского и английского текста (`rus+eng`) | Рабочая станция |
+| `ibsrv` | Автономный сервер 1С: публикует базу для веб-клиента без Apache/nginx | Рабочая станция |
+| Playwright | Headless Chromium: управляет веб-клиентом 1С программно (вход под разными пользователями, клики, DOM, скриншоты) — без участия человека, в отличие от десктопного клиента | Рабочая станция |
 | 1C:EDT 2026.1.3 | Разработка расширения, сборка и валидация `.cfe` | Рабочая станция |
 | 1С:Предприятие 8.3.27 | Исполнение базы и расширения | Рабочая станция |
 | Файловая демо-база | Быстрый локальный стенд | Рабочая станция |
@@ -158,7 +165,9 @@ flowchart TB
 
 Зависимости: `tesseract` с языками `rus+eng`, GStreamer (`gst-launch-1.0`) и X11-утилита `xwininfo`. Скриншот сохраняется в `/tmp/kilo/1c-screen.png`, OCR-текст выводится в stdout.
 
-Ограничение: Tesseract читает заголовки, поля, ошибки и пункты меню, но не понимает иконки и вёрстку. Для веб-клиента надёжнее DOM через Playwright.
+Ограничение: Tesseract читает заголовки, поля, ошибки и пункты меню, но не понимает иконки и вёрстку.
+
+Для толстого/тонкого клиента (десктопное приложение) это единственный доступный агенту способ видеть экран — нет инструмента ввода (`xdotool`), клики выполняет только человек. Для таких же проверок на той же базе есть альтернатива: `ibsrv` (автономный сервер 1С, входит в дистрибутив платформы) публикует базу как обычный веб-клиент на HTML/JS, без Apache/nginx — и им управляет Playwright (headless Chromium) полностью самостоятельно: вход под любым демо-пользователем, клики, поиск, чтение DOM, скриншоты — без участия человека. Подробности и рабочий пример — `guides/runbook.md` §2.5. Используется для сценариев, где нужно реально воспроизвести разные роли/права (например, негативные тесты доступа `tests/1c/test_access.md`), а не просто посмотреть текущий экран.
 
 ## 5. Границы автоматизации
 

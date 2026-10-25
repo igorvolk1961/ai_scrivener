@@ -113,4 +113,11 @@
 			<value>true</value>
 		</right>
 	</object>
+	<object>
+		<name>Configuration</name>
+		<right>
+			<name>ViewAllFunctions</name>
+			<value>true</value>
+		</right>
+	</object>
 </Rights>
