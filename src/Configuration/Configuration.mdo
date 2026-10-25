@@ -47,6 +47,7 @@
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <commonModules>CommonModule.АИС_ДемоДанные</commonModules>
   <dataProcessors>DataProcessor.АИС_ЗаполнитьДемоДанные</dataProcessors>
+  <subsystems>Subsystem.АИС_Сервис</subsystems>
   <scheduledJobs>ScheduledJob.АИС_РазовоеЗаполнениеДемоДанных</scheduledJobs>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Subsystem xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="6281fc11-1e6a-446f-88ec-f5b1aa07c54d">
+  <name>АИС_Сервис</name>
+  <synonym>
+    <key>ru</key>
+    <value>АИС: Сервис</value>
+  </synonym>
+  <includeInCommandInterface>true</includeInCommandInterface>
+  <content>DataProcessor.АИС_ЗаполнитьДемоДанные</content>
+</mdclass:Subsystem>
