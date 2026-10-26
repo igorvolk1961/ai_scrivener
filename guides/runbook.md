@@ -135,6 +135,8 @@ curl -sI http://localhost:8314/ai_scrivener/
 
 ### 2.6. `HTTPService` расширения через Apache (для программного доступа извне)
 
+`HTTPService.АИС_Симулятор` — тестовый адаптер для симулятора предприятия. В штатной работе без симулятора он не используется: документы создаются штатными средствами 1С:Документооборота, а расширение обрабатывает их подписками и AI-контуром.
+
 `ibsrv` (§2.5) хорош для веб-клиента, но в этой версии платформы (8.3.27.2342) `HTTPService`-вызовы через него падают с внутренней ошибкой `sessionId != kUUIDNull` — похоже, это ограничение/баг именно автономного сервера, не нашего кода (проверено: роутинг резолвится, аутентификация не при чём, не зависит от метода/cookie). Для `HTTPService` нужна классическая публикация через Apache + модуль 1С.
 
 **Установка (один раз):**
@@ -213,6 +215,27 @@ with sync_playwright() as p:
 ```
 
 Строка подключения: `/Slocalhost:1541/ai_scrivener`, пользователь `Администратор`, пароль пустой. Подробности — в `guides/postgresql.md`.
+
+### 2.7. Симулятор предприятия (LLM-агенты)
+
+Симулятор живёт в отдельном репозитории `ai-scrivener-enterprise-sim` и ходит в расширение только через `HTTPService.АИС_Симулятор` (§2.6). Он не требует доступа к исходникам или базе `ai_scrivener`; каждый вызов аутентифицируется как реальный пользователь 1С.
+
+```bash
+cd ~/PycharmProjects/ai-scrivener-enterprise-sim
+uv sync
+```
+
+Переменные окружения: `AIS_SIM_BASE_URL` (по умолчанию `http://localhost/ai_scrivener`), `AIS_SIM_AUTH_LOGIN` (логин сотрудника, от имени которого действует агент), `AIS_SIM_AUTH_PASSWORD`, `AIS_SIM_COMPANY_PROFILE` (профиль компании), `DEEPSEEK_API_KEY`/`DEEPSEEK_BASE_URL`/`DEEPSEEK_MODEL`.
+
+```bash
+AIS_SIM_AUTH_LOGIN=Администратор uv run python -m enterprise_sim.seed
+AIS_SIM_AUTH_LOGIN=ДиректорПоПерсоналу uv run python -m enterprise_sim.hire_management
+AIS_SIM_AUTH_LOGIN=ДиректорПоПерсоналу uv run python -m enterprise_sim.hire_engineering
+uv run python -m enterprise_sim.issue_founding_orders
+AIS_SIM_AUTH_LOGIN=ГлавныйИнженер uv run python -m enterprise_sim.deepseek_agent "Главный инженер"
+```
+
+Перед запуском убедиться, что Apache опубликован (§2.6) и база не занята Конфигуратором/EDT. `issue_founding_orders` не идемпотентен: повторный запуск создаёт новые документы и задачи. Полный сценарий, профиль компании и текущие ограничения — `plans/2026-10-26-enterprise-simulator.md` и README симулятора.
 
 ## 3. Расширение в Конфигураторе
 
@@ -397,6 +420,7 @@ cat /tmp/kilo/check.log
 6. Запустить RAG-сервис (раздел 5).
 7. Запустить 1С:Предприятие (раздел 2.3).
 8. Прогнать проверки (раздел 6).
+9. Для сценариев симулятора опубликовать `HTTPService` через Apache (раздел 2.6) и запустить агентов (раздел 2.7).
 
 ## 8. Типовые проблемы
 
@@ -465,7 +489,9 @@ docker compose -f deploy/docker-compose.yml down
 - `guides/versioning.md` — источник истины, артефакты, пересборка базы и релизный цикл.
 - `docs/data-model.md` — дедуплицированная модель данных расширения.
 - `docs/process-diagrams.md` — процессы AS-IS и TO-BE.
-- `docs/template-factory.md` — мастер шаблонов.
+- `docs/template-factory.md` — мастер шаблонов и автошаблонизация.
 - `docs/proofreading.md` — вычитка документов и квоты LLM.
+- `plans/2026-10-26-enterprise-simulator.md` — симулятор предприятия, агенты и текущие ограничения.
+- `ai-scrivener-enterprise-sim/README.md` — запуск симулятора и профиль компании.
 - `docs/design-decisions.md` — завершённые проектные решения.
 - `docs/requirements/traceability_matrix.md` — требования и сценарии проверки.

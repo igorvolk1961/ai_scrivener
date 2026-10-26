@@ -1,6 +1,6 @@
 # Среда разработки
 
-Схема показывает, как устроен локальный контур разработки `ai_scrivener`: рабочие места, AI-агенты, инструменты проверки, 1С-стенд, RAG-сервис и внешние сервисы. Диаграмма описывает именно среду разработки, а не промышленную топологию.
+Схема показывает, как устроен локальный контур разработки `ai_scrivener`: рабочие места, AI-агенты, инструменты проверки, 1С-стенд, RAG-сервис, симулятор предприятия и внешние сервисы. Диаграмма описывает именно среду разработки, а не промышленную топологию.
 
 ```mermaid
 flowchart TB
@@ -17,6 +17,10 @@ flowchart TB
       UV["uv"]
       CHECKS["pre-commit<br/>ruff, mypy, pytest"]
       BSL["bsl-language-server"]
+    end
+    subgraph SIMENV["Симулятор предприятия"]
+      SIMREPO["Git-репозиторий<br/>ai-scrivener-enterprise-sim"]
+      SIM["LLM-агенты сотрудников<br/>DeepSeek tool-calling"]
     end
     subgraph ONE["1С"]
       EDT["1C:EDT 2026.1.3"]
@@ -84,10 +88,14 @@ flowchart TB
   IBSRV -->|"веб-клиент HTML/JS"| PWR
   PWR -->|"DOM, клики, скриншоты"| CLAUDE
   PLATFORM --> APACHE
-  APACHE -->|"HTTPService, Basic Auth"| CLAUDE
-  PLATFORM -.->|"будущая интеграция"| DS
+  SIMREPO --> SIM
+  SIM -->|"HTTPService, Basic Auth"| APACHE
+  SIM -->|"промпты"| DS
+  REPO -.->|"API-контракт"| SIMREPO
+  PLATFORM -->|"HTTPS + OpenAI-совместимый API"| DS
   ENV -.-> RAG
   ENV -.-> PLATFORM
+  ENV -.-> SIM
   ART -.-> PLATFORM
 
   classDef human fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
@@ -99,8 +107,8 @@ flowchart TB
   classDef external fill:#ECEFF1,stroke:#546E7A,color:#263238
   classDef ci fill:#E1F5FE,stroke:#0277BD,color:#01579B
   class DEV human
-  class KILO,CLAUDE agent
-  class REPO repo
+  class KILO,CLAUDE,SIM agent
+  class REPO,SIMREPO repo
   class UV,CHECKS,BSL,OCR,GST,XWIN,TESS,IBSRV,PWR,APACHE tool
   class EDT,PLATFORM onec
   class FILEBASE,PGBASE,QD,ART,ENV,SCREEN storage
@@ -117,6 +125,8 @@ flowchart TB
 | Claude Code | CLI-агент для задач, ревью и пакетных изменений | Рабочая станция |
 | Sonnet 5 | Модель Claude Code | Внешний API |
 | Git-репозиторий | Единый источник кода, документов и требований | Рабочая станция |
+| `ai-scrivener-enterprise-sim` | Отдельный репозиторий симулятора: HTTP-клиент, сценарии легенды, профиль компании, LLM-агенты сотрудников | Рабочая станция |
+| LLM-агенты сотрудников | DeepSeek tool-calling: читают задачи, ищут шаблоны/образцы, создают документы, нанимают и согласуют | Рабочая станция |
 | GitHub `origin/main` | Удалённый репозиторий и точка интеграции | GitHub |
 | GitHub Actions | CI: pre-commit, линтеры и Python-тесты | GitHub |
 | `uv` | Управление Python-окружением и зависимостями | Рабочая станция |
@@ -130,6 +140,7 @@ flowchart TB
 | `ibsrv` | Автономный сервер 1С: публикует базу для веб-клиента без Apache/nginx | Рабочая станция |
 | Playwright | Headless Chromium: управляет веб-клиентом 1С программно (вход под разными пользователями, клики, DOM, скриншоты) — без участия человека, в отличие от десктопного клиента | Рабочая станция |
 | Apache 2.4 + `wsap24.so` | Публикация `HTTPService` расширения (программный REST-доступ, напр. `АИС_Симулятор`) — `ibsrv` этого надёжно не умеет, см. `guides/runbook.md` §2.6 | Рабочая станция |
+| `HTTPService.АИС_Симулятор` | Найм, внутренние документы, задачи, шаблоны, сеансы, диагностика ИИ, решение бухгалтера | Расширение 1С |
 | 1C:EDT 2026.1.3 | Разработка расширения, сборка и валидация `.cfe` | Рабочая станция |
 | 1С:Предприятие 8.3.27 | Исполнение базы и расширения | Рабочая станция |
 | Файловая демо-база | Быстрый локальный стенд | Рабочая станция |
