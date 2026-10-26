@@ -33,6 +33,16 @@ mkdir -p "$OUTPUT_DIR"
 
 rsync -a --delete "$REPO_ROOT/src/" "$WORKSPACE_PROJECT/src/"
 
+# Required: export reads EDT's indexed project model, not the filesystem
+# directly. Without a build first, changes to some object kinds (confirmed:
+# Rights.rights) silently don't make it into the exported XML even though
+# the source file on disk is correct - a build step is the fix.
+"$EDT_CLI" \
+  -data "$EDT_DATA" \
+  -timeout 600 \
+  -vmargs -Xmx8g \
+  -command build -y true "$EDT_PROJECT"
+
 "$EDT_CLI" \
   -data "$EDT_DATA" \
   -timeout 600 \

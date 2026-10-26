@@ -59,4 +59,55 @@
       <handler>ПолучитьСеансы_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="3c6c6c2d-8c3c-5f0c-b16c-8c3c5f0cb16c">
+    <name>Задачи</name>
+    <synonym>
+      <key>ru</key>
+      <value>Задачи</value>
+    </synonym>
+    <template>/tasks</template>
+    <methods uuid="4d7d7d3e-9d4d-6a1d-c27d-9d4d6a1dc27d">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>Get</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьЗадачи_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="5e8e8e4f-ae5e-7b2e-d38e-ae5e7b2ed38e">
+    <name>ЗавершитьЗадачу</name>
+    <synonym>
+      <key>ru</key>
+      <value>Завершить задачу</value>
+    </synonym>
+    <template>/tasks/complete</template>
+    <methods uuid="6f9f9f5a-bf6f-8c3f-e49f-bf6f8c3fe49f">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ЗавершитьЗадачу_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="7fafaf6b-cfaf-9d4f-f5af-cfaf9d4ff5af">
+    <name>Шаблоны</name>
+    <synonym>
+      <key>ru</key>
+      <value>Шаблоны</value>
+    </synonym>
+    <template>/templates</template>
+    <methods uuid="8fbfbf7c-dfbf-ae5f-06bf-dfbfae5f06bf">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>Get</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьШаблоны_GET</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>
