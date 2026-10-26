@@ -133,6 +133,50 @@ mkdir -p /tmp/kilo/standalone-server
 curl -sI http://localhost:8314/ai_scrivener/
 ```
 
+### 2.6. `HTTPService` расширения через Apache (для программного доступа извне)
+
+`ibsrv` (§2.5) хорош для веб-клиента, но в этой версии платформы (8.3.27.2342) `HTTPService`-вызовы через него падают с внутренней ошибкой `sessionId != kUUIDNull` — похоже, это ограничение/баг именно автономного сервера, не нашего кода (проверено: роутинг резолвится, аутентификация не при чём, не зависит от метода/cookie). Для `HTTPService` нужна классическая публикация через Apache + модуль 1С.
+
+**Установка (один раз):**
+
+1. Компонент `ws` (веб-коннектор Apache/nginx) не входит в базовую установку — ставится отдельно из полного дистрибутива сервера (`server64_*.zip` → `setup-full-*.run`):
+   ```bash
+   sudo /путь/к/setup-full-8.3.27.2342-x86_64.run --mode unattended --enable-components ws
+   ```
+   Это кладёт `wsap24.so`/`wsap22.so`/`wsapch2.so` в каталог платформы. Сам Apache ставится отдельно: `sudo apt-get install -y apache2`.
+2. Публикация через штатную утилиту `webinst`:
+   ```bash
+   sudo mkdir -p /var/www/ai_scrivener
+   sudo chown igorvolk:igorvolk /var/www/ai_scrivener
+   sudo "$ONEC_DIR/webinst" -publish -apache24 -wsdir ai_scrivener -dir /var/www/ai_scrivener \
+     -connstr 'File="/home/igorvolk/1C/ai_scrivener_docmng";' -confPath /etc/apache2/apache2.conf
+   sudo systemctl restart apache2
+   ```
+   Это добавляет `LoadModule`+`Alias`+`<Directory>` в `apache2.conf` и создаёт `/var/www/ai_scrivener/default.vrd`.
+3. **`webinst` не включает `HTTPService` в `default.vrd`** — там только `<ws>` (SOAP) и `<standardOdata>`. Нужно дописать вручную, и это не плоский флаг, а список сервисов по имени (`rootURL` расширения):
+   ```xml
+   <httpServices>
+       <service name="ais-sim" rootUrl="ais-sim" enable="true"
+               reuseSessions="autouse" sessionMaxAge="20" poolSize="10" poolTimeout="5"/>
+   </httpServices>
+   ```
+   (вставить рядом с `<ws .../>`; `<httpServices enable="true"/>` одним флагом — невалидно, платформа бросает `Error converting XDTO data: PropertyStart: enable`).
+4. Мастер **Администрирование → Публикация на веб-сервере** в Конфигураторе делает то же самое из коробки (и корректно формирует `httpServices`), но требует суперпользователя (пишет в `/etc/apache2/apache2.conf`) — а лицензия community-версии видна только пользователю `igorvolk`, не `root`, так что запустить Конфигуратор от root для этого не выйдет без лишних манипуляций с лицензией. Проще править `default.vrd` руками по образцу выше.
+
+**Проверка:**
+```bash
+curl -s -u "Администратор:" -X POST -H "Content-Type: application/json; charset=utf-8" \
+  --data-raw '{"Имя":"Тест","ФИО":"...","Должность":"...","Роли":["ДолжностноеЛицо"]}' \
+  http://localhost/ai_scrivener/hs/ais-sim/employees -i
+```
+
+**Повторяющаяся проблема: конфликт прав `igorvolk` vs `www-data`.** Apache-воркер (`www-data`) и Конфигуратор/`1cv8` (`igorvolk`) обращаются к одним файлам файловой базы (`1Cv8.1CD`, `*.1CL`, временные `1Cv8tmp.*`). Каждая сторона создаёт файлы под своим пользователем без прав для другого — следующая попытка открыть базу из другого аккаунта падает с «Ошибка режима доступа»/«Ошибка открытия файла блокировок». Рабочий паттерн:
+- **Перед** открытием Конфигуратора после любого HTTP-запроса: `sudo systemctl stop apache2`, затем `chmod -R o+rw` на каталог базы (не страшно, если часть файлов вроде `1CHelpIndex`/`1Cv8Temp` откажет — они не нужны ни той, ни другой стороне в этом сценарии), удалить `1Cv8tmp.*`/`*.1CL`, если chmod на них не прошёл (`rm -f`, т.к. право на удаление даёт запись в каталог, а не владение файлом).
+- **После** Конфигуратора: `sudo systemctl start apache2`.
+- При смене кода (`load_extension.sh file`) та же база нужна и Конфигуратору — Apache тоже должен быть остановлен на это время.
+
+Для реальной эксплуатации (не разработки) это не проблема — там один владелец процесса публикации; конфликт специфичен именно для dev-окружения, где одна и та же файловая база используется и интерактивно, и через веб-публикацию.
+
 Playwright (headless Chromium, отдельный venv, чтобы не трогать `uv`-окружение проекта):
 
 ```bash

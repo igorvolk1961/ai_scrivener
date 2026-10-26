@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:HTTPService xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="9238adbc-cd79-4671-b16c-6f8aa0202182">
+  <name>АИС_Симулятор</name>
+  <synonym>
+    <key>ru</key>
+    <value>АИС: Симулятор предприятия</value>
+  </synonym>
+  <rootURL>ais-sim</rootURL>
+  <reuseSessions>AutoUse</reuseSessions>
+  <sessionMaxAge>20</sessionMaxAge>
+  <urlTemplates uuid="72e2b952-971f-4018-86a0-0d622e99aa3b">
+    <name>Сотрудники</name>
+    <synonym>
+      <key>ru</key>
+      <value>Сотрудники</value>
+    </synonym>
+    <template>/employees</template>
+    <methods uuid="91d559b2-3ebd-4f60-af42-56c1db60b5bc">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СоздатьСотрудника_POST</handler>
+    </methods>
+  </urlTemplates>
+</mdclass:HTTPService>

@@ -36,6 +36,7 @@ flowchart TB
       SCREEN[("Скриншот окна 1С")]
       IBSRV["ibsrv<br/>автономный сервер"]
       PWR["Playwright<br/>headless Chromium"]
+      APACHE["Apache 2.4<br/>+ wsap24.so"]
     end
     ENV["Локальные секреты<br/>.env_0 → .env"]
     ART["Локальные артефакты<br/>.dt, .cfe, extension-xml"]
@@ -82,6 +83,8 @@ flowchart TB
   PLATFORM --> IBSRV
   IBSRV -->|"веб-клиент HTML/JS"| PWR
   PWR -->|"DOM, клики, скриншоты"| CLAUDE
+  PLATFORM --> APACHE
+  APACHE -->|"HTTPService, Basic Auth"| CLAUDE
   PLATFORM -.->|"будущая интеграция"| DS
   ENV -.-> RAG
   ENV -.-> PLATFORM
@@ -98,7 +101,7 @@ flowchart TB
   class DEV human
   class KILO,CLAUDE agent
   class REPO repo
-  class UV,CHECKS,BSL,OCR,GST,XWIN,TESS,IBSRV,PWR tool
+  class UV,CHECKS,BSL,OCR,GST,XWIN,TESS,IBSRV,PWR,APACHE tool
   class EDT,PLATFORM onec
   class FILEBASE,PGBASE,QD,ART,ENV,SCREEN storage
   class DS,ANT,GC,GH external
@@ -126,6 +129,7 @@ flowchart TB
 | Tesseract OCR | Распознавание русского и английского текста (`rus+eng`) | Рабочая станция |
 | `ibsrv` | Автономный сервер 1С: публикует базу для веб-клиента без Apache/nginx | Рабочая станция |
 | Playwright | Headless Chromium: управляет веб-клиентом 1С программно (вход под разными пользователями, клики, DOM, скриншоты) — без участия человека, в отличие от десктопного клиента | Рабочая станция |
+| Apache 2.4 + `wsap24.so` | Публикация `HTTPService` расширения (программный REST-доступ, напр. `АИС_Симулятор`) — `ibsrv` этого надёжно не умеет, см. `guides/runbook.md` §2.6 | Рабочая станция |
 | 1C:EDT 2026.1.3 | Разработка расширения, сборка и валидация `.cfe` | Рабочая станция |
 | 1С:Предприятие 8.3.27 | Исполнение базы и расширения | Рабочая станция |
 | Файловая демо-база | Быстрый локальный стенд | Рабочая станция |

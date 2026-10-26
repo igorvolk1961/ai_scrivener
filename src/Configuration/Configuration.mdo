@@ -46,6 +46,9 @@
   <sessionParameters>SessionParameter.АИС_ТекущееДЛ</sessionParameters>
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <commonModules>CommonModule.АИС_ДемоДанные</commonModules>
+  <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
+  <commonModules>CommonModule.АИС_Сотрудники</commonModules>
+  <httpServices>HTTPService.АИС_Симулятор</httpServices>
   <dataProcessors>DataProcessor.АИС_ЗаполнитьДемоДанные</dataProcessors>
   <subsystems>Subsystem.АИС_Сервис</subsystems>
   <scheduledJobs>ScheduledJob.АИС_РазовоеЗаполнениеДемоДанных</scheduledJobs>
