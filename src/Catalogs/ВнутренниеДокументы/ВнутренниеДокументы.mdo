@@ -57,4 +57,44 @@
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
   </attributes>
+  <attributes uuid="a39aaf4e-bf1a-4197-b109-aa95c5598332">
+    <name>АИС_СтатусСогласованияБухгалтера</name>
+    <synonym>
+      <key>ru</key>
+      <value>Статус согласования бухгалтера</value>
+    </synonym>
+    <comment>Для документов вида "Заявка на найм" - "" (не рассмотрено), "Согласовано" или "Отклонено" главным бухгалтером (зарплатная вилка). См. АИС_Уведомления.ОбработатьЗаявкуНаНайм, HTTPService.АИС_Симулятор (/hiring-requests/accounting-decision).</comment>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>20</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <tabularSections uuid="fba50749-0d04-48d8-8ac2-c473cb1ec7dd">
+    <name>АИС_ЗапрашиваемыеДолжности</name>
+    <synonym>
+      <key>ru</key>
+      <value>Запрашиваемые должности</value>
+    </synonym>
+    <comment>Для документов вида "Заявка на найм" - перечень должностей, которые запрашивает заявка. По каждой HR (через АИС_Уведомления.ОбработатьЗаявкуНаНайм) проверяет наличие действующей должностной инструкции (АИС_ОбщегоНазначения.НайтиДолжностнуюИнструкцию).</comment>
+    <attributes uuid="e384a6d9-68e5-4c4e-acc4-e61267f2f691">
+      <name>Должность</name>
+      <synonym>
+        <key>ru</key>
+        <value>Должность</value>
+      </synonym>
+      <type>
+        <types>CatalogRef.Должности</types>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <fullTextSearch>Use</fullTextSearch>
+      <dataHistory>Use</dataHistory>
+    </attributes>
+  </tabularSections>
 </mdclass:Catalog>

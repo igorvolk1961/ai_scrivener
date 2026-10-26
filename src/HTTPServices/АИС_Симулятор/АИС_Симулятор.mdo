@@ -136,6 +136,23 @@
       <handler>УтвердитьШаблон_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="6218c2a7-874d-4078-b277-0530e5580ab3">
+    <name>РешениеБухгалтера</name>
+    <synonym>
+      <key>ru</key>
+      <value>Решение бухгалтера по заявке на найм</value>
+    </synonym>
+    <template>/hiring-requests/accounting-decision</template>
+    <methods uuid="1ccc3c51-3be8-44ef-bf1d-54dc4877eba7">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ПринятьРешениеБухгалтера_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="c1f1f1b0-12f1-e293-4af1-12f1e2934af1">
     <name>ПроверитьИИ</name>
     <synonym>

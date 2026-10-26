@@ -271,4 +271,11 @@
 			<value>true</value>
 		</right>
 	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.РешениеБухгалтера.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
 </Rights>
