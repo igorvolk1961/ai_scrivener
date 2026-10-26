@@ -293,6 +293,25 @@
     <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
   </resources>
+  <resources uuid="1a2b3c4d-5e6f-4789-9abc-def012345678">
+    <name>КандидатыШаблонов</name>
+    <synonym>
+      <key>ru</key>
+      <value>Кандидаты шаблонов</value>
+    </synonym>
+    <comment>Автоматический поиск шаблонов ВнутреннихДокументов, выполненный расширением при создании задачи (JSON-массив {УникальныйИдентификатор, Наименование, Заголовок, КомментарийКШаблону}). Исполнитель задачи (ДЛ/его симулятор) сам оценивает пригодность и решает, воспользоваться ли одним из них - поиск расширения не заменяет его решение.</comment>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:StringValue"/>
+  </resources>
   <resources uuid="bab940ed-ad1a-43f5-8002-6e441a7a1136">
     <name>ДатаОбновления</name>
     <synonym>
