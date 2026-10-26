@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="f5a02d45-248e-4b42-a7b0-d19cffefd15d" extendedConfigurationObject="017baf6e-d210-4362-b7ae-cbe8236aa7c4">
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="f5a02d45-248e-4b42-a7b0-d19cffefd15d" extendedConfigurationObject="017baf6e-d210-4362-b7ae-cbe8236aa7c4">
   <producedTypes>
     <objectType typeId="af4fc2c3-1ca8-492e-9a63-f9c749217f6c" valueTypeId="3f64d698-58bb-45fb-b353-5f223b91a49d"/>
     <refType typeId="0157a46b-f545-41a2-be1e-ffa02bc76668" valueTypeId="d9fa2a45-5472-414e-bd10-9d45b45a51aa"/>
@@ -12,4 +12,19 @@
   <extension xsi:type="mdclassExtension:CatalogExtension">
     <extendedConfigurationObject>Checked</extendedConfigurationObject>
   </extension>
+  <attributes uuid="2c3d4e5f-6a7b-4c8d-9e0f-1a2b3c4d5e6f">
+    <name>АИС_Должность</name>
+    <synonym>
+      <key>ru</key>
+      <value>Должность</value>
+    </synonym>
+    <comment>Для документов вида "Должностная инструкция" - должность, которую описывает документ. Используется для поиска действующей инструкции по должности (АИС_ОбщегоНазначения.НайтиДолжностнуюИнструкцию).</comment>
+    <type>
+      <types>CatalogRef.Должности</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
 </mdclass:Catalog>
