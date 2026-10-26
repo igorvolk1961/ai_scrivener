@@ -27,4 +27,34 @@
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
   </attributes>
+  <attributes uuid="3d4e5f6a-7b8c-4d9e-0f1a-2b3c4d5e6f7a">
+    <name>АИС_ИспользованШаблон</name>
+    <synonym>
+      <key>ru</key>
+      <value>Использован шаблон</value>
+    </synonym>
+    <comment>Какой шаблон (если какой-либо) был использован как основа при составлении документа - заполняется вызывающей стороной (исполнителем/его симулятором). Пусто - документ составлен с нуля. Вместе с АИС_ДополненоРазделами определяет, нужно ли формировать новый/обновлённый шаблон (см. АИС_Уведомления).</comment>
+    <type>
+      <types>CatalogRef.ШаблоныВнутреннихДокументов</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="4e5f6a7b-8c9d-4e0f-1a2b-3c4d5e6f7a8b">
+    <name>АИС_ДополненоРазделами</name>
+    <synonym>
+      <key>ru</key>
+      <value>Дополнено разделами</value>
+    </synonym>
+    <comment>Истина, если документ составлен на основе шаблона (АИС_ИспользованШаблон), но исполнитель добавил содержание сверх шаблона - сигнал, что шаблон стоит обновить/расширить.</comment>
+    <type>
+      <types>Boolean</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
 </mdclass:Catalog>

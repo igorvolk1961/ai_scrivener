@@ -109,5 +109,48 @@
       <httpMethod>GET</httpMethod>
       <handler>ПолучитьШаблоны_GET</handler>
     </methods>
+    <methods uuid="9fcfcf8d-efcf-bf60-17cf-efcfbf6017cf">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СоздатьШаблон_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="afdfdf9e-f0df-c071-28df-f0dfc07128df">
+    <name>УтвердитьШаблон</name>
+    <synonym>
+      <key>ru</key>
+      <value>Утвердить шаблон</value>
+    </synonym>
+    <template>/templates/approve</template>
+    <methods uuid="b0e0e0af-01e0-d182-39e0-01e0d18239e0">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>УтвердитьШаблон_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="c1f1f1b0-12f1-e293-4af1-12f1e2934af1">
+    <name>ПроверитьИИ</name>
+    <synonym>
+      <key>ru</key>
+      <value>Проверить доступность ИИ</value>
+    </synonym>
+    <template>/ai-check</template>
+    <methods uuid="d2020221-23f2-f3a4-5bf2-23f2f3a45bf2">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>Get</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПроверитьИИ_GET</handler>
+    </methods>
   </urlTemplates>
 </mdclass:HTTPService>

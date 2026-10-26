@@ -7,6 +7,24 @@
   </synonym>
   <objectBelonging>Adopted</objectBelonging>
   <extendedConfigurationObject>2ff6bcab-48f9-42fd-a7da-f51bd3af0c8d</extendedConfigurationObject>
+  <attributes uuid="5f6a7b8c-9d0e-4f1a-2b3c-4d5e6f7a8b9c">
+    <name>Статус</name>
+    <synonym>
+      <key>ru</key>
+      <value>Статус</value>
+    </synonym>
+    <comment>"Черновик" (создан Делопроизводителем, ждёт утверждения автором исходного документа) или "Утверждён" (виден в поиске шаблонов) - см. HTTPService.АИС_Симулятор (/templates POST, /templates/approve). Строка, а не перечисление - штатного АИС_СостоянияШаблонов ещё нет (docs/data-model.md §3, запланировано, не реализовано).</comment>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>20</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
   <tabularSections uuid="35b210cf-e3f9-4226-9fcf-f8abf1bbd85e">
     <name>АИС_Плейсхолдеры</name>
     <synonym>

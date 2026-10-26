@@ -44,6 +44,8 @@
   <roles>Role.АИС_Аудитор</roles>
   <roles>Role.АИС_СервисныйПользователь</roles>
   <sessionParameters>SessionParameter.АИС_ТекущееДЛ</sessionParameters>
+  <constants>Constant.АИС_КлючИИ</constants>
+  <constants>Constant.АИС_МодельИИ</constants>
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <commonModules>CommonModule.АИС_ДемоДанные</commonModules>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>

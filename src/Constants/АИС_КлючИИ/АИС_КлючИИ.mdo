@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="e3f4a5b6-c7d8-49e0-a1b2-c3d4e5f6a7b8">
+  <producedTypes>
+    <managerType typeId="f4a5b6c7-d8e9-4af1-b2c3-d4e5f6a7b8c9" valueTypeId="05a6b7c8-e9fa-4b02-c3d4-e5f6a7b8c9d0"/>
+    <valueManagerType typeId="16b7c8d9-fa0b-4c13-d4e5-f6a7b8c9d0e1" valueTypeId="27c8d9ea-0b1c-4d24-e5f6-a7b8c9d0e1f2"/>
+    <valueKeyType typeId="38d9eafb-1c2d-4e35-f6a7-b8c9d0e1f2a3" valueTypeId="49eafb0c-2d3e-4f46-a7b8-c9d0e1f2a3b4"/>
+  </producedTypes>
+  <name>АИС_КлючИИ</name>
+  <synonym>
+    <key>ru</key>
+    <value>Ключ API для вызовов ИИ</value>
+  </synonym>
+  <comment>Общий ключ для всех ИИ-вызовов расширения из BSL (та же переменная DEEPSEEK_API_KEY из .env, что используется агентами симулятора - провайдер не зашит в имя, чтобы не привязываться к конкретному) - задаётся один раз через Конфигуратор/Предприятие, не хранится в коде.</comment>
+  <type>
+    <types>String</types>
+    <stringQualifiers>
+      <length>200</length>
+    </stringQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

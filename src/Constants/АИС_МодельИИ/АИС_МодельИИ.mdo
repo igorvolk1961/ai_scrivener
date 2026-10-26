@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="5a6b7c8d-e9f0-4a12-b3c4-d5e6f7a8b9c0">
+  <producedTypes>
+    <managerType typeId="6b7c8d9e-f0a1-4b23-c4d5-e6f7a8b9c0d1" valueTypeId="7c8d9eaf-01b2-4c34-d5e6-f7a8b9c0d1e2"/>
+    <valueManagerType typeId="8d9eafb0-12c3-4d45-e6f7-a8b9c0d1e2f3" valueTypeId="9eafb0c1-23d4-4e56-f7a8-b9c0d1e2f3a4"/>
+    <valueKeyType typeId="afb0c1d2-34e5-4f67-a8b9-c0d1e2f3a4b5" valueTypeId="b0c1d2e3-45f6-4a78-b9c0-d1e2f3a4b5c6"/>
+  </producedTypes>
+  <name>АИС_МодельИИ</name>
+  <synonym>
+    <key>ru</key>
+    <value>Модель для вызовов ИИ</value>
+  </synonym>
+  <comment>Имя модели для АИС_ОбщегоНазначения.ВызватьИИ (та же переменная DEEPSEEK_MODEL из .env, что у агентов симулятора). Пусто - используется запасное значение "deepseek-chat".</comment>
+  <type>
+    <types>String</types>
+    <stringQualifiers>
+      <length>50</length>
+    </stringQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>
