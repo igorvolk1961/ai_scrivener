@@ -48,7 +48,9 @@
   <commonModules>CommonModule.АИС_ДемоДанные</commonModules>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
   <commonModules>CommonModule.АИС_Сотрудники</commonModules>
+  <commonModules>CommonModule.АИС_Уведомления</commonModules>
   <httpServices>HTTPService.АИС_Симулятор</httpServices>
+  <eventSubscriptions>EventSubscription.АИС_ВнутреннийДокументПриЗаписи</eventSubscriptions>
   <dataProcessors>DataProcessor.АИС_ЗаполнитьДемоДанные</dataProcessors>
   <subsystems>Subsystem.АИС_Сервис</subsystems>
   <scheduledJobs>ScheduledJob.АИС_РазовоеЗаполнениеДемоДанных</scheduledJobs>
@@ -63,6 +65,7 @@
   <catalogs>Catalog.ШаблоныВходящихДокументов</catalogs>
   <catalogs>Catalog.ШаблоныВнутреннихДокументов</catalogs>
   <catalogs>Catalog.ИсточникиДанных</catalogs>
+  <catalogs>Catalog.ВнутренниеДокументы</catalogs>
   <enums>Enum.АИС_СпособыЗаполнения</enums>
   <enums>Enum.АИС_СостоянияЗадач</enums>
   <enums>Enum.АИС_СостоянияРазделов</enums>

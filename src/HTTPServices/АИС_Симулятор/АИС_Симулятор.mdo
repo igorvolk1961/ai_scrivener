@@ -25,4 +25,38 @@
       <handler>СоздатьСотрудника_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="5577ba0a-ae81-4663-8c00-9328063ff152">
+    <name>ВнутренниеДокументы</name>
+    <synonym>
+      <key>ru</key>
+      <value>Внутренние документы</value>
+    </synonym>
+    <template>/internal-documents</template>
+    <methods uuid="35dcab3e-bd57-4a76-a339-b4df5c92b18f">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СоздатьВнутреннийДокумент_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
+    <name>Сеансы</name>
+    <synonym>
+      <key>ru</key>
+      <value>Сеансы</value>
+    </synonym>
+    <template>/sessions</template>
+    <methods uuid="2b5b5b1c-7b2b-4f9b-a05b-7b2b4f9ba05b">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>Get</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьСеансы_GET</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>
