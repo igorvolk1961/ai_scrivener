@@ -417,8 +417,9 @@ requirements:
     type: functional
     title: Параметры промптов
     description: >-
-      Текст промпта хранится в штатном `ШаблоныТекстов`; версия, модель,
-      температура, лимит токенов и ожидаемая JSON-схема — в `АИС_ПромптПараметры`.
+      Текст промпта хранится в `Справочник.АИС_Промпты`; версия, модель,
+      температура, лимит токенов и ожидаемая JSON-схема — в
+      `АИС_ПромптПараметры`, который ссылается на `АИС_Промпты`.
     priority: must
     approval: approved
     source:
@@ -432,12 +433,14 @@ requirements:
       - plans/implementation_plan.md#5.3
       - plans/implementation_plan.md#8
     implementation:
+      - src/Catalogs/АИС_Промпты
       - src/Catalogs/АИС_ПромптПараметры
+      - src/CommonModules/АИС_Промпты
     tests:
       - TEST-FR-016-01
     test_files:
       - tests/1c/test_prompts.md
-    status: planned
+    status: in_progress
   - id: FR-017
     type: functional
     title: RAG-поиск шаблонов и обязанностей

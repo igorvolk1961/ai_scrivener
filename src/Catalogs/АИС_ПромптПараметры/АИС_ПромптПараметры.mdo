@@ -106,13 +106,13 @@
   <editType>InDialog</editType>
   <choiceMode>BothWays</choiceMode>
   <attributes uuid="4b72e5bb-b1ae-4c35-a5d7-cb54aa7bd9bb">
-    <name>ТекстПромпта</name>
+    <name>Промпт</name>
     <synonym>
       <key>ru</key>
-      <value>Текст промпта</value>
+      <value>Промпт</value>
     </synonym>
     <type>
-      <types>CatalogRef.ШаблоныТекстов</types>
+      <types>CatalogRef.АИС_Промпты</types>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>

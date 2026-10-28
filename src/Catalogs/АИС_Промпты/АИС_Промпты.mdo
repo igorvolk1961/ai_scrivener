@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="f1ded6e2-74f5-42b9-8b7d-c03ae657b1ba">
+  <producedTypes>
+    <objectType typeId="1cba1e7d-b97b-43c3-bba0-dc61b65836f2" valueTypeId="e7258f1e-26c5-4f2c-8a2b-ae183eec6352"/>
+    <refType typeId="a86fbdc5-7580-4643-9565-9705b43677b6" valueTypeId="c6751c45-75cb-4932-9f25-5cb8001216f6"/>
+    <selectionType typeId="3b3731e0-e1cb-41e9-ae5a-d224c249e3d9" valueTypeId="10c2c19d-8110-4c42-b3a8-504bfe855fec"/>
+    <listType typeId="0725b9aa-dbfc-411e-abda-44ad7a58c173" valueTypeId="0222c332-814d-499b-8bf4-d70ff30d310e"/>
+    <managerType typeId="d4ebb00d-79ea-4bce-ae5a-c16ab322ad36" valueTypeId="939c7580-45dc-4793-8c02-e4b83aa25ad0"/>
+  </producedTypes>
+  <name>АИС_Промпты</name>
+  <synonym>
+    <key>ru</key>
+    <value>Тексты промптов ИИ</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Catalog.АИС_Промпты.StandardAttribute.Description</inputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <objectPresentation>
+    <key>ru</key>
+    <value>Текст промпта</value>
+  </objectPresentation>
+  <descriptionLength>150</descriptionLength>
+  <codeType>String</codeType>
+  <codeLength>50</codeLength>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <attributes uuid="e2e35b8f-8be2-4d5f-9b5e-6b7a1f0c9d21">
+    <name>Текст</name>
+    <synonym>
+      <key>ru</key>
+      <value>Текст промпта</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>ShowError</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="c3d24a6e-1f7b-4a8c-9d0e-2b3c4d5e6f70">
+    <name>Версия</name>
+    <synonym>
+      <key>ru</key>
+      <value>Версия</value>
+    </synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers>
+        <precision>10</precision>
+      </numberQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="b4a13f5d-2e8c-4b9a-8f1d-3c4e5f6a7b80">
+    <name>Активность</name>
+    <synonym>
+      <key>ru</key>
+      <value>Активность</value>
+    </synonym>
+    <type>
+      <types>Boolean</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:BooleanValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="a5e24b6c-3d9e-4c0b-9a2e-4d5f6a7b8c90">
+    <name>Комментарий</name>
+    <synonym>
+      <key>ru</key>
+      <value>Комментарий</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+</mdclass:Catalog>

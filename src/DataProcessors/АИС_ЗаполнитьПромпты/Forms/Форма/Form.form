@@ -26,7 +26,7 @@
     <name>Объект</name>
     <id>1</id>
     <valueType>
-      <types>DataProcessorObject.АИС_ЗаполнитьДемоДанные</types>
+      <types>DataProcessorObject.АИС_ЗаполнитьПромпты</types>
     </valueType>
     <view>
       <common>true</common>

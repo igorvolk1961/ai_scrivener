@@ -6,12 +6,13 @@
     <value>АИС: Сервис</value>
   </synonym>
   <includeInCommandInterface>true</includeInCommandInterface>
-  <content>DataProcessor.АИС_ЗаполнитьДемоДанные</content>
+  <content>DataProcessor.АИС_ЗаполнитьПромпты</content>
   <content>DataProcessor.АИС_Оргструктура</content>
   <content>DataProcessor.АИС_Шаблоны</content>
   <content>Catalog.АИС_ТипыДействий</content>
   <content>Catalog.АИС_ТипыТриггеров</content>
   <content>Catalog.АИС_ПромптПараметры</content>
+  <content>Catalog.АИС_Промпты</content>
   <content>Catalog.АИС_ДолжностныеОбязанности</content>
   <content>Catalog.АИС_РасписаниеТриггеров</content>
   <content>Catalog.АИС_ЛистОжидания</content>

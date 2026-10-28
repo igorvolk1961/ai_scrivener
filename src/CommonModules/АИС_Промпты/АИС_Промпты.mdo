@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="ca595399-5e9d-420c-8060-493f42dceb60">
-  <name>АИС_ДемоДанные</name>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="8f3c2d1e-4a5b-4c6d-9e7f-0a1b2c3d4e5f">
+  <name>АИС_Промпты</name>
   <synonym>
     <key>ru</key>
-    <value>Демоданные</value>
+    <value>Промпты ИИ</value>
   </synonym>
   <server>true</server>
   <externalConnection>true</externalConnection>

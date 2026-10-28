@@ -47,20 +47,20 @@
   <constants>Constant.АИС_КлючИИ</constants>
   <constants>Constant.АИС_МодельИИ</constants>
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
-  <commonModules>CommonModule.АИС_ДемоДанные</commonModules>
+  <commonModules>CommonModule.АИС_Промпты</commonModules>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
   <commonModules>CommonModule.АИС_Сотрудники</commonModules>
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
   <httpServices>HTTPService.АИС_Симулятор</httpServices>
   <eventSubscriptions>EventSubscription.АИС_ВнутреннийДокументПриЗаписи</eventSubscriptions>
-  <dataProcessors>DataProcessor.АИС_ЗаполнитьДемоДанные</dataProcessors>
+  <dataProcessors>DataProcessor.АИС_ЗаполнитьПромпты</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Шаблоны</dataProcessors>
   <subsystems>Subsystem.АИС_Сервис</subsystems>
-  <scheduledJobs>ScheduledJob.АИС_РазовоеЗаполнениеДемоДанных</scheduledJobs>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>
   <catalogs>Catalog.АИС_ПромптПараметры</catalogs>
+  <catalogs>Catalog.АИС_Промпты</catalogs>
   <catalogs>Catalog.АИС_ДолжностныеОбязанности</catalogs>
   <catalogs>Catalog.АИС_РазделыДокумента</catalogs>
   <catalogs>Catalog.АИС_ЛистОжидания</catalogs>

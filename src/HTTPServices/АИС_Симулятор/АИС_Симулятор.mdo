@@ -41,6 +41,15 @@
       <httpMethod>POST</httpMethod>
       <handler>СоздатьВнутреннийДокумент_POST</handler>
     </methods>
+    <methods uuid="e06a1c9b-9b3e-41fc-a442-e6e31acd4bbd">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>Get</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьВнутренниеДокументы_GET</handler>
+    </methods>
   </urlTemplates>
   <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
     <name>Сеансы</name>
@@ -74,6 +83,15 @@
       </synonym>
       <httpMethod>GET</httpMethod>
       <handler>ПолучитьЗадачи_GET</handler>
+    </methods>
+    <methods uuid="e6bcd7e2-4311-420b-87b1-1098de678b50">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СоздатьЗадачу_POST</handler>
     </methods>
   </urlTemplates>
   <urlTemplates uuid="5e8e8e4f-ae5e-7b2e-d38e-ae5e7b2ed38e">
@@ -151,6 +169,23 @@
       </synonym>
       <httpMethod>POST</httpMethod>
       <handler>СогласоватьШаблонТехнически_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="48a2305e-0375-41bb-87ae-e6c1f4ee7fcc">
+    <name>ЗаполнитьПромпты</name>
+    <synonym>
+      <key>ru</key>
+      <value>Заполнить промпты</value>
+    </synonym>
+    <template>/prompts/seed</template>
+    <methods uuid="90498ed6-165d-4f1c-99a6-7d44aa133b10">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ЗаполнитьПромпты_POST</handler>
     </methods>
   </urlTemplates>
   <urlTemplates uuid="6218c2a7-874d-4078-b277-0530e5580ab3">
