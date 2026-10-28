@@ -54,6 +54,8 @@
   <httpServices>HTTPService.АИС_Симулятор</httpServices>
   <eventSubscriptions>EventSubscription.АИС_ВнутреннийДокументПриЗаписи</eventSubscriptions>
   <dataProcessors>DataProcessor.АИС_ЗаполнитьДемоДанные</dataProcessors>
+  <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
+  <dataProcessors>DataProcessor.АИС_Шаблоны</dataProcessors>
   <subsystems>Subsystem.АИС_Сервис</subsystems>
   <scheduledJobs>ScheduledJob.АИС_РазовоеЗаполнениеДемоДанных</scheduledJobs>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>

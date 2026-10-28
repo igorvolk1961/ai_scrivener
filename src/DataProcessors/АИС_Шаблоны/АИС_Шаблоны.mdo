@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="e026de95-f288-45d7-8126-086f3866d429">
+  <producedTypes>
+    <objectType typeId="f4515d03-c6c3-4d7a-8d05-8fb08df71c25" valueTypeId="460462a5-e267-4513-a4df-5fa1666f1992"/>
+    <managerType typeId="1e16083f-49b3-4642-94c2-cc2e20e72faf" valueTypeId="76f997ea-c34f-4923-b027-e454dd1ef332"/>
+  </producedTypes>
+  <name>АИС_Шаблоны</name>
+  <synonym>
+    <key>ru</key>
+    <value>Шаблоны документов</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <defaultForm>DataProcessor.АИС_Шаблоны.Form.Форма</defaultForm>
+  <forms uuid="635a7a86-cc77-4e8f-ac34-ca177bde8bed">
+    <name>Форма</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:DataProcessor>

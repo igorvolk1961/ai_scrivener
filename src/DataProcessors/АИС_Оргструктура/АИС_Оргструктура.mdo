@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="8a9fb266-bc7c-48c9-a235-c2d7c8720676">
+  <producedTypes>
+    <objectType typeId="be044999-d28c-4d38-9550-7d47a6bf5579" valueTypeId="72289d7d-33b7-4529-8c08-a51a469a9f1f"/>
+    <managerType typeId="b4d32bc2-cc7b-46ea-ae39-4c0b40eda191" valueTypeId="c71b1f60-bf62-463d-af9c-6f9f43d92a04"/>
+  </producedTypes>
+  <name>АИС_Оргструктура</name>
+  <synonym>
+    <key>ru</key>
+    <value>Структура предприятия и подчиненность</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <defaultForm>DataProcessor.АИС_Оргструктура.Form.Форма</defaultForm>
+  <forms uuid="606588b0-c78b-4cd0-aac5-ab557bd256ed">
+    <name>Форма</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:DataProcessor>

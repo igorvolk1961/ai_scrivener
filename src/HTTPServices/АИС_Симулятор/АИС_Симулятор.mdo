@@ -136,6 +136,23 @@
       <handler>УтвердитьШаблон_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="185f6d2c-af48-4d19-a233-8899a074e7a9">
+    <name>СогласоватьШаблонТехнически</name>
+    <synonym>
+      <key>ru</key>
+      <value>Техническое согласование шаблона</value>
+    </synonym>
+    <template>/templates/technical-approve</template>
+    <methods uuid="1cecd782-582b-48b3-821e-80da72a85f91">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СогласоватьШаблонТехнически_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="6218c2a7-874d-4078-b277-0530e5580ab3">
     <name>РешениеБухгалтера</name>
     <synonym>

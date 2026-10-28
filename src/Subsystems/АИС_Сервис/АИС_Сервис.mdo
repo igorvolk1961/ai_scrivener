@@ -7,6 +7,8 @@
   </synonym>
   <includeInCommandInterface>true</includeInCommandInterface>
   <content>DataProcessor.АИС_ЗаполнитьДемоДанные</content>
+  <content>DataProcessor.АИС_Оргструктура</content>
+  <content>DataProcessor.АИС_Шаблоны</content>
   <content>Catalog.АИС_ТипыДействий</content>
   <content>Catalog.АИС_ТипыТриггеров</content>
   <content>Catalog.АИС_ПромптПараметры</content>

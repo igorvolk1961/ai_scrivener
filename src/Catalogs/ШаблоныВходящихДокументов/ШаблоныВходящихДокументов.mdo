@@ -7,6 +7,24 @@
   </synonym>
   <objectBelonging>Adopted</objectBelonging>
   <extendedConfigurationObject>3c9fb231-7a60-48dd-a78a-adff33984b0b</extendedConfigurationObject>
+  <attributes uuid="b8b372fc-8a2b-4322-a777-9fe417443741">
+    <name>Статус</name>
+    <synonym>
+      <key>ru</key>
+      <value>Статус</value>
+    </synonym>
+    <comment>"Черновик" (создан автоматически), "Согласован" (технически проверен Программистом 1С, ждёт утверждения автором исходного документа) или "Утверждён" (виден в поиске шаблонов).</comment>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>20</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
   <tabularSections uuid="acd6887a-9f43-4335-922c-fb4be2883681">
     <name>АИС_Плейсхолдеры</name>
     <synonym>
