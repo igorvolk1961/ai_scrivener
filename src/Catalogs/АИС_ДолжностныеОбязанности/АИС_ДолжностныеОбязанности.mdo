@@ -8,9 +8,10 @@
     <managerType typeId="4f07ee0f-120b-4b93-9e36-53443f879433" valueTypeId="8cee0acc-e238-43aa-b1a4-f65f6f0557ca"/>
   </producedTypes>
   <name>АИС_ДолжностныеОбязанности</name>
+  <comment>Правила маршрутизации задач ИИ по должностям (триггер/действие/приоритет). Это не должностные инструкции: инструкции хранятся в Справочник.ВнутренниеДокументы с видом "Должностная инструкция".</comment>
   <synonym>
     <key>ru</key>
-    <value>Должностные обязанности</value>
+    <value>Правила маршрутизации ИИ</value>
   </synonym>
   <useStandardCommands>true</useStandardCommands>
   <inputByString>Catalog.АИС_ДолжностныеОбязанности.StandardAttribute.Description</inputByString>
@@ -96,7 +97,7 @@
   <fullTextSearch>Use</fullTextSearch>
   <objectPresentation>
     <key>ru</key>
-    <value>Должностная обязанность</value>
+    <value>Правило маршрутизации ИИ</value>
   </objectPresentation>
   <descriptionLength>150</descriptionLength>
   <codeType>String</codeType>
@@ -123,7 +124,7 @@
     <name>Текст</name>
     <synonym>
       <key>ru</key>
-      <value>Текст обязанности</value>
+      <value>Описание правила</value>
     </synonym>
     <type>
       <types>String</types>
@@ -267,4 +268,14 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
+  <defaultObjectForm>Catalog.АИС_ДолжностныеОбязанности.Form.ФормаОбязанности</defaultObjectForm>
+  <forms uuid="87293e29-50b4-4675-b4ba-84e356d24b67">
+    <name>ФормаОбязанности</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма обязанности</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
 </mdclass:Catalog>

@@ -97,4 +97,14 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
+  <defaultObjectForm>Catalog.АИС_Промпты.Form.ФормаПромпта</defaultObjectForm>
+  <forms uuid="3ce23859-b5b0-467b-8100-3ad0b7724589">
+    <name>ФормаПромпта</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма промпта</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
 </mdclass:Catalog>

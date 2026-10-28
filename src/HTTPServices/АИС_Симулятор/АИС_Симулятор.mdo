@@ -171,6 +171,49 @@
       <handler>СогласоватьШаблонТехнически_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="948c98ac-37f2-4bec-acf6-b97d8e447d0a">
+    <name>ДолжностныеИнструкции</name>
+    <synonym>
+      <key>ru</key>
+      <value>Должностные инструкции</value>
+    </synonym>
+    <template>/duty-instructions</template>
+    <methods uuid="294dba79-d315-4d30-b360-3b26462671f4">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>Get</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьДолжностныеИнструкции_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="5e85794b-a033-4044-99f6-5bcca84b2ac2">
+    <name>ДолжностныеОбязанности</name>
+    <synonym>
+      <key>ru</key>
+      <value>Должностные обязанности</value>
+    </synonym>
+    <template>/obligations</template>
+    <methods uuid="58c510e5-196b-4f4e-80aa-ea1bb4a63416">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СоздатьОбязанность_POST</handler>
+    </methods>
+    <methods uuid="31d8d0a6-bbbf-4b74-a856-35a40635c613">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>Get</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьОбязанности_GET</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="48a2305e-0375-41bb-87ae-e6c1f4ee7fcc">
     <name>ЗаполнитьПромпты</name>
     <synonym>
