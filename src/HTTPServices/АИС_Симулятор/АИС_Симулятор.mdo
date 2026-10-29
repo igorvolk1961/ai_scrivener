@@ -274,4 +274,38 @@
       <handler>ПроверитьИИ_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="367d653c-8296-4d53-8c5c-d95a6308925a">
+    <name>РуководительСотрудника</name>
+    <synonym>
+      <key>ru</key>
+      <value>Руководитель сотрудника</value>
+    </synonym>
+    <template>/manager</template>
+    <methods uuid="c66aa0f9-47db-452f-a116-43058e0431f3">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>УстановитьРуководителя_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="3c12bbca-7365-4c7d-beb8-60fed3cc7767">
+    <name>НастройкиИИ</name>
+    <synonym>
+      <key>ru</key>
+      <value>Настройки ИИ</value>
+    </synonym>
+    <template>/ai-settings</template>
+    <methods uuid="e44dd6d3-813c-496d-9647-85e635a1b6d6">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>УстановитьНастройкиИИ_POST</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>

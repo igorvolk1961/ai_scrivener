@@ -8,6 +8,7 @@
   <includeInCommandInterface>true</includeInCommandInterface>
   <content>DataProcessor.АИС_ДолжностныеИнструкции</content>
   <content>DataProcessor.АИС_Оргструктура</content>
+  <content>DataProcessor.АИС_ДокументыИАдресаты</content>
   <content>DataProcessor.АИС_Шаблоны</content>
   <content>Catalog.АИС_ТипыДействий</content>
   <content>Catalog.АИС_ТипыТриггеров</content>
