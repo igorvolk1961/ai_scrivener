@@ -6,7 +6,6 @@
     <value>АИС: Сервис</value>
   </synonym>
   <includeInCommandInterface>true</includeInCommandInterface>
-  <content>DataProcessor.АИС_ЗаполнитьПромпты</content>
   <content>DataProcessor.АИС_ДолжностныеИнструкции</content>
   <content>DataProcessor.АИС_Оргструктура</content>
   <content>DataProcessor.АИС_Шаблоны</content>

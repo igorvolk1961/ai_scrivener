@@ -106,7 +106,7 @@
     </items>
   </items>
   <items xsi:type="form:FormField">
-    <name>ТекстДокумента</name>
+    <name>ТекстИнструкции</name>
     <id>5</id>
     <title>
       <key>ru</key>
@@ -118,18 +118,19 @@
       <common>true</common>
     </userVisible>
     <dataPath xsi:type="form:DataPath">
-      <segments>ТекстДокумента</segments>
+      <segments>ТекстИнструкции</segments>
     </dataPath>
     <titleLocation>None</titleLocation>
-    <type>TextDocumentField</type>
-    <extInfo xsi:type="form:TextDocFieldExtInfo">
+    <type>InputField</type>
+    <extInfo xsi:type="form:InputFieldExtInfo">
+      <readOnly>true</readOnly>
       <width>100</width>
       <height>20</height>
       <autoMaxWidth>true</autoMaxWidth>
       <autoMaxHeight>true</autoMaxHeight>
       <horizontalStretch>true</horizontalStretch>
       <verticalStretch>true</verticalStretch>
-      <readOnly>true</readOnly>
+      <multiLine>true</multiLine>
     </extInfo>
   </items>
   <attributes>
@@ -205,10 +206,13 @@
     </columns>
   </attributes>
   <attributes>
-    <name>ТекстДокумента</name>
+    <name>ТекстИнструкции</name>
     <id>102</id>
     <valueType>
-      <types>TextDocument</types>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
     </valueType>
     <view>
       <common>true</common>

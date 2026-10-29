@@ -24,6 +24,15 @@
       <httpMethod>POST</httpMethod>
       <handler>СоздатьСотрудника_POST</handler>
     </methods>
+    <methods uuid="13cf6583-0267-4f96-8cae-892fcdc24db3">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>Get</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьСотрудников_GET</handler>
+    </methods>
   </urlTemplates>
   <urlTemplates uuid="5577ba0a-ae81-4663-8c00-9328063ff152">
     <name>ВнутренниеДокументы</name>

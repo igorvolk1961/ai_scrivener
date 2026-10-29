@@ -105,17 +105,18 @@
       <segments>ТекстШаблона</segments>
     </dataPath>
     <titleLocation>None</titleLocation>
-    <type>TextDocumentField</type>
+    <type>InputField</type>
     <editMode>Enter</editMode>
     <showInHeader>true</showInHeader>
     <headerHorizontalAlign>Left</headerHorizontalAlign>
     <showInFooter>true</showInFooter>
-    <extInfo xsi:type="form:TextDocFieldExtInfo">
+    <extInfo xsi:type="form:InputFieldExtInfo">
       <width>50</width>
       <height>10</height>
       <autoMaxHeight>true</autoMaxHeight>
       <horizontalStretch>true</horizontalStretch>
       <verticalStretch>false</verticalStretch>
+      <multiLine>true</multiLine>
     </extInfo>
   </items>
   <items xsi:type="form:Table">
@@ -353,7 +354,10 @@
     <name>ТекстШаблона</name>
     <id>4</id>
     <valueType>
-      <types>TextDocument</types>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
     </valueType>
     <view>
       <common>true</common>

@@ -53,7 +53,6 @@
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
   <httpServices>HTTPService.АИС_Симулятор</httpServices>
   <eventSubscriptions>EventSubscription.АИС_ВнутреннийДокументПриЗаписи</eventSubscriptions>
-  <dataProcessors>DataProcessor.АИС_ЗаполнитьПромпты</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ДолжностныеИнструкции</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Шаблоны</dataProcessors>

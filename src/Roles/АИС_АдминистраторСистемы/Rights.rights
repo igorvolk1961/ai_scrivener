@@ -376,17 +376,6 @@
 		</right>
 	</object>
 	<object>
-		<name>DataProcessor.АИС_ЗаполнитьПромпты</name>
-		<right>
-			<name>Use</name>
-			<value>true</value>
-		</right>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
 		<name>HTTPService.АИС_Симулятор.URLTemplate.ДолжностныеИнструкции.Method.get</name>
 		<right>
 			<name>Use</name>

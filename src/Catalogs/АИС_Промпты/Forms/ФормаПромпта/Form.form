@@ -6,14 +6,6 @@
     <horizontalAlign>Left</horizontalAlign>
     <autoFill>true</autoFill>
   </autoCommandBar>
-  <handlers>
-    <event>OnCreateAtServer</event>
-    <name>ПриСозданииНаСервере</name>
-  </handlers>
-  <handlers>
-    <event>BeforeWriteAtServer</event>
-    <name>ПередЗаписьюНаСервере</name>
-  </handlers>
   <autoTitle>true</autoTitle>
   <autoUrl>true</autoUrl>
   <group>Vertical</group>
@@ -137,7 +129,7 @@
     </extInfo>
   </items>
   <items xsi:type="form:FormField">
-    <name>ТекстДокумента</name>
+    <name>ТекстПромпта</name>
     <id>5</id>
     <title>
       <key>ru</key>
@@ -149,20 +141,22 @@
       <common>true</common>
     </userVisible>
     <dataPath xsi:type="form:DataPath">
-      <segments>ТекстДокумента</segments>
+      <segments>Объект</segments>
+      <segments>Текст</segments>
     </dataPath>
     <titleLocation>None</titleLocation>
-    <type>TextDocumentField</type>
+    <type>InputField</type>
     <showInHeader>true</showInHeader>
     <headerHorizontalAlign>Left</headerHorizontalAlign>
     <showInFooter>true</showInFooter>
-    <extInfo xsi:type="form:TextDocFieldExtInfo">
+    <extInfo xsi:type="form:InputFieldExtInfo">
       <width>100</width>
       <height>20</height>
       <autoMaxWidth>true</autoMaxWidth>
       <autoMaxHeight>true</autoMaxHeight>
       <horizontalStretch>true</horizontalStretch>
       <verticalStretch>true</verticalStretch>
+      <multiLine>true</multiLine>
     </extInfo>
   </items>
   <attributes>
@@ -178,19 +172,6 @@
       <common>true</common>
     </edit>
     <main>true</main>
-  </attributes>
-  <attributes>
-    <name>ТекстДокумента</name>
-    <id>2</id>
-    <valueType>
-      <types>TextDocument</types>
-    </valueType>
-    <view>
-      <common>true</common>
-    </view>
-    <edit>
-      <common>true</common>
-    </edit>
   </attributes>
   <commandInterface>
     <navigationPanel/>
