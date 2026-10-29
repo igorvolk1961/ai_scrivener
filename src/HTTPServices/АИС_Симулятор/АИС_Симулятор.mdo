@@ -103,6 +103,40 @@
       <handler>СоздатьЗадачу_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="0c3d236a-df01-4948-adac-8b3763310bea">
+    <name>СтатусПриказа</name>
+    <synonym>
+      <key>ru</key>
+      <value>Статус приказа</value>
+    </synonym>
+    <template>/orders/status</template>
+    <methods uuid="745a5e5c-e28d-4bd6-a2f9-64656ae54e5d">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>Get</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьСтатусПриказа_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="afc40eb9-e082-45e1-b58f-5b031e2bde58">
+    <name>СвязатьДокументы</name>
+    <synonym>
+      <key>ru</key>
+      <value>Связать документы</value>
+    </synonym>
+    <template>/orders/link</template>
+    <methods uuid="0f9506fb-1596-41b4-b5ae-d241f7ad8fd3">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СвязатьДокументы_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="5e8e8e4f-ae5e-7b2e-d38e-ae5e7b2ed38e">
     <name>ЗавершитьЗадачу</name>
     <synonym>
