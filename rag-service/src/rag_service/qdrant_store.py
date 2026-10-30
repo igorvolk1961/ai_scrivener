@@ -118,6 +118,9 @@ class QdrantStore:
             ("doc_type", models.PayloadSchemaType.KEYWORD),
             ("position_ids", models.PayloadSchemaType.KEYWORD),
             ("active", models.PayloadSchemaType.BOOL),
+            ("metadata.folders", models.PayloadSchemaType.KEYWORD),
+            ("metadata.employees", models.PayloadSchemaType.KEYWORD),
+            ("metadata.purposes", models.PayloadSchemaType.KEYWORD),
         ):
             await self._client.create_payload_index(
                 collection_name=self._collection,
@@ -223,6 +226,18 @@ class QdrantStore:
                     match=models.MatchAny(any=filters.position_ids),
                 )
             )
+        for field_name, values in (
+            ("metadata.folders", filters.folders),
+            ("metadata.employees", filters.employees),
+            ("metadata.purposes", filters.purposes),
+        ):
+            if values:
+                must.append(
+                    models.FieldCondition(
+                        key=field_name,
+                        match=models.MatchAny(any=values),
+                    )
+                )
         response = await self._client.query_points(
             collection_name=self._collection,
             query=vector,

@@ -271,7 +271,7 @@
 		</right>
 	</object>
 	<object>
-		<name>DataProcessor.АИС_ДолжностныеИнструкции</name>
+		<name>DataProcessor.АИС_ПапкиДокументов</name>
 		<right>
 			<name>Use</name>
 			<value>true</value>
@@ -282,32 +282,20 @@
 		</right>
 	</object>
 	<object>
-		<name>DataProcessor.АИС_Оргструктура</name>
-		<right>
-			<name>Use</name>
-			<value>true</value>
-		</right>
+		<name>Subsystem.АИС_Сервис</name>
 		<right>
 			<name>View</name>
 			<value>true</value>
 		</right>
 	</object>
 	<object>
-		<name>DataProcessor.АИС_ДокументыИАдресаты</name>
+		<name>Catalog.ПапкиВнутреннихДокументов</name>
 		<right>
-			<name>Use</name>
+			<name>Read</name>
 			<value>true</value>
-		</right>
-		<right>
-			<name>View</name>
-			<value>true</value>
-		</right>
-	</object>
-	<object>
-		<name>DataProcessor.АИС_Шаблоны</name>
-		<right>
-			<name>Use</name>
-			<value>true</value>
+			<restrictionByCondition>
+				<condition>Ответственный = &amp;АИС_ТекущееДЛ</condition>
+			</restrictionByCondition>
 		</right>
 		<right>
 			<name>View</name>

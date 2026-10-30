@@ -35,7 +35,7 @@ def test_ensure_collection_creates_vectors_and_indexes() -> None:
     asyncio.run(store.ensure_collection(3))
 
     client.create_collection.assert_awaited_once()
-    assert client.create_payload_index.await_count == 5
+    assert client.create_payload_index.await_count == 8
 
 
 def test_ensure_collection_rejects_dimension_mismatch() -> None:
@@ -108,3 +108,31 @@ def test_search_maps_payload_to_result() -> None:
     assert results[0].source_id == "doc-1"
     assert results[0].score == 0.9
     client.query_points.assert_awaited_once()
+
+
+def test_search_applies_folder_employee_and_purpose_filters() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    client.query_points.return_value = SimpleNamespace(points=[])
+    asyncio.run(
+        store.search(
+            [1.0, 2.0, 3.0],
+            SearchFilters(
+                source_types=["document"],
+                folders=["folder-1"],
+                employees=["ГенДиректор"],
+                purposes=["Сформированные"],
+            ),
+            limit=10,
+            min_score=0.0,
+        )
+    )
+    conditions = client.query_points.await_args.kwargs["query_filter"].must
+    keys = {
+        condition.key: condition.match.any
+        for condition in conditions
+        if hasattr(condition, "key") and hasattr(condition.match, "any")
+    }
+    assert keys["metadata.folders"] == ["folder-1"]
+    assert keys["metadata.employees"] == ["ГенДиректор"]
+    assert keys["metadata.purposes"] == ["Сформированные"]

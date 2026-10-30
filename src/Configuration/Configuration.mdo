@@ -51,12 +51,15 @@
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
   <commonModules>CommonModule.АИС_Сотрудники</commonModules>
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
+  <commonModules>CommonModule.АИС_ПапкиДокументов</commonModules>
   <httpServices>HTTPService.АИС_Симулятор</httpServices>
   <eventSubscriptions>EventSubscription.АИС_ВнутреннийДокументПриЗаписи</eventSubscriptions>
+  <eventSubscriptions>EventSubscription.АИС_ДокументВПапкуПриЗаписи</eventSubscriptions>
   <dataProcessors>DataProcessor.АИС_ДолжностныеИнструкции</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ДокументыИАдресаты</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Шаблоны</dataProcessors>
+  <dataProcessors>DataProcessor.АИС_ПапкиДокументов</dataProcessors>
   <subsystems>Subsystem.АИС_Сервис</subsystems>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>
@@ -78,9 +81,12 @@
   <enums>Enum.АИС_СтатусыПлейсхолдеров</enums>
   <enums>Enum.АИС_ТипыЗапросовЛистаОжидания</enums>
   <enums>Enum.АИС_ТипыИсточниковОжидания</enums>
+  <enums>Enum.АИС_НазначенияПапокДокументов</enums>
+  <enums>Enum.АИС_ИсточникиПривязкиДокументов</enums>
   <enums>Enum.АИС_СостоянияЗапросовОжидания</enums>
   <informationRegisters>InformationRegister.АИС_КонтекстЗадачИИ</informationRegisters>
   <informationRegisters>InformationRegister.АИС_СостоянияПлейсхолдеров</informationRegisters>
   <informationRegisters>InformationRegister.АИС_НормативыИИ</informationRegisters>
   <informationRegisters>InformationRegister.АИС_ИсторияДействийИИ</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_ДокументыВПапках</informationRegisters>
 </mdclass:Configuration>

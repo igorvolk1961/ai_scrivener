@@ -342,4 +342,118 @@
       <handler>УстановитьНастройкиИИ_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="c6ee8832-558f-42be-82c3-ac33b390f5b2">
+    <name>ПапкиСотрудника</name>
+    <synonym>
+      <key>ru</key>
+      <value>ПапкиСотрудника</value>
+    </synonym>
+    <template>/folders</template>
+    <methods uuid="f9d7a8bc-c6bb-4910-9f5f-d37ed025b635">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>GET</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьПапки_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="62506bd1-8dbe-4c4e-a4e3-80e7b8964218">
+    <name>ДокументыВПапках</name>
+    <synonym>
+      <key>ru</key>
+      <value>ДокументыВПапках</value>
+    </synonym>
+    <template>/folders/documents</template>
+    <methods uuid="4a43c2f5-69b8-40d4-b758-6ed0afc431b9">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>GET</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьДокументыВПапках_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="e680112d-6036-4388-a33f-b4a550520aab">
+    <name>ПапкиДокумента</name>
+    <synonym>
+      <key>ru</key>
+      <value>ПапкиДокумента</value>
+    </synonym>
+    <template>/folders/document</template>
+    <methods uuid="a11f34a1-461d-4723-9d6d-3d688d7bba7a">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>GET</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьПапкиДокумента_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="80ae2035-4056-4082-b8dd-2c7875637d69">
+    <name>ОбеспечитьПапки</name>
+    <synonym>
+      <key>ru</key>
+      <value>ОбеспечитьПапки</value>
+    </synonym>
+    <template>/folders/ensure</template>
+    <methods uuid="d9a17fe9-1edc-45b5-8222-3a1d0492542c">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>POST</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ОбеспечитьПапки_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="a297b6bb-51a7-44a0-b89d-d67fcbd22979">
+    <name>РазместитьДокумент</name>
+    <synonym>
+      <key>ru</key>
+      <value>РазместитьДокумент</value>
+    </synonym>
+    <template>/folders/place</template>
+    <methods uuid="2051e781-c7a7-43ec-b73e-488f92284d2f">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>POST</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>РазместитьДокумент_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="98bf1fa6-1288-4288-9315-5db2142ef24a">
+    <name>ЗаполнитьПапки</name>
+    <synonym>
+      <key>ru</key>
+      <value>ЗаполнитьПапки</value>
+    </synonym>
+    <template>/folders/backfill</template>
+    <methods uuid="c5dd3fc8-f2b3-4eac-bc14-fa0f344db09b">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>POST</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ЗаполнитьПапки_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="3e459f95-b70a-4954-bf1b-a24ad0fdfb53">
+    <name>ДиагностикаРолей</name>
+    <synonym><key>ru</key><value>Диагностика ролей</value></synonym>
+    <template>/debug/roles</template>
+    <methods uuid="fbbebaa8-0624-4325-8b99-6489896b3cc9">
+      <name>get</name>
+      <synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьРолиПользователя_GET</handler>
+    </methods>
+  </urlTemplates>
+
 </mdclass:HTTPService>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="d2cab291-42ed-4347-9f24-5d1d20fbc815">
+  <producedTypes>
+    <objectType typeId="eb589fa4-ca99-47ef-897f-ba3d71ab5ff9" valueTypeId="d5134264-5a99-4205-948c-863d07795fbc"/>
+    <managerType typeId="31ba7b74-e22c-4a96-a8cf-ef06df8dfe2b" valueTypeId="b3fa3df0-930d-4010-a5f3-43e0c5fb4bde"/>
+  </producedTypes>
+  <name>АИС_ПапкиДокументов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Папки документов сотрудников</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <defaultForm>DataProcessor.АИС_ПапкиДокументов.Form.Форма</defaultForm>
+  <forms uuid="f679bd24-78bc-4757-a0fb-e7eb49e59a48">
+    <name>Форма</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:DataProcessor>

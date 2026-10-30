@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="0251178a-394f-457c-89e6-ed34a2e7cf65">
+  <producedTypes>
+    <refType typeId="6dd01a44-c792-4538-a5fa-86626ce230b8" valueTypeId="6695abe3-f5ae-41d5-87e9-bd01976a3f20"/>
+    <listType typeId="cb448361-bbc1-400b-a470-29ad2472af3c" valueTypeId="d4871d85-f6bd-4381-a030-492d014a67e2"/>
+    <managerType typeId="53de60a5-dbe7-4bdf-b075-11c0c59f41c0" valueTypeId="afb40877-0864-4f99-8f33-b38ea23ec237"/>
+  </producedTypes>
+  <name>АИС_ИсточникиПривязкиДокументов</name>
+  <synonym>
+    <key>ru</key>
+    <value>АИС_ИсточникиПривязкиДокументов</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="cd8773f2-1948-4683-8c2a-bba902925e62">
+    <name>Автоматически</name>
+    <synonym>
+      <key>ru</key>
+      <value>Автоматически</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="6387e3a8-2842-4197-b2d5-491639e37234">
+    <name>API</name>
+    <synonym>
+      <key>ru</key>
+      <value>API</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="9bedd2aa-fbe0-4270-84fe-bd42b525ec99">
+    <name>Вручную</name>
+    <synonym>
+      <key>ru</key>
+      <value>Вручную</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="20b2825c-8bcc-4f24-a9ed-c8579377420d">
+    <name>Заполнение</name>
+    <synonym>
+      <key>ru</key>
+      <value>Заполнение</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

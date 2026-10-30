@@ -99,6 +99,29 @@
 		</right>
 	</object>
 	<object>
+		<name>InformationRegister.АИС_ДокументыВПапках</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Insert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Delete</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>InformationRegister.АИС_НормативыИИ</name>
 		<right>
 			<name>Read</name>
@@ -425,6 +448,48 @@
 		</right>
 	</object>
 	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ПапкиСотрудника.Method.get</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ДокументыВПапках.Method.get</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ПапкиДокумента.Method.get</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ОбеспечитьПапки.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.РазместитьДокумент.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ЗаполнитьПапки.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>HTTPService.АИС_Симулятор.URLTemplate.СтатусПриказа.Method.get</name>
 		<right>
 			<name>Use</name>
@@ -475,6 +540,42 @@
 		<name>DataProcessor.АИС_Шаблоны</name>
 		<right>
 			<name>Use</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>DataProcessor.АИС_ПапкиДокументов</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ДиагностикаРолей.Method.get</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Subsystem.АИС_Сервис</name>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.ПапкиВнутреннихДокументов</name>
+		<right>
+			<name>Read</name>
 			<value>true</value>
 		</right>
 		<right>

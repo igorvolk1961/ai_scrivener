@@ -12,6 +12,9 @@ class SearchFilters(BaseModel):
     doc_types: list[str] = Field(default_factory=list)
     active: bool = True
     position_ids: list[str] = Field(default_factory=list)
+    folders: list[str] = Field(default_factory=list)
+    employees: list[str] = Field(default_factory=list)
+    purposes: list[str] = Field(default_factory=list)
 
 
 class SearchRequest(BaseModel):

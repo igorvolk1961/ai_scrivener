@@ -10,6 +10,7 @@
   <content>DataProcessor.АИС_Оргструктура</content>
   <content>DataProcessor.АИС_ДокументыИАдресаты</content>
   <content>DataProcessor.АИС_Шаблоны</content>
+  <content>DataProcessor.АИС_ПапкиДокументов</content>
   <content>Catalog.АИС_ТипыДействий</content>
   <content>Catalog.АИС_ТипыТриггеров</content>
   <content>Catalog.АИС_ПромптПараметры</content>
@@ -20,4 +21,5 @@
   <content>InformationRegister.АИС_ИсторияДействийИИ</content>
   <content>InformationRegister.АИС_КонтекстЗадачИИ</content>
   <content>InformationRegister.АИС_СостоянияПлейсхолдеров</content>
+  <content>InformationRegister.АИС_ДокументыВПапках</content>
 </mdclass:Subsystem>
