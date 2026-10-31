@@ -40,7 +40,16 @@ SORT_BUTTONS = [
 
 
 def sort_buttons() -> str:
-    result = []
+    result = [
+        """\t\t\t<Button name="ОткрытьДокумент" id="55">
+\t\t\t\t<Type>CommandBarButton</Type>
+\t\t\t\t<CommandName>Form.Command.ОткрытьДокумент</CommandName>
+\t\t\t\t<Title>
+\t\t\t\t\t<v8:item><v8:lang>ru</v8:lang><v8:content>Открыть документ</v8:content></v8:item>
+\t\t\t\t</Title>
+\t\t\t</Button>
+"""
+    ]
     for index, (name, title) in enumerate(SORT_BUTTONS, start=50):
         result.append(
             f"""\t\t\t<Button name="{name}" id="{index}">

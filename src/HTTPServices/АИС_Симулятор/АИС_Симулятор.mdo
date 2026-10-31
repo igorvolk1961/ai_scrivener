@@ -482,6 +482,16 @@
       <httpMethod>POST</httpMethod><handler>ОтменитьДокумент_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="5f2db1d0-c15a-4972-bca3-ebd2c0e552e4">
+    <name>УтвердитьДокумент</name>
+    <synonym><key>ru</key><value>Утвердить документ</value></synonym>
+    <template>/documents/approve</template>
+    <methods uuid="4f90ea64-348e-451e-b7fd-0eda4dc4c666">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>УтвердитьДокумент_POST</handler>
+    </methods>
+  </urlTemplates>
+
 
 
 
