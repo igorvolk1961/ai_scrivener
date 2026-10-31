@@ -415,4 +415,16 @@
 			<value>true</value>
 		</right>
 	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.Оргструктура.Method.get</name>
+		<right><name>Use</name><value>true</value></right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.СоздатьПодразделение.Method.post</name>
+		<right><name>Use</name><value>true</value></right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.Сотрудники.Method.get</name>
+		<right><name>Use</name><value>true</value></right>
+	</object>
 </Rights>

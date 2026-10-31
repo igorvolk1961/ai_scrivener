@@ -92,6 +92,23 @@
       <placementArea>UserCmds</placementArea>
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
+    <items xsi:type="form:Button">
+      <name>ОткрытьДокумент</name>
+      <id>55</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Открыть документ</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.ОткрытьДокумент</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <width>16</width>
+      <height>1</height>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
   </items>
     <items xsi:type="form:FormField">
       <name>Сотрудник</name>
@@ -584,6 +601,14 @@
     <id>24</id>
     <use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>СортПапки</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ОткрытьДокумент</name>
+    <title><key>ru</key><value>Открыть документ</value></title>
+    <id>25</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ОткрытьДокумент</name></handler></action>
     <currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <extInfo xsi:type="form:ObjectFormExtInfo"/>

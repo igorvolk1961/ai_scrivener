@@ -455,5 +455,35 @@
       <handler>ПолучитьРолиПользователя_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="b271e86c-347e-45b1-9ee6-e998987edf0a">
+    <name>Оргструктура</name>
+    <synonym><key>ru</key><value>Оргструктура</value></synonym>
+    <template>/org-structure</template>
+    <methods uuid="8089e744-9c73-47b4-a321-04125f8822e3">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПолучитьОргструктуру_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="0943e279-a146-4fc0-aea4-bd16c4ea1ac0">
+    <name>СоздатьПодразделение</name>
+    <synonym><key>ru</key><value>Создать подразделение</value></synonym>
+    <template>/org-structure/department</template>
+    <methods uuid="7ab08fa1-ef9f-4076-b5bc-dc98b2bbc24a">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>СоздатьПодразделение_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="11ae3cde-0239-430b-86b8-8a1cf891ed53">
+    <name>ОтменитьДокумент</name>
+    <synonym><key>ru</key><value>Отменить документ</value></synonym>
+    <template>/documents/cancel</template>
+    <methods uuid="d8d913bb-2280-4b37-a343-377f947aa23e">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ОтменитьДокумент_POST</handler>
+    </methods>
+  </urlTemplates>
+
+
+
 
 </mdclass:HTTPService>
