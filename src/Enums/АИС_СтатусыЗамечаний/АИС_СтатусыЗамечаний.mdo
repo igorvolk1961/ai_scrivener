@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="b1c2d3e4-0001-4000-8000-000000000001">
+  <producedTypes>
+    <refType typeId="b1c2d3e4-0001-4000-8000-000000000011" valueTypeId="b1c2d3e4-0001-4000-8000-000000000012"/>
+    <listType typeId="b1c2d3e4-0001-4000-8000-000000000013" valueTypeId="b1c2d3e4-0001-4000-8000-000000000014"/>
+    <managerType typeId="b1c2d3e4-0001-4000-8000-000000000015" valueTypeId="b1c2d3e4-0001-4000-8000-000000000016"/>
+  </producedTypes>
+  <name>АИС_СтатусыЗамечаний</name>
+  <synonym>
+    <key>ru</key>
+    <value>Статусы замечаний</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="b1c2d3e4-0001-4000-8000-000000000101">
+    <name>Открыто</name>
+    <synonym>
+      <key>ru</key>
+      <value>Открыто</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="b1c2d3e4-0001-4000-8000-000000000102">
+    <name>ВРаботе</name>
+    <synonym>
+      <key>ru</key>
+      <value>В работе</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="b1c2d3e4-0001-4000-8000-000000000103">
+    <name>Исправлено</name>
+    <synonym>
+      <key>ru</key>
+      <value>Исправлено</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="b1c2d3e4-0001-4000-8000-000000000104">
+    <name>Принято</name>
+    <synonym>
+      <key>ru</key>
+      <value>Принято</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="b1c2d3e4-0001-4000-8000-000000000105">
+    <name>Отклонено</name>
+    <synonym>
+      <key>ru</key>
+      <value>Отклонено</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

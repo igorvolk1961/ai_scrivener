@@ -53,6 +53,7 @@
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
   <commonModules>CommonModule.АИС_ПапкиДокументов</commonModules>
   <commonModules>CommonModule.АИС_РазделыДокументов</commonModules>
+  <commonModules>CommonModule.АИС_ЗамечанияДокументов</commonModules>
   <httpServices>HTTPService.АИС_Симулятор</httpServices>
   <eventSubscriptions>EventSubscription.АИС_ВнутреннийДокументПриЗаписи</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_ДокументВПапкуПриЗаписи</eventSubscriptions>
@@ -68,6 +69,7 @@
   <catalogs>Catalog.АИС_Промпты</catalogs>
   <catalogs>Catalog.АИС_ДолжностныеОбязанности</catalogs>
   <catalogs>Catalog.АИС_РазделыДокумента</catalogs>
+  <catalogs>Catalog.АИС_Замечания</catalogs>
   <catalogs>Catalog.АИС_ЛистОжидания</catalogs>
   <catalogs>Catalog.АИС_РасписаниеТриггеров</catalogs>
   <catalogs>Catalog.ШаблоныИсходящихДокументов</catalogs>
@@ -78,6 +80,7 @@
   <enums>Enum.АИС_СпособыЗаполнения</enums>
   <enums>Enum.АИС_СостоянияЗадач</enums>
   <enums>Enum.АИС_СостоянияРазделов</enums>
+  <enums>Enum.АИС_СтатусыЗамечаний</enums>
   <enums>Enum.АИС_ВидыПлейсхолдеров</enums>
   <enums>Enum.АИС_СтатусыПлейсхолдеров</enums>
   <enums>Enum.АИС_ТипыЗапросовЛистаОжидания</enums>
