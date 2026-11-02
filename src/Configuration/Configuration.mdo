@@ -52,6 +52,7 @@
   <commonModules>CommonModule.АИС_Сотрудники</commonModules>
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
   <commonModules>CommonModule.АИС_ПапкиДокументов</commonModules>
+  <commonModules>CommonModule.АИС_РазделыДокументов</commonModules>
   <httpServices>HTTPService.АИС_Симулятор</httpServices>
   <eventSubscriptions>EventSubscription.АИС_ВнутреннийДокументПриЗаписи</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_ДокументВПапкуПриЗаписи</eventSubscriptions>

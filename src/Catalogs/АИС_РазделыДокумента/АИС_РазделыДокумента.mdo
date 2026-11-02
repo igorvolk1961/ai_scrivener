@@ -13,6 +13,7 @@
     <value>Разделы документа</value>
   </synonym>
   <useStandardCommands>true</useStandardCommands>
+  <hierarchical>true</hierarchical>
   <inputByString>Catalog.АИС_РазделыДокумента.StandardAttribute.Description</inputByString>
   <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
   <standardAttributes>
@@ -366,6 +367,24 @@
       <types>String</types>
       <stringQualifiers>
         <length>100</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="c7abba68-f491-46fe-8de7-7edbf6bd88fe">
+    <name>Содержание</name>
+    <synonym>
+      <key>ru</key>
+      <value>Содержание раздела</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
       </stringQualifiers>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>

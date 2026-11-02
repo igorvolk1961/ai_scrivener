@@ -603,4 +603,8 @@
 		<name>HTTPService.АИС_Симулятор.URLTemplate.УтвердитьДокумент.Method.post</name>
 		<right><name>Use</name><value>true</value></right>
 	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.РазделыДокументов.Method.post</name>
+		<right><name>Use</name><value>true</value></right>
+	</object>
 </Rights>

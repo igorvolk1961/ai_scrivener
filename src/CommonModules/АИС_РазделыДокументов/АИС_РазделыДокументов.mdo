@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="5e2f6a8b-4d71-4a8c-9e3b-2f7c1a6d9b41">
+  <name>АИС_РазделыДокументов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Разделы документов и шаблонов</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+  <serverCall>false</serverCall>
+</mdclass:CommonModule>

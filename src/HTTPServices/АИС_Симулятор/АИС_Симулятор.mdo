@@ -491,6 +491,16 @@
       <httpMethod>POST</httpMethod><handler>УтвердитьДокумент_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="e3874e48-de0d-47d9-812a-75b26b3413e4">
+    <name>РазделыДокументов</name>
+    <synonym><key>ru</key><value>Разделы документов</value></synonym>
+    <template>/sections/action</template>
+    <methods uuid="847d85b9-abaa-4169-a7ab-c7ed1905d02b">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>РазделыДокументов_POST</handler>
+    </methods>
+  </urlTemplates>
+
 
 
 
