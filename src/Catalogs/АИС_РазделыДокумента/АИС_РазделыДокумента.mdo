@@ -393,4 +393,14 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
+  <attributes uuid="a4a2f5c7-2f7e-4e2e-9c7d-4b4f2f1a8c11">
+    <name>Распоряжение</name>
+    <synonym><key>ru</key><value>Распоряжение по разделу</value></synonym>
+    <type><types>CatalogRef.ВнутренниеДокументы</types></type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
 </mdclass:Catalog>
