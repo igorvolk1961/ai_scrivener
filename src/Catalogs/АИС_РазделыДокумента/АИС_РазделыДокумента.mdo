@@ -14,6 +14,7 @@
   </synonym>
   <useStandardCommands>true</useStandardCommands>
   <hierarchical>true</hierarchical>
+  <hierarchyType>HierarchyOfItems</hierarchyType>
   <inputByString>Catalog.АИС_РазделыДокумента.StandardAttribute.Description</inputByString>
   <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
   <standardAttributes>
