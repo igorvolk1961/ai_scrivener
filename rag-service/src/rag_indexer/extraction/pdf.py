@@ -7,6 +7,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from rag_indexer.extraction.boilerplate import BoilerplateFilter, BoilerplateOptions
 from rag_indexer.extraction.merger import LineToParagraphMerger, MergerOptions
 from rag_indexer.extraction.models import ExtractedDocument, ExtractionError
 from rag_indexer.ocr.models import (
@@ -31,6 +32,7 @@ class ExtractionOptions:
     text_layer: TextLayerOptions = field(default_factory=TextLayerOptions)
     ocr: OcrOptions = field(default_factory=OcrOptions)
     merger: MergerOptions = field(default_factory=MergerOptions)
+    boilerplate: BoilerplateOptions = field(default_factory=BoilerplateOptions)
 
 
 def _load_pdfium() -> Any:
@@ -157,11 +159,12 @@ class PdfExtractor:
                     f"OCR did not return page {page.page_number} for {path}"
                 )
             pages.append(recognized)
+        boilerplate = BoilerplateFilter(options.boilerplate).apply(pages)
         blocks = merger.merge_document(
-            OcrDocument(pages=pages),
+            OcrDocument(pages=boilerplate.pages),
             {number: size[0] for number, size in page_sizes.items()},
         )
-        engines = sorted({page.engine for page in pages})
+        engines = sorted({page.engine for page in boilerplate.pages})
         return ExtractedDocument(
             source_path=path,
             title=path.stem,
@@ -173,6 +176,8 @@ class PdfExtractor:
                 "ocr_pages": [page.page_number for page in report.scanned_pages],
                 "engines": engines,
                 "render_dpi": options.render_dpi,
+                "boilerplate_removed": len(boilerplate.removed),
+                "boilerplate_repeated": boilerplate.repeated_texts[:10],
             },
         )
 

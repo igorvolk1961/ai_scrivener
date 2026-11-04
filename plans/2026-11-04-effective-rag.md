@@ -302,7 +302,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [x] Реализовать `rag_indexer.pdf`: `TextLayerReport` и `detect_pdf_text_layer` для page-level triage «есть текстовый слой / нужен OCR»; опциональная зависимость `indexer`.
 - [x] Реализовать `rag_indexer.ocr`: `OcrEngine`/`OcrDocument`, `PaddleOcrEngine` (основной), `YandexOcrEngine` (fallback), `FallbackOcrEngine` с page-level policy; опциональная зависимость `ocr-paddle`.
 - [x] Реализовать `LineToParagraphMerger`: bbox, вертикальные интервалы, отступы, нумерация, переносы; колонки и таблицы требуют доработки.
-- [ ] Добавить фильтр повторяющихся колонтитулов, номеров страниц и boilerplate: определять повторяющиеся строки по страницам/позиции (верх/низ), удалять до склейки, сохранять удалённое в `metadata` для аудита; проверка на П-6 и 20–30 PDF.
+- [x] Добавить фильтр повторяющихся колонтитулов, номеров страниц и boilerplate: определять повторяющиеся строки по страницам/позиции (верх/низ), удалять до склейки, сохранять удалённое в `metadata` для аудита; проверка на П-6 и 20–30 PDF.
 - [ ] Реализовать `StructureBuilder`: заголовки, юридическая нумерация (`1.2.3`, `п. 4.2`, `ст. 5`, `Приложение А`, `Таблица 1`), дерево разделов.
 - [ ] Реализовать `StructureAwareChunker`: атомарный пункт, merge small siblings, split long by sentences, таблицы с повтором шапки, context header, `embedding_text`.
 - [ ] Кэш извлечения и чанков по `sha256 + extractor_version + chunker_version`; state-файл для идемпотентности.
