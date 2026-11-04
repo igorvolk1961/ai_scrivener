@@ -69,6 +69,8 @@ def test_pipeline_indexes_document(tmp_path: Path) -> None:
     assert client.payloads[0]["document"]["source_id"] == "abc123"
     assert client.payloads[0]["chunks"][0]["embedding_text"].startswith("Документ:")
     assert state.is_indexed("abc123") is True
+    assert report.documents[0].status == "indexed"
+    assert report.documents[0].chunks > 0
 
 
 def test_pipeline_batches_chunks_and_replaces_only_first_batch(tmp_path: Path) -> None:

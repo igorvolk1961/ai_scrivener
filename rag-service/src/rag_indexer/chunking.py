@@ -8,7 +8,7 @@ from rag_indexer.extraction.models import Block, ExtractedDocument
 
 CLAUSE_RE = re.compile(
     r"^\s*("
-    r"\d+(?:\.\d+)+"
+    r"\d+(?:\.\d+)+\.?"
     r"|\d+[.)]"
     r"|[IVXLC]+[.)]"
     r"|[а-яё]\)"

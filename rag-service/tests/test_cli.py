@@ -32,6 +32,7 @@ def _prepare(tmp_path: Path) -> Path:
 def test_cli_validate_dry_runs_without_state(tmp_path: Path) -> None:
     corpus = _prepare(tmp_path)
     state_path = tmp_path / "state.json"
+    report_path = tmp_path / "report.json"
 
     code = main(
         [
@@ -40,6 +41,8 @@ def test_cli_validate_dry_runs_without_state(tmp_path: Path) -> None:
             str(corpus),
             "--state",
             str(state_path),
+            "--report",
+            str(report_path),
             "--ocr",
             "none",
         ]
@@ -47,6 +50,9 @@ def test_cli_validate_dry_runs_without_state(tmp_path: Path) -> None:
 
     assert code == 0
     assert not state_path.exists()
+    report = json.loads(report_path.read_text(encoding="utf-8"))
+    assert report["documents"][0]["status"] == "validated"
+    assert report["documents"][0]["chunks"] > 0
 
 
 def test_cli_index_dry_run_does_not_require_token(tmp_path: Path) -> None:

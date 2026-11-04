@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import json
 import os
 import sys
 from collections.abc import Sequence
@@ -73,6 +74,7 @@ def _add_common_arguments(parser: argparse.ArgumentParser) -> None:
     )
     parser.add_argument("--no-cache", action="store_true")
     parser.add_argument("--chunk-batch-size", type=int, default=0)
+    parser.add_argument("--report", type=Path)
     parser.add_argument("--pipeline-version", default=PIPELINE_VERSION)
     parser.add_argument("--render-dpi", type=int, default=150)
     parser.add_argument("--rag-url", default=os.environ.get("RAG_URL", "http://127.0.0.1:8080"))
@@ -165,6 +167,12 @@ async def _run(args: argparse.Namespace) -> int:
             await client.close()
     if args.command == "index" and not args.dry_run:
         state.save(args.state)
+    if args.report is not None:
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        args.report.write_text(
+            json.dumps(report.to_dict(), ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
     print(
         "processed={processed} indexed={indexed} skipped={skipped} "
         "failed={failed} deleted={deleted} chunks={chunks}".format(**vars(report))

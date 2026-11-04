@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from itertools import batched
 from pathlib import Path
@@ -23,6 +23,22 @@ class PipelineError(RuntimeError):
 
 
 @dataclass
+class DocumentReport:
+    sha256: str
+    title: str
+    status: str
+    pages: int = 0
+    blocks: int = 0
+    chunks: int = 0
+    clauses: int = 0
+    tables: int = 0
+    text_layer_coverage: float | None = None
+    ocr_pages: list[int] = field(default_factory=list)
+    engines: list[str] = field(default_factory=list)
+    error: str = ""
+
+
+@dataclass
 class IndexReport:
     processed: int = 0
     indexed: int = 0
@@ -31,6 +47,21 @@ class IndexReport:
     deleted: int = 0
     chunks: int = 0
     errors: list[tuple[str, str]] = field(default_factory=list)
+    documents: list[DocumentReport] = field(default_factory=list)
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "processed": self.processed,
+            "indexed": self.indexed,
+            "skipped": self.skipped,
+            "failed": self.failed,
+            "deleted": self.deleted,
+            "chunks": self.chunks,
+            "errors": [
+                {"sha256": sha, "error": error} for sha, error in self.errors
+            ],
+            "documents": [asdict(document) for document in self.documents],
+        }
 
 
 class IndexPipeline:
@@ -71,8 +102,17 @@ class IndexPipeline:
         for record in records:
             if not full and self._state.is_indexed(record.sha256):
                 report.skipped += 1
+                report.documents.append(
+                    DocumentReport(
+                        sha256=record.sha256,
+                        title=record.title,
+                        status="skipped",
+                    )
+                )
                 continue
             report.processed += 1
+            document: ExtractedDocument | None = None
+            chunks: list[Chunk] = []
             try:
                 source_path = corpus_dir / record.stored_path
                 if not source_path.exists():
@@ -91,12 +131,14 @@ class IndexPipeline:
                     )
                     if self._cache is not None:
                         self._cache.save_document(record.sha256, document)
-                chunks = (
+                cached_chunks = (
                     self._cache.load_chunks(record.sha256)
                     if self._cache is not None
                     else None
                 )
-                if chunks is None:
+                if cached_chunks is not None:
+                    chunks = cached_chunks
+                else:
                     chunks = self._chunker.chunk(document, source_id=record.sha256)
                     if self._cache is not None:
                         self._cache.save_chunks(record.sha256, chunks)
@@ -104,6 +146,9 @@ class IndexPipeline:
                     raise PipelineError("no chunks produced")
                 report.chunks += len(chunks)
                 if dry_run:
+                    report.documents.append(
+                        _document_report(record, document, chunks, "validated")
+                    )
                     continue
                 if client is None:
                     raise PipelineError("RAG client is required for indexing")
@@ -139,9 +184,23 @@ class IndexPipeline:
                     indexed_at=datetime.now(UTC).isoformat(),
                 )
                 report.indexed += 1
+                report.documents.append(
+                    _document_report(record, document, chunks, "indexed")
+                )
             except Exception as error:
                 report.failed += 1
                 report.errors.append((record.sha256, str(error)))
+                if document is not None:
+                    failed = _document_report(record, document, chunks, "failed")
+                    failed.error = str(error)
+                else:
+                    failed = DocumentReport(
+                        sha256=record.sha256,
+                        title=record.title,
+                        status="failed",
+                        error=str(error),
+                    )
+                report.documents.append(failed)
                 if not dry_run:
                     self._state.mark_failed(record.sha256, str(error))
         if delete_missing and not dry_run and client is not None:
@@ -160,6 +219,30 @@ def _batches(chunks: list[Chunk], size: int) -> list[list[Chunk]]:
     if size <= 0 or size >= len(chunks):
         return [chunks]
     return [list(batch) for batch in batched(chunks, size)]
+
+
+def _document_report(
+    record: CorpusRecord,
+    document: ExtractedDocument,
+    chunks: list[Chunk],
+    status: str,
+) -> DocumentReport:
+    coverage = document.metadata.get("text_layer_coverage")
+    ocr_pages = document.metadata.get("ocr_pages", [])
+    engines = document.metadata.get("engines", [])
+    return DocumentReport(
+        sha256=record.sha256,
+        title=record.title or document.title,
+        status=status,
+        pages=document.page_count,
+        blocks=len(document.blocks),
+        chunks=len(chunks),
+        clauses=sum(1 for chunk in chunks if chunk.clause),
+        tables=sum(1 for chunk in chunks if chunk.kind == "table"),
+        text_layer_coverage=float(coverage) if isinstance(coverage, (int, float)) else None,
+        ocr_pages=[int(page) for page in ocr_pages if isinstance(page, int)],
+        engines=[str(engine) for engine in engines],
+    )
 
 
 def build_payload(

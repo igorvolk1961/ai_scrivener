@@ -120,6 +120,21 @@ def test_chunker_splits_inline_clauses() -> None:
     assert [chunk.clause for chunk in chunks] == ["1", "2"]
 
 
+def test_chunker_extracts_clause_with_trailing_dot() -> None:
+    document = _document(
+        [
+            _block("1.1. Первый пункт."),
+            _block("1.2. Второй пункт."),
+        ]
+    )
+
+    chunks = ClauseAwareChunker(
+        ChunkerOptions(target_tokens=2, max_tokens=100, min_tokens=1)
+    ).chunk(document)
+
+    assert [chunk.clause for chunk in chunks] == ["1.1", "1.2"]
+
+
 def test_chunker_splits_table_rows_with_header() -> None:
     header = "Наименование | Количество | Примечание"
     rows = [
