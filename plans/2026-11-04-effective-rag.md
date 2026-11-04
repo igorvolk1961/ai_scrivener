@@ -308,9 +308,9 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [x] State-файл для идемпотентности по `sha256 + pipeline_version`; кэш извлечения/чанков на диск пока не реализован.
 - [x] CLI: `python -m rag_indexer index|validate|stats` с `--corpus-dir`, `--manifest`, `--rag-url`, `--token`, `--full`, `--limit`, `--dry-run`, `--statuses`, `--ocr`.
 - [x] Использовать `/v1/index/chunks` и `DELETE` для исчезнувших материалов.
-- [ ] Дисковый кэш extraction/chunks по `sha256 + extractor_version + chunker_version`; сейчас state хранит только факт индексации.
+- [x] Дисковый кэш extraction/chunks по `sha256 + extractor_version + chunker_version` (`rag_indexer.cache`).
 - [ ] Батчинг/лимит payload для больших PDF: `/v1/index/chunks` принимает весь документ одним запросом.
-- [ ] Отдельные версии extractor/chunker в state вместо одного `pipeline_version`.
+- [ ] Отдельные версии extractor/chunker в state вместо одного `pipeline_version`; в кэше они уже раздельные.
 - [ ] Интеграционный тест `rag_indexer index` против живого RAG-сервиса; сейчас проверен только `validate` и unit-тесты клиента.
 - [ ] Dockerfile/профиль `rag-indexer`; corpus volume read-only; сеть только к RAG API.
 - [ ] Пилот на 20–30 материалах: проверить заголовки, таблицы, сканы, кодировки; замерить chunk integrity.

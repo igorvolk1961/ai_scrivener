@@ -5,6 +5,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from rag_indexer.cache import DocumentCache
 from rag_indexer.chunking import Chunk, ClauseAwareChunker
 from rag_indexer.client import RagClient
 from rag_indexer.extraction import DocumentExtractor, ExtractedDocument
@@ -39,11 +40,13 @@ class IndexPipeline:
         chunker: ClauseAwareChunker | None = None,
         client: RagClient | None = None,
         state: IndexState | None = None,
+        cache: DocumentCache | None = None,
     ) -> None:
         self._extractor = extractor or DocumentExtractor()
         self._chunker = chunker or ClauseAwareChunker()
         self._client = client
         self._state = state or IndexState(pipeline_version=PIPELINE_VERSION)
+        self._cache = cache
 
     async def run(
         self,
@@ -69,13 +72,29 @@ class IndexPipeline:
                 source_path = corpus_dir / record.stored_path
                 if not source_path.exists():
                     raise PipelineError(f"file not found: {source_path}")
-                document = await self._extractor.extract(
-                    source_path,
-                    ocr_engine,
-                    mime=record.mime,
-                    original_name=record.original_name,
+                document = (
+                    self._cache.load_document(record.sha256)
+                    if self._cache is not None
+                    else None
                 )
-                chunks = self._chunker.chunk(document, source_id=record.sha256)
+                if document is None:
+                    document = await self._extractor.extract(
+                        source_path,
+                        ocr_engine,
+                        mime=record.mime,
+                        original_name=record.original_name,
+                    )
+                    if self._cache is not None:
+                        self._cache.save_document(record.sha256, document)
+                chunks = (
+                    self._cache.load_chunks(record.sha256)
+                    if self._cache is not None
+                    else None
+                )
+                if chunks is None:
+                    chunks = self._chunker.chunk(document, source_id=record.sha256)
+                    if self._cache is not None:
+                        self._cache.save_chunks(record.sha256, chunks)
                 if not chunks:
                     raise PipelineError("no chunks produced")
                 report.chunks += len(chunks)

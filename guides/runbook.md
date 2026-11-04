@@ -446,6 +446,8 @@ uv run --project rag-service python -m rag_indexer index \
 
 Состояние индексации хранится в `.rag-index-state.json`; повторный запуск пропускает уже проиндексированные документы. `--full` переиндексирует всё, `--dry-run` не вызывает RAG и не пишет state, `--delete-missing` удаляет из индекса материалы, исчезнувшие из манифеста.
 
+Кэш extraction/chunks хранится в `.rag-index-cache` и версионируется отдельно по extractor/chunker. Для временного отключения используйте `--no-cache`, для другого расположения — `--cache-dir`.
+
 ## 6. Проверки проекта
 
 ```bash

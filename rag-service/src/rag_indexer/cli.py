@@ -7,6 +7,7 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
+from rag_indexer.cache import DocumentCache
 from rag_indexer.client import RagClient
 from rag_indexer.extraction import DocumentExtractor, ExtractionOptions
 from rag_indexer.manifest import (
@@ -60,6 +61,12 @@ def _add_common_arguments(parser: argparse.ArgumentParser) -> None:
         type=Path,
         default=Path(".rag-index-state.json"),
     )
+    parser.add_argument(
+        "--cache-dir",
+        type=Path,
+        default=Path(".rag-index-cache"),
+    )
+    parser.add_argument("--no-cache", action="store_true")
     parser.add_argument("--pipeline-version", default=PIPELINE_VERSION)
     parser.add_argument("--render-dpi", type=int, default=150)
     parser.add_argument("--rag-url", default=os.environ.get("RAG_URL", "http://127.0.0.1:8080"))
@@ -125,11 +132,13 @@ async def _run(args: argparse.Namespace) -> int:
         if not args.token:
             raise RuntimeError("RAG service token is required for indexing")
         client = RagClient(args.rag_url, args.token)
+    cache = None if args.no_cache else DocumentCache(args.cache_dir)
     pipeline = IndexPipeline(
         extractor=DocumentExtractor(ExtractionOptions(render_dpi=args.render_dpi)),
         chunker=None,
         client=client,
         state=state,
+        cache=cache,
     )
     try:
         report = await pipeline.run(

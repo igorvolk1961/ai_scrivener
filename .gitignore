@@ -19,6 +19,8 @@ htmlcov/
 .idea/
 .qdrant/
 qdrant_storage/
+.rag-index-cache/
+.rag-index-state.json
 *.dt
 *.cf
 *.cfe
