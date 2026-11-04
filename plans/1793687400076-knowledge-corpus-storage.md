@@ -92,7 +92,10 @@ ai_scrivener_corpus/
   "max_file_mb": 50,
   "allowed_mime": ["application/pdf", "text/plain", "text/html", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
   "allowed_ext": [".pdf", ".txt", ".html", ".docx"],
-  "require_provenance": true
+  "require_provenance": true,
+  "quota_gb": 20,
+  "min_free_gb": 5,
+  "min_free_percent": 10
 }
 ```
 
@@ -270,7 +273,7 @@ corpus/annotations.jsonl
 - [x] `KnowledgeSettings`: `enabled`, `corpus_dir`, `mode`, лимиты; env-override `AIS_SIM_KNOWLEDGE_MODE`, `AIS_SIM_CORPUS_DIR`.
 - [x] Абстракция провайдера `search_internet`; `record` — текущий `ddgs`, `offline` — только `retrieval_events`/манифест, `verify` — без сети.
 - [x] В `offline` при промахе писать в `offline_misses.jsonl` и возвращать явный текст «в офлайн-корпусе не найдено»; сетевой вызов не выполнять.
-- [x] **R7 (критично) Tool `kb_download(url, title, authority, published_at, license, doc_type, notes)`**: только `http/https`, connect/read/total таймауты 10/30/300 с, 3 попытки с exponential backoff и jitter, максимум 5 редиректов, запрет `localhost` и приватных диапазонов, проверка TLS, лимит 50 МБ и `Content-Length`, потоковая запись в `tmp/` с SHA-256, публикация только после полного тела и совпадения размера; при ошибке — удалить `tmp/`, записать `download_failures.jsonl`, не создавать запись в манифесте. Рубрики не передаются — их назначение вынесено в отдельный план (§5.5).
+- [x] **R7 (критично) Tool `kb_download(url, title, authority, published_at, license, doc_type, notes)`**: только `http/https`, connect/read/total таймауты 10/30/300 с, 3 попытки с exponential backoff и jitter, максимум 5 редиректов, запрет `localhost` и приватных диапазонов, проверка TLS, лимит 50 МБ и `Content-Length`, потоковая запись в `tmp/` с SHA-256, ограничение частоты запросов на агента и хост, публикация только после полного тела и совпадения размера; при ошибке — удалить `tmp/`, записать `download_failures.jsonl`, не создавать запись в манифесте. Рубрики не передаются — их назначение вынесено в отдельный план (§5.5).
 - [x] Tool `kb_register_material` — регистрация уже лежащего локально файла (ручной импорт).
 - [x] Tool `kb_list_materials` — свои материалы и пробелы.
 - [x] Промпт: не выдумывать тексты; обязательны источник, автор/орган, дата; при отсутствии — фиксировать пробел.
@@ -329,6 +332,8 @@ corpus/annotations.jsonl
 - [x] R8: checkpoint по каждой записи, retry-очередь на 5xx/таймауты, возобновление с последней успешной записи, отчёт `import_report.jsonl`, компенсация «материал без загрузки».
 - [ ] Сверить количество и хеши: `kb verify`, `GET /knowledge/materials` (уникальные хеши), `GET /knowledge/downloads` (факты по сотрудникам), `GET /knowledge/summary`.
 - [ ] Переключить `knowledge.mode=offline`, заблокировать сеть в тесте (monkeypatch / сетевой namespace), прогнать этап 3 на копии.
+- [x] R10: `kb status` отдаёт свободное место, объём корпуса, число отказов скачивания, офлайн-промахов и удалений GC.
+- [x] R11: квота корпуса и порог свободного места (`quota_gb`, `min_free_gb`, `min_free_percent`), загрузка останавливается до сети; покрыто тестами.
 - [x] R12: автоматизированы прерывание импорта (аналог `kill -9`), HTTP 500 с повтором, обрезанный манифест, конкурентный импорт и GC во время импорта; переполнение диска проверено на скачивании. Реальные `kill -9` и заполнение диска на копии базы не выполнялись.
 - [ ] Приёмочный сценарий: `owner-9` → задачи всем → материалы и загрузки → отчёты → `check`; затем сброс → импорт → офлайн-повтор без сети.
 - [x] Убедиться, что `db_admin init` не удаляет и не изменяет `corpus_dir`.
