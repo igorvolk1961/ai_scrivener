@@ -305,6 +305,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [x] Добавить фильтр повторяющихся колонтитулов, номеров страниц и boilerplate: определять повторяющиеся строки по страницам/позиции (верх/низ), удалять до склейки, сохранять удалённое в `metadata` для аудита; проверка на П-6 и 20–30 PDF.
 - [x] Реализовать `StructureBuilder`: заголовки, уровни разделов и путь секции; сложная юридическая нумерация пока базовая.
 - [x] Реализовать `ClauseAwareChunker`: context header, `embedding_text`, section path, clause, split long by sentences, merge small tail, дробление склеенных пунктов и таблиц по группам строк с повтором шапки.
+- [x] Извлечение таблиц из PDF с текстовым слоем через `pdfplumber` для таблиц с линиями; borderless/сканы и merged cells остаются в отдельных задачах.
 - [x] State-файл для идемпотентности по `sha256 + pipeline_version`; кэш извлечения/чанков на диск пока не реализован.
 - [x] CLI: `python -m rag_indexer index|validate|stats` с `--corpus-dir`, `--manifest`, `--rag-url`, `--token`, `--full`, `--limit`, `--dry-run`, `--statuses`, `--ocr`.
 - [x] Использовать `/v1/index/chunks` и `DELETE` для исчезнувших материалов.
@@ -453,7 +454,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 | Docling медленный на CPU и не идеален на русских сканах | пилот на 20–30 материалах, OCR, fallback на `python-docx`/`trafilatura`; при необходимости Marker как challenger |
 | `PdfExtractor` на текстовом слое использует `pypdfium2` и текстовые эвристики; типовые колонтитулы удаляются, но нестандартные/OCR-искажённые могут остаться | layout-aware parser (Docling/PyMuPDF) и/или фильтрация по bbox; ручная проверка проблемных ГОСТ |
 | `ClauseAwareChunker` делит пункты по newline/пунктуации, но сложные склейки без разделителей могут остаться | пилот на реальных PDF; расширение regex и тесты |
-| Сложные таблицы с merged cells и многострочными ячейками могут терять структуру | отдельный table parser и проверка на реальных ГОСТах |
+| `pdfplumber` находит таблицы с линиями, но borderless-таблицы и merged cells могут терять структуру | отдельный layout/table parser (Docling/Paddle PP-Structure) и проверка на реальных ГОСТах |
 | При падении батчинга остаются неактивные staging-точки; видимость документа атомарна, но мусор требует очистки | `rag_indexer cleanup --older-than-hours 24`; запуск по расписанию; повторный запуск перезаписывает staging-версию |
 | Размер чанка оценивается как `len(text) / 4`, а не токенайзером GigaChat | подключить точный токенайзер, проверить лимит embedding-модели |
 | Regex нумерации может не покрыть реальные форматы корпуса | собрать примеры из 20–30 PDF, расширить regex и закрепить тестами |

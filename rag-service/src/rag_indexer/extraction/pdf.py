@@ -11,6 +11,11 @@ from rag_indexer.extraction.boilerplate import BoilerplateFilter, BoilerplateOpt
 from rag_indexer.extraction.headers import clean_block_headers
 from rag_indexer.extraction.merger import LineToParagraphMerger, MergerOptions
 from rag_indexer.extraction.models import ExtractedDocument, ExtractionError
+from rag_indexer.extraction.tables import (
+    PdfTable,
+    extract_pdf_tables,
+    merge_table_blocks,
+)
 from rag_indexer.ocr.models import (
     OcrDocument,
     OcrEngine,
@@ -34,6 +39,7 @@ class ExtractionOptions:
     ocr: OcrOptions = field(default_factory=OcrOptions)
     merger: MergerOptions = field(default_factory=MergerOptions)
     boilerplate: BoilerplateOptions = field(default_factory=BoilerplateOptions)
+    extract_tables: bool = True
 
 
 def _load_pdfium() -> Any:
@@ -126,6 +132,17 @@ class PdfExtractor:
                     raise ExtractionError("OCR engine became unavailable")
                 ocr_document = await ocr_engine.recognize(images, self._options.ocr)
 
+        tables: list[PdfTable] = []
+        if self._options.extract_tables:
+            textual_pages = {
+                page.page_number for page in report.textual_pages
+            }
+            tables = await asyncio.to_thread(
+                extract_pdf_tables,
+                path,
+                textual_pages,
+            )
+
         return self.build_document(
             path,
             report,
@@ -133,6 +150,7 @@ class PdfExtractor:
             ocr_document,
             self._options,
             self._merger,
+            tables,
         )
 
     @staticmethod
@@ -143,6 +161,7 @@ class PdfExtractor:
         ocr_document: OcrDocument | None,
         options: ExtractionOptions,
         merger: LineToParagraphMerger,
+        tables: list[PdfTable] | None = None,
     ) -> ExtractedDocument:
         ocr_pages = {
             page.page_number: page
@@ -166,6 +185,7 @@ class PdfExtractor:
             {number: size[0] for number, size in page_sizes.items()},
         )
         blocks = clean_block_headers(blocks)
+        blocks = merge_table_blocks(blocks, tables or [])
         engines = sorted({page.engine for page in boilerplate.pages})
         return ExtractedDocument(
             source_path=path,
@@ -180,6 +200,7 @@ class PdfExtractor:
                 "render_dpi": options.render_dpi,
                 "boilerplate_removed": len(boilerplate.removed),
                 "boilerplate_repeated": boilerplate.repeated_texts[:10],
+                "tables_extracted": len(tables or []),
             },
         )
 

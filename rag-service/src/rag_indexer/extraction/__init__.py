@@ -11,6 +11,12 @@ from rag_indexer.extraction.html import HtmlExtractor
 from rag_indexer.extraction.merger import LineToParagraphMerger, MergerOptions
 from rag_indexer.extraction.models import Block, ExtractedDocument, ExtractionError
 from rag_indexer.extraction.pdf import ExtractionOptions, PdfExtractor
+from rag_indexer.extraction.tables import (
+    PdfTable,
+    extract_pdf_tables,
+    merge_table_blocks,
+    table_blocks,
+)
 from rag_indexer.extraction.text import TextExtractor
 
 __all__ = [
@@ -27,7 +33,11 @@ __all__ = [
     "LineToParagraphMerger",
     "MergerOptions",
     "PdfExtractor",
+    "PdfTable",
     "RemovedLine",
     "TextExtractor",
     "clean_block_headers",
+    "extract_pdf_tables",
+    "merge_table_blocks",
+    "table_blocks",
 ]

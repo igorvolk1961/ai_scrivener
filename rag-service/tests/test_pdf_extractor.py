@@ -10,6 +10,7 @@ from rag_indexer.extraction import (
     ExtractionOptions,
     LineToParagraphMerger,
     PdfExtractor,
+    PdfTable,
 )
 from rag_indexer.ocr import OcrDocument, OcrLine, OcrPage
 from rag_indexer.pdf import detect_pdf_text_layer
@@ -81,6 +82,32 @@ def test_build_document_requires_ocr_page_for_scanned_page() -> None:
             ExtractionOptions(),
             LineToParagraphMerger(),
         )
+
+
+def test_build_document_adds_extracted_tables() -> None:
+    report = detect_pdf_text_layer(
+        Path("document.pdf"),
+        page_texts=[TEXT_PAGE],
+    )
+    table = PdfTable(
+        page_number=1,
+        text="Наименование | Количество\nТовар | 10",
+        rows=2,
+        columns=2,
+    )
+
+    document = PdfExtractor.build_document(
+        Path("document.pdf"),
+        report,
+        {1: (600, 800)},
+        None,
+        ExtractionOptions(),
+        LineToParagraphMerger(),
+        [table],
+    )
+
+    assert document.metadata["tables_extracted"] == 1
+    assert any(block.kind == "table" for block in document.blocks)
 
 
 def test_build_document_uses_text_layer_without_ocr() -> None:
