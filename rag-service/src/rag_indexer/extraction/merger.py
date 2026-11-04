@@ -142,18 +142,19 @@ class LineToParagraphMerger:
         text = _join_lines([line.text for line in lines])
         boxes = [line.bbox for line in lines if line.bbox is not None]
         confidence = sum(line.confidence for line in lines) / len(lines)
+        kind = _classify_kind(lines[0].text, self._options.heading_max_chars)
+        metadata: dict[str, object] = {"line_count": len(lines)}
+        if kind == "heading":
+            metadata["heading_level"] = _heading_level(lines[0].text)
         return Block(
             text=text,
             page_start=lines[0].page_number,
             page_end=lines[-1].page_number,
-            kind=_classify_kind(
-                lines[0].text,
-                self._options.heading_max_chars,
-            ),
+            kind=kind,
             engine=engine_by_page.get(lines[0].page_number, "unknown"),
             confidence=confidence,
             bbox=_union_bbox(boxes),
-            metadata={"line_count": len(lines)},
+            metadata=metadata,
         )
 
 
@@ -193,6 +194,18 @@ def _is_heading(text: str, heading_max_chars: int) -> bool:
 
 def _is_table_row(text: str) -> bool:
     return bool(TABLE_RE.search(text.strip()))
+
+
+def _heading_level(text: str) -> int:
+    match = re.match(r"^\s*(\d+(?:\.\d+)*)\s+", text)
+    if match:
+        return match.group(1).count(".") + 1
+    lowered = text.strip().lower()
+    if lowered.startswith(("раздел", "глава", "приложение")):
+        return 1
+    if lowered.startswith("статья"):
+        return 2
+    return 1
 
 
 def _join_lines(parts: Sequence[str]) -> str:

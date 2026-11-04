@@ -303,8 +303,8 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [x] Реализовать `rag_indexer.ocr`: `OcrEngine`/`OcrDocument`, `PaddleOcrEngine` (основной), `YandexOcrEngine` (fallback), `FallbackOcrEngine` с page-level policy; опциональная зависимость `ocr-paddle`.
 - [x] Реализовать `LineToParagraphMerger`: bbox, вертикальные интервалы, отступы, нумерация, переносы; колонки и таблицы требуют доработки.
 - [x] Добавить фильтр повторяющихся колонтитулов, номеров страниц и boilerplate: определять повторяющиеся строки по страницам/позиции (верх/низ), удалять до склейки, сохранять удалённое в `metadata` для аудита; проверка на П-6 и 20–30 PDF.
-- [ ] Реализовать `StructureBuilder`: заголовки, юридическая нумерация (`1.2.3`, `п. 4.2`, `ст. 5`, `Приложение А`, `Таблица 1`), дерево разделов.
-- [ ] Реализовать `StructureAwareChunker`: атомарный пункт, merge small siblings, split long by sentences, таблицы с повтором шапки, context header, `embedding_text`.
+- [x] Реализовать `StructureBuilder`: заголовки, уровни разделов и путь секции; сложная юридическая нумерация пока базовая.
+- [x] Реализовать `ClauseAwareChunker`: context header, `embedding_text`, section path, clause, split long by sentences, merge small tail; таблицы пока как отдельные блоки.
 - [ ] Кэш извлечения и чанков по `sha256 + extractor_version + chunker_version`; state-файл для идемпотентности.
 - [ ] CLI: `python -m rag_indexer index|validate|stats` с `--corpus-dir`, `--manifest`, `--rag-url`, `--token`, `--full`, `--limit`, `--dry-run`, `--statuses`.
 - [ ] Реализовать `/v1/index/chunks` и батчевую индексацию; `DELETE` для исчезнувших материалов.
@@ -430,6 +430,10 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 |---|---|
 | Docling медленный на CPU и не идеален на русских сканах | пилот на 20–30 материалах, OCR, fallback на `python-docx`/`trafilatura`; при необходимости Marker как challenger |
 | `PdfExtractor` на текстовом слое использует `pypdfium2` и текстовые эвристики; сложная вёрстка/колонтитулы могут склеиваться | пилот на 20–30 PDF; при проблемах подключить Docling/PyMuPDF для layout и фильтр повторяющихся колонтитулов |
+| `ClauseAwareChunker` не делит `Block`, если экстрактор склеил несколько пунктов | пилот на реальных PDF; детектор границ пунктов внутри блока и тесты |
+| Таблицы сохраняются одним блоком без построчной нарезки и повтора шапки | отдельный table chunker: строки/группы строк, повтор header, caption |
+| Размер чанка оценивается как `len(text) / 4`, а не токенайзером GigaChat | подключить точный токенайзер, проверить лимит embedding-модели |
+| Regex нумерации может не покрыть реальные форматы корпуса | собрать примеры из 20–30 PDF, расширить regex и закрепить тестами |
 | GigaChat-эмбеддинги 2560 и лимиты батча | замерить лимиты, батч 32, обрезка/разбиение при ошибке |
 | Reranker на CPU добавляет latency | int8-модель, `candidate_k=30–50`, профилирование; GPU опционально |
 | BM25 Snowball может агрессивно стеммить юридические термины | eval, кастомные стоп-слова, при необходимости собственный словарь |
