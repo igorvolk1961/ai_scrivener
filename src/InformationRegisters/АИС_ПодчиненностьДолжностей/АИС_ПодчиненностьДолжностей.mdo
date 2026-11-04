@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="e8f0167f-2baa-4767-bac5-e8a2cc986823">
+  <producedTypes>
+    <selectionType typeId="2522e4f8-6cc6-4da7-a1e4-14abe33e62c9" valueTypeId="2bdc8882-f52d-464a-ade7-aafdc61061c6"/>
+    <listType typeId="aff7866d-ed01-44cd-b51d-829f0cdfd8fc" valueTypeId="2d90f1ec-3fd2-43b2-985b-8b47ce492171"/>
+    <managerType typeId="54b17f59-2471-4465-8d03-d30ce39c0f3c" valueTypeId="60670a80-ef27-4f6e-94b0-1f78666d0b5d"/>
+    <recordSetType typeId="cad655c6-7210-43b7-b2ff-7df18266eaf6" valueTypeId="8a7764f3-6b15-4d62-b750-58e501795faf"/>
+    <recordKeyType typeId="5b3e3c02-4f54-4b4d-9a5e-6f9a0f6c1d21" valueTypeId="c85f0d6a-4f1e-4a7b-8a4b-2b3f9a6e7c31"/>
+    <recordType typeId="4c1d2e3f-5a6b-4c7d-8e9f-0a1b2c3d4e5f" valueTypeId="9d8e7f6a-5b4c-4d3e-2f1a-0b9c8d7e6f5a"/>
+    <recordManagerType typeId="1a2b3c4d-5e6f-4a7b-8c9d-0e1f2a3b4c5d" valueTypeId="6f5e4d3c-2b1a-4c9d-8e7f-6a5b4c3d2e1f"/>
+  </producedTypes>
+  <name>АИС_ПодчиненностьДолжностей</name>
+  <synonym>
+    <key>ru</key>
+    <value>Подчиненность должностей</value>
+  </synonym>
+  <editType>InDialog</editType>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Active</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>LineNumber</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Recorder</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Period</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>ShowError</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <resources uuid="03a1ccea-413b-49df-a0f9-98287abbb389">
+    <name>РуководительДолжности</name>
+    <synonym>
+      <key>ru</key>
+      <value>Руководитель должности</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.Должности</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:UndefinedValue"/>
+  </resources>
+  <dimensions uuid="6db62e00-af78-45f9-9f98-1cf3815d3d73">
+    <name>Должность</name>
+    <synonym>
+      <key>ru</key>
+      <value>Должность</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.Должности</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillFromFillingValue>true</fillFromFillingValue>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <master>true</master>
+    <mainFilter>true</mainFilter>
+  </dimensions>
+</mdclass:InformationRegister>

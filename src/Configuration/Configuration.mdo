@@ -93,4 +93,5 @@
   <informationRegisters>InformationRegister.АИС_НормативыИИ</informationRegisters>
   <informationRegisters>InformationRegister.АИС_ИсторияДействийИИ</informationRegisters>
   <informationRegisters>InformationRegister.АИС_ДокументыВПапках</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_ПодчиненностьДолжностей</informationRegisters>
 </mdclass:Configuration>

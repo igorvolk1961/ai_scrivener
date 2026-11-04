@@ -137,6 +137,21 @@
 		</right>
 	</object>
 	<object>
+		<name>InformationRegister.АИС_ПодчиненностьДолжностей</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>Configuration</name>
 		<right>
 			<name>ViewAllFunctions</name>
@@ -498,6 +513,41 @@
 	</object>
 	<object>
 		<name>HTTPService.АИС_Симулятор.URLTemplate.СвязатьДокументы.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.НормализацияРуководителей.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.РуководительДолжности.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ДолжностнаяИерархия.Method.get</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.СинхронизацияДолжностнойИерархии.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.НазначениеПодразделений.Method.post</name>
 		<right>
 			<name>Use</name>
 			<value>true</value>

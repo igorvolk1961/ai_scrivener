@@ -325,6 +325,91 @@
       <handler>УстановитьРуководителя_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="b3faf455-b59d-42ae-8f6e-e8ada6f591a6">
+    <name>НормализацияРуководителей</name>
+    <synonym>
+      <key>ru</key>
+      <value>Нормализация руководителей</value>
+    </synonym>
+    <template>/manager/normalize</template>
+    <methods uuid="1c4b221f-f4dc-4901-b35d-4e4ad273155e">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>НормализоватьРуководителей_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="8e156138-4eb9-4a01-b31e-d35ba45d0f28">
+    <name>РуководительДолжности</name>
+    <synonym>
+      <key>ru</key>
+      <value>Руководитель должности</value>
+    </synonym>
+    <template>/manager/position</template>
+    <methods uuid="384ea2a7-ec16-4d6c-a698-03147267a1a6">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>УстановитьРуководителяДолжности_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="f51f8bde-62ff-41b3-8105-a941a2f38794">
+    <name>ДолжностнаяИерархия</name>
+    <synonym>
+      <key>ru</key>
+      <value>Должностная иерархия</value>
+    </synonym>
+    <template>/manager/positions</template>
+    <methods uuid="f4c2b2a9-65db-4a55-8a0a-ab9a4a255374">
+      <name>get</name>
+      <synonym>
+        <key>ru</key>
+        <value>Get</value>
+      </synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьДолжностнуюИерархию_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="81138096-fa5b-4b25-9dc4-d9e03b2f0b59">
+    <name>СинхронизацияДолжностнойИерархии</name>
+    <synonym>
+      <key>ru</key>
+      <value>Синхронизация должностной иерархии</value>
+    </synonym>
+    <template>/manager/sync-positions</template>
+    <methods uuid="de90d1a3-a0a5-4171-8775-8f5f1844d888">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СинхронизироватьДолжностнуюИерархию_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="84e2167e-4223-4ca2-9aa6-0b6610a8b3ae">
+    <name>НазначениеПодразделений</name>
+    <synonym>
+      <key>ru</key>
+      <value>Назначение подразделений</value>
+    </synonym>
+    <template>/manager/assign-departments</template>
+    <methods uuid="945f2596-2dec-4549-9471-72ea75821f61">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>НазначитьПодразделения_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="3c12bbca-7365-4c7d-beb8-60fed3cc7767">
     <name>НастройкиИИ</name>
     <synonym>

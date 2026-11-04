@@ -203,6 +203,17 @@
 		</right>
 	</object>
 	<object>
+		<name>InformationRegister.АИС_ПодчиненностьДолжностей</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>InformationRegister.АИС_ИсторияДействийИИ</name>
 		<right>
 			<name>Read</name>
