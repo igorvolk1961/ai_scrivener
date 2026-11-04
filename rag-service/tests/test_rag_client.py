@@ -38,6 +38,29 @@ def test_index_chunks_posts_payload_and_token() -> None:
     assert captured["body"] == payload
 
 
+def test_retrieve_posts_query_and_filters() -> None:
+    captured: dict[str, object] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured["url"] = str(request.url)
+        captured["body"] = json.loads(request.content)
+        return httpx.Response(200, json={"results": []})
+
+    client = _client(httpx.MockTransport(handler))
+    result = asyncio.run(
+        client.retrieve("вопрос", {"source_types": ["template"]}, 5)
+    )
+    asyncio.run(client.close())
+
+    assert result == {"results": []}
+    assert captured["url"] == "http://rag.test/v1/retrieve"
+    assert captured["body"] == {
+        "query": "вопрос",
+        "filters": {"source_types": ["template"]},
+        "top_k": 5,
+    }
+
+
 def test_activate_posts_version() -> None:
     captured: dict[str, object] = {}
 

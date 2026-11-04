@@ -312,7 +312,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [x] Батчинг payload для больших PDF: `--chunk-batch-size`; батчи пишутся с `active=false`, затем `/v1/index/activate` включает новую версию и удаляет старые.
 - [x] Очистка неактивных staging-версий: `POST /v1/index/cleanup` и `rag_indexer cleanup`; точки получают `created_at`.
 - [ ] Отдельные версии extractor/chunker в state вместо одного `pipeline_version`; в кэше они уже раздельные.
-- [ ] Интеграционный тест `rag_indexer index` против живого RAG-сервиса; сейчас проверен только `validate` и unit-тесты клиента.
+- [x] Gated live integration test `tests/test_live_rag.py` (index → retrieve → delete) через `RAG_LIVE_URL`/`RAG_LIVE_TOKEN`; запуск против живого RAG остаётся ручным.
 - [x] Dockerfile/профиль `rag-indexer`; corpus volume read-only; сеть только к RAG API; PaddleOCR включается build-arg `WITH_PADDLE`.
 - [ ] Пилот на 20–30 материалах: проверить заголовки, таблицы, сканы, кодировки; замерить chunk integrity.
 - [ ] Собрать knowledge golden set: 50–100 запросов с ожидаемыми `sha256`/пунктом, включая точные идентификаторы и «не найдено».
@@ -333,6 +333,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - 11/11 документов обработаны без ошибок; 421 страница, 1001 чанк, 169 чанков с `clause`.
 - OCR вызывался только для страниц без текстового слоя; смешанные PDF используют `text_layer` + `paddleocr`.
 - 0 табличных чанков; извлечение таблиц остаётся главным пробелом.
+- Токен-prefix stripping убирает колонтитулы в начале/конце, но колонтитулы, попавшие в середину страницы из-за порядка extraction, остаются.
 - В учебниках/руководствах мало `clause` — это ожидаемо, но часть ГОСТ/ТР ТС всё ещё теряет пункты.
 - Следующие шаги: table parser для PDF, удаление колонтитулов, улучшение clause extraction и golden set.
 
@@ -450,7 +451,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 | Риск/вопрос | Мера/решение |
 |---|---|
 | Docling медленный на CPU и не идеален на русских сканах | пилот на 20–30 материалах, OCR, fallback на `python-docx`/`trafilatura`; при необходимости Marker как challenger |
-| `PdfExtractor` на текстовом слое использует `pypdfium2` и текстовые эвристики; сложная вёрстка/колонтитулы могут склеиваться | пилот на 20–30 PDF; при проблемах подключить Docling/PyMuPDF для layout и фильтр повторяющихся колонтитулов |
+| `PdfExtractor` на текстовом слое использует `pypdfium2` и текстовые эвристики; токен-prefix stripping удаляет колонтитулы в начале/конце, но колонтитулы, попавшие в середину страницы из-за порядка extraction, остаются | нужен layout-aware parser (Docling/PyMuPDF) и/или фильтрация по bbox; до этого — ручная проверка проблемных ГОСТ |
 | `ClauseAwareChunker` делит пункты по newline/пунктуации, но сложные склейки без разделителей могут остаться | пилот на реальных PDF; расширение regex и тесты |
 | Сложные таблицы с merged cells и многострочными ячейками могут терять структуру | отдельный table parser и проверка на реальных ГОСТах |
 | При падении батчинга остаются неактивные staging-точки; видимость документа атомарна, но мусор требует очистки | `rag_indexer cleanup --older-than-hours 24`; запуск по расписанию; повторный запуск перезаписывает staging-версию |

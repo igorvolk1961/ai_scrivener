@@ -34,6 +34,18 @@ class RagClient:
     async def index_chunks(self, payload: dict[str, Any]) -> dict[str, Any]:
         return await self._request("POST", "/v1/index/chunks", json=payload)
 
+    async def retrieve(
+        self,
+        query: str,
+        filters: dict[str, Any],
+        top_k: int = 10,
+    ) -> dict[str, Any]:
+        return await self._request(
+            "POST",
+            "/v1/retrieve",
+            json={"query": query, "filters": filters, "top_k": top_k},
+        )
+
     async def activate(
         self,
         source_type: str,

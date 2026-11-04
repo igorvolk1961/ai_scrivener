@@ -210,13 +210,21 @@ class BoilerplateFilter:
         line: OcrLine,
         repeated: set[str],
     ) -> OcrLine | None:
-        normalized = normalize_boilerplate_text(line.text)
+        original_tokens = line.text.split()
+        normalized_tokens = [
+            normalize_boilerplate_text(token) for token in original_tokens
+        ]
         for text in sorted(repeated, key=len, reverse=True):
-            if len(text) < self._options.min_chars or not normalized.startswith(text):
+            prefix_tokens = text.split()
+            if len(text) < self._options.min_chars:
                 continue
-            if len(line.text) <= len(text):
+            if len(prefix_tokens) >= len(original_tokens):
                 continue
-            remainder = line.text[len(text) :].lstrip(" .:;—-")
+            if normalized_tokens[: len(prefix_tokens)] != prefix_tokens:
+                continue
+            remainder = " ".join(original_tokens[len(prefix_tokens) :]).lstrip(
+                " .:;—-"
+            )
             if not remainder:
                 continue
             return OcrLine(

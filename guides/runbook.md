@@ -470,6 +470,14 @@ uv run --project rag-service python -m rag_service.eval \
 
 Формат датасета — `rag-service/eval/README.md`.
 
+Live integration test (index → retrieve → delete) запускается только при заданных env:
+
+```bash
+RAG_LIVE_URL=http://127.0.0.1:8080 \
+RAG_LIVE_TOKEN="$RAG_SERVICE_TOKEN" \
+uv run --project rag-service pytest tests/test_live_rag.py
+```
+
 Индексация в Docker (one-shot, профиль `indexer`):
 
 ```bash

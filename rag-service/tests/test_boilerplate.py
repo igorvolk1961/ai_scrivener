@@ -93,6 +93,28 @@ def test_strips_header_prefix_and_keeps_body() -> None:
     assert any(item.reason == "prefix" for item in result.removed)
 
 
+def test_strips_header_prefix_with_page_number() -> None:
+    suffixes = ["Продолжение", "Таблица", "Примечание"]
+    pages = [
+        OcrPage(
+            page_number=index,
+            width=600,
+            height=800,
+            lines=[
+                _line(f"{index} ГОСТ 7000-80 {suffix}", 10, index),
+                _line(BODY, 200, index),
+            ],
+            engine="paddleocr",
+        )
+        for index, suffix in enumerate(suffixes, start=1)
+    ]
+
+    result = BoilerplateFilter().apply(pages)
+
+    assert result.pages[0].lines[0].text == "Продолжение"
+    assert any(item.reason == "prefix" for item in result.removed)
+
+
 def test_single_page_is_not_filtered() -> None:
     result = BoilerplateFilter().apply([_page(1)])
 
