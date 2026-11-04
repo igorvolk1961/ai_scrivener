@@ -16,6 +16,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+indexer = [
+  "pypdfium2>=4,<6",
+]
 ocr-paddle = [
   "paddleocr>=3.7,<4",
   "paddlepaddle>=3.3,<4",

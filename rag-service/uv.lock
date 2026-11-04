@@ -41,6 +41,9 @@ dependencies = [
 ]
 
 [package.optional-dependencies]
+indexer = [
+    { name = "pypdfium2" },
+]
 ocr-paddle = [
     { name = "paddleocr" },
     { name = "paddlepaddle" },
@@ -65,11 +68,12 @@ requires-dist = [
     { name = "paddlepaddle", marker = "extra == 'ocr-paddle'", specifier = ">=3.3,<4" },
     { name = "pydantic", specifier = ">=2.10,<3" },
     { name = "pydantic-settings", specifier = ">=2.7,<3" },
+    { name = "pypdfium2", marker = "extra == 'indexer'", specifier = ">=4,<6" },
     { name = "pyyaml", specifier = ">=6.0,<7" },
     { name = "qdrant-client", specifier = ">=1.13,<2" },
     { name = "uvicorn", extras = ["standard"], specifier = ">=0.34,<1" },
 ]
-provides-extras = ["ocr-paddle"]
+provides-extras = ["indexer", "ocr-paddle"]
 
 [package.metadata.requires-dev]
 dev = [

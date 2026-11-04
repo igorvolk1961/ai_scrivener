@@ -298,6 +298,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 
 - [ ] Добавить пакет `rag-service/src/rag_indexer/` и optional-группу зависимостей `indexer` (docling, python-docx, trafilatura, razdel, tiktoken).
 - [ ] Реализовать `ExtractedDocument`/`Block` и экстракторы: PDF/DOCX/HTML/TXT; OCR для сканов; страницы, bbox, таблицы.
+- [ ] Реализовать `rag_indexer.pdf`: `TextLayerReport` и `detect_pdf_text_layer` для page-level triage «есть текстовый слой / нужен OCR»; опциональная зависимость `indexer`.
 - [ ] Реализовать `rag_indexer.ocr`: `OcrEngine`/`OcrDocument`, `PaddleOcrEngine` (основной), `YandexOcrEngine` (fallback), `FallbackOcrEngine` с page-level policy; опциональная зависимость `ocr-paddle`.
 - [ ] Реализовать `LineToParagraphMerger`: bbox, вертикальные интервалы, отступы, нумерация, переносы, колонки и таблицы; одинаково для Paddle и Yandex.
 - [ ] Реализовать `StructureBuilder`: заголовки, юридическая нумерация (`1.2.3`, `п. 4.2`, `ст. 5`, `Приложение А`, `Таблица 1`), дерево разделов.
