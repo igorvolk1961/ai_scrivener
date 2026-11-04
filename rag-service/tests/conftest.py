@@ -38,6 +38,7 @@ class FakeStore:
         self.documents: dict[tuple[str, str], tuple[IndexedDocument, list[TextChunk]]] = {}
         self.dimension: int | None = None
         self.closed = False
+        self.activated: list[tuple[str, str, str]] = []
 
     async def ensure_collection(self, dimension: int) -> None:
         self.dimension = dimension
@@ -87,12 +88,22 @@ class FakeStore:
         dense_vectors: list[list[float]],
         sparse_vectors: list[Any] | None = None,
         replace_existing: bool = True,
+        active: bool = True,
     ) -> int:
         if len(chunks) != len(dense_vectors):
             raise AssertionError("chunks and vectors mismatch")
         text_chunks = [TextChunk(index=chunk.index, text=chunk.text) for chunk in chunks]
         self.documents[(source_type, document.source_id)] = (document, text_chunks)
         return len(chunks)
+
+    async def activate_document(
+        self,
+        source_type: str,
+        source_id: str,
+        version: str,
+    ) -> bool:
+        self.activated.append((source_type, source_id, version))
+        return True
 
     async def delete(self, source_type: str, source_id: str) -> bool:
         existed = (source_type, source_id) in self.documents

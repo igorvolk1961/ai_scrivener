@@ -17,10 +17,15 @@ class FakeClient:
     def __init__(self) -> None:
         self.payloads: list[dict[str, Any]] = []
         self.deleted: list[tuple[str, str]] = []
+        self.activated: list[tuple[str, str, str]] = []
 
     async def index_chunks(self, payload: dict[str, Any]) -> dict[str, Any]:
         self.payloads.append(payload)
         return {"indexed_chunks": len(payload["chunks"])}
+
+    async def activate(self, source_type: str, source_id: str, version: str) -> dict[str, Any]:
+        self.activated.append((source_type, source_id, version))
+        return {"activated": True}
 
     async def delete(self, source_type: str, source_id: str) -> dict[str, Any]:
         self.deleted.append((source_type, source_id))
@@ -86,8 +91,11 @@ def test_pipeline_batches_chunks_and_replaces_only_first_batch(tmp_path: Path) -
 
     assert report.indexed == 1
     assert len(client.payloads) == 2
-    assert [payload["replace_existing"] for payload in client.payloads] == [True, False]
+    assert [payload["replace_existing"] for payload in client.payloads] == [False, False]
+    assert [payload["active"] for payload in client.payloads] == [False, False]
     assert [len(payload["chunks"]) for payload in client.payloads] == [2, 1]
+    assert client.payloads[0]["document"]["version"] == "abc123:1"
+    assert client.activated == [("knowledge_material", "abc123", "abc123:1")]
 
 
 def test_pipeline_dry_run_does_not_call_client_or_state(tmp_path: Path) -> None:

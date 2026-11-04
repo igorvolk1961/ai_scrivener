@@ -309,7 +309,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [x] CLI: `python -m rag_indexer index|validate|stats` с `--corpus-dir`, `--manifest`, `--rag-url`, `--token`, `--full`, `--limit`, `--dry-run`, `--statuses`, `--ocr`.
 - [x] Использовать `/v1/index/chunks` и `DELETE` для исчезнувших материалов.
 - [x] Дисковый кэш extraction/chunks по `sha256 + extractor_version + chunker_version` (`rag_indexer.cache`).
-- [x] Батчинг payload для больших PDF: `--chunk-batch-size`, первый батч заменяет документ (`replace_existing=true`), последующие добавляют чанки.
+- [x] Батчинг payload для больших PDF: `--chunk-batch-size`; батчи пишутся с `active=false`, затем `/v1/index/activate` включает новую версию и удаляет старые.
 - [ ] Отдельные версии extractor/chunker в state вместо одного `pipeline_version`; в кэше они уже раздельные.
 - [ ] Интеграционный тест `rag_indexer index` против живого RAG-сервиса; сейчас проверен только `validate` и unit-тесты клиента.
 - [x] Dockerfile/профиль `rag-indexer`; corpus volume read-only; сеть только к RAG API; PaddleOCR включается build-arg `WITH_PADDLE`.
@@ -436,7 +436,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 | `PdfExtractor` на текстовом слое использует `pypdfium2` и текстовые эвристики; сложная вёрстка/колонтитулы могут склеиваться | пилот на 20–30 PDF; при проблемах подключить Docling/PyMuPDF для layout и фильтр повторяющихся колонтитулов |
 | `ClauseAwareChunker` делит пункты по newline/пунктуации, но сложные склейки без разделителей могут остаться | пилот на реальных PDF; расширение regex и тесты |
 | Сложные таблицы с merged cells и многострочными ячейками могут терять структуру | отдельный table parser и проверка на реальных ГОСТах |
-| Батчирование payload не атомарно: падение после первого батча оставляет документ частично обновлённым | повторный запуск с `replace_existing=true`; при необходимости staging-коллекция и alias-swap |
+| При падении батчинга остаются неактивные staging-точки; видимость документа атомарна, но мусор требует очистки | периодическая очистка неактивных версий; повторный запуск перезаписывает staging-версию |
 | Размер чанка оценивается как `len(text) / 4`, а не токенайзером GigaChat | подключить точный токенайзер, проверить лимит embedding-модели |
 | Regex нумерации может не покрыть реальные форматы корпуса | собрать примеры из 20–30 PDF, расширить regex и закрепить тестами |
 | GigaChat-эмбеддинги 2560 и лимиты батча | замерить лимиты, батч 32, обрезка/разбиение при ошибке |

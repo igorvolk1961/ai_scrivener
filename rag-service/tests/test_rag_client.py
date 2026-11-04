@@ -38,6 +38,29 @@ def test_index_chunks_posts_payload_and_token() -> None:
     assert captured["body"] == payload
 
 
+def test_activate_posts_version() -> None:
+    captured: dict[str, object] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured["url"] = str(request.url)
+        captured["body"] = json.loads(request.content)
+        return httpx.Response(200, json={"activated": True})
+
+    client = _client(httpx.MockTransport(handler))
+    result = asyncio.run(
+        client.activate("knowledge_material", "sha-1", "v2")
+    )
+    asyncio.run(client.close())
+
+    assert result == {"activated": True}
+    assert captured["url"] == "http://rag.test/v1/index/activate"
+    assert captured["body"] == {
+        "source_type": "knowledge_material",
+        "source_id": "sha-1",
+        "version": "v2",
+    }
+
+
 def test_delete_encodes_path() -> None:
     captured: dict[str, str] = {}
 

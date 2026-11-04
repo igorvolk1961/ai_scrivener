@@ -202,6 +202,34 @@ def test_upsert_chunks_can_append_without_delete() -> None:
     client.upsert.assert_awaited_once()
 
 
+def test_activate_document_marks_version_and_removes_others() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    client.count.return_value = SimpleNamespace(count=1)
+
+    activated = asyncio.run(
+        store.activate_document("knowledge_material", "sha-1", "v2")
+    )
+
+    assert activated is True
+    client.set_payload.assert_awaited_once()
+    client.delete.assert_awaited_once()
+
+
+def test_activate_document_returns_false_without_points() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    client.count.return_value = SimpleNamespace(count=0)
+
+    activated = asyncio.run(
+        store.activate_document("knowledge_material", "sha-1", "v2")
+    )
+
+    assert activated is False
+    client.set_payload.assert_not_awaited()
+    client.delete.assert_not_awaited()
+
+
 def test_search_hybrid_uses_prefetch_and_rrf() -> None:
     client = AsyncMock()
     store = _store(client)

@@ -60,6 +60,22 @@ def test_replace_removes_stale_documents(client: TestClient, store: FakeStore) -
     assert ("template", "doc-2") not in store.documents
 
 
+def test_activate_document(client: TestClient, store: FakeStore) -> None:
+    response = client.post(
+        "/v1/index/activate",
+        json={
+            "source_type": "knowledge_material",
+            "source_id": "sha-1",
+            "version": "v2",
+        },
+        headers=AUTH_HEADERS,
+    )
+
+    assert response.status_code == 200
+    assert response.json()["activated"] is True
+    assert store.activated == [("knowledge_material", "sha-1", "v2")]
+
+
 def test_delete_document(client: TestClient, store: FakeStore) -> None:
     client.post("/v1/index/upsert", json=index_payload(), headers=AUTH_HEADERS)
     response = client.delete("/v1/index/template/doc-1", headers=AUTH_HEADERS)

@@ -107,6 +107,12 @@ class IndexPipeline:
                     continue
                 if client is None:
                     raise PipelineError("RAG client is required for indexing")
+                staged = self._chunk_batch_size > 0
+                index_version = (
+                    f"{record.version}:{PIPELINE_VERSION}"
+                    if staged
+                    else record.version
+                )
                 for batch_index, batch in enumerate(
                     _batches(chunks, self._chunk_batch_size)
                 ):
@@ -115,8 +121,16 @@ class IndexPipeline:
                             record,
                             document,
                             batch,
-                            replace_existing=batch_index == 0,
+                            version=index_version,
+                            replace_existing=not staged and batch_index == 0,
+                            active=not staged,
                         )
+                    )
+                if staged:
+                    await client.activate(
+                        SOURCE_TYPE,
+                        record.sha256,
+                        index_version,
                     )
                 self._state.mark_indexed(
                     record.sha256,
@@ -153,7 +167,9 @@ def build_payload(
     document: ExtractedDocument,
     chunks: list[Chunk],
     *,
+    version: str | None = None,
     replace_existing: bool = True,
+    active: bool = True,
 ) -> dict[str, Any]:
     metadata = record.metadata()
     metadata["extraction"] = document.metadata
@@ -161,11 +177,12 @@ def build_payload(
         "source_type": SOURCE_TYPE,
         "document": {
             "source_id": record.sha256,
-            "version": record.version,
+            "version": version or record.version,
             "title": record.title or document.title,
             "metadata": metadata,
         },
         "replace_existing": replace_existing,
+        "active": active,
         "chunks": [
             {
                 "index": chunk.index,

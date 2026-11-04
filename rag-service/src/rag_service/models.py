@@ -170,6 +170,7 @@ class IndexChunksRequest(BaseModel):
     document: IndexDocument
     chunks: list[IndexChunk] = Field(min_length=1)
     replace_existing: bool = True
+    active: bool = True
 
 
 class IndexChunksResponse(BaseModel):
@@ -179,6 +180,23 @@ class IndexChunksResponse(BaseModel):
     source_id: str
     version: str
     indexed_chunks: int
+
+
+class ActivateRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source_type: str = Field(min_length=1)
+    source_id: str = Field(min_length=1)
+    version: str = Field(min_length=1)
+
+
+class ActivateResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source_type: str
+    source_id: str
+    version: str
+    activated: bool
 
 
 class HealthResponse(BaseModel):

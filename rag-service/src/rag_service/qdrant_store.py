@@ -62,7 +62,15 @@ class VectorStore(Protocol):
         dense_vectors: list[list[float]],
         sparse_vectors: list[models.SparseVector] | None = None,
         replace_existing: bool = True,
+        active: bool = True,
     ) -> int: ...
+
+    async def activate_document(
+        self,
+        source_type: str,
+        source_id: str,
+        version: str,
+    ) -> bool: ...
 
     async def delete(self, source_type: str, source_id: str) -> bool: ...
 
@@ -306,6 +314,7 @@ class QdrantStore:
         char_start: int | None = None,
         char_end: int | None = None,
         metadata: dict[str, Any] | None = None,
+        active: bool = True,
     ) -> dict[str, Any]:
         merged_metadata = {**document.metadata, **(metadata or {})}
         return {
@@ -326,7 +335,7 @@ class QdrantStore:
             "parent_id": parent_id,
             "char_start": char_start,
             "char_end": char_end,
-            "active": True,
+            "active": active,
             "doc_type": merged_metadata.get("doc_type"),
             "status": merged_metadata.get("status"),
             "authority": merged_metadata.get("authority"),
@@ -388,6 +397,7 @@ class QdrantStore:
         dense_vectors: list[list[float]],
         sparse_vectors: list[models.SparseVector] | None = None,
         replace_existing: bool = True,
+        active: bool = True,
     ) -> int:
         if len(chunks) != len(dense_vectors):
             raise VectorStoreError("chunks and dense vectors count mismatch")
@@ -425,6 +435,7 @@ class QdrantStore:
                         char_start=chunk.char_start,
                         char_end=chunk.char_end,
                         metadata=chunk.metadata,
+                        active=active,
                     ),
                 )
             )
@@ -435,6 +446,63 @@ class QdrantStore:
                 wait=True,
             )
         return len(points)
+
+    async def activate_document(
+        self,
+        source_type: str,
+        source_id: str,
+        version: str,
+    ) -> bool:
+        target_filter = models.Filter(
+            must=[
+                models.FieldCondition(
+                    key="source_type",
+                    match=models.MatchValue(value=source_type),
+                ),
+                models.FieldCondition(
+                    key="source_id",
+                    match=models.MatchValue(value=source_id),
+                ),
+                models.FieldCondition(
+                    key="version",
+                    match=models.MatchValue(value=version),
+                ),
+            ]
+        )
+        count = await self._client.count(
+            collection_name=self._collection,
+            count_filter=target_filter,
+            exact=True,
+        )
+        if count.count == 0:
+            return False
+        await self._client.set_payload(
+            collection_name=self._collection,
+            payload={"active": True},
+            points=target_filter,
+            wait=True,
+        )
+        await self._delete_filter(
+            models.Filter(
+                must=[
+                    models.FieldCondition(
+                        key="source_type",
+                        match=models.MatchValue(value=source_type),
+                    ),
+                    models.FieldCondition(
+                        key="source_id",
+                        match=models.MatchValue(value=source_id),
+                    ),
+                ],
+                must_not=[
+                    models.FieldCondition(
+                        key="version",
+                        match=models.MatchValue(value=version),
+                    )
+                ],
+            )
+        )
+        return True
 
     async def replace(
         self,

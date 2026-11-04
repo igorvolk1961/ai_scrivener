@@ -34,6 +34,22 @@ class RagClient:
     async def index_chunks(self, payload: dict[str, Any]) -> dict[str, Any]:
         return await self._request("POST", "/v1/index/chunks", json=payload)
 
+    async def activate(
+        self,
+        source_type: str,
+        source_id: str,
+        version: str,
+    ) -> dict[str, Any]:
+        return await self._request(
+            "POST",
+            "/v1/index/activate",
+            json={
+                "source_type": source_type,
+                "source_id": source_id,
+                "version": version,
+            },
+        )
+
     async def delete(self, source_type: str, source_id: str) -> dict[str, Any]:
         path = f"/v1/index/{quote(source_type, safe='')}/{quote(source_id, safe='')}"
         return await self._request("DELETE", path)

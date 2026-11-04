@@ -18,6 +18,8 @@ from rag_service.config import (
 )
 from rag_service.gigachat import GigaChatClient, GigaChatError
 from rag_service.models import (
+    ActivateRequest,
+    ActivateResponse,
     DeleteResponse,
     HealthResponse,
     IndexChunksRequest,
@@ -348,6 +350,7 @@ def create_app(
                 dense_vectors,
                 sparse_vectors,
                 replace_existing=payload.replace_existing,
+                active=payload.active,
             )
         except (GigaChatError, VectorStoreError, SparseEncoderError) as error:
             logger.exception("index chunks failed")
@@ -366,6 +369,33 @@ def create_app(
             source_id=payload.document.source_id,
             version=payload.document.version,
             indexed_chunks=indexed_chunks,
+        )
+
+    @app.post(
+        "/v1/index/activate",
+        response_model=ActivateResponse,
+        dependencies=[Depends(_require_token)],
+    )
+    async def activate_document(
+        request: Request, payload: ActivateRequest
+    ) -> ActivateResponse:
+        try:
+            activated = await _store(request).activate_document(
+                payload.source_type,
+                payload.source_id,
+                payload.version,
+            )
+        except VectorStoreError as error:
+            logger.exception("activate document failed")
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail="activation dependency failed",
+            ) from error
+        return ActivateResponse(
+            source_type=payload.source_type,
+            source_id=payload.source_id,
+            version=payload.version,
+            activated=activated,
         )
 
     @app.delete(
