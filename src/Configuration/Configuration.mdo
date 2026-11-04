@@ -50,7 +50,7 @@
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <commonModules>CommonModule.АИС_Промпты</commonModules>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
-  <commonModules>CommonModule.АИС_МатериалыЗнаний</commonModules>
+  <commonModules>CommonModule.АИС_КорпусЗнаний</commonModules>
   <commonModules>CommonModule.АИС_Сотрудники</commonModules>
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
   <commonModules>CommonModule.АИС_ПапкиДокументов</commonModules>
