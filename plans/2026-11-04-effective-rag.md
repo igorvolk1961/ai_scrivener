@@ -304,7 +304,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [x] Реализовать `LineToParagraphMerger`: bbox, вертикальные интервалы, отступы, нумерация, переносы; колонки и таблицы требуют доработки.
 - [x] Добавить фильтр повторяющихся колонтитулов, номеров страниц и boilerplate: определять повторяющиеся строки по страницам/позиции (верх/низ), удалять до склейки, сохранять удалённое в `metadata` для аудита; проверка на П-6 и 20–30 PDF.
 - [x] Реализовать `StructureBuilder`: заголовки, уровни разделов и путь секции; сложная юридическая нумерация пока базовая.
-- [x] Реализовать `ClauseAwareChunker`: context header, `embedding_text`, section path, clause, split long by sentences, merge small tail; таблицы пока как отдельные блоки.
+- [x] Реализовать `ClauseAwareChunker`: context header, `embedding_text`, section path, clause, split long by sentences, merge small tail, дробление склеенных пунктов и таблиц по группам строк с повтором шапки.
 - [x] State-файл для идемпотентности по `sha256 + pipeline_version`; кэш извлечения/чанков на диск пока не реализован.
 - [x] CLI: `python -m rag_indexer index|validate|stats` с `--corpus-dir`, `--manifest`, `--rag-url`, `--token`, `--full`, `--limit`, `--dry-run`, `--statuses`, `--ocr`.
 - [x] Использовать `/v1/index/chunks` и `DELETE` для исчезнувших материалов.
@@ -434,8 +434,8 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 |---|---|
 | Docling медленный на CPU и не идеален на русских сканах | пилот на 20–30 материалах, OCR, fallback на `python-docx`/`trafilatura`; при необходимости Marker как challenger |
 | `PdfExtractor` на текстовом слое использует `pypdfium2` и текстовые эвристики; сложная вёрстка/колонтитулы могут склеиваться | пилот на 20–30 PDF; при проблемах подключить Docling/PyMuPDF для layout и фильтр повторяющихся колонтитулов |
-| `ClauseAwareChunker` не делит `Block`, если экстрактор склеил несколько пунктов | пилот на реальных PDF; детектор границ пунктов внутри блока и тесты |
-| Таблицы сохраняются одним блоком без построчной нарезки и повтора шапки | отдельный table chunker: строки/группы строк, повтор header, caption |
+| `ClauseAwareChunker` делит пункты по newline/пунктуации, но сложные склейки без разделителей могут остаться | пилот на реальных PDF; расширение regex и тесты |
+| Сложные таблицы с merged cells и многострочными ячейками могут терять структуру | отдельный table parser и проверка на реальных ГОСТах |
 | Размер чанка оценивается как `len(text) / 4`, а не токенайзером GigaChat | подключить точный токенайзер, проверить лимит embedding-модели |
 | Regex нумерации может не покрыть реальные форматы корпуса | собрать примеры из 20–30 PDF, расширить regex и закрепить тестами |
 | GigaChat-эмбеддинги 2560 и лимиты батча | замерить лимиты, батч 32, обрезка/разбиение при ошибке |

@@ -96,8 +96,10 @@ def test_chunker_splits_long_text() -> None:
 def test_chunker_keeps_table_kind() -> None:
     document = _document(
         [
-            _block("Наименование | Количество", kind="table"),
-            _block("Товар | 10", kind="table"),
+            _block(
+                "Наименование | Количество\nТовар | 10",
+                kind="table",
+            ),
         ]
     )
 
@@ -105,6 +107,33 @@ def test_chunker_keeps_table_kind() -> None:
 
     assert len(chunks) == 1
     assert chunks[0].kind == "table"
+
+
+def test_chunker_splits_inline_clauses() -> None:
+    document = _document([_block("1. Первый пункт. 2. Второй пункт.")])
+
+    chunks = ClauseAwareChunker(
+        ChunkerOptions(target_tokens=2, max_tokens=100, min_tokens=1)
+    ).chunk(document)
+
+    assert len(chunks) == 2
+    assert [chunk.clause for chunk in chunks] == ["1", "2"]
+
+
+def test_chunker_splits_table_rows_with_header() -> None:
+    header = "Наименование | Количество | Примечание"
+    rows = [
+        f"Товар {index} | {index} | " + "описание " * 5
+        for index in range(5)
+    ]
+    document = _document([_block("\n".join([header, *rows]), kind="table")])
+
+    chunks = ClauseAwareChunker(
+        ChunkerOptions(target_tokens=10, max_tokens=25, min_tokens=1)
+    ).chunk(document)
+
+    assert len(chunks) > 1
+    assert all(chunk.text.startswith(header) for chunk in chunks)
 
 
 def test_chunker_merges_small_tail() -> None:

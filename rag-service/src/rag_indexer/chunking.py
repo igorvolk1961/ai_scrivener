@@ -121,16 +121,27 @@ class ClauseAwareChunker:
                 flush()
                 buffer.append(block)
                 continue
-            parts = (
-                self._split_block(block)
-                if estimate_tokens(block.text) > self._options.max_tokens
-                else [block]
+            expanded = (
+                self._split_table(block)
+                if block.kind == "table"
+                else self._split_clauses(block)
             )
-            for part in parts:
-                candidate = "\n\n".join(item.text for item in [*buffer, part])
-                if buffer and estimate_tokens(candidate) > self._options.target_tokens:
+            for expanded_block in expanded:
+                if expanded_block.kind == "table":
                     flush()
-                buffer.append(part)
+                    buffer.append(expanded_block)
+                    flush()
+                    continue
+                parts = (
+                    self._split_block(expanded_block)
+                    if estimate_tokens(expanded_block.text) > self._options.max_tokens
+                    else [expanded_block]
+                )
+                for part in parts:
+                    candidate = "\n\n".join(item.text for item in [*buffer, part])
+                    if buffer and estimate_tokens(candidate) > self._options.target_tokens:
+                        flush()
+                    buffer.append(part)
         flush()
         return self._merge_small_tail(title, section, source_id, chunks)
 
@@ -175,6 +186,58 @@ class ClauseAwareChunker:
             },
         )
 
+    def _split_clauses(self, block: Block) -> list[Block]:
+        if block.kind in {"heading", "table"}:
+            return [block]
+        text = block.text.strip()
+        if not text:
+            return []
+        groups: list[str] = []
+        current: list[str] = []
+        for line in (line.strip() for line in text.splitlines() if line.strip()):
+            if current and CLAUSE_RE.match(line):
+                groups.append(" ".join(current))
+                current = [line]
+                continue
+            current.append(line)
+        if current:
+            groups.append(" ".join(current))
+        if len(groups) == 1:
+            groups = [
+                part.strip()
+                for part in re.split(
+                    r"(?<=[.!?;:])\s+(?=\d+(?:\.\d+)*[.)]?\s+[А-ЯЁA-Z])",
+                    groups[0],
+                )
+                if part.strip()
+            ]
+        if len(groups) <= 1:
+            return [block]
+        return [replace(block, text=group) for group in groups]
+
+    def _split_table(self, block: Block) -> list[Block]:
+        rows = [row.strip() for row in block.text.splitlines() if row.strip()]
+        if len(rows) <= 1:
+            return [block]
+        header = rows[0]
+        parts: list[str] = []
+        current = [header]
+        current_tokens = estimate_tokens(header)
+        for row in rows[1:]:
+            row_tokens = estimate_tokens(row)
+            if len(current) > 1 and current_tokens + row_tokens > self._options.max_tokens:
+                parts.append("\n".join(current))
+                current = [header, row]
+                current_tokens = estimate_tokens(header) + row_tokens
+                continue
+            current.append(row)
+            current_tokens += row_tokens
+        if len(current) > 1:
+            parts.append("\n".join(current))
+        if not parts:
+            return [block]
+        return [replace(block, text=part) for part in parts]
+
     def _split_block(self, block: Block) -> list[Block]:
         sentences = [
             sentence.strip()
@@ -211,6 +274,8 @@ class ClauseAwareChunker:
     ) -> list[Chunk]:
         while len(chunks) > 1 and estimate_tokens(chunks[-1].text) < self._options.min_tokens:
             previous = chunks[-2]
+            if previous.kind == "table" or chunks[-1].kind == "table":
+                break
             merged_text = f"{previous.text}\n\n{chunks[-1].text}"
             if estimate_tokens(merged_text) > self._options.max_tokens:
                 break
@@ -240,7 +305,7 @@ def _heading_level(block: Block) -> int:
 
 def _extract_clause(text: str) -> str:
     match = CLAUSE_RE.match(text.strip())
-    return match.group(1) if match else ""
+    return match.group(1).rstrip(".)") if match else ""
 
 
 def _context_text(
