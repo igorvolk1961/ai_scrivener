@@ -4,6 +4,7 @@ EDT silently drops table-level properties (header, scroll bars, stretch)
 from this hand-written form, and it does not expose form-command buttons in
 the auto command bar. Apply both after the regular EDT export.
 """
+
 from __future__ import annotations
 
 import sys
@@ -37,6 +38,9 @@ SORT_BUTTONS = [
     ("СортТип", "Тип"),
     ("СортПапки", "Папки"),
 ]
+
+
+EXPECTED_ARGUMENTS = 2
 
 
 def sort_buttons() -> str:
@@ -83,7 +87,9 @@ def patch_table(text: str) -> str:
         return text
     table = text[start:end]
     # Column titles must be visible in the header.
-    table = table.replace("<TitleLocation>None</TitleLocation>", "<TitleLocation>Top</TitleLocation>")
+    table = table.replace(
+        "<TitleLocation>None</TitleLocation>", "<TitleLocation>Top</TitleLocation>"
+    )
     return text[:start] + table + text[end:]
 
 
@@ -93,9 +99,7 @@ def patch_auto_command_bar(text: str) -> str:
         return text
     block = (
         '<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">\n'
-        "\t\t<ChildItems>\n"
-        + sort_buttons()
-        + "\t\t</ChildItems>\n"
+        "\t\t<ChildItems>\n" + sort_buttons() + "\t\t</ChildItems>\n"
         "\t</AutoCommandBar>"
     )
     return text.replace(marker, block, 1)
@@ -110,11 +114,9 @@ def patch(path: Path) -> bool:
 
 
 def main() -> None:
-    if len(sys.argv) != 2:
+    if len(sys.argv) != EXPECTED_ARGUMENTS:
         raise SystemExit("usage: patch_folder_form.py <export-dir>")
-    form = Path(sys.argv[1]) / (
-        "DataProcessors/АИС_ПапкиДокументов/Forms/Форма/Ext/Form.xml"
-    )
+    form = Path(sys.argv[1]) / ("DataProcessors/АИС_ПапкиДокументов/Forms/Форма/Ext/Form.xml")
     if not patch(form):
         raise SystemExit(f"folder form not found or not patched: {form}")
     print(f"Patched folder form: {form}")
