@@ -35,7 +35,7 @@ def test_ensure_collection_creates_vectors_and_indexes() -> None:
     asyncio.run(store.ensure_collection(3))
 
     client.create_collection.assert_awaited_once()
-    assert client.create_payload_index.await_count == 16
+    assert client.create_payload_index.await_count == 17
 
 
 def test_ensure_collection_rejects_dimension_mismatch() -> None:
@@ -228,6 +228,22 @@ def test_activate_document_returns_false_without_points() -> None:
     assert activated is False
     client.set_payload.assert_not_awaited()
     client.delete.assert_not_awaited()
+
+
+def test_cleanup_inactive_deletes_old_staging_points() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    client.count.return_value = SimpleNamespace(count=2)
+
+    deleted = asyncio.run(
+        store.cleanup_inactive(24, "knowledge_material")
+    )
+
+    assert deleted == 2
+    client.delete.assert_awaited_once()
+    filter_ = client.delete.await_args.kwargs["points_selector"].filter
+    keys = {condition.key for condition in filter_.must}
+    assert keys == {"active", "created_at", "source_type"}
 
 
 def test_search_hybrid_uses_prefetch_and_rrf() -> None:

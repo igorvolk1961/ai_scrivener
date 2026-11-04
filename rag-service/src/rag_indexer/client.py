@@ -50,6 +50,20 @@ class RagClient:
             },
         )
 
+    async def cleanup(
+        self,
+        older_than_hours: float,
+        source_type: str | None = None,
+    ) -> dict[str, Any]:
+        return await self._request(
+            "POST",
+            "/v1/index/cleanup",
+            json={
+                "older_than_hours": older_than_hours,
+                "source_type": source_type,
+            },
+        )
+
     async def delete(self, source_type: str, source_id: str) -> dict[str, Any]:
         path = f"/v1/index/{quote(source_type, safe='')}/{quote(source_id, safe='')}"
         return await self._request("DELETE", path)

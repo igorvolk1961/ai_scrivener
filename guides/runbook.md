@@ -450,6 +450,15 @@ uv run --project rag-service python -m rag_indexer index \
 
 Для больших PDF используйте `--chunk-batch-size N`: батчи пишутся как неактивная staging-версия, затем `/v1/index/activate` атомарно включает её и удаляет старые версии. До активации поиск продолжает видеть предыдущую версию документа; при падении остаются только неактивные staging-точки, которые перезаписываются повторным запуском.
 
+Очистка старых неактивных staging-точек:
+
+```bash
+uv run --project rag-service python -m rag_indexer cleanup \
+  --token "$RAG_SERVICE_TOKEN" \
+  --older-than-hours 24 \
+  --source-type knowledge_material
+```
+
 Оценка retrieval на golden set:
 
 ```bash

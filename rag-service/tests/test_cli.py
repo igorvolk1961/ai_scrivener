@@ -110,6 +110,10 @@ def test_cli_rejects_limit_with_delete_missing(tmp_path: Path) -> None:
     assert code == 1
 
 
+def test_cli_cleanup_requires_token() -> None:
+    assert main(["cleanup"]) == 1
+
+
 def test_cli_stats(tmp_path: Path) -> None:
     state_path = tmp_path / "state.json"
     state = IndexState(pipeline_version="1")

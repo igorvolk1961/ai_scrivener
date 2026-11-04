@@ -61,6 +61,26 @@ def test_activate_posts_version() -> None:
     }
 
 
+def test_cleanup_posts_options() -> None:
+    captured: dict[str, object] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured["url"] = str(request.url)
+        captured["body"] = json.loads(request.content)
+        return httpx.Response(200, json={"deleted": 3})
+
+    client = _client(httpx.MockTransport(handler))
+    result = asyncio.run(client.cleanup(12, "knowledge_material"))
+    asyncio.run(client.close())
+
+    assert result == {"deleted": 3}
+    assert captured["url"] == "http://rag.test/v1/index/cleanup"
+    assert captured["body"] == {
+        "older_than_hours": 12,
+        "source_type": "knowledge_material",
+    }
+
+
 def test_delete_encodes_path() -> None:
     captured: dict[str, str] = {}
 

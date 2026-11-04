@@ -44,6 +44,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path(".rag-index-state.json"),
     )
     stats.add_argument("--pipeline-version", default=PIPELINE_VERSION)
+    cleanup = subparsers.add_parser("cleanup")
+    cleanup.add_argument("--rag-url", default=os.environ.get("RAG_URL", "http://127.0.0.1:8080"))
+    cleanup.add_argument("--token", default=os.environ.get("RAG_SERVICE_TOKEN", ""))
+    cleanup.add_argument("--older-than-hours", type=float, default=24)
+    cleanup.add_argument("--source-type")
     return parser
 
 
@@ -94,6 +99,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     if args.command == "stats":
         return _stats(args)
     try:
+        if args.command == "cleanup":
+            return asyncio.run(_cleanup(args))
         return asyncio.run(_run(args))
     except (ManifestError, StateError, RuntimeError) as error:
         print(f"error: {error}", file=sys.stderr)
@@ -165,6 +172,21 @@ async def _run(args: argparse.Namespace) -> int:
     for sha, error in report.errors:
         print(f"  {sha}: {error}", file=sys.stderr)
     return 0 if report.failed == 0 else 1
+
+
+async def _cleanup(args: argparse.Namespace) -> int:
+    if not args.token:
+        raise RuntimeError("RAG service token is required for cleanup")
+    client = RagClient(args.rag_url, args.token)
+    try:
+        result = await client.cleanup(
+            args.older_than_hours,
+            args.source_type,
+        )
+    finally:
+        await client.close()
+    print(f"deleted={result.get('deleted', 0)}")
+    return 0
 
 
 def _statuses(value: str) -> set[str]:

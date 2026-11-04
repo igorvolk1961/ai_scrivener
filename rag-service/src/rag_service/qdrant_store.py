@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 import uuid
 from dataclasses import dataclass
+from datetime import UTC, datetime, timedelta
 from typing import Any, Protocol
 
 from qdrant_client import AsyncQdrantClient, models
@@ -71,6 +72,12 @@ class VectorStore(Protocol):
         source_id: str,
         version: str,
     ) -> bool: ...
+
+    async def cleanup_inactive(
+        self,
+        older_than_hours: float,
+        source_type: str | None = None,
+    ) -> int: ...
 
     async def delete(self, source_type: str, source_id: str) -> bool: ...
 
@@ -254,6 +261,7 @@ class QdrantStore:
             ("page_start", models.PayloadSchemaType.INTEGER),
             ("published_at", models.PayloadSchemaType.DATETIME),
             ("effective_from", models.PayloadSchemaType.DATETIME),
+            ("created_at", models.PayloadSchemaType.DATETIME),
             ("metadata.folders", models.PayloadSchemaType.KEYWORD),
             ("metadata.employees", models.PayloadSchemaType.KEYWORD),
             ("metadata.purposes", models.PayloadSchemaType.KEYWORD),
@@ -315,6 +323,7 @@ class QdrantStore:
         char_end: int | None = None,
         metadata: dict[str, Any] | None = None,
         active: bool = True,
+        created_at: str | None = None,
     ) -> dict[str, Any]:
         merged_metadata = {**document.metadata, **(metadata or {})}
         return {
@@ -336,6 +345,7 @@ class QdrantStore:
             "char_start": char_start,
             "char_end": char_end,
             "active": active,
+            "created_at": created_at or datetime.now(UTC).isoformat(),
             "doc_type": merged_metadata.get("doc_type"),
             "status": merged_metadata.get("status"),
             "authority": merged_metadata.get("authority"),
@@ -503,6 +513,39 @@ class QdrantStore:
             )
         )
         return True
+
+    async def cleanup_inactive(
+        self,
+        older_than_hours: float,
+        source_type: str | None = None,
+    ) -> int:
+        cutoff = datetime.now(UTC) - timedelta(hours=older_than_hours)
+        must: list[models.Condition] = [
+            models.FieldCondition(
+                key="active",
+                match=models.MatchValue(value=False),
+            ),
+            models.FieldCondition(
+                key="created_at",
+                range=models.DatetimeRange(lt=cutoff),
+            ),
+        ]
+        if source_type is not None:
+            must.append(
+                models.FieldCondition(
+                    key="source_type",
+                    match=models.MatchValue(value=source_type),
+                )
+            )
+        filter_ = models.Filter(must=must)
+        count = await self._client.count(
+            collection_name=self._collection,
+            count_filter=filter_,
+            exact=True,
+        )
+        if count.count:
+            await self._delete_filter(filter_)
+        return int(count.count)
 
     async def replace(
         self,

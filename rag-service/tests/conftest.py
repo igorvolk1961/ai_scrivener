@@ -39,6 +39,7 @@ class FakeStore:
         self.dimension: int | None = None
         self.closed = False
         self.activated: list[tuple[str, str, str]] = []
+        self.cleanup_calls: list[tuple[float, str | None]] = []
 
     async def ensure_collection(self, dimension: int) -> None:
         self.dimension = dimension
@@ -104,6 +105,14 @@ class FakeStore:
     ) -> bool:
         self.activated.append((source_type, source_id, version))
         return True
+
+    async def cleanup_inactive(
+        self,
+        older_than_hours: float,
+        source_type: str | None = None,
+    ) -> int:
+        self.cleanup_calls.append((older_than_hours, source_type))
+        return 0
 
     async def delete(self, source_type: str, source_id: str) -> bool:
         existed = (source_type, source_id) in self.documents

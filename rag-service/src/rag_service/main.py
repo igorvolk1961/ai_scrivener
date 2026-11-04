@@ -20,6 +20,8 @@ from rag_service.gigachat import GigaChatClient, GigaChatError
 from rag_service.models import (
     ActivateRequest,
     ActivateResponse,
+    CleanupRequest,
+    CleanupResponse,
     DeleteResponse,
     HealthResponse,
     IndexChunksRequest,
@@ -397,6 +399,27 @@ def create_app(
             version=payload.version,
             activated=activated,
         )
+
+    @app.post(
+        "/v1/index/cleanup",
+        response_model=CleanupResponse,
+        dependencies=[Depends(_require_token)],
+    )
+    async def cleanup_inactive(
+        request: Request, payload: CleanupRequest
+    ) -> CleanupResponse:
+        try:
+            deleted = await _store(request).cleanup_inactive(
+                payload.older_than_hours,
+                payload.source_type,
+            )
+        except VectorStoreError as error:
+            logger.exception("cleanup inactive points failed")
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail="cleanup dependency failed",
+            ) from error
+        return CleanupResponse(deleted=deleted)
 
     @app.delete(
         "/v1/index/{source_type}/{source_id}",

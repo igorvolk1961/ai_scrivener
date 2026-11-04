@@ -199,6 +199,19 @@ class ActivateResponse(BaseModel):
     activated: bool
 
 
+class CleanupRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    older_than_hours: float = Field(default=24, gt=0)
+    source_type: str | None = None
+
+
+class CleanupResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    deleted: int
+
+
 class HealthResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 

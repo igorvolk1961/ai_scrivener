@@ -76,6 +76,18 @@ def test_activate_document(client: TestClient, store: FakeStore) -> None:
     assert store.activated == [("knowledge_material", "sha-1", "v2")]
 
 
+def test_cleanup_inactive(client: TestClient, store: FakeStore) -> None:
+    response = client.post(
+        "/v1/index/cleanup",
+        json={"older_than_hours": 12, "source_type": "knowledge_material"},
+        headers=AUTH_HEADERS,
+    )
+
+    assert response.status_code == 200
+    assert response.json()["deleted"] == 0
+    assert store.cleanup_calls == [(12, "knowledge_material")]
+
+
 def test_delete_document(client: TestClient, store: FakeStore) -> None:
     client.post("/v1/index/upsert", json=index_payload(), headers=AUTH_HEADERS)
     response = client.delete("/v1/index/template/doc-1", headers=AUTH_HEADERS)
