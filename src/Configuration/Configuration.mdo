@@ -44,11 +44,13 @@
   <roles>Role.АИС_Аудитор</roles>
   <roles>Role.АИС_СервисныйПользователь</roles>
   <sessionParameters>SessionParameter.АИС_ТекущееДЛ</sessionParameters>
+  <constants>Constant.АИС_КаталогКорпусаЗнаний</constants>
   <constants>Constant.АИС_КлючИИ</constants>
   <constants>Constant.АИС_МодельИИ</constants>
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <commonModules>CommonModule.АИС_Промпты</commonModules>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
+  <commonModules>CommonModule.АИС_МатериалыЗнаний</commonModules>
   <commonModules>CommonModule.АИС_Сотрудники</commonModules>
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
   <commonModules>CommonModule.АИС_ПапкиДокументов</commonModules>
@@ -70,6 +72,8 @@
   <catalogs>Catalog.АИС_ДолжностныеОбязанности</catalogs>
   <catalogs>Catalog.АИС_РазделыДокумента</catalogs>
   <catalogs>Catalog.АИС_Замечания</catalogs>
+  <catalogs>Catalog.АИС_МатериалыЗнаний</catalogs>
+  <catalogs>Catalog.АИС_ЗагрузкиМатериалов</catalogs>
   <catalogs>Catalog.АИС_ЛистОжидания</catalogs>
   <catalogs>Catalog.АИС_РасписаниеТриггеров</catalogs>
   <catalogs>Catalog.ШаблоныИсходящихДокументов</catalogs>

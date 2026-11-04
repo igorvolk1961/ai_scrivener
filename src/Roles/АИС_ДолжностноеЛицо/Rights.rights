@@ -431,4 +431,51 @@
 		<name>HTTPService.АИС_Симулятор.URLTemplate.РазделыДокументов.Method.post</name>
 		<right><name>Use</name><value>true</value></right>
 	</object>
+	<object>
+		<name>Catalog.АИС_МатериалыЗнаний</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Insert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.АИС_ЗагрузкиМатериалов</name>
+		<right>
+			<name>Read</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Сотрудник = &amp;АИС_ТекущееДЛ</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Сотрудник = &amp;АИС_ТекущееДЛ</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>Insert</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Update</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Сотрудник = &amp;АИС_ТекущееДЛ</condition>
+			</restrictionByCondition>
+		</right>
+	</object>
 </Rights>

@@ -591,4 +591,57 @@
 
 
 
+  <urlTemplates uuid="9c48d30d-deef-4c5d-85e5-114779b24ecc">
+    <name>МатериалыЗнаний</name>
+    <synonym><key>ru</key><value>Материалы знаний</value></synonym>
+    <template>/knowledge/materials</template>
+    <methods uuid="05fcb4b8-6d25-425e-8419-edde7ae2579f">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ЗарегистрироватьМатериал_POST</handler>
+    </methods>
+    <methods uuid="31df884b-2e06-4cf5-8532-fd2285d989e5">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПолучитьМатериалы_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="f281848a-6f4f-4606-acc9-25da3ef2bdd0">
+    <name>ЗагрузкиМатериалов</name>
+    <synonym><key>ru</key><value>Загрузки материалов</value></synonym>
+    <template>/knowledge/downloads</template>
+    <methods uuid="742a3ea1-50d6-4310-9a95-b846e01ed3df">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ЗарегистрироватьЗагрузку_POST</handler>
+    </methods>
+    <methods uuid="dc3c68ef-6887-49b8-b76d-d930b979cd9e">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПолучитьЗагрузки_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="20f445ca-c669-4df9-ae9d-293d90037e7e">
+    <name>СтатусМатериала</name>
+    <synonym><key>ru</key><value>Статус материала</value></synonym>
+    <template>/knowledge/materials/status</template>
+    <methods uuid="8ae2530c-f768-4778-932f-def546225820">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>УстановитьСтатусМатериала_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="d8f0beac-ce16-4458-931d-d0f3a60aa03e">
+    <name>СтатусЗагрузки</name>
+    <synonym><key>ru</key><value>Статус загрузки</value></synonym>
+    <template>/knowledge/downloads/status</template>
+    <methods uuid="2fdc2644-5135-4504-9543-91fc3ce0fb87">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>УстановитьСтатусЗагрузки_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="e1e8e4f2-42fe-40b8-a4f7-c68d7002ae27">
+    <name>СводкаКорпуса</name>
+    <synonym><key>ru</key><value>Сводка корпуса знаний</value></synonym>
+    <template>/knowledge/summary</template>
+    <methods uuid="d60034a7-7ce3-44ce-aa74-3e4b306ee26b">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПолучитьСводкуКорпуса_GET</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="c24a1e92-772f-42a3-88fa-5fa005c7ae7d">
+  <producedTypes>
+    <managerType typeId="736b0f08-705d-4239-bc8a-6c648643a4a0" valueTypeId="c143ea40-0afc-4c3a-bda1-dc787ddbf067"/>
+    <valueManagerType typeId="13807669-9589-41f4-9bd1-81988f9d3e78" valueTypeId="a057b9a5-efb1-45ac-8f48-1c5d163ffc0d"/>
+    <valueKeyType typeId="d15cedad-32b9-456c-8cf7-33f0d9cad972" valueTypeId="c7732be0-94c6-4138-889c-fc40e0b9af6e"/>
+  </producedTypes>
+  <name>АИС_КаталогКорпусаЗнаний</name>
+  <synonym>
+    <key>ru</key>
+    <value>Каталог корпуса знаний</value>
+  </synonym>
+  <comment>Разрешённый корень внешнего content-addressed хранилища (вне ИБ 1С). Используется для проверки относительных путей материалов.</comment>
+  <type>
+    <types>String</types>
+    <stringQualifiers>
+      <length>500</length>
+    </stringQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>
