@@ -274,7 +274,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [ ] Зафиксировать решения D1–D12 в `docs/design-decisions.md` и обновить `docs/system-analysis/c4-model.md`.
 - [ ] Снять snapshot Qdrant и сохранить копию `manifest.jsonl` (без дублирования блобов корпуса).
 - [ ] Создать golden set для шаблонов: 50–100 запросов, 20–30 «не найдено»; для корпуса — каркас и список целевых материалов.
-- [ ] Реализовать `rag_service.eval` с режимами `dense`, `hybrid`, `hybrid_rerank`; снять baseline текущего сервиса.
+- [x] Реализовать `rag_service.eval`: Recall@k, MRR, nDCG, no-answer accuracy и latency; сравнение dense/hybrid/rerank — через конфигурацию сервиса.
 - [ ] Добавить в `config/parameters.yaml` и `parameters.schema.json` параметры из §8; обновить тесты конфигурации.
 - [ ] Зафиксировать API-контракты §6 в `docs/design-decisions.md` и тестах.
 

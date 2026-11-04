@@ -450,6 +450,17 @@ uv run --project rag-service python -m rag_indexer index \
 
 Для больших PDF используйте `--chunk-batch-size N`: первый батч заменяет документ, последующие добавляют чанки. Без флага документ отправляется одним запросом. Батчи не атомарны: при падении после первого батча документ остаётся частично обновлённым, поэтому повторяйте запуск с заменой (`replace_existing=true` для первого батча).
 
+Оценка retrieval на golden set:
+
+```bash
+uv run --project rag-service python -m rag_service.eval \
+  --dataset rag-service/eval/golden/templates.jsonl \
+  --top-k 10 \
+  --output artifacts/rag-eval/templates.json
+```
+
+Формат датасета — `rag-service/eval/README.md`.
+
 Индексация в Docker (one-shot, профиль `indexer`):
 
 ```bash
