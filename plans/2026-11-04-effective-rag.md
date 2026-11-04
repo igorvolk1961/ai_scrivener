@@ -297,10 +297,11 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 ### Этап 2. Индексатор корпуса
 
 - [ ] Добавить пакет `rag-service/src/rag_indexer/` и optional-группу зависимостей `indexer` (docling, python-docx, trafilatura, razdel, tiktoken).
-- [ ] Реализовать `ExtractedDocument`/`Block` и экстракторы: PDF/DOCX/HTML/TXT; OCR для сканов; страницы, bbox, таблицы.
-- [ ] Реализовать `rag_indexer.pdf`: `TextLayerReport` и `detect_pdf_text_layer` для page-level triage «есть текстовый слой / нужен OCR»; опциональная зависимость `indexer`.
-- [ ] Реализовать `rag_indexer.ocr`: `OcrEngine`/`OcrDocument`, `PaddleOcrEngine` (основной), `YandexOcrEngine` (fallback), `FallbackOcrEngine` с page-level policy; опциональная зависимость `ocr-paddle`.
-- [ ] Реализовать `LineToParagraphMerger`: bbox, вертикальные интервалы, отступы, нумерация, переносы, колонки и таблицы; одинаково для Paddle и Yandex.
+- [x] Реализовать `Block`/`ExtractedDocument`, `PdfExtractor`, page triage и `LineToParagraphMerger`.
+- [ ] Реализовать DOCX/HTML/TXT экстракторы в тот же `ExtractedDocument`; таблицы и колонки.
+- [x] Реализовать `rag_indexer.pdf`: `TextLayerReport` и `detect_pdf_text_layer` для page-level triage «есть текстовый слой / нужен OCR»; опциональная зависимость `indexer`.
+- [x] Реализовать `rag_indexer.ocr`: `OcrEngine`/`OcrDocument`, `PaddleOcrEngine` (основной), `YandexOcrEngine` (fallback), `FallbackOcrEngine` с page-level policy; опциональная зависимость `ocr-paddle`.
+- [x] Реализовать `LineToParagraphMerger`: bbox, вертикальные интервалы, отступы, нумерация, переносы; колонки и таблицы требуют доработки.
 - [ ] Реализовать `StructureBuilder`: заголовки, юридическая нумерация (`1.2.3`, `п. 4.2`, `ст. 5`, `Приложение А`, `Таблица 1`), дерево разделов.
 - [ ] Реализовать `StructureAwareChunker`: атомарный пункт, merge small siblings, split long by sentences, таблицы с повтором шапки, context header, `embedding_text`.
 - [ ] Кэш извлечения и чанков по `sha256 + extractor_version + chunker_version`; state-файл для идемпотентности.
@@ -427,6 +428,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 | Риск/вопрос | Мера/решение |
 |---|---|
 | Docling медленный на CPU и не идеален на русских сканах | пилот на 20–30 материалах, OCR, fallback на `python-docx`/`trafilatura`; при необходимости Marker как challenger |
+| `PdfExtractor` на текстовом слое использует `pypdfium2` и текстовые эвристики; сложная вёрстка/колонтитулы могут склеиваться | пилот на 20–30 PDF; при проблемах подключить Docling/PyMuPDF для layout и фильтр повторяющихся колонтитулов |
 | GigaChat-эмбеддинги 2560 и лимиты батча | замерить лимиты, батч 32, обрезка/разбиение при ошибке |
 | Reranker на CPU добавляет latency | int8-модель, `candidate_k=30–50`, профилирование; GPU опционально |
 | BM25 Snowball может агрессивно стеммить юридические термины | eval, кастомные стоп-слова, при необходимости собственный словарь |
