@@ -8,9 +8,13 @@ from typing import Any, Protocol
 from qdrant_client import AsyncQdrantClient, models
 
 from rag_service.chunking import TextChunk
-from rag_service.models import SearchFilters, SearchResult
+from rag_service.models import IndexChunk, SearchFilters, SearchResult
 
 logger = logging.getLogger(__name__)
+
+DENSE_VECTOR = "dense"
+SPARSE_VECTOR = "sparse"
+DATE_ONLY_LENGTH = len("YYYY-MM-DD")
 
 
 class VectorStoreError(RuntimeError):
@@ -38,6 +42,7 @@ class VectorStore(Protocol):
         document: IndexedDocument,
         chunks: list[TextChunk],
         vectors: list[list[float]],
+        sparse_vectors: list[models.SparseVector] | None = None,
     ) -> int: ...
 
     async def replace(
@@ -46,6 +51,16 @@ class VectorStore(Protocol):
         documents: list[IndexedDocument],
         chunks: list[list[TextChunk]],
         vectors: list[list[list[float]]],
+        sparse_vectors: list[list[models.SparseVector] | None] | None = None,
+    ) -> int: ...
+
+    async def upsert_chunks(
+        self,
+        source_type: str,
+        document: IndexedDocument,
+        chunks: list[IndexChunk],
+        dense_vectors: list[list[float]],
+        sparse_vectors: list[models.SparseVector] | None = None,
     ) -> int: ...
 
     async def delete(self, source_type: str, source_id: str) -> bool: ...
@@ -56,6 +71,23 @@ class VectorStore(Protocol):
         filters: SearchFilters,
         limit: int,
         min_score: float,
+    ) -> list[SearchResult]: ...
+
+    async def search_hybrid(
+        self,
+        dense_vector: list[float],
+        sparse_vector: models.SparseVector,
+        filters: SearchFilters,
+        limit: int,
+        hnsw_ef: int,
+    ) -> list[SearchResult]: ...
+
+    async def fetch_parent_chunks(
+        self,
+        source_type: str,
+        source_id: str,
+        parent_id: str,
+        limit: int,
     ) -> list[SearchResult]: ...
 
 
@@ -73,6 +105,70 @@ def _source_filter(source_type: str, source_id: str | None = None) -> models.Fil
             models.FieldCondition(key="source_id", match=models.MatchValue(value=source_id))
         )
     return models.Filter(must=must)
+
+
+def _filter_conditions(filters: SearchFilters) -> list[models.Condition]:
+    conditions: list[models.Condition] = [
+        models.FieldCondition(key="active", match=models.MatchValue(value=filters.active))
+    ]
+    for field_name, values in (
+        ("source_type", filters.source_types),
+        ("doc_type", filters.doc_types),
+        ("status", filters.statuses),
+        ("authority", filters.authorities),
+        ("document_key", filters.document_keys),
+        ("position_ids", filters.position_ids),
+        ("metadata.folders", filters.folders),
+        ("metadata.employees", filters.employees),
+        ("metadata.purposes", filters.purposes),
+    ):
+        if values:
+            conditions.append(
+                models.FieldCondition(key=field_name, match=models.MatchAny(any=values))
+            )
+    return conditions
+
+
+def _string_list(value: object) -> list[str]:
+    if not isinstance(value, list):
+        return []
+    return [str(item) for item in value]
+
+
+def _rfc3339(value: object) -> str | None:
+    if not isinstance(value, str) or not value:
+        return None
+    if len(value) == DATE_ONLY_LENGTH and value[4] == "-" and value[7] == "-":
+        return f"{value}T00:00:00Z"
+    return value
+
+
+def _payload_to_result(point: object, score_type: str) -> SearchResult:
+    payload = getattr(point, "payload", None) or {}
+    source_type = str(payload.get("source_type", ""))
+    source_id = str(payload.get("source_id", ""))
+    return SearchResult(
+        score=float(getattr(point, "score", 0.0)),
+        source_type=source_type,
+        source_id=source_id,
+        version=str(payload.get("version", "")),
+        title=str(payload.get("title", "")),
+        chunk_index=int(payload.get("chunk_index", 0)),
+        text=str(payload.get("text", "")),
+        metadata=dict(payload.get("metadata", {})),
+        embedding_text=str(payload.get("embedding_text", "")),
+        document_key=str(payload.get("document_key", f"{source_type}:{source_id}")),
+        section_path=_string_list(payload.get("section_path")),
+        section_text=str(payload.get("section_text", "")),
+        clause=str(payload.get("clause", "")),
+        page_start=payload.get("page_start"),
+        page_end=payload.get("page_end"),
+        kind=str(payload.get("kind", "text")),
+        parent_id=payload.get("parent_id"),
+        char_start=payload.get("char_start"),
+        char_end=payload.get("char_end"),
+        score_type=score_type,
+    )
 
 
 class QdrantStore:
@@ -102,31 +198,83 @@ class QdrantStore:
         if exists:
             info = await self._client.get_collection(self._collection)
             vectors = info.config.params.vectors
-            size = vectors.size if hasattr(vectors, "size") else vectors["size"]
+            if vectors is None:
+                raise VectorStoreError(
+                    f"collection {self._collection} has no vector configuration"
+                )
+            if isinstance(vectors, dict):
+                dense = vectors.get(DENSE_VECTOR)
+                if dense is None:
+                    raise VectorStoreError(
+                        f"collection {self._collection} has no named {DENSE_VECTOR} vector"
+                    )
+                size = dense.size
+            else:
+                size = vectors.size
             if size != dimension:
                 raise VectorStoreError(
                     f"collection {self._collection} has dimension {size}, expected {dimension}"
                 )
             return
+        await self.create_collection(self._collection, dimension)
+
+    async def create_collection(self, collection_name: str, dimension: int) -> None:
         await self._client.create_collection(
-            collection_name=self._collection,
-            vectors_config=models.VectorParams(size=dimension, distance=models.Distance.COSINE),
+            collection_name=collection_name,
+            vectors_config={
+                DENSE_VECTOR: models.VectorParams(
+                    size=dimension,
+                    distance=models.Distance.COSINE,
+                )
+            },
+            sparse_vectors_config={
+                SPARSE_VECTOR: models.SparseVectorParams(modifier=models.Modifier.IDF)
+            },
         )
         for field_name, schema in (
             ("source_type", models.PayloadSchemaType.KEYWORD),
             ("source_id", models.PayloadSchemaType.KEYWORD),
+            ("document_key", models.PayloadSchemaType.KEYWORD),
             ("doc_type", models.PayloadSchemaType.KEYWORD),
+            ("status", models.PayloadSchemaType.KEYWORD),
+            ("authority", models.PayloadSchemaType.KEYWORD),
             ("position_ids", models.PayloadSchemaType.KEYWORD),
+            ("parent_id", models.PayloadSchemaType.KEYWORD),
+            ("kind", models.PayloadSchemaType.KEYWORD),
             ("active", models.PayloadSchemaType.BOOL),
+            ("page_start", models.PayloadSchemaType.INTEGER),
+            ("published_at", models.PayloadSchemaType.DATETIME),
+            ("effective_from", models.PayloadSchemaType.DATETIME),
             ("metadata.folders", models.PayloadSchemaType.KEYWORD),
             ("metadata.employees", models.PayloadSchemaType.KEYWORD),
             ("metadata.purposes", models.PayloadSchemaType.KEYWORD),
         ):
             await self._client.create_payload_index(
-                collection_name=self._collection,
+                collection_name=collection_name,
                 field_name=field_name,
                 field_schema=schema,
             )
+
+    async def switch_alias(self, alias: str, collection_name: str) -> None:
+        aliases = await self._client.get_aliases()
+        operations: list[models.AliasOperations] = []
+        if any(item.alias_name == alias for item in aliases.aliases):
+            operations.append(
+                models.DeleteAliasOperation(
+                    delete_alias=models.DeleteAlias(alias_name=alias)
+                )
+            )
+        operations.append(
+            models.CreateAliasOperation(
+                create_alias=models.CreateAlias(
+                    collection_name=collection_name,
+                    alias_name=alias,
+                )
+            )
+        )
+        await self._client.update_collection_aliases(
+            change_aliases_operations=operations
+        )
 
     async def _delete_filter(self, filter_: models.Filter) -> None:
         await self._client.delete(
@@ -139,35 +287,144 @@ class QdrantStore:
         await self._delete_filter(_source_filter(source_type, source_id))
         return True
 
+    def _base_payload(
+        self,
+        source_type: str,
+        document: IndexedDocument,
+        *,
+        chunk_index: int,
+        text: str,
+        embedding_text: str,
+        section_path: list[str] | None = None,
+        section_text: str = "",
+        clause: str = "",
+        page_start: int | None = None,
+        page_end: int | None = None,
+        kind: str = "text",
+        parent_id: str | None = None,
+        char_start: int | None = None,
+        char_end: int | None = None,
+        metadata: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        merged_metadata = {**document.metadata, **(metadata or {})}
+        return {
+            "source_type": source_type,
+            "source_id": document.source_id,
+            "version": document.version,
+            "document_key": f"{source_type}:{document.source_id}",
+            "title": document.title,
+            "chunk_index": chunk_index,
+            "text": text,
+            "embedding_text": embedding_text,
+            "section_path": section_path or [],
+            "section_text": section_text,
+            "clause": clause,
+            "page_start": page_start,
+            "page_end": page_end,
+            "kind": kind,
+            "parent_id": parent_id,
+            "char_start": char_start,
+            "char_end": char_end,
+            "active": True,
+            "doc_type": merged_metadata.get("doc_type"),
+            "status": merged_metadata.get("status"),
+            "authority": merged_metadata.get("authority"),
+            "published_at": _rfc3339(merged_metadata.get("published_at")),
+            "effective_from": _rfc3339(merged_metadata.get("effective_from")),
+            "position_ids": merged_metadata.get("position_ids", []),
+            "metadata": merged_metadata,
+        }
+
     async def upsert(
         self,
         source_type: str,
         document: IndexedDocument,
         chunks: list[TextChunk],
         vectors: list[list[float]],
+        sparse_vectors: list[models.SparseVector] | None = None,
     ) -> int:
         if len(chunks) != len(vectors):
             raise VectorStoreError("chunks and vectors count mismatch")
+        if sparse_vectors is not None and len(chunks) != len(sparse_vectors):
+            raise VectorStoreError("chunks and sparse vectors count mismatch")
         await self.delete(source_type, document.source_id)
-        points = [
-            models.PointStruct(
-                id=point_id(source_type, document.source_id, document.version, chunk.index),
-                vector=vector,
-                payload={
-                    "source_type": source_type,
-                    "source_id": document.source_id,
-                    "version": document.version,
-                    "title": document.title,
-                    "chunk_index": chunk.index,
-                    "text": chunk.text,
-                    "active": True,
-                    "doc_type": document.metadata.get("doc_type"),
-                    "position_ids": document.metadata.get("position_ids", []),
-                    "metadata": document.metadata,
-                },
+        points = []
+        for position, (chunk, vector) in enumerate(zip(chunks, vectors, strict=True)):
+            point_vector: dict[str, Any] = {DENSE_VECTOR: vector}
+            if sparse_vectors is not None:
+                point_vector[SPARSE_VECTOR] = sparse_vectors[position]
+            points.append(
+                models.PointStruct(
+                    id=point_id(
+                        source_type,
+                        document.source_id,
+                        document.version,
+                        chunk.index,
+                    ),
+                    vector=point_vector,
+                    payload=self._base_payload(
+                        source_type,
+                        document,
+                        chunk_index=chunk.index,
+                        text=chunk.text,
+                        embedding_text=chunk.text,
+                    ),
+                )
             )
-            for chunk, vector in zip(chunks, vectors, strict=True)
-        ]
+        if points:
+            await self._client.upsert(
+                collection_name=self._collection,
+                points=points,
+                wait=True,
+            )
+        return len(points)
+
+    async def upsert_chunks(
+        self,
+        source_type: str,
+        document: IndexedDocument,
+        chunks: list[IndexChunk],
+        dense_vectors: list[list[float]],
+        sparse_vectors: list[models.SparseVector] | None = None,
+    ) -> int:
+        if len(chunks) != len(dense_vectors):
+            raise VectorStoreError("chunks and dense vectors count mismatch")
+        if sparse_vectors is not None and len(chunks) != len(sparse_vectors):
+            raise VectorStoreError("chunks and sparse vectors count mismatch")
+        await self.delete(source_type, document.source_id)
+        points = []
+        for position, (chunk, vector) in enumerate(zip(chunks, dense_vectors, strict=True)):
+            point_vector: dict[str, Any] = {DENSE_VECTOR: vector}
+            if sparse_vectors is not None:
+                point_vector[SPARSE_VECTOR] = sparse_vectors[position]
+            points.append(
+                models.PointStruct(
+                    id=point_id(
+                        source_type,
+                        document.source_id,
+                        document.version,
+                        chunk.index,
+                    ),
+                    vector=point_vector,
+                    payload=self._base_payload(
+                        source_type,
+                        document,
+                        chunk_index=chunk.index,
+                        text=chunk.text,
+                        embedding_text=chunk.embedding_text or chunk.text,
+                        section_path=chunk.section_path,
+                        section_text=chunk.section_text,
+                        clause=chunk.clause,
+                        page_start=chunk.page_start,
+                        page_end=chunk.page_end,
+                        kind=chunk.kind,
+                        parent_id=chunk.parent_id,
+                        char_start=chunk.char_start,
+                        char_end=chunk.char_end,
+                        metadata=chunk.metadata,
+                    ),
+                )
+            )
         if points:
             await self._client.upsert(
                 collection_name=self._collection,
@@ -182,17 +439,29 @@ class QdrantStore:
         documents: list[IndexedDocument],
         chunks: list[list[TextChunk]],
         vectors: list[list[list[float]]],
+        sparse_vectors: list[list[models.SparseVector] | None] | None = None,
     ) -> int:
         if not (len(documents) == len(chunks) == len(vectors)):
             raise VectorStoreError("documents, chunks and vectors count mismatch")
+        if sparse_vectors is not None and len(documents) != len(sparse_vectors):
+            raise VectorStoreError("documents and sparse vectors count mismatch")
         await self._delete_filter(_source_filter(source_type))
         total = 0
-        for document, document_chunks, document_vectors in zip(
-            documents, chunks, vectors, strict=True
+        for position, (document, document_chunks, document_vectors) in enumerate(
+            zip(documents, chunks, vectors, strict=True)
         ):
             if len(document_chunks) != len(document_vectors):
                 raise VectorStoreError("chunks and vectors count mismatch")
-            total += await self.upsert(source_type, document, document_chunks, document_vectors)
+            document_sparse = (
+                sparse_vectors[position] if sparse_vectors is not None else None
+            )
+            total += await self.upsert(
+                source_type,
+                document,
+                document_chunks,
+                document_vectors,
+                document_sparse,
+            )
         return total
 
     async def search(
@@ -202,64 +471,83 @@ class QdrantStore:
         limit: int,
         min_score: float,
     ) -> list[SearchResult]:
-        must: list[models.Condition] = [
-            models.FieldCondition(key="active", match=models.MatchValue(value=filters.active))
-        ]
-        if filters.source_types:
-            must.append(
-                models.FieldCondition(
-                    key="source_type",
-                    match=models.MatchAny(any=filters.source_types),
-                )
-            )
-        if filters.doc_types:
-            must.append(
-                models.FieldCondition(
-                    key="doc_type",
-                    match=models.MatchAny(any=filters.doc_types),
-                )
-            )
-        if filters.position_ids:
-            must.append(
-                models.FieldCondition(
-                    key="position_ids",
-                    match=models.MatchAny(any=filters.position_ids),
-                )
-            )
-        for field_name, values in (
-            ("metadata.folders", filters.folders),
-            ("metadata.employees", filters.employees),
-            ("metadata.purposes", filters.purposes),
-        ):
-            if values:
-                must.append(
-                    models.FieldCondition(
-                        key=field_name,
-                        match=models.MatchAny(any=values),
-                    )
-                )
         response = await self._client.query_points(
             collection_name=self._collection,
             query=vector,
-            query_filter=models.Filter(must=must),
+            using=DENSE_VECTOR,
+            query_filter=models.Filter(must=_filter_conditions(filters)),
             limit=limit,
             score_threshold=min_score,
             with_payload=True,
             with_vectors=False,
         )
-        results: list[SearchResult] = []
-        for point in response.points:
-            payload = point.payload or {}
-            results.append(
-                SearchResult(
-                    score=float(point.score),
-                    source_type=str(payload.get("source_type", "")),
-                    source_id=str(payload.get("source_id", "")),
-                    version=str(payload.get("version", "")),
-                    title=str(payload.get("title", "")),
-                    chunk_index=int(payload.get("chunk_index", 0)),
-                    text=str(payload.get("text", "")),
-                    metadata=dict(payload.get("metadata", {})),
-                )
-            )
-        return results
+        return [_payload_to_result(point, "dense") for point in response.points]
+
+    async def search_hybrid(
+        self,
+        dense_vector: list[float],
+        sparse_vector: models.SparseVector,
+        filters: SearchFilters,
+        limit: int,
+        hnsw_ef: int,
+    ) -> list[SearchResult]:
+        if not sparse_vector.indices:
+            return await self.search(dense_vector, filters, limit, 0.0)
+        response = await self._client.query_points(
+            collection_name=self._collection,
+            prefetch=[
+                models.Prefetch(
+                    query=dense_vector,
+                    using=DENSE_VECTOR,
+                    limit=limit,
+                    params=models.SearchParams(hnsw_ef=hnsw_ef),
+                ),
+                models.Prefetch(
+                    query=sparse_vector,
+                    using=SPARSE_VECTOR,
+                    limit=limit,
+                ),
+            ],
+            query=models.FusionQuery(fusion=models.Fusion.RRF),
+            query_filter=models.Filter(must=_filter_conditions(filters)),
+            limit=limit,
+            with_payload=True,
+            with_vectors=False,
+        )
+        return [_payload_to_result(point, "rrf") for point in response.points]
+
+    async def fetch_parent_chunks(
+        self,
+        source_type: str,
+        source_id: str,
+        parent_id: str,
+        limit: int,
+    ) -> list[SearchResult]:
+        points, _ = await self._client.scroll(
+            collection_name=self._collection,
+            scroll_filter=models.Filter(
+                must=[
+                    models.FieldCondition(
+                        key="source_type",
+                        match=models.MatchValue(value=source_type),
+                    ),
+                    models.FieldCondition(
+                        key="source_id",
+                        match=models.MatchValue(value=source_id),
+                    ),
+                    models.FieldCondition(
+                        key="parent_id",
+                        match=models.MatchValue(value=parent_id),
+                    ),
+                    models.FieldCondition(
+                        key="active",
+                        match=models.MatchValue(value=True),
+                    ),
+                ]
+            ),
+            limit=limit,
+            with_payload=True,
+            with_vectors=False,
+        )
+        results = [_payload_to_result(point, "parent") for point in points]
+        return sorted(results, key=lambda result: result.chunk_index)

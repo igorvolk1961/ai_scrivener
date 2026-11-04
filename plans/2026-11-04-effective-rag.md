@@ -41,6 +41,7 @@
 | D10 | Публикация/утверждение шаблона вызывает синхронный upsert; регламентное задание остаётся догоняющей синхронизацией. |
 | D11 | При недоступности RAG 1С использует существующий детерминированный поиск шаблонов. |
 | D12 | В аудит пишутся параметры запроса, ID/score результатов и ошибки; полные тексты документов не логируются. |
+| D13 | OCR — единый интерфейс `rag_indexer.ocr.OcrEngine`: основной `PaddleOcrEngine`, fallback `YandexOcrEngine`, page-level policy; downstream не зависит от выбранного движка. |
 
 ## 3. Границы
 
@@ -297,6 +298,8 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 
 - [ ] Добавить пакет `rag-service/src/rag_indexer/` и optional-группу зависимостей `indexer` (docling, python-docx, trafilatura, razdel, tiktoken).
 - [ ] Реализовать `ExtractedDocument`/`Block` и экстракторы: PDF/DOCX/HTML/TXT; OCR для сканов; страницы, bbox, таблицы.
+- [ ] Реализовать `rag_indexer.ocr`: `OcrEngine`/`OcrDocument`, `PaddleOcrEngine` (основной), `YandexOcrEngine` (fallback), `FallbackOcrEngine` с page-level policy; опциональная зависимость `ocr-paddle`.
+- [ ] Реализовать `LineToParagraphMerger`: bbox, вертикальные интервалы, отступы, нумерация, переносы, колонки и таблицы; одинаково для Paddle и Yandex.
 - [ ] Реализовать `StructureBuilder`: заголовки, юридическая нумерация (`1.2.3`, `п. 4.2`, `ст. 5`, `Приложение А`, `Таблица 1`), дерево разделов.
 - [ ] Реализовать `StructureAwareChunker`: атомарный пункт, merge small siblings, split long by sentences, таблицы с повтором шапки, context header, `embedding_text`.
 - [ ] Кэш извлечения и чанков по `sha256 + extractor_version + chunker_version`; state-файл для идемпотентности.

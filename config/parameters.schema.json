@@ -172,7 +172,27 @@
         "chunk_size_chars",
         "chunk_overlap_chars",
         "index_sync_interval_minutes",
-        "search_min_score"
+        "search_min_score",
+        "candidate_k",
+        "group_by_source",
+        "group_size",
+        "hybrid_enabled",
+        "rerank_enabled",
+        "rerank_model",
+        "rerank_batch_size",
+        "sparse_model",
+        "sparse_language",
+        "sparse_avg_len",
+        "include_parent",
+        "context_max_tokens",
+        "parent_chunk_limit",
+        "query_max_chars",
+        "hnsw_ef",
+        "chunk_target_tokens",
+        "chunk_max_tokens",
+        "chunk_min_tokens",
+        "chunk_overlap_sentences",
+        "index_batch_size"
       ],
       "properties": {
         "top_k": {
@@ -214,6 +234,95 @@
           "type": "number",
           "minimum": 0,
           "maximum": 1
+        },
+        "candidate_k": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "group_by_source": {
+          "type": "boolean"
+        },
+        "group_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20
+        },
+        "hybrid_enabled": {
+          "type": "boolean"
+        },
+        "rerank_enabled": {
+          "type": "boolean"
+        },
+        "rerank_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rerank_batch_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "sparse_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sparse_language": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sparse_avg_len": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 100000
+        },
+        "include_parent": {
+          "type": "boolean"
+        },
+        "context_max_tokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 131072
+        },
+        "parent_chunk_limit": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "query_max_chars": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100000
+        },
+        "hnsw_ef": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10000
+        },
+        "chunk_target_tokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8192
+        },
+        "chunk_max_tokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8192
+        },
+        "chunk_min_tokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8192
+        },
+        "chunk_overlap_sentences": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "index_batch_size": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
         }
       }
     },

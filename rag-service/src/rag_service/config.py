@@ -67,6 +67,26 @@ class RagParameters(BaseModel):
     chunk_overlap_chars: int
     index_sync_interval_minutes: int
     search_min_score: float
+    candidate_k: int
+    group_by_source: bool
+    group_size: int
+    hybrid_enabled: bool
+    rerank_enabled: bool
+    rerank_model: str
+    rerank_batch_size: int
+    sparse_model: str
+    sparse_language: str
+    sparse_avg_len: float
+    include_parent: bool
+    context_max_tokens: int
+    parent_chunk_limit: int
+    query_max_chars: int
+    hnsw_ef: int
+    chunk_target_tokens: int
+    chunk_max_tokens: int
+    chunk_min_tokens: int
+    chunk_overlap_sentences: int
+    index_batch_size: int
 
 
 class GigaChatParameters(BaseModel):
@@ -146,6 +166,17 @@ def _cross_field_errors(data: dict[str, Any]) -> list[str]:
         overlap = rag.get("chunk_overlap_chars")
         if isinstance(size, int) and isinstance(overlap, int) and overlap >= size:
             errors.append("rag.chunk_overlap_chars must be less than rag.chunk_size_chars")
+        target = rag.get("chunk_target_tokens")
+        maximum = rag.get("chunk_max_tokens")
+        minimum = rag.get("chunk_min_tokens")
+        if isinstance(target, int) and isinstance(maximum, int) and target > maximum:
+            errors.append("rag.chunk_target_tokens must not exceed rag.chunk_max_tokens")
+        if isinstance(minimum, int) and isinstance(target, int) and minimum > target:
+            errors.append("rag.chunk_min_tokens must not exceed rag.chunk_target_tokens")
+        candidate_k = rag.get("candidate_k")
+        top_k = rag.get("top_k")
+        if isinstance(candidate_k, int) and isinstance(top_k, int) and candidate_k < top_k:
+            errors.append("rag.candidate_k must be greater than or equal to rag.top_k")
     for section_name in ("http", "llm", "gigachat"):
         section = data.get(section_name)
         if not isinstance(section, dict):
@@ -186,7 +217,7 @@ def load_parameters(path: Path | None = None) -> ApplicationParameters:
 
 def load_settings() -> ServiceSettings:
     try:
-        return ServiceSettings()
+        return ServiceSettings()  # type: ignore[call-arg]
     except ValidationError as error:
         raise ConfigurationError(str(error)) from error
 

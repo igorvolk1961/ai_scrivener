@@ -10,7 +10,7 @@ from pydantic import SecretStr
 from rag_service.chunking import TextChunk
 from rag_service.config import ApplicationParameters, ServiceSettings, load_parameters
 from rag_service.main import create_app
-from rag_service.models import SearchFilters, SearchResult
+from rag_service.models import IndexChunk, SearchFilters, SearchResult
 from rag_service.qdrant_store import IndexedDocument
 
 
@@ -54,6 +54,7 @@ class FakeStore:
         document: IndexedDocument,
         chunks: list[TextChunk],
         vectors: list[list[float]],
+        sparse_vectors: list[Any] | None = None,
     ) -> int:
         if len(chunks) != len(vectors):
             raise AssertionError("chunks and vectors mismatch")
@@ -66,6 +67,7 @@ class FakeStore:
         documents: list[IndexedDocument],
         chunks: list[list[TextChunk]],
         vectors: list[list[list[float]]],
+        sparse_vectors: list[list[Any] | None] | None = None,
     ) -> int:
         self.documents = {
             key: value for key, value in self.documents.items() if key[0] != source_type
@@ -77,10 +79,50 @@ class FakeStore:
             total += await self.upsert(source_type, document, document_chunks, document_vectors)
         return total
 
+    async def upsert_chunks(
+        self,
+        source_type: str,
+        document: IndexedDocument,
+        chunks: list[IndexChunk],
+        dense_vectors: list[list[float]],
+        sparse_vectors: list[Any] | None = None,
+    ) -> int:
+        if len(chunks) != len(dense_vectors):
+            raise AssertionError("chunks and vectors mismatch")
+        text_chunks = [TextChunk(index=chunk.index, text=chunk.text) for chunk in chunks]
+        self.documents[(source_type, document.source_id)] = (document, text_chunks)
+        return len(chunks)
+
     async def delete(self, source_type: str, source_id: str) -> bool:
         existed = (source_type, source_id) in self.documents
         self.documents.pop((source_type, source_id), None)
         return existed
+
+    def _results(
+        self,
+        filters: SearchFilters,
+        limit: int,
+    ) -> list[SearchResult]:
+        results: list[SearchResult] = []
+        for (source_type, source_id), (document, chunks) in self.documents.items():
+            if filters.source_types and source_type not in filters.source_types:
+                continue
+            for chunk in chunks[:1]:
+                results.append(
+                    SearchResult(
+                        score=1.0,
+                        source_type=source_type,
+                        source_id=source_id,
+                        version=document.version,
+                        title=document.title,
+                        chunk_index=chunk.index,
+                        text=chunk.text,
+                        embedding_text=chunk.text,
+                        document_key=f"{source_type}:{source_id}",
+                        metadata=document.metadata,
+                    )
+                )
+        return results[:limit]
 
     async def search(
         self,
@@ -89,36 +131,66 @@ class FakeStore:
         limit: int,
         min_score: float,
     ) -> list[SearchResult]:
-        results: list[SearchResult] = []
-        for (source_type, source_id), (document, chunks) in self.documents.items():
-            if filters.source_types and source_type not in filters.source_types:
-                continue
-            first = chunks[0]
-            results.append(
-                SearchResult(
-                    score=1.0,
-                    source_type=source_type,
-                    source_id=source_id,
-                    version=document.version,
-                    title=document.title,
-                    chunk_index=first.index,
-                    text=first.text,
-                    metadata=document.metadata,
-                )
-            )
-        return results[:limit]
+        return self._results(filters, limit)
+
+    async def search_hybrid(
+        self,
+        dense_vector: list[float],
+        sparse_vector: Any,
+        filters: SearchFilters,
+        limit: int,
+        hnsw_ef: int,
+    ) -> list[SearchResult]:
+        return self._results(filters, limit)
+
+    async def fetch_parent_chunks(
+        self,
+        source_type: str,
+        source_id: str,
+        parent_id: str,
+        limit: int,
+    ) -> list[SearchResult]:
+        return []
+
+
+class FakeSparseEncoder:
+    def __init__(self) -> None:
+        self.closed = False
+
+    async def embed_documents(self, texts: list[str]) -> list[Any]:
+        return [object() for _ in texts]
+
+    async def embed_query(self, text: str) -> Any:
+        return object()
+
+    async def close(self) -> None:
+        self.closed = True
+
+
+class FakeReranker:
+    def __init__(self) -> None:
+        self.closed = False
+
+    async def score(self, query: str, documents: list[str]) -> list[float]:
+        return [float(len(documents) - index) for index, _ in enumerate(documents)]
+
+    async def close(self) -> None:
+        self.closed = True
 
 
 @pytest.fixture
 def parameters() -> ApplicationParameters:
     resolved = load_parameters()
     resolved.rag.embedding_dimension = None
+    resolved.rag.hybrid_enabled = False
+    resolved.rag.rerank_enabled = False
+    resolved.rag.include_parent = False
     return resolved
 
 
 @pytest.fixture
 def settings() -> ServiceSettings:
-    return ServiceSettings(
+    return ServiceSettings(  # type: ignore[call-arg]
         _env_file=None,
         service_token=SecretStr("test-token"),
         qdrant_url="http://qdrant:6333",
@@ -140,6 +212,16 @@ def embedder() -> FakeEmbedder:
 @pytest.fixture
 def store() -> FakeStore:
     return FakeStore()
+
+
+@pytest.fixture
+def sparse_encoder() -> FakeSparseEncoder:
+    return FakeSparseEncoder()
+
+
+@pytest.fixture
+def reranker() -> FakeReranker:
+    return FakeReranker()
 
 
 @pytest.fixture

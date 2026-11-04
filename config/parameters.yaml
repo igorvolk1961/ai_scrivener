@@ -40,6 +40,26 @@ rag:
   chunk_overlap_chars: 150
   index_sync_interval_minutes: 5
   search_min_score: 0.0
+  candidate_k: 50
+  group_by_source: true
+  group_size: 3
+  hybrid_enabled: true
+  rerank_enabled: true
+  rerank_model: BAAI/bge-reranker-v2-m3-int8
+  rerank_batch_size: 16
+  sparse_model: Qdrant/bm25
+  sparse_language: russian
+  sparse_avg_len: 350
+  include_parent: true
+  context_max_tokens: 6000
+  parent_chunk_limit: 100
+  query_max_chars: 4000
+  hnsw_ef: 128
+  chunk_target_tokens: 350
+  chunk_max_tokens: 600
+  chunk_min_tokens: 80
+  chunk_overlap_sentences: 1
+  index_batch_size: 64
 gigachat:
   token_refresh_skew_seconds: 60
   request_timeout_seconds: 30

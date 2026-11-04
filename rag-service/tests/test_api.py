@@ -6,7 +6,14 @@ from fastapi.testclient import TestClient
 from rag_service.config import ApplicationParameters, ConfigurationError, ServiceSettings
 from rag_service.main import create_app
 
-from .conftest import AUTH_HEADERS, FakeEmbedder, FakeStore, index_payload
+from .conftest import (
+    AUTH_HEADERS,
+    FakeEmbedder,
+    FakeReranker,
+    FakeSparseEncoder,
+    FakeStore,
+    index_payload,
+)
 
 
 def test_health_is_public(client: TestClient) -> None:
@@ -72,3 +79,76 @@ def test_configured_dimension_mismatch_fails_startup(
     app = create_app(parameters=mismatched, settings=settings, embedder=embedder, store=store)
     with pytest.raises(ConfigurationError), TestClient(app):
         pass
+
+
+def test_retrieve_uses_hybrid_and_rerank(
+    parameters: ApplicationParameters,
+    settings: ServiceSettings,
+    embedder: FakeEmbedder,
+    store: FakeStore,
+) -> None:
+    hybrid = parameters.model_copy(deep=True)
+    hybrid.rag.hybrid_enabled = True
+    hybrid.rag.rerank_enabled = True
+    hybrid.rag.include_parent = False
+    app = create_app(
+        parameters=hybrid,
+        settings=settings,
+        embedder=embedder,
+        store=store,
+        sparse_encoder=FakeSparseEncoder(),
+        reranker=FakeReranker(),
+    )
+    with TestClient(app) as client:
+        indexed = client.post(
+            "/v1/index/upsert",
+            json=index_payload("doc-1"),
+            headers=AUTH_HEADERS,
+        )
+        assert indexed.status_code == 200
+        response = client.post(
+            "/v1/retrieve",
+            json={
+                "query": "исходящий документ",
+                "filters": {"source_types": ["template"]},
+            },
+            headers=AUTH_HEADERS,
+        )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["diagnostics"]["hybrid"] is True
+    assert body["diagnostics"]["rerank"] is True
+    assert body["results"][0]["source_id"] == "doc-1"
+    assert body["results"][0]["score_type"] == "rerank_sigmoid"
+    assert body["results"][0]["chunks"][0]["text"]
+
+
+def test_index_chunks_accepts_structured_chunks(
+    client: TestClient,
+    store: FakeStore,
+) -> None:
+    payload = {
+        "source_type": "knowledge_material",
+        "document": {
+            "source_id": "sha-1",
+            "version": "2026-01-01",
+            "title": "ГОСТ 2.101-2016",
+            "metadata": {"doc_type": "ГОСТ", "status": "verified"},
+        },
+        "chunks": [
+            {
+                "index": 0,
+                "text": "Текст пункта 4.2.1",
+                "embedding_text": "Документ: ГОСТ\nПункт: 4.2.1\nТекст: Текст пункта 4.2.1",
+                "section_path": ["4", "4.2"],
+                "clause": "4.2.1",
+                "page_start": 12,
+                "parent_id": "sha-1:4.2",
+            }
+        ],
+    }
+    response = client.post("/v1/index/chunks", json=payload, headers=AUTH_HEADERS)
+    assert response.status_code == 200
+    assert response.json()["indexed_chunks"] == 1
+    assert ("knowledge_material", "sha-1") in store.documents

@@ -6,10 +6,10 @@ from typing import cast
 from unittest.mock import AsyncMock
 
 import pytest
-from qdrant_client import AsyncQdrantClient
+from qdrant_client import AsyncQdrantClient, models
 
 from rag_service.chunking import TextChunk
-from rag_service.models import SearchFilters
+from rag_service.models import IndexChunk, SearchFilters
 from rag_service.qdrant_store import IndexedDocument, QdrantStore, VectorStoreError, point_id
 
 
@@ -35,7 +35,7 @@ def test_ensure_collection_creates_vectors_and_indexes() -> None:
     asyncio.run(store.ensure_collection(3))
 
     client.create_collection.assert_awaited_once()
-    assert client.create_payload_index.await_count == 8
+    assert client.create_payload_index.await_count == 16
 
 
 def test_ensure_collection_rejects_dimension_mismatch() -> None:
@@ -136,3 +136,112 @@ def test_search_applies_folder_employee_and_purpose_filters() -> None:
     assert keys["metadata.folders"] == ["folder-1"]
     assert keys["metadata.employees"] == ["ГенДиректор"]
     assert keys["metadata.purposes"] == ["Сформированные"]
+
+
+def test_upsert_chunks_builds_structured_payload() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    store._client = client
+    document = IndexedDocument(
+        source_id="sha-1",
+        version="1",
+        title="ГОСТ",
+        metadata={"doc_type": "ГОСТ", "status": "verified"},
+    )
+    chunk = IndexChunk(
+        index=0,
+        text="Текст пункта",
+        embedding_text="Документ: ГОСТ\nПункт: 4.1\nТекст: Текст пункта",
+        section_path=["4", "4.1"],
+        clause="4.1",
+        page_start=3,
+        parent_id="sha-1:4.1",
+    )
+    count = asyncio.run(
+        store.upsert_chunks(
+            "knowledge_material",
+            document,
+            [chunk],
+            [[1.0, 2.0, 3.0]],
+            [models.SparseVector(indices=[1], values=[1.0])],
+        )
+    )
+
+    assert count == 1
+    point = client.upsert.await_args.kwargs["points"][0]
+    assert point.payload["section_path"] == ["4", "4.1"]
+    assert point.payload["clause"] == "4.1"
+    assert point.payload["parent_id"] == "sha-1:4.1"
+    assert point.payload["status"] == "verified"
+    assert point.vector["sparse"].indices == [1]
+
+
+def test_search_hybrid_uses_prefetch_and_rrf() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    client.query_points.return_value = SimpleNamespace(points=[])
+    asyncio.run(
+        store.search_hybrid(
+            [1.0, 2.0, 3.0],
+            models.SparseVector(indices=[1], values=[1.0]),
+            SearchFilters(source_types=["knowledge_material"]),
+            limit=10,
+            hnsw_ef=128,
+        )
+    )
+
+    kwargs = client.query_points.await_args.kwargs
+    assert len(kwargs["prefetch"]) == 2
+    assert kwargs["query"].fusion == models.Fusion.RRF
+
+
+def test_switch_alias_replaces_existing_alias() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    client.get_aliases.return_value = SimpleNamespace(
+        aliases=[SimpleNamespace(alias_name="current")]
+    )
+    asyncio.run(store.switch_alias("current", "test_v2"))
+
+    operations = client.update_collection_aliases.await_args.kwargs[
+        "change_aliases_operations"
+    ]
+    assert len(operations) == 2
+    assert isinstance(operations[0], models.DeleteAliasOperation)
+    assert isinstance(operations[1], models.CreateAliasOperation)
+
+
+def test_fetch_parent_chunks_sorts_and_limits() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    first = SimpleNamespace(
+        score=0.0,
+        payload={
+            "source_type": "knowledge_material",
+            "source_id": "sha-1",
+            "version": "1",
+            "title": "ГОСТ",
+            "chunk_index": 0,
+            "text": "первый",
+            "metadata": {},
+        },
+    )
+    second = SimpleNamespace(
+        score=0.0,
+        payload={
+            "source_type": "knowledge_material",
+            "source_id": "sha-1",
+            "version": "1",
+            "title": "ГОСТ",
+            "chunk_index": 1,
+            "text": "второй",
+            "metadata": {},
+        },
+    )
+    client.scroll.return_value = ([second, first], None)
+    results = asyncio.run(
+        store.fetch_parent_chunks("knowledge_material", "sha-1", "sha-1:4.1", 20)
+    )
+
+    assert [result.chunk_index for result in results] == [0, 1]
+    assert client.scroll.await_args.kwargs["limit"] == 20

@@ -379,6 +379,10 @@ cp rag-service/.env.example rag-service/.env
 
 Заполните `rag-service/.env`: `RAG_GIGACHAT_CLIENT_ID`, `RAG_GIGACHAT_CLIENT_SECRET`, `RAG_SERVICE_TOKEN`. Файл `.env` в Git не коммитится.
 
+Для схемы с named vectors `dense`/`sparse` используйте коллекцию `ai_scrivener_knowledge_v2`. Если в `.env` осталась `ai_scrivener_knowledge_v1`, сервис не стартует: старая коллекция не содержит именованных векторов. Пока в индексе нет production-данных, проще пересоздать том Qdrant (`down -v`), затем запустить сервис с `_v2`.
+
+При первом старте FastEmbed скачивает BM25 и reranker (`~0.6 ГБ`) в том `fastembed_cache`. Нужен доступ к Hugging Face или заранее прогретый кэш; иначе `/health` не поднимется.
+
 Запуск:
 
 ```bash
@@ -386,6 +390,17 @@ docker compose -f deploy/docker-compose.yml up --build -d
 docker compose -f deploy/docker-compose.yml ps
 curl http://127.0.0.1:8080/health
 ```
+
+Проверка нового retrieval-контура:
+
+```bash
+curl -X POST http://127.0.0.1:8080/v1/retrieve \
+  -H "X-Service-Token: $RAG_SERVICE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"query":"порядок утверждения штатного расписания","filters":{"source_types":["template_internal"]}}'
+```
+
+Ответ содержит документы, чанки, `score_type` и диагностику (`hybrid`, `rerank`, тайминги).
 
 Логи:
 
