@@ -31,6 +31,42 @@ services:
       timeout: 10s
       retries: 3
 
+  rag-indexer:
+    profiles: ["indexer"]
+    build:
+      context: ..
+      dockerfile: rag-service/Dockerfile.indexer
+      args:
+        WITH_PADDLE: ${RAG_INDEXER_WITH_PADDLE:-0}
+    env_file:
+      - ../rag-service/.env
+    environment:
+      RAG_URL: http://rag-service:8080
+    volumes:
+      - ${RAG_CORPUS_DIR_HOST:-/home/igorvolk/1C/ai_scrivener_corpus}:/corpus:ro
+      - rag_index_cache:/cache
+      - rag_index_state:/state
+      - paddle_cache:/root/.paddlex
+    command:
+      - index
+      - --corpus-dir
+      - /corpus
+      - --rag-url
+      - http://rag-service:8080
+      - --cache-dir
+      - /cache
+      - --state
+      - /state/index-state.json
+      - --ocr
+      - ${RAG_INDEXER_OCR:-none}
+    depends_on:
+      rag-service:
+        condition: service_healthy
+    restart: "no"
+
 volumes:
   qdrant_data:
   fastembed_cache:
+  rag_index_cache:
+  rag_index_state:
+  paddle_cache:

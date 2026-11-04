@@ -448,6 +448,24 @@ uv run --project rag-service python -m rag_indexer index \
 
 Кэш extraction/chunks хранится в `.rag-index-cache` и версионируется отдельно по extractor/chunker. Для временного отключения используйте `--no-cache`, для другого расположения — `--cache-dir`.
 
+Индексация в Docker (one-shot, профиль `indexer`):
+
+```bash
+docker compose -f deploy/docker-compose.yml --profile indexer build rag-indexer
+docker compose -f deploy/docker-compose.yml --profile indexer run --rm rag-indexer
+```
+
+По умолчанию образ собирается без PaddleOCR и запускается с `--ocr none`. Для сканов:
+
+```bash
+RAG_INDEXER_WITH_PADDLE=1 RAG_INDEXER_OCR=paddle \
+  docker compose -f deploy/docker-compose.yml --profile indexer build rag-indexer
+RAG_INDEXER_OCR=paddle \
+  docker compose -f deploy/docker-compose.yml --profile indexer run --rm rag-indexer
+```
+
+Путь к корпусу на хосте задаётся `RAG_CORPUS_DIR_HOST` (по умолчанию `/home/igorvolk/1C/ai_scrivener_corpus`). Кэш и state вынесены в тома `rag_index_cache` и `rag_index_state`, модели Paddle — в `paddle_cache`.
+
 ## 6. Проверки проекта
 
 ```bash

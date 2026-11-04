@@ -312,7 +312,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [ ] Батчинг/лимит payload для больших PDF: `/v1/index/chunks` принимает весь документ одним запросом.
 - [ ] Отдельные версии extractor/chunker в state вместо одного `pipeline_version`; в кэше они уже раздельные.
 - [ ] Интеграционный тест `rag_indexer index` против живого RAG-сервиса; сейчас проверен только `validate` и unit-тесты клиента.
-- [ ] Dockerfile/профиль `rag-indexer`; corpus volume read-only; сеть только к RAG API.
+- [x] Dockerfile/профиль `rag-indexer`; corpus volume read-only; сеть только к RAG API; PaddleOCR включается build-arg `WITH_PADDLE`.
 - [ ] Пилот на 20–30 материалах: проверить заголовки, таблицы, сканы, кодировки; замерить chunk integrity.
 - [ ] Собрать knowledge golden set: 50–100 запросов с ожидаемыми `sha256`/пунктом, включая точные идентификаторы и «не найдено».
 - [ ] После пилота — полная индексация корпуса и eval по knowledge golden set.
