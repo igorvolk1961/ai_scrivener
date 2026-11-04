@@ -169,6 +169,7 @@ class IndexChunksRequest(BaseModel):
     source_type: str = Field(min_length=1)
     document: IndexDocument
     chunks: list[IndexChunk] = Field(min_length=1)
+    replace_existing: bool = True
 
 
 class IndexChunksResponse(BaseModel):

@@ -5,7 +5,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, cast
 
-from rag_indexer.chunking import ClauseAwareChunker
+from rag_indexer.chunking import ChunkerOptions, ClauseAwareChunker
 from rag_indexer.client import RagClient
 from rag_indexer.extraction import DocumentExtractor
 from rag_indexer.manifest import CorpusRecord
@@ -64,6 +64,30 @@ def test_pipeline_indexes_document(tmp_path: Path) -> None:
     assert client.payloads[0]["document"]["source_id"] == "abc123"
     assert client.payloads[0]["chunks"][0]["embedding_text"].startswith("Документ:")
     assert state.is_indexed("abc123") is True
+
+
+def test_pipeline_batches_chunks_and_replaces_only_first_batch(tmp_path: Path) -> None:
+    (tmp_path / "doc.txt").write_text(
+        "1. Первый пункт.\n\n2. Второй пункт.\n\n3. Третий пункт.",
+        encoding="utf-8",
+    )
+    client = FakeClient()
+    pipeline = IndexPipeline(
+        extractor=DocumentExtractor(),
+        chunker=ClauseAwareChunker(
+            ChunkerOptions(target_tokens=1, max_tokens=100, min_tokens=1)
+        ),
+        client=cast(RagClient, client),
+        state=_state(),
+        chunk_batch_size=2,
+    )
+
+    report = asyncio.run(pipeline.run([_record()], tmp_path))
+
+    assert report.indexed == 1
+    assert len(client.payloads) == 2
+    assert [payload["replace_existing"] for payload in client.payloads] == [True, False]
+    assert [len(payload["chunks"]) for payload in client.payloads] == [2, 1]
 
 
 def test_pipeline_dry_run_does_not_call_client_or_state(tmp_path: Path) -> None:

@@ -86,6 +86,7 @@ class FakeStore:
         chunks: list[IndexChunk],
         dense_vectors: list[list[float]],
         sparse_vectors: list[Any] | None = None,
+        replace_existing: bool = True,
     ) -> int:
         if len(chunks) != len(dense_vectors):
             raise AssertionError("chunks and vectors mismatch")

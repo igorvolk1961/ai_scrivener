@@ -176,6 +176,32 @@ def test_upsert_chunks_builds_structured_payload() -> None:
     assert point.vector["sparse"].indices == [1]
 
 
+def test_upsert_chunks_can_append_without_delete() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    document = IndexedDocument(
+        source_id="sha-1",
+        version="1",
+        title="ГОСТ",
+        metadata={},
+    )
+    chunk = IndexChunk(index=0, text="Текст")
+
+    count = asyncio.run(
+        store.upsert_chunks(
+            "knowledge_material",
+            document,
+            [chunk],
+            [[1.0, 2.0, 3.0]],
+            replace_existing=False,
+        )
+    )
+
+    assert count == 1
+    client.delete.assert_not_awaited()
+    client.upsert.assert_awaited_once()
+
+
 def test_search_hybrid_uses_prefetch_and_rrf() -> None:
     client = AsyncMock()
     store = _store(client)

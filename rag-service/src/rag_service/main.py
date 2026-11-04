@@ -347,6 +347,7 @@ def create_app(
                 payload.chunks,
                 dense_vectors,
                 sparse_vectors,
+                replace_existing=payload.replace_existing,
             )
         except (GigaChatError, VectorStoreError, SparseEncoderError) as error:
             logger.exception("index chunks failed")

@@ -61,6 +61,7 @@ class VectorStore(Protocol):
         chunks: list[IndexChunk],
         dense_vectors: list[list[float]],
         sparse_vectors: list[models.SparseVector] | None = None,
+        replace_existing: bool = True,
     ) -> int: ...
 
     async def delete(self, source_type: str, source_id: str) -> bool: ...
@@ -386,12 +387,14 @@ class QdrantStore:
         chunks: list[IndexChunk],
         dense_vectors: list[list[float]],
         sparse_vectors: list[models.SparseVector] | None = None,
+        replace_existing: bool = True,
     ) -> int:
         if len(chunks) != len(dense_vectors):
             raise VectorStoreError("chunks and dense vectors count mismatch")
         if sparse_vectors is not None and len(chunks) != len(sparse_vectors):
             raise VectorStoreError("chunks and sparse vectors count mismatch")
-        await self.delete(source_type, document.source_id)
+        if replace_existing:
+            await self.delete(source_type, document.source_id)
         points = []
         for position, (chunk, vector) in enumerate(zip(chunks, dense_vectors, strict=True)):
             point_vector: dict[str, Any] = {DENSE_VECTOR: vector}

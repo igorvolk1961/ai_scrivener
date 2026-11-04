@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
+from itertools import batched
 from pathlib import Path
 from typing import Any
 
@@ -41,12 +42,16 @@ class IndexPipeline:
         client: RagClient | None = None,
         state: IndexState | None = None,
         cache: DocumentCache | None = None,
+        chunk_batch_size: int = 0,
     ) -> None:
+        if chunk_batch_size < 0:
+            raise ValueError("chunk_batch_size must be non-negative")
         self._extractor = extractor or DocumentExtractor()
         self._chunker = chunker or ClauseAwareChunker()
         self._client = client
         self._state = state or IndexState(pipeline_version=PIPELINE_VERSION)
         self._cache = cache
+        self._chunk_batch_size = chunk_batch_size
 
     async def run(
         self,
@@ -102,7 +107,17 @@ class IndexPipeline:
                     continue
                 if client is None:
                     raise PipelineError("RAG client is required for indexing")
-                await client.index_chunks(build_payload(record, document, chunks))
+                for batch_index, batch in enumerate(
+                    _batches(chunks, self._chunk_batch_size)
+                ):
+                    await client.index_chunks(
+                        build_payload(
+                            record,
+                            document,
+                            batch,
+                            replace_existing=batch_index == 0,
+                        )
+                    )
                 self._state.mark_indexed(
                     record.sha256,
                     chunks=len(chunks),
@@ -127,10 +142,18 @@ class IndexPipeline:
         return report
 
 
+def _batches(chunks: list[Chunk], size: int) -> list[list[Chunk]]:
+    if size <= 0 or size >= len(chunks):
+        return [chunks]
+    return [list(batch) for batch in batched(chunks, size)]
+
+
 def build_payload(
     record: CorpusRecord,
     document: ExtractedDocument,
     chunks: list[Chunk],
+    *,
+    replace_existing: bool = True,
 ) -> dict[str, Any]:
     metadata = record.metadata()
     metadata["extraction"] = document.metadata
@@ -142,6 +165,7 @@ def build_payload(
             "title": record.title or document.title,
             "metadata": metadata,
         },
+        "replace_existing": replace_existing,
         "chunks": [
             {
                 "index": chunk.index,

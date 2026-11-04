@@ -67,6 +67,7 @@ def _add_common_arguments(parser: argparse.ArgumentParser) -> None:
         default=Path(".rag-index-cache"),
     )
     parser.add_argument("--no-cache", action="store_true")
+    parser.add_argument("--chunk-batch-size", type=int, default=0)
     parser.add_argument("--pipeline-version", default=PIPELINE_VERSION)
     parser.add_argument("--render-dpi", type=int, default=150)
     parser.add_argument("--rag-url", default=os.environ.get("RAG_URL", "http://127.0.0.1:8080"))
@@ -139,6 +140,7 @@ async def _run(args: argparse.Namespace) -> int:
         client=client,
         state=state,
         cache=cache,
+        chunk_batch_size=args.chunk_batch_size,
     )
     try:
         report = await pipeline.run(
