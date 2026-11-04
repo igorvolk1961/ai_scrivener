@@ -228,10 +228,10 @@ corpus/annotations.jsonl
 
 ### Этап 0. Предпосылки и фиксация
 
-- [ ] Убедиться, что `owner-6.status == "completed"`, а `owner-9.status == "pending"`; не издавать `owner-9` до этого.
-- [ ] Снять backup живой базы: `uv run python -m enterprise_sim.db_admin backup`.
-- [ ] Создать каталог корпуса вне базы и backup-каталога, права `0750`.
-- [ ] Добавить секцию `knowledge` в `config/enterprise.json` с `enabled=false`.
+- [x] Убедиться, что `owner-6.status == "completed"`, а `owner-9.status == "pending"`; не издавать `owner-9` до этого.
+- [x] Снять backup живой базы: `uv run python -m enterprise_sim.db_admin backup`.
+- [x] Создать каталог корпуса вне базы и backup-каталога, права `0750`.
+- [x] Добавить секцию `knowledge` в `config/enterprise.json` с `enabled=false`.
 
 ### Этап 1. CAS + манифест (симулятор)
 
@@ -246,15 +246,15 @@ corpus/annotations.jsonl
 
 Задачи:
 
-- [ ] `corpus.put_file(src, meta) -> record`: потоковый SHA-256, запись в `tmp/`, `fsync` файла и каталога, атомарный `os.replace`; существующий блоб проверить по хешу (не только по размеру), при расхождении — карантин, не перезаписывать; права `0640`.
-- [ ] `corpus.startup_cleanup`: удалить `tmp/` старше 24 ч; `verify_all` при старте в `verify`-режиме.
-- [ ] `corpus.read/verify/verify_all` и `repair_hint`: пересчёт хеша, missing/mismatch, рекомендация «перекачать»/«пробел»; автоматического удаления нет.
-- [ ] Безопасность: `resolve()` под корнем, запрет symlink/traversal, лимит размера, MIME/расширение по allowlist.
-- [ ] `manifest.append(record)`: `fcntl.flock`, JSONL, `fsync`; `load`, `find`, `snapshot(tag)`; ротация по дню/размеру, checksum сегмента, backup, восстановление последней валидной строки.
-- [ ] `gc`: эксклюзивный lock, grace period 24 ч, mark-and-sweep по манифесту/снапшотам, журнал удалений, `dry_run=True` по умолчанию.
-- [ ] `retrieval_events.append/load`: запрос, провайдер, результаты, выбранный URL, `sha256`, агент, время; `download_failures.jsonl`.
-- [ ] CLI: `put`, `verify`, `freeze`, `gc`, `status`, `cleanup`.
-- [ ] Тесты: дедуп, атомарность при обрыве, stale `tmp`, повреждённый блоб, обрезанный манифест, traversal, лимиты, конкурентная запись, snapshot, GC-lock/grace.
+- [x] `corpus.put_file(src, meta) -> record`: потоковый SHA-256, запись в `tmp/`, `fsync` файла и каталога, атомарный `os.replace`; существующий блоб проверить по хешу (не только по размеру), при расхождении — карантин, не перезаписывать; права `0640`.
+- [x] `corpus.startup_cleanup`: удалить `tmp/` старше 24 ч; `verify_all` при старте в `verify`-режиме.
+- [x] `corpus.read/verify/verify_all` и `repair_hint`: пересчёт хеша, missing/mismatch, рекомендация «перекачать»/«пробел»; автоматического удаления нет.
+- [x] Безопасность: `resolve()` под корнем, запрет symlink/traversal, лимит размера, MIME/расширение по allowlist.
+- [x] `manifest.append(record)`: `fcntl.flock`, JSONL, `fsync`; `load`, `find`, `snapshot(tag)`; ротация по дню/размеру, checksum сегмента, backup, восстановление последней валидной строки.
+- [x] `gc`: эксклюзивный lock, grace period 24 ч, mark-and-sweep по манифесту/снапшотам, журнал удалений, `dry_run=True` по умолчанию.
+- [x] `retrieval_events.append/load`: запрос, провайдер, результаты, выбранный URL, `sha256`, агент, время; `download_failures.jsonl`.
+- [x] CLI: `put`, `verify`, `freeze`, `gc`, `status`, `cleanup`.
+- [x] Тесты: дедуп, атомарность при обрыве, stale `tmp`, повреждённый блоб, обрезанный манифест, traversal, лимиты, конкурентная запись, snapshot, GC-lock/grace.
 
 ### Этап 2. Инструменты агента и офлайн-режим (симулятор)
 
