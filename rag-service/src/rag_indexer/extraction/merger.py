@@ -111,6 +111,8 @@ class LineToParagraphMerger:
     ) -> bool:
         if previous.page_number != line.page_number:
             return True
+        if _is_heading(previous.text, self._options.heading_max_chars):
+            return True
         if _starts_new_block_text(line.text):
             return True
         if SENTENCE_END_RE.search(previous.text) and UPPER_OR_NUMBER_START_RE.match(

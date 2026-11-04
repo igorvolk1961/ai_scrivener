@@ -298,7 +298,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 
 - [ ] Добавить пакет `rag-service/src/rag_indexer/` и optional-группу зависимостей `indexer` (docling, python-docx, trafilatura, razdel, tiktoken).
 - [x] Реализовать `Block`/`ExtractedDocument`, `PdfExtractor`, page triage и `LineToParagraphMerger`.
-- [ ] Реализовать DOCX/HTML/TXT экстракторы в тот же `ExtractedDocument`; таблицы и колонки.
+- [x] Реализовать DOCX/HTML/TXT экстракторы и `DocumentExtractor` в тот же `ExtractedDocument`; таблицы и колонки требуют доработки.
 - [x] Реализовать `rag_indexer.pdf`: `TextLayerReport` и `detect_pdf_text_layer` для page-level triage «есть текстовый слой / нужен OCR»; опциональная зависимость `indexer`.
 - [x] Реализовать `rag_indexer.ocr`: `OcrEngine`/`OcrDocument`, `PaddleOcrEngine` (основной), `YandexOcrEngine` (fallback), `FallbackOcrEngine` с page-level policy; опциональная зависимость `ocr-paddle`.
 - [x] Реализовать `LineToParagraphMerger`: bbox, вертикальные интервалы, отступы, нумерация, переносы; колонки и таблицы требуют доработки.

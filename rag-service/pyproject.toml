@@ -18,6 +18,8 @@ dependencies = [
 [project.optional-dependencies]
 indexer = [
   "pypdfium2>=4,<6",
+  "python-docx>=1.1,<2",
+  "trafilatura>=2,<3",
 ]
 ocr-paddle = [
   "paddleocr>=3.7,<4",
@@ -28,8 +30,10 @@ ocr-paddle = [
 dev = [
   "mypy>=1.14",
   "pytest>=8.3",
+  "python-docx>=1.1,<2",
   "respx>=0.22",
   "ruff>=0.9",
+  "trafilatura>=2,<3",
   "types-pyyaml>=6.0",
 ]
 
