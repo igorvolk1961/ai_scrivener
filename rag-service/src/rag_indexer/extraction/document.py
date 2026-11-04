@@ -19,9 +19,14 @@ class DocumentExtractor:
         self,
         path: Path,
         ocr_engine: OcrEngine | None = None,
+        *,
+        mime: str | None = None,
+        original_name: str | None = None,
     ) -> ExtractedDocument:
         path = Path(path)
-        suffix = path.suffix.lower()
+        suffix = path.suffix.lower() or Path(original_name or "").suffix.lower()
+        if not suffix:
+            suffix = _suffix_from_mime(mime)
         if suffix == ".pdf":
             return await PdfExtractor(self._options).extract(path, ocr_engine)
         if suffix == ".docx":
@@ -31,3 +36,17 @@ class DocumentExtractor:
         if suffix in {".txt", ".md"}:
             return await asyncio.to_thread(TextExtractor().extract, path)
         raise ExtractionError(f"unsupported document type: {suffix or path.name}")
+
+
+def _suffix_from_mime(mime: str | None) -> str:
+    if not mime:
+        return ""
+    normalized = mime.split(";", 1)[0].strip().lower()
+    return {
+        "application/pdf": ".pdf",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": ".docx",
+        "text/html": ".html",
+        "application/xhtml+xml": ".html",
+        "text/plain": ".txt",
+        "text/markdown": ".md",
+    }.get(normalized, "")

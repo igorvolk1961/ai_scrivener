@@ -305,9 +305,13 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [x] Добавить фильтр повторяющихся колонтитулов, номеров страниц и boilerplate: определять повторяющиеся строки по страницам/позиции (верх/низ), удалять до склейки, сохранять удалённое в `metadata` для аудита; проверка на П-6 и 20–30 PDF.
 - [x] Реализовать `StructureBuilder`: заголовки, уровни разделов и путь секции; сложная юридическая нумерация пока базовая.
 - [x] Реализовать `ClauseAwareChunker`: context header, `embedding_text`, section path, clause, split long by sentences, merge small tail; таблицы пока как отдельные блоки.
-- [ ] Кэш извлечения и чанков по `sha256 + extractor_version + chunker_version`; state-файл для идемпотентности.
-- [ ] CLI: `python -m rag_indexer index|validate|stats` с `--corpus-dir`, `--manifest`, `--rag-url`, `--token`, `--full`, `--limit`, `--dry-run`, `--statuses`.
-- [ ] Реализовать `/v1/index/chunks` и батчевую индексацию; `DELETE` для исчезнувших материалов.
+- [x] State-файл для идемпотентности по `sha256 + pipeline_version`; кэш извлечения/чанков на диск пока не реализован.
+- [x] CLI: `python -m rag_indexer index|validate|stats` с `--corpus-dir`, `--manifest`, `--rag-url`, `--token`, `--full`, `--limit`, `--dry-run`, `--statuses`, `--ocr`.
+- [x] Использовать `/v1/index/chunks` и `DELETE` для исчезнувших материалов.
+- [ ] Дисковый кэш extraction/chunks по `sha256 + extractor_version + chunker_version`; сейчас state хранит только факт индексации.
+- [ ] Батчинг/лимит payload для больших PDF: `/v1/index/chunks` принимает весь документ одним запросом.
+- [ ] Отдельные версии extractor/chunker в state вместо одного `pipeline_version`.
+- [ ] Интеграционный тест `rag_indexer index` против живого RAG-сервиса; сейчас проверен только `validate` и unit-тесты клиента.
 - [ ] Dockerfile/профиль `rag-indexer`; corpus volume read-only; сеть только к RAG API.
 - [ ] Пилот на 20–30 материалах: проверить заголовки, таблицы, сканы, кодировки; замерить chunk integrity.
 - [ ] Собрать knowledge golden set: 50–100 запросов с ожидаемыми `sha256`/пунктом, включая точные идентификаторы и «не найдено».

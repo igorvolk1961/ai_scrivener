@@ -416,6 +416,36 @@ docker compose -f deploy/docker-compose.yml down
 
 `down` сохраняет том Qdrant. `down -v` удаляет векторы — используйте только если готовы переиндексировать.
 
+### 5.1. Индексация корпуса
+
+Установите optional-зависимости индексатора:
+
+```bash
+uv sync --project rag-service --extra indexer --extra ocr-paddle
+```
+
+Проверка извлечения и чанкинга без записи в RAG и без state:
+
+```bash
+uv run --project rag-service python -m rag_indexer validate \
+  --corpus-dir /home/igorvolk/1C/ai_scrivener_corpus \
+  --ocr none
+```
+
+Индексация в RAG:
+
+```bash
+uv run --project rag-service python -m rag_indexer index \
+  --corpus-dir /home/igorvolk/1C/ai_scrivener_corpus \
+  --rag-url http://127.0.0.1:8080 \
+  --token "$RAG_SERVICE_TOKEN" \
+  --ocr paddle
+```
+
+`--ocr none` — только PDF с текстовым слоем; `--ocr paddle` — PaddleOCR для сканов; `--fallback-yandex` с `--yandex-iam-token` и `--yandex-folder-id` — резервный Yandex OCR.
+
+Состояние индексации хранится в `.rag-index-state.json`; повторный запуск пропускает уже проиндексированные документы. `--full` переиндексирует всё, `--dry-run` не вызывает RAG и не пишет state, `--delete-missing` удаляет из индекса материалы, исчезнувшие из манифеста.
+
 ## 6. Проверки проекта
 
 ```bash
