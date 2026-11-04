@@ -6,6 +6,7 @@ from rag_indexer.extraction.boilerplate import (
 )
 from rag_indexer.extraction.document import DocumentExtractor
 from rag_indexer.extraction.docx import DocxExtractor
+from rag_indexer.extraction.headers import clean_block_headers
 from rag_indexer.extraction.html import HtmlExtractor
 from rag_indexer.extraction.merger import LineToParagraphMerger, MergerOptions
 from rag_indexer.extraction.models import Block, ExtractedDocument, ExtractionError
@@ -28,4 +29,5 @@ __all__ = [
     "PdfExtractor",
     "RemovedLine",
     "TextExtractor",
+    "clean_block_headers",
 ]

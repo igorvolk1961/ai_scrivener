@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from rag_indexer.extraction.boilerplate import BoilerplateFilter, BoilerplateOptions
+from rag_indexer.extraction.headers import clean_block_headers
 from rag_indexer.extraction.merger import LineToParagraphMerger, MergerOptions
 from rag_indexer.extraction.models import ExtractedDocument, ExtractionError
 from rag_indexer.ocr.models import (
@@ -164,6 +165,7 @@ class PdfExtractor:
             OcrDocument(pages=boilerplate.pages),
             {number: size[0] for number, size in page_sizes.items()},
         )
+        blocks = clean_block_headers(blocks)
         engines = sorted({page.engine for page in boilerplate.pages})
         return ExtractedDocument(
             source_path=path,
