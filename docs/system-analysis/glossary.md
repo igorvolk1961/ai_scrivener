@@ -93,8 +93,8 @@
 | **OCR** | Optical Character Recognition | Распознавание текста; Tesseract для окна 1С. |
 | **RAG** | Retrieval-Augmented Generation | Генерация с поиском по внешнему индексу; Qdrant + эмбеддинги. |
 | **RBAC** | Role-Based Access Control | Ролевое управление доступом; роли расширения. |
-| **RPO** | Recovery Point Objective | Допустимый объём данных, теряемых при сбое; в плане — период backup корпуса. |
-| **RTO** | Recovery Time Objective | Допустимое время восстановления после сбоя; проверяется restore drill. |
+| **RPO** | Recovery Point Objective | Допустимый объём данных, теряемых при сбое; для корпуса не гарантируется (R2 исключён), для снапшота — 0. |
+| **RTO** | Recovery Time Objective | Допустимое время восстановления; каталоги 1С пересоздаются из снапшота, для корпуса не гарантируется (R2 исключён). |
 | **SHA-256** | Secure Hash Algorithm, 256 bit | Криптографический хеш (64 hex-символа); адрес блоба и проверка целостности в CAS. |
 | **SQL** | Structured Query Language | Язык запросов к PostgreSQL. |
 | **SSRF** | Server-Side Request Forgery | Атака через запросы к внутренним адресам; в R7 запрещены `localhost` и приватные диапазоны. |
