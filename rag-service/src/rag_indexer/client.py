@@ -51,15 +51,33 @@ class RagClient:
         source_type: str,
         source_id: str,
         version: str,
+        target_collection: str | None = None,
     ) -> dict[str, Any]:
+        payload: dict[str, Any] = {
+            "source_type": source_type,
+            "source_id": source_id,
+            "version": version,
+        }
+        if target_collection is not None:
+            payload["target_collection"] = target_collection
         return await self._request(
             "POST",
             "/v1/index/activate",
-            json={
-                "source_type": source_type,
-                "source_id": source_id,
-                "version": version,
-            },
+            json=payload,
+        )
+
+    async def create_collection(self, name: str) -> dict[str, Any]:
+        return await self._request(
+            "POST",
+            "/v1/admin/collections",
+            json={"name": name},
+        )
+
+    async def switch_alias(self, alias: str, collection: str) -> dict[str, Any]:
+        return await self._request(
+            "POST",
+            "/v1/admin/alias",
+            json={"alias": alias, "collection": collection},
         )
 
     async def cleanup(
@@ -76,8 +94,15 @@ class RagClient:
             },
         )
 
-    async def delete(self, source_type: str, source_id: str) -> dict[str, Any]:
+    async def delete(
+        self,
+        source_type: str,
+        source_id: str,
+        target_collection: str | None = None,
+    ) -> dict[str, Any]:
         path = f"/v1/index/{quote(source_type, safe='')}/{quote(source_id, safe='')}"
+        if target_collection is not None:
+            path += f"?target_collection={quote(target_collection, safe='')}"
         return await self._request("DELETE", path)
 
     async def close(self) -> None:

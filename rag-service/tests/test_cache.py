@@ -33,7 +33,12 @@ class FakeClient:
         self.calls += 1
         return {"indexed_chunks": len(payload["chunks"])}
 
-    async def delete(self, source_type: str, source_id: str) -> dict[str, Any]:
+    async def delete(
+        self,
+        source_type: str,
+        source_id: str,
+        target_collection: str | None = None,
+    ) -> dict[str, Any]:
         return {"deleted": True}
 
 

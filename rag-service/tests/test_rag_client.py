@@ -84,6 +84,27 @@ def test_activate_posts_version() -> None:
     }
 
 
+def test_collection_and_alias_methods() -> None:
+    captured: list[tuple[str, object]] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured.append((str(request.url), json.loads(request.content)))
+        return httpx.Response(200, json={"ok": True})
+
+    client = _client(httpx.MockTransport(handler))
+    asyncio.run(client.create_collection("knowledge_v3"))
+    asyncio.run(client.switch_alias("knowledge_current", "knowledge_v3"))
+    asyncio.run(client.close())
+
+    assert captured == [
+        ("http://rag.test/v1/admin/collections", {"name": "knowledge_v3"}),
+        (
+            "http://rag.test/v1/admin/alias",
+            {"alias": "knowledge_current", "collection": "knowledge_v3"},
+        ),
+    ]
+
+
 def test_cleanup_posts_options() -> None:
     captured: dict[str, object] = {}
 
@@ -116,6 +137,20 @@ def test_delete_encodes_path() -> None:
     asyncio.run(client.close())
 
     assert captured["url"] == "http://rag.test/v1/index/knowledge_material/sha%2F1"
+
+
+def test_delete_targets_collection() -> None:
+    captured: dict[str, str] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        captured["url"] = str(request.url)
+        return httpx.Response(200, json={"deleted": True})
+
+    client = _client(httpx.MockTransport(handler))
+    asyncio.run(client.delete("knowledge_material", "sha-1", "knowledge_v2"))
+    asyncio.run(client.close())
+
+    assert captured["url"].endswith("?target_collection=knowledge_v2")
 
 
 def test_client_raises_on_error() -> None:

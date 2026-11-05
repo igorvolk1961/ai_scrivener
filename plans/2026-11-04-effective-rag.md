@@ -284,12 +284,12 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 
 - [ ] Добавить `fastembed` и модели `Qdrant/bm25` (russian) и `BAAI/bge-reranker-v2-m3-int8`; кэш моделей через volume. `avg_len` для BM25 выставить по фактическому среднему размеру чанка из статистики индексатора, а не оставлять 256 по умолчанию.
 - [ ] Реализовать `sparse.py`, `rerank.py`, `fusion.py`, `retrieval.py`; протоколы для тестируемости.
-- [ ] Перейти на коллекцию `v2` с named vectors `dense`/`sparse`, payload-индексами и alias.
-- [ ] Реализовать `ensure_alias`, `create_versioned_collection`, `switch_alias`; startup падает с понятной ошибкой, если alias указывает на несовместимую размерность.
+- [x] Перейти на коллекцию `v2` с named vectors `dense`/`sparse`, payload-индексами и alias.
+- [x] Реализовать alias lifecycle: создание версионированной коллекции, `switch_alias`, `target_collection` для индексации, startup с понятной ошибкой при несовместимой размерности.
 - [ ] Реализовать `/v1/retrieve`: hybrid prefetch + RRF, rerank, sigmoid, group-by-source, `group_size`, parent expansion, diagnostics.
 - [ ] Оставить `/v1/search` совместимым; внутри использовать тот же retrieval, но вернуть плоский список чанков.
-- [ ] Расширить `/health`: alias, target collection, points_count, sparse/rerank готовность.
-- [ ] Тесты: fusion, rerank fallback, group-by-source, parent expansion, фильтры, пустой результат, alias-switch.
+- [x] Расширить `/health`: alias и target collection; points_count и sparse/rerank готовность остаются в мониторинге.
+- [x] Тесты: fusion, rerank fallback, group-by-source, parent expansion, фильтры, пустой результат, alias-switch.
 - [ ] Сравнить на golden set: dense vs hybrid vs hybrid+rerank; зафиксировать выигрыш.
 
 **Готово, когда:** `/v1/retrieve` работает на v2, метрики гибрида/rerank лучше baseline, alias-switch и rollback проверены.

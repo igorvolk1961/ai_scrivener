@@ -57,6 +57,15 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path(".rag-index-cache"),
     )
     cache_cleanup.add_argument("--keep-versions", type=int, default=2)
+    collection_create = subparsers.add_parser("collection-create")
+    collection_create.add_argument("--rag-url", default=os.environ.get("RAG_URL", "http://127.0.0.1:8080"))
+    collection_create.add_argument("--token", default=os.environ.get("RAG_SERVICE_TOKEN", ""))
+    collection_create.add_argument("--name", required=True)
+    alias_switch = subparsers.add_parser("alias-switch")
+    alias_switch.add_argument("--rag-url", default=os.environ.get("RAG_URL", "http://127.0.0.1:8080"))
+    alias_switch.add_argument("--token", default=os.environ.get("RAG_SERVICE_TOKEN", ""))
+    alias_switch.add_argument("--alias", required=True)
+    alias_switch.add_argument("--collection", required=True)
     return parser
 
 
@@ -82,6 +91,7 @@ def _add_common_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--no-cache", action="store_true")
     parser.add_argument("--ocr-version", default="")
     parser.add_argument("--export-dir", type=Path)
+    parser.add_argument("--target-collection")
     parser.add_argument("--chunk-batch-size", type=int, default=0)
     parser.add_argument("--report", type=Path)
     parser.add_argument("--pipeline-version", default=PIPELINE_VERSION)
@@ -111,6 +121,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _stats(args)
     if args.command == "cache-cleanup":
         return _cache_cleanup(args)
+    if args.command in {"collection-create", "alias-switch"}:
+        try:
+            return asyncio.run(_collection_command(args))
+        except (RuntimeError, OSError) as error:
+            print(f"error: {error}", file=sys.stderr)
+            return 1
     try:
         if args.command == "cleanup":
             return asyncio.run(_cleanup(args))
@@ -169,6 +185,7 @@ async def _run(args: argparse.Namespace) -> int:
         cache=cache,
         chunk_batch_size=args.chunk_batch_size,
         export_dir=args.export_dir,
+        target_collection=args.target_collection,
     )
     try:
         report = await pipeline.run(
@@ -199,6 +216,21 @@ async def _run(args: argparse.Namespace) -> int:
     for sha, error in report.errors:
         print(f"  {sha}: {error}", file=sys.stderr)
     return 0 if report.failed == 0 else 1
+
+
+async def _collection_command(args: argparse.Namespace) -> int:
+    if not args.token:
+        raise RuntimeError("RAG service token is required")
+    client = RagClient(args.rag_url, args.token)
+    try:
+        if args.command == "collection-create":
+            result = await client.create_collection(args.name)
+        else:
+            result = await client.switch_alias(args.alias, args.collection)
+    finally:
+        await client.close()
+    print(result)
+    return 0
 
 
 def _cache_cleanup(args: argparse.Namespace) -> int:

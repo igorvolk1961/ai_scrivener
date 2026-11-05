@@ -60,6 +60,26 @@ def test_replace_removes_stale_documents(client: TestClient, store: FakeStore) -
     assert ("template", "doc-2") not in store.documents
 
 
+def test_create_collection_and_switch_alias(
+    client: TestClient, store: FakeStore
+) -> None:
+    created = client.post(
+        "/v1/admin/collections",
+        json={"name": "knowledge_v3"},
+        headers=AUTH_HEADERS,
+    )
+    switched = client.post(
+        "/v1/admin/alias",
+        json={"alias": "knowledge_current", "collection": "knowledge_v3"},
+        headers=AUTH_HEADERS,
+    )
+
+    assert created.status_code == 200
+    assert created.json()["name"] == "knowledge_v3"
+    assert switched.status_code == 200
+    assert store.alias == ("knowledge_current", "knowledge_v3")
+
+
 def test_activate_document(client: TestClient, store: FakeStore) -> None:
     response = client.post(
         "/v1/index/activate",

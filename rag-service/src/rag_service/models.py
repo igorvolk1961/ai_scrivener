@@ -171,6 +171,7 @@ class IndexChunksRequest(BaseModel):
     chunks: list[IndexChunk] = Field(min_length=1)
     replace_existing: bool = True
     active: bool = True
+    target_collection: str | None = None
 
 
 class IndexChunksResponse(BaseModel):
@@ -188,6 +189,7 @@ class ActivateRequest(BaseModel):
     source_type: str = Field(min_length=1)
     source_id: str = Field(min_length=1)
     version: str = Field(min_length=1)
+    target_collection: str | None = None
 
 
 class ActivateResponse(BaseModel):
@@ -212,9 +214,36 @@ class CleanupResponse(BaseModel):
     deleted: int
 
 
+class CreateCollectionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    name: str = Field(min_length=1)
+
+
+class CreateCollectionResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    name: str
+
+
+class SwitchAliasRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    alias: str = Field(min_length=1)
+    collection: str = Field(min_length=1)
+
+
+class SwitchAliasResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    alias: str
+    collection: str
+
+
 class HealthResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     status: str
     qdrant: bool
     embedding_dimension: int | None
+    collection_state: dict[str, Any] | None = None

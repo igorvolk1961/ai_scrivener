@@ -379,7 +379,29 @@ cp rag-service/.env.example rag-service/.env
 
 Заполните `rag-service/.env`: `RAG_GIGACHAT_CLIENT_ID`, `RAG_GIGACHAT_CLIENT_SECRET`, `RAG_SERVICE_TOKEN`. Файл `.env` в Git не коммитится.
 
-Для схемы с named vectors `dense`/`sparse` используйте коллекцию `ai_scrivener_knowledge_v2`. Если в `.env` осталась `ai_scrivener_knowledge_v1`, сервис не стартует: старая коллекция не содержит именованных векторов. Пока в индексе нет production-данных, проще пересоздать том Qdrant (`down -v`), затем запустить сервис с `_v2`.
+Для схемы с named vectors `dense`/`sparse` используйте alias `ai_scrivener_knowledge_current`. На первом старте сервис создаёт версионированную коллекцию `ai_scrivener_knowledge_current_v1_<timestamp>` и переключает на неё alias. Если в `.env` осталась `ai_scrivener_knowledge_v1`, сервис не стартует: старая коллекция не содержит именованных векторов и не является alias. Пока в индексе нет production-данных, проще пересоздать том Qdrant (`down -v`).
+
+Переиндексация с alias-swap:
+
+```bash
+# 1. Создать новую коллекцию
+uv run --project rag-service python -m rag_indexer collection-create \
+  --token "$RAG_SERVICE_TOKEN" --name ai_scrivener_knowledge_v2_$(date +%s)
+
+# 2. Проиндексировать в неё
+uv run --project rag-service python -m rag_indexer index \
+  --token "$RAG_SERVICE_TOKEN" \
+  --target-collection ai_scrivener_knowledge_v2_<timestamp> \
+  --ocr none
+
+# 3. Переключить alias после проверки
+uv run --project rag-service python -m rag_indexer alias-switch \
+  --token "$RAG_SERVICE_TOKEN" \
+  --alias ai_scrivener_knowledge_current \
+  --collection ai_scrivener_knowledge_v2_<timestamp>
+```
+
+Откат — тот же `alias-switch` на предыдущую коллекцию.
 
 При первом старте FastEmbed скачивает BM25 и reranker (`~0.6 ГБ`) в том `fastembed_cache`. Нужен доступ к Hugging Face или заранее прогретый кэш; иначе `/health` не поднимется.
 

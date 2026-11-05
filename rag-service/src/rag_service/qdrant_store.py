@@ -33,6 +33,12 @@ class IndexedDocument:
 class VectorStore(Protocol):
     async def ensure_collection(self, dimension: int) -> None: ...
 
+    async def create_collection(self, collection_name: str, dimension: int) -> None: ...
+
+    async def switch_alias(self, alias: str, collection_name: str) -> None: ...
+
+    async def collection_state(self) -> dict[str, Any]: ...
+
     async def health(self) -> bool: ...
 
     async def close(self) -> None: ...
@@ -64,6 +70,7 @@ class VectorStore(Protocol):
         sparse_vectors: list[models.SparseVector] | None = None,
         replace_existing: bool = True,
         active: bool = True,
+        collection_name: str | None = None,
     ) -> int: ...
 
     async def activate_document(
@@ -71,6 +78,7 @@ class VectorStore(Protocol):
         source_type: str,
         source_id: str,
         version: str,
+        collection_name: str | None = None,
     ) -> bool: ...
 
     async def cleanup_inactive(
@@ -79,7 +87,12 @@ class VectorStore(Protocol):
         source_type: str | None = None,
     ) -> int: ...
 
-    async def delete(self, source_type: str, source_id: str) -> bool: ...
+    async def delete(
+        self,
+        source_type: str,
+        source_id: str,
+        collection_name: str | None = None,
+    ) -> bool: ...
 
     async def search(
         self,
@@ -209,30 +222,54 @@ class QdrantStore:
             logger.exception("qdrant health check failed")
             return False
 
+    async def _alias_target(self, alias: str | None = None) -> str | None:
+        aliases = await self._client.get_aliases()
+        items = getattr(aliases, "aliases", None)
+        if not isinstance(items, list):
+            return None
+        name = alias or self._collection
+        for item in items:
+            if item.alias_name == name:
+                return str(item.collection_name)
+        return None
+
+    async def collection_state(self) -> dict[str, Any]:
+        target = await self._alias_target()
+        collections = await self._client.get_collections()
+        return {
+            "alias": self._collection,
+            "alias_target": target,
+            "collections": sorted(item.name for item in collections.collections),
+        }
+
     async def ensure_collection(self, dimension: int) -> None:
-        exists = await self._client.collection_exists(self._collection)
-        if exists:
-            info = await self._client.get_collection(self._collection)
-            vectors = info.config.params.vectors
-            if vectors is None:
-                raise VectorStoreError(
-                    f"collection {self._collection} has no vector configuration"
-                )
-            if isinstance(vectors, dict):
-                dense = vectors.get(DENSE_VECTOR)
-                if dense is None:
-                    raise VectorStoreError(
-                        f"collection {self._collection} has no named {DENSE_VECTOR} vector"
-                    )
-                size = dense.size
+        target = await self._alias_target()
+        if target is None:
+            if await self._client.collection_exists(self._collection):
+                target = self._collection
             else:
-                size = vectors.size
-            if size != dimension:
+                target = f"{self._collection}_v1_{int(datetime.now(UTC).timestamp())}"
+                await self.create_collection(target, dimension)
+                await self.switch_alias(self._collection, target)
+        info = await self._client.get_collection(target)
+        vectors = info.config.params.vectors
+        if vectors is None:
+            raise VectorStoreError(
+                f"collection {target} has no vector configuration"
+            )
+        if isinstance(vectors, dict):
+            dense = vectors.get(DENSE_VECTOR)
+            if dense is None:
                 raise VectorStoreError(
-                    f"collection {self._collection} has dimension {size}, expected {dimension}"
+                    f"collection {target} has no named {DENSE_VECTOR} vector"
                 )
-            return
-        await self.create_collection(self._collection, dimension)
+            size = dense.size
+        else:
+            size = vectors.size
+        if size != dimension:
+            raise VectorStoreError(
+                f"collection {target} has dimension {size}, expected {dimension}"
+            )
 
     async def create_collection(self, collection_name: str, dimension: int) -> None:
         await self._client.create_collection(
@@ -293,15 +330,27 @@ class QdrantStore:
             change_aliases_operations=operations
         )
 
-    async def _delete_filter(self, filter_: models.Filter) -> None:
+    async def _delete_filter(
+        self,
+        filter_: models.Filter,
+        collection_name: str | None = None,
+    ) -> None:
         await self._client.delete(
-            collection_name=self._collection,
+            collection_name=collection_name or self._collection,
             points_selector=models.FilterSelector(filter=filter_),
             wait=True,
         )
 
-    async def delete(self, source_type: str, source_id: str) -> bool:
-        await self._delete_filter(_source_filter(source_type, source_id))
+    async def delete(
+        self,
+        source_type: str,
+        source_id: str,
+        collection_name: str | None = None,
+    ) -> bool:
+        await self._delete_filter(
+            _source_filter(source_type, source_id),
+            collection_name,
+        )
         return True
 
     def _base_payload(
@@ -408,13 +457,14 @@ class QdrantStore:
         sparse_vectors: list[models.SparseVector] | None = None,
         replace_existing: bool = True,
         active: bool = True,
+        collection_name: str | None = None,
     ) -> int:
         if len(chunks) != len(dense_vectors):
             raise VectorStoreError("chunks and dense vectors count mismatch")
         if sparse_vectors is not None and len(chunks) != len(sparse_vectors):
             raise VectorStoreError("chunks and sparse vectors count mismatch")
         if replace_existing:
-            await self.delete(source_type, document.source_id)
+            await self.delete(source_type, document.source_id, collection_name)
         points = []
         for position, (chunk, vector) in enumerate(zip(chunks, dense_vectors, strict=True)):
             point_vector: dict[str, Any] = {DENSE_VECTOR: vector}
@@ -451,7 +501,7 @@ class QdrantStore:
             )
         if points:
             await self._client.upsert(
-                collection_name=self._collection,
+                collection_name=collection_name or self._collection,
                 points=points,
                 wait=True,
             )
@@ -462,6 +512,7 @@ class QdrantStore:
         source_type: str,
         source_id: str,
         version: str,
+        collection_name: str | None = None,
     ) -> bool:
         target_filter = models.Filter(
             must=[
@@ -480,14 +531,14 @@ class QdrantStore:
             ]
         )
         count = await self._client.count(
-            collection_name=self._collection,
+            collection_name=collection_name or self._collection,
             count_filter=target_filter,
             exact=True,
         )
         if count.count == 0:
             return False
         await self._client.set_payload(
-            collection_name=self._collection,
+            collection_name=collection_name or self._collection,
             payload={"active": True},
             points=target_filter,
             wait=True,
@@ -510,7 +561,8 @@ class QdrantStore:
                         match=models.MatchValue(value=version),
                     )
                 ],
-            )
+            ),
+            collection_name,
         )
         return True
 

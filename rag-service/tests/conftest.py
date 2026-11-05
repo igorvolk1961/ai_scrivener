@@ -40,9 +40,23 @@ class FakeStore:
         self.closed = False
         self.activated: list[tuple[str, str, str]] = []
         self.cleanup_calls: list[tuple[float, str | None]] = []
+        self.alias: tuple[str, str] | None = None
 
     async def ensure_collection(self, dimension: int) -> None:
         self.dimension = dimension
+
+    async def create_collection(self, collection_name: str, dimension: int) -> None:
+        self.dimension = dimension
+
+    async def switch_alias(self, alias: str, collection_name: str) -> None:
+        self.alias = (alias, collection_name)
+
+    async def collection_state(self) -> dict[str, Any]:
+        return {
+            "alias": "test_collection",
+            "alias_target": "test_collection_v1",
+            "collections": ["test_collection_v1"],
+        }
 
     async def health(self) -> bool:
         return True
@@ -90,6 +104,7 @@ class FakeStore:
         sparse_vectors: list[Any] | None = None,
         replace_existing: bool = True,
         active: bool = True,
+        collection_name: str | None = None,
     ) -> int:
         if len(chunks) != len(dense_vectors):
             raise AssertionError("chunks and vectors mismatch")
@@ -102,6 +117,7 @@ class FakeStore:
         source_type: str,
         source_id: str,
         version: str,
+        collection_name: str | None = None,
     ) -> bool:
         self.activated.append((source_type, source_id, version))
         return True
@@ -114,7 +130,12 @@ class FakeStore:
         self.cleanup_calls.append((older_than_hours, source_type))
         return 0
 
-    async def delete(self, source_type: str, source_id: str) -> bool:
+    async def delete(
+        self,
+        source_type: str,
+        source_id: str,
+        collection_name: str | None = None,
+    ) -> bool:
         existed = (source_type, source_id) in self.documents
         self.documents.pop((source_type, source_id), None)
         return existed

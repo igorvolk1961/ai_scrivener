@@ -32,10 +32,39 @@ def test_ensure_collection_creates_vectors_and_indexes() -> None:
     client = AsyncMock()
     store = _store(client)
     client.collection_exists.return_value = False
+    client.get_aliases.return_value = SimpleNamespace(aliases=[])
+    client.get_collection.return_value = SimpleNamespace(
+        config=SimpleNamespace(
+            params=SimpleNamespace(vectors=SimpleNamespace(size=3))
+        )
+    )
     asyncio.run(store.ensure_collection(3))
 
     client.create_collection.assert_awaited_once()
     assert client.create_payload_index.await_count == 17
+
+
+def test_ensure_collection_resolves_alias_target() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    client.get_aliases.return_value = SimpleNamespace(
+        aliases=[
+            SimpleNamespace(
+                alias_name="test",
+                collection_name="knowledge_v2",
+            )
+        ]
+    )
+    client.get_collection.return_value = SimpleNamespace(
+        config=SimpleNamespace(
+            params=SimpleNamespace(vectors=SimpleNamespace(size=3))
+        )
+    )
+
+    asyncio.run(store.ensure_collection(3))
+
+    client.get_collection.assert_awaited_once_with("knowledge_v2")
+    client.create_collection.assert_not_awaited()
 
 
 def test_ensure_collection_rejects_dimension_mismatch() -> None:

@@ -22,6 +22,8 @@ from rag_service.models import (
     ActivateResponse,
     CleanupRequest,
     CleanupResponse,
+    CreateCollectionRequest,
+    CreateCollectionResponse,
     DeleteResponse,
     HealthResponse,
     IndexChunksRequest,
@@ -34,6 +36,8 @@ from rag_service.models import (
     RetrieveResponse,
     SearchRequest,
     SearchResponse,
+    SwitchAliasRequest,
+    SwitchAliasResponse,
 )
 from rag_service.qdrant_store import IndexedDocument, QdrantStore, VectorStore, VectorStoreError
 from rag_service.rerank import FastEmbedReranker, Reranker, RerankerError
@@ -152,6 +156,7 @@ def create_app(
         app.state.parameters = resolved_parameters
         app.state.settings = resolved_settings
         app.state.embedder = resolved_embedder
+        app.state.dimension = dimension
         app.state.store = resolved_store
         app.state.sparse_encoder = resolved_sparse
         app.state.reranker = resolved_reranker
@@ -174,14 +179,60 @@ def create_app(
 
     app = FastAPI(title="ai_scrivener RAG", version="0.1.0", lifespan=lifespan)
 
+    @app.post(
+        "/v1/admin/collections",
+        response_model=CreateCollectionResponse,
+        dependencies=[Depends(_require_token)],
+    )
+    async def create_collection_endpoint(
+        request: Request, payload: CreateCollectionRequest
+    ) -> CreateCollectionResponse:
+        try:
+            await _store(request).create_collection(
+                payload.name,
+                request.app.state.dimension,
+            )
+        except VectorStoreError as error:
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail="collection creation failed",
+            ) from error
+        return CreateCollectionResponse(name=payload.name)
+
+    @app.post(
+        "/v1/admin/alias",
+        response_model=SwitchAliasResponse,
+        dependencies=[Depends(_require_token)],
+    )
+    async def switch_alias_endpoint(
+        request: Request, payload: SwitchAliasRequest
+    ) -> SwitchAliasResponse:
+        try:
+            await _store(request).switch_alias(payload.alias, payload.collection)
+        except VectorStoreError as error:
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail="alias switch failed",
+            ) from error
+        return SwitchAliasResponse(
+            alias=payload.alias,
+            collection=payload.collection,
+        )
+
     @app.get("/health", response_model=HealthResponse)
     async def health(request: Request) -> HealthResponse:
         resolved_store: VectorStore = request.app.state.store
         resolved_embedder: Embedder = request.app.state.embedder
+        collection_state: dict[str, Any] | None = None
+        try:
+            collection_state = await resolved_store.collection_state()
+        except Exception:
+            logger.exception("collection state lookup failed")
         return HealthResponse(
             status="ok",
             qdrant=await resolved_store.health(),
             embedding_dimension=resolved_embedder.dimension,
+            collection_state=collection_state,
         )
 
     @app.post(
@@ -353,6 +404,7 @@ def create_app(
                 sparse_vectors,
                 replace_existing=payload.replace_existing,
                 active=payload.active,
+                collection_name=payload.target_collection,
             )
         except (GigaChatError, VectorStoreError, SparseEncoderError) as error:
             logger.exception("index chunks failed")
@@ -386,6 +438,7 @@ def create_app(
                 payload.source_type,
                 payload.source_id,
                 payload.version,
+                payload.target_collection,
             )
         except VectorStoreError as error:
             logger.exception("activate document failed")
@@ -426,10 +479,19 @@ def create_app(
         response_model=DeleteResponse,
         dependencies=[Depends(_require_token)],
     )
-    async def index_delete(request: Request, source_type: str, source_id: str) -> DeleteResponse:
+    async def index_delete(
+        request: Request,
+        source_type: str,
+        source_id: str,
+        target_collection: str | None = None,
+    ) -> DeleteResponse:
         resolved_store = _store(request)
         try:
-            deleted = await resolved_store.delete(source_type, source_id)
+            deleted = await resolved_store.delete(
+                source_type,
+                source_id,
+                target_collection,
+            )
         except VectorStoreError as error:
             logger.exception("index delete failed")
             raise HTTPException(

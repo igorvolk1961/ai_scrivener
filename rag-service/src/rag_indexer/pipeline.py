@@ -79,6 +79,7 @@ class IndexPipeline:
         cache: DocumentCache | None = None,
         chunk_batch_size: int = 0,
         export_dir: Path | None = None,
+        target_collection: str | None = None,
     ) -> None:
         if chunk_batch_size < 0:
             raise ValueError("chunk_batch_size must be non-negative")
@@ -89,6 +90,7 @@ class IndexPipeline:
         self._cache = cache
         self._chunk_batch_size = chunk_batch_size
         self._export_dir = export_dir
+        self._target_collection = target_collection
 
     async def run(
         self,
@@ -182,6 +184,7 @@ class IndexPipeline:
                             version=index_version,
                             replace_existing=not staged and batch_index == 0,
                             active=not staged,
+                            target_collection=self._target_collection,
                         )
                     )
                 if staged:
@@ -189,6 +192,7 @@ class IndexPipeline:
                         SOURCE_TYPE,
                         record.sha256,
                         index_version,
+                        self._target_collection,
                     )
                 self._state.mark_indexed(
                     record.sha256,
@@ -219,7 +223,11 @@ class IndexPipeline:
         if delete_missing and not dry_run and client is not None:
             for sha in self._state.missing(selected_shas):
                 try:
-                    await client.delete(SOURCE_TYPE, sha)
+                    await client.delete(
+                        SOURCE_TYPE,
+                        sha,
+                        self._target_collection,
+                    )
                     self._state.documents.pop(sha, None)
                     report.deleted += 1
                 except Exception as error:
@@ -266,6 +274,7 @@ def build_payload(
     version: str | None = None,
     replace_existing: bool = True,
     active: bool = True,
+    target_collection: str | None = None,
 ) -> dict[str, Any]:
     metadata = record.metadata()
     metadata["extraction"] = document.metadata
@@ -279,6 +288,7 @@ def build_payload(
         },
         "replace_existing": replace_existing,
         "active": active,
+        "target_collection": target_collection,
         "chunks": [
             {
                 "index": chunk.index,

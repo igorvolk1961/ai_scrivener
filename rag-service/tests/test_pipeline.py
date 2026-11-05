@@ -23,11 +23,22 @@ class FakeClient:
         self.payloads.append(payload)
         return {"indexed_chunks": len(payload["chunks"])}
 
-    async def activate(self, source_type: str, source_id: str, version: str) -> dict[str, Any]:
+    async def activate(
+        self,
+        source_type: str,
+        source_id: str,
+        version: str,
+        target_collection: str | None = None,
+    ) -> dict[str, Any]:
         self.activated.append((source_type, source_id, version))
         return {"activated": True}
 
-    async def delete(self, source_type: str, source_id: str) -> dict[str, Any]:
+    async def delete(
+        self,
+        source_type: str,
+        source_id: str,
+        target_collection: str | None = None,
+    ) -> dict[str, Any]:
         self.deleted.append((source_type, source_id))
         return {"deleted": True}
 
