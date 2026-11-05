@@ -20,6 +20,7 @@ from tools.llm_eval.metrics import CaseResult, find_rank
 from tools.llm_eval.prompts import (
     ANSWER_SYSTEM_PROMPT,
     JUDGE_SYSTEM_PROMPT,
+    RERANK_REPAIR_SUFFIX,
     RERANK_SYSTEM_PROMPT,
     judge_user_prompt,
 )
@@ -97,6 +98,11 @@ class Settings:
     limit: int | None
     timeout: float
     no_rerank: bool
+    group_size: int | None
+    include_parent: bool | None
+    rerank_max_candidates: int
+    rerank_text_limit: int
+    rerank_json_mode: bool
     no_judge: bool
     no_cache: bool
     cache_dir: Path
@@ -181,6 +187,8 @@ def evaluate_case(
             case.filters,
             top_k=settings.top_k,
             candidate_k=settings.candidate_k,
+            group_size=settings.group_size,
+            include_parent=settings.include_parent,
         )
     except (HttpError, OSError) as error:
         return _failed_result(case, error)
@@ -211,16 +219,20 @@ def evaluate_case(
         result.e2e_ms = retrieval_ms
         return result
 
-    reranked, rerank_error = rerank_candidates(
+    reranked, rerank_error, rerank_empty = rerank_candidates(
         answer_client,
         case.query,
         candidates,
         enabled=not settings.no_rerank,
+        max_candidates=settings.rerank_max_candidates,
+        text_limit=settings.rerank_text_limit,
+        json_mode=settings.rerank_json_mode,
     )
     if rerank_error is not None:
         result.rerank_fallback = True
         result.rerank_error = rerank_error
         print(f"rerank fallback: {rerank_error}", file=sys.stderr, flush=True)
+    result.rerank_empty = rerank_empty
 
     expected_sources = set(case.expected_source_ids)
     expected_clauses = set(case.expected_clauses)
@@ -297,9 +309,14 @@ def rerank_candidates(
     candidates: list[Candidate],
     *,
     enabled: bool,
-) -> tuple[list[Candidate], str | None]:
+    max_candidates: int = 30,
+    text_limit: int = 1200,
+    json_mode: bool = False,
+) -> tuple[list[Candidate], str | None, bool]:
     if not enabled or len(candidates) <= 1:
-        return candidates, None
+        return candidates, None, False
+
+    selected = candidates[: max(1, max_candidates)]
     payload = {
         "query": query,
         "candidates": [
@@ -308,26 +325,41 @@ def rerank_candidates(
                 "source_id": candidate.source_id,
                 "clause": candidate.clause,
                 "title": candidate.title,
-                "text": candidate.text,
+                "text": candidate.text[:text_limit],
             }
-            for candidate in candidates
+            for candidate in selected
         ],
     }
+    user_prompt = json.dumps(payload, ensure_ascii=False)
     try:
         raw = client.complete(
             RERANK_SYSTEM_PROMPT,
-            json.dumps(payload, ensure_ascii=False),
+            user_prompt,
             temperature=0.0,
             max_tokens=2000,
+            json_mode=json_mode,
         )
         data = extract_json(raw)
-    except (HttpError, JsonParseError, OSError) as error:
-        return candidates, str(error)
+    except (HttpError, JsonParseError, OSError):
+        try:
+            raw = client.complete(
+                RERANK_SYSTEM_PROMPT,
+                user_prompt + RERANK_REPAIR_SUFFIX,
+                temperature=0.0,
+                max_tokens=2000,
+                json_mode=json_mode,
+            )
+            data = extract_json(raw)
+        except (HttpError, JsonParseError, OSError) as retry_error:
+            return candidates, str(retry_error), False
 
     ranking = data.get("ranking")
     if not isinstance(ranking, list):
-        return candidates, "rerank response has no ranking"
-    by_id = {candidate.id: candidate for candidate in candidates}
+        return candidates, "rerank response has no ranking", False
+    if not ranking:
+        return candidates, None, True
+
+    by_id = {candidate.id: candidate for candidate in selected}
     ordered: list[Candidate] = []
     used: set[str] = set()
     for item in ranking:
@@ -339,11 +371,12 @@ def rerank_candidates(
             ordered.append(candidate)
             used.add(candidate_id)
     if not ordered:
-        return candidates, "rerank returned an empty ranking"
-    for candidate in candidates:
+        return candidates, "rerank returned no known candidate ids", False
+    for candidate in selected:
         if candidate.id not in used:
             ordered.append(candidate)
-    return ordered, None
+    ordered.extend(candidates[len(selected) :])
+    return ordered, None, False
 
 
 def flatten_candidates(results: list[Any]) -> list[Candidate]:

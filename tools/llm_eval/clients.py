@@ -131,12 +131,18 @@ class RagClient:
         *,
         top_k: int | None = None,
         candidate_k: int | None = None,
+        group_size: int | None = None,
+        include_parent: bool | None = None,
     ) -> dict[str, Any]:
         payload: dict[str, Any] = {"query": query, "filters": filters}
         if top_k is not None:
             payload["top_k"] = top_k
         if candidate_k is not None:
             payload["candidate_k"] = candidate_k
+        if group_size is not None:
+            payload["group_size"] = group_size
+        if include_parent is not None:
+            payload["include_parent"] = include_parent
         return post_json(
             f"{self.base_url.rstrip('/')}/v1/retrieve",
             payload,
@@ -161,6 +167,7 @@ class ChatClient:
         temperature: float,
         max_tokens: int,
         model: str | None = None,
+        json_mode: bool = False,
     ) -> str:
         resolved_model = model or self.model
         key = cache_key(
@@ -170,6 +177,7 @@ class ChatClient:
             user,
             str(temperature),
             str(max_tokens),
+            str(json_mode),
         )
         if self.cache is not None:
             cached = self.cache.get(key)
@@ -185,6 +193,8 @@ class ChatClient:
                 {"role": "user", "content": user},
             ],
         }
+        if json_mode:
+            payload["response_format"] = {"type": "json_object"}
         content = ""
         for attempt in range(MAX_CHAT_ATTEMPTS):
             response = post_json(

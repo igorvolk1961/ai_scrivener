@@ -43,10 +43,23 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--judge-model")
     parser.add_argument("--top-k", type=int, default=10)
     parser.add_argument("--candidate-k", type=int)
+    parser.add_argument("--group-size", type=int)
+    parser.add_argument(
+        "--include-parent",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+    )
     parser.add_argument("--concurrency", type=int, default=4)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--timeout", type=float, default=90.0)
     parser.add_argument("--no-rerank", action="store_true")
+    parser.add_argument("--rerank-max-candidates", type=int, default=15)
+    parser.add_argument("--rerank-text-limit", type=int, default=1200)
+    parser.add_argument(
+        "--rerank-json-mode",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
     parser.add_argument("--no-judge", action="store_true")
     parser.add_argument("--no-cache", action="store_true")
     parser.add_argument(
@@ -85,10 +98,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         judge_model=args.judge_model or model,
         top_k=args.top_k,
         candidate_k=args.candidate_k,
+        group_size=args.group_size,
+        include_parent=args.include_parent,
         concurrency=max(1, args.concurrency),
         limit=args.limit,
         timeout=args.timeout,
         no_rerank=args.no_rerank,
+        rerank_max_candidates=max(1, args.rerank_max_candidates),
+        rerank_text_limit=max(1, args.rerank_text_limit),
+        rerank_json_mode=args.rerank_json_mode,
         no_judge=args.no_judge,
         no_cache=args.no_cache,
         cache_dir=args.cache_dir,
@@ -118,6 +136,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             "judge_model": settings.judge_model,
             "top_k": settings.top_k,
             "candidate_k": settings.candidate_k,
+            "group_size": settings.group_size,
+            "include_parent": settings.include_parent,
             "prompt_version": PROMPT_VERSION,
             "rerank": not settings.no_rerank,
             "judge": not settings.no_judge,

@@ -42,7 +42,7 @@ rag:
   search_min_score: 0.0
   candidate_k: 50
   group_by_source: true
-  group_size: 3
+  group_size: 5
   hybrid_enabled: true
   rerank_enabled: false
   rerank_model: BAAI/bge-reranker-v2-m3-int8
@@ -50,7 +50,7 @@ rag:
   sparse_model: Qdrant/bm25
   sparse_language: russian
   sparse_avg_len: 350
-  include_parent: true
+  include_parent: false
   context_max_tokens: 6000
   parent_chunk_limit: 100
   query_max_chars: 4000

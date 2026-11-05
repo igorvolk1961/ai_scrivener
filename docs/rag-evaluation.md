@@ -479,7 +479,89 @@ uv run python -m tools.llm_eval \
 - `no_answer_precision` низкая из-за ложных отказов, а не из-за галлюцинаций: `hallucinated_answers = 0`, `no_answer_recall = 1.0`.
 - Rechunk не заменяет полную переиндексацию: текст взят из старых чанков, OCR и извлечение не повторялись. Для production нужна переиндексация корпуса с Paddle/OCR и проверка на полном наборе.
 
-Следующие шаги по answer-качеству: `group_size`/`include_parent`, стабильность JSON у реранка, контракт citations в промпте и порог abstention для no-answer.
+Следующие шаги по answer-качеству: контракт citations в промпте, затем латентность и порог abstention для no-answer.
+
+#### Rerank stability experiment
+
+Отдельный rerank-only прогон на тех же 70 кейсах:
+
+| Режим | Fallback | Empty ranking | p50 | p95 |
+|---|---:|---:|---:|---:|
+| 30 кандидатов, без JSON mode | 24 | 11 | — | — |
+| 30 кандидатов, JSON mode | 0 | 12 | 4460 мс | 24795 мс |
+| 15 кандидатов, JSON mode | 0 | 14 | 4123 мс | 9881 мс |
+
+Вывод: JSON mode убирает технические fallback-и полностью. Оставшиеся `empty ranking` — это валидный ответ модели «ни один кандидат не релевантен», а не сбой парсинга; код в этом случае сохраняет порядок RRF. Ограничение до 15 кандидатов снижает p95 примерно с 24,8 до 9,9 с. В production-контуре 1С включены JSON mode и первые 15 кандидатов; eval по умолчанию повторяет эти настройки. Это ещё не полный answer-eval: метрики качества нужно переснять после полной переиндексации.
+
+Полный answer-eval после стабилизации реранка (та же rechunk-коллекция, 70 кейсов):
+
+```text
+found_rate                 = 0.5000
+false_refusal_rate         = 0.5000
+expected_clause_in_context = 0.8167
+false_refusals_with_context = 19
+citation_precision         = 0.3977
+citation_recall            = 0.5000
+citation_accuracy          = 0.8667
+correctness                = 0.4831
+groundedness               = 0.9655
+rerank_fallbacks           = 0
+rerank_empty_rankings      = 12
+no_answer_precision        = 0.2500
+no_answer_recall           = 1.0000
+e2e p50 / p95              = 8.3 с / 18.3 с
+```
+
+По сравнению с прогоном до стабилизации реранка: correctness 0.4655 → 0.4831, citation accuracy 0.8000 → 0.8667, e2e p95 48.3 → 18.3 с; citation precision немного снизилась (0.4568 → 0.3977), потому что модель стала чаще возвращать citations, часть которых всё ещё не проходит валидацию. Ложные отказы не изменились (30), из них 19 — при наличии пункта в контексте. Главный оставшийся дефект — контракт citations, затем `group_size`/`include_parent`.
+
+#### Context experiment: `group_size` и `include_parent`
+
+Замер только retrieval+контекста, без LLM, на 60 answerable-кейсах:
+
+| Режим | Expected clause in context | Средне чанков | Средне символов | p50 | p95 |
+|---|---:|---:|---:|---:|---:|
+| `group_size=3`, без parent (текущий дефолт до правки) | 0.9500 | 7.2 | 6 327 | 111 мс | 7 707 мс |
+| `group_size=5`, без parent | 0.9667 | 11.0 | 9 429 | 111 мс | 7 220 мс |
+| `group_size=10`, без parent | 1.0000 | 19.0 | 15 444 | 115 мс | 7 664 мс |
+| `group_size=3`, с parent | 0.8167 | 48.1 | 36 022 | 200 мс | 3 636 мс |
+| `group_size=5`, с parent | 0.8000 | 53.8 | 39 193 | 276 мс | 7 215 мс |
+| `group_size=10`, с parent | 0.8167 | 59.0 | 42 095 | 331 мс | 8 602 мс |
+
+Выводы:
+
+- `include_parent=true` не помогает: он раздувает контекст в 4–5 раз, но снижает `expected_clause_in_context` до 0.80–0.82, потому что при добавлении parent-чанков и trim по бюджету теряется исходный пункт. В `config/parameters.yaml` выставлено `include_parent: false`.
+- `group_size=5` даёт 0.9667 при 9,4 тыс. символов; `group_size=10` даёт 1.0, но 15,4 тыс. символов. Для пилота выбран `group_size=5`.
+- p95 retrieval в этом эксперименте шумный из-за холодного старта; важнее рост среднего числа чанков и символов.
+
+#### Answer eval после context fix (`group_size=5`, без parent)
+
+```text
+found_rate                 = 0.6167
+false_refusal_rate         = 0.3833
+expected_clause_in_context = 0.9667
+false_refusals_with_context = 22
+citation_precision         = 0.4713
+citation_recall            = 0.5833
+citation_accuracy          = 0.8649
+correctness                = 0.5818
+groundedness               = 0.9891
+rerank_fallbacks           = 0
+rerank_empty_rankings      = 5
+no_answer_precision        = 0.3030
+no_answer_recall           = 1.0000
+e2e p50 / p95              = 7.0 с / 98.4 с
+```
+
+Эффект:
+
+- ложные отказы 30 → 23; отказы из-за отсутствия пункта в контексте 11 → 1 (23 всего, 22 — при наличии пункта);
+- found_rate 0.50 → 0.6167, correctness 0.483 → 0.5818;
+- citation precision 0.398 → 0.471, recall 0.50 → 0.583;
+- теперь почти все ложные отказы (22 из 23) — это снова отбраковка citations, а не контекст. Следующий приоритет — контракт citations.
+- e2e p95 98 с — выброс из-за одного долгого LLM/judge-вызова; p50 7.0 с. Латентность всё ещё выше цели 3 с и требует отдельного трека.
+
+
+
 
 
 ## 8. Ограничения текущей оценки
