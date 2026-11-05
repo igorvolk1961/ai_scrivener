@@ -33,6 +33,8 @@
 | rerank_fallbacks | 0 | — |
 | e2e p50 / p95 | 5.7 / 10.9 с | p95 < 3 с |
 
+Последняя попытка полной переиндексации: 30 документов, 4 проиндексировано, 26 упало на `POST /v1/index/chunks` из-за `GigaChat 402 Payment Required`. Неполная коллекция `ai_scrivener_knowledge_pilot_v3_*` удалена; alias не менялся. Текущая RAG-коллекция `v2b` остаётся проверенным кандидатом, но retrieval сейчас недоступен из-за квоты эмбеддингов.
+
 Остаточные проблемы:
 
 - 2 ложных отказа по учебнику Гаджинского: в контексте есть только заголовки разделов 17.2/17.4, нет самого перечня. Это ограничение extraction/полноты корпуса, а не `group_size`.
@@ -42,28 +44,38 @@
 - Метрики сняты на rechunk-коллекции, а не на полной переиндексации с Paddle/OCR.
 - В 1С активный промпт в базе может быть старой версии; seed обновлён, runtime-инструкция добавлена, но БД нужно проверить.
 
+### Решение по реранкеру
+
+**GigaChat не использовать до явного указания владельца продукта.** Метрики GigaChat-3-Pro и GigaChat3-10B в этом плане и в `docs/rag-metrics-results.md` — исторические; новые прогоны с ними не запускать. Текущий дефолт 1С — `deepseek-chat`; модель задаётся `Константа.АИС_МодельИИ`. Для production-политики (GigaChat + BAAI) нужно отдельное явное указание и повторный eval; до этого production-конфигурацию не менять.
+
 ## 2. Приоритеты
 
 ### P0. Полная переиндексация пилота и повторный eval
 
-- [ ] Собрать indexer с PaddleOCR (`WITH_PADDLE=1`).
-- [ ] Создать новую коллекцию через `collection-create`.
-- [ ] Переиндексировать 30 пилотных документов с `--ocr paddle`, `PIPELINE_VERSION=2`, `--target-collection <new>`.
-- [ ] Проверить, что в новой коллекции у 2 «учебниковых» кейсов есть текст разделов, а не только заголовки.
-- [ ] Прогнать retrieval-eval и answer-eval на новой коллекции с `group_size=5`, без parent, labels-only.
-- [ ] Сравнить с текущими метриками; зафиксировать результат в `docs/rag-evaluation.md`.
+Статус на 2026-11-05: Cloud.ru embeddings и BAAI доступны; GigaChat-модели не использовать до явного указания. Alias переведён на Cloud.ru-коллекцию; answer-модель для новых прогонов — DeepSeek, пока не будет отдельного решения по production.
+
+- [x] Собрать indexer с PaddleOCR (`WITH_PADDLE=1`).
+- [x] Исправить системные зависимости OCR: `libgl1`, `libglib2.0-0`, `libgomp1`, `libsm6`, `libxext6`, `libxrender1` в `rag-service/Dockerfile.indexer`; OCR проверен на реальной странице.
+- [x] Создать новую коллекцию через `collection-create`.
+- [x] Переиндексировать 30 пилотных документов с `--ocr paddle`, `PIPELINE_VERSION=2`, `--target-collection <new>`.
+- [x] Перейти на Cloud.ru Foundation Models (`ai-sage/Giga-Embeddings-instruct-480M`, 1024); reranker `BAAI/bge-reranker-v2-m3` подключён кодом, но не включён в production.
+- [x] Проверить, что в новой коллекции у 2 «учебниковых» кейсов есть текст разделов: полная переиндексация 30/30, 5538 чанков.
+- [x] Прогнать retrieval-eval и answer-eval на новой коллекции с `group_size=5`, без parent, labels-only.
+- [x] Сравнить с текущими метриками; зафиксировать результат в `docs/rag-evaluation.md`.
+- [x] Rollout: production 8080 перезапущен с Cloud.ru embeddings, alias `ai_scrivener_knowledge_current` переведён на `cloudru_pilot_v1_1793908370`; retrieval eval 1.0/1.0/1.0, p95 180 мс.
+- [ ] Если включать Cloud.ru reranker — сначала ограничить число кандидатов/батчи: сейчас p95 retrieval 17 с, e2e p95 39 с.
 
 Критерий: found_rate ≥ 0.9667, citation_accuracy ≥ 0.95, no_answer_precision ≥ 0.90 на полной переиндексации, а не на rechunk.
 
 ### P1. Развернуть проверенные изменения
 
-- [ ] Пересобрать/перезапустить `rag-service` с `group_size=5` и `include_parent=false`.
-- [ ] Обновить активный промпт `ОтветПоБазеЗнаний` в базе 1С на формат `citations: [string]`; проверить, что runtime-инструкция не конфликтует с текстом промпта.
+- [x] Пересобрать/перезапустить `rag-service` с `group_size=5`, `include_parent=false`, Cloud.ru provider.
+- [x] Переключить alias на `cloudru_pilot_v1_1793908370`; retrieval eval на production: 1.0/1.0/1.0, p95 180 мс.
+- [ ] Обновить активный промпт `ОтветПоБазеЗнаний` в базе 1С на формат `citations: [string]`; runtime-инструкция уже добавлена, но текст промпта в БД нужно привести к той же схеме.
 - [ ] Прогнать ручной e2e-сценарий из 1С на 5–10 вопросах: found, citations, источники, ошибки.
-- [ ] Переключить alias на новую коллекцию только после прохождения eval и ручного теста.
-- [ ] Подготовить rollback: предыдущая коллекция и alias-switch обратно.
+- [ ] Зафиксировать rollback: alias обратно на старую коллекцию невозможен без GigaChat; хранить старую коллекцию только как архив.
 
-Критерий: 1С получает ответы с валидными citations, alias переключён, rollback проверен.
+Критерий: 1С получает ответы с валидными citations, alias переключён. Текущее качество на Cloud.ru без RAG-reranker: found_rate 0.933, citation_accuracy 0.893, correctness 0.912, e2e p95 13.1 с.
 
 ### P1. Латентность
 

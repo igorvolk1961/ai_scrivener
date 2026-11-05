@@ -103,32 +103,30 @@ class Retriever:
         rerank_ms = 0.0
         if use_rerank and reranker is not None and candidates:
             rerank_started = time.perf_counter()
-            documents = [candidate.embedding_text or candidate.text for candidate in candidates]
+            rerank_limit = max(1, rag.rerank_candidate_limit)
+            head = candidates[:rerank_limit]
+            tail = candidates[rerank_limit:]
+            documents = [candidate.embedding_text or candidate.text for candidate in head]
             scores = await reranker.score(query, documents)
-            if len(scores) != len(candidates):
+            if len(scores) != len(head):
                 raise RuntimeError("reranker returned unexpected score count")
-            for candidate, raw_score in zip(candidates, scores, strict=True):
+            for candidate, raw_score in zip(head, scores, strict=True):
                 candidate.rerank_score = raw_score
                 candidate.score = _sigmoid(raw_score)
                 candidate.score_type = "rerank_sigmoid"
-            candidates.sort(key=lambda candidate: candidate.score, reverse=True)
+            head.sort(key=lambda candidate: candidate.score, reverse=True)
+            candidates = [*head, *tail]
             rerank_ms = (time.perf_counter() - rerank_started) * 1000
             if rag.search_min_score > 0:
                 candidates = [
-                    candidate
-                    for candidate in candidates
-                    if candidate.score >= rag.search_min_score
+                    candidate for candidate in candidates if candidate.score >= rag.search_min_score
                 ]
 
         group_by_source = (
-            request.group_by_source
-            if request.group_by_source is not None
-            else rag.group_by_source
+            request.group_by_source if request.group_by_source is not None else rag.group_by_source
         )
         include_parent = (
-            request.include_parent
-            if request.include_parent is not None
-            else rag.include_parent
+            request.include_parent if request.include_parent is not None else rag.include_parent
         )
 
         if group_by_source:

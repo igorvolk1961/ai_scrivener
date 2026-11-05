@@ -74,6 +74,7 @@ class RagParameters(BaseModel):
     rerank_enabled: bool
     rerank_model: str
     rerank_batch_size: int
+    rerank_candidate_limit: int
     sparse_model: str
     sparse_language: str
     sparse_avg_len: float
@@ -144,12 +145,18 @@ class ServiceSettings(BaseSettings):
     qdrant_url: str
     qdrant_collection: str
     qdrant_api_key: SecretStr | None = None
-    gigachat_oauth_url: str
-    gigachat_api_url: str
-    gigachat_client_id: str
-    gigachat_client_secret: SecretStr
-    gigachat_scope: str
-    gigachat_model: str
+    embedding_provider: str = "cloudru"
+    foundation_api_url: str = "https://foundation-models.api.cloud.ru"
+    foundation_api_key: SecretStr | None = None
+    foundation_embedding_model: str = "ai-sage/Giga-Embeddings-instruct-480M"
+    foundation_rerank_model: str = "BAAI/bge-reranker-v2-m3"
+    rerank_provider: str = "cloudru"
+    gigachat_oauth_url: str | None = None
+    gigachat_api_url: str | None = None
+    gigachat_client_id: str | None = None
+    gigachat_client_secret: SecretStr | None = None
+    gigachat_scope: str | None = None
+    gigachat_model: str | None = None
     gigachat_ca_bundle: str | None = None
 
 

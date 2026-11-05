@@ -9,6 +9,7 @@ from typing import Annotated, Any, Protocol, cast
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
 
 from rag_service.chunking import ChunkingError, TextChunk, chunk_structured_text
+from rag_service.cloudru import CloudRuEmbedder, CloudRuError, CloudRuReranker
 from rag_service.config import (
     ApplicationParameters,
     ConfigurationError,
@@ -123,7 +124,14 @@ def create_app(
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         resolved_parameters = parameters or load_parameters()
         resolved_settings = settings or load_settings()
-        resolved_embedder = embedder or GigaChatClient(resolved_settings, resolved_parameters)
+        if embedder is not None:
+            resolved_embedder = embedder
+        elif resolved_settings.embedding_provider == "cloudru":
+            resolved_embedder = CloudRuEmbedder(resolved_settings, resolved_parameters)
+        elif resolved_settings.embedding_provider == "gigachat":
+            resolved_embedder = GigaChatClient(resolved_settings, resolved_parameters)
+        else:
+            raise ConfigurationError("RAG_EMBEDDING_PROVIDER must be 'gigachat' or 'cloudru'")
         resolved_store = store or QdrantStore(
             url=str(resolved_settings.qdrant_url),
             collection=str(resolved_settings.qdrant_collection),
@@ -142,10 +150,18 @@ def create_app(
             )
         resolved_reranker = reranker
         if resolved_reranker is None and resolved_parameters.rag.rerank_enabled:
-            resolved_reranker = FastEmbedReranker(
-                resolved_parameters.rag.rerank_model,
-                resolved_parameters.rag.rerank_batch_size,
-            )
+            if resolved_settings.rerank_provider == "cloudru":
+                resolved_reranker = CloudRuReranker(
+                    resolved_settings,
+                    resolved_parameters,
+                )
+            elif resolved_settings.rerank_provider == "fastembed":
+                resolved_reranker = FastEmbedReranker(
+                    resolved_parameters.rag.rerank_model,
+                    resolved_parameters.rag.rerank_batch_size,
+                )
+            else:
+                raise ConfigurationError("RAG_RERANK_PROVIDER must be 'fastembed' or 'cloudru'")
         dimension = await resolved_embedder.probe_dimension()
         configured = resolved_parameters.rag.embedding_dimension
         if configured is not None and configured != dimension:
@@ -252,7 +268,7 @@ def create_app(
                 limit=resolved_parameters.rag.top_k,
                 min_score=resolved_parameters.rag.search_min_score,
             )
-        except (GigaChatError, VectorStoreError) as error:
+        except (CloudRuError, GigaChatError, VectorStoreError) as error:
             logger.exception("search failed")
             raise HTTPException(
                 status_code=status.HTTP_502_BAD_GATEWAY,
@@ -268,7 +284,13 @@ def create_app(
     async def retrieve(request: Request, payload: RetrieveRequest) -> RetrieveResponse:
         try:
             return await _retriever(request).retrieve(payload)
-        except (GigaChatError, VectorStoreError, SparseEncoderError, RerankerError) as error:
+        except (
+            CloudRuError,
+            GigaChatError,
+            VectorStoreError,
+            SparseEncoderError,
+            RerankerError,
+        ) as error:
             logger.exception("retrieve failed")
             raise HTTPException(
                 status_code=status.HTTP_502_BAD_GATEWAY,
@@ -303,7 +325,13 @@ def create_app(
                     vectors,
                     sparse_vectors,
                 )
-        except (GigaChatError, VectorStoreError, SparseEncoderError, ChunkingError) as error:
+        except (
+            CloudRuError,
+            GigaChatError,
+            VectorStoreError,
+            SparseEncoderError,
+            ChunkingError,
+        ) as error:
             logger.exception("index upsert failed")
             raise HTTPException(
                 status_code=status.HTTP_502_BAD_GATEWAY,
@@ -355,7 +383,13 @@ def create_app(
                 all_vectors,
                 all_sparse_vectors,
             )
-        except (GigaChatError, VectorStoreError, SparseEncoderError, ChunkingError) as error:
+        except (
+            CloudRuError,
+            GigaChatError,
+            VectorStoreError,
+            SparseEncoderError,
+            ChunkingError,
+        ) as error:
             logger.exception("index replace failed")
             raise HTTPException(
                 status_code=status.HTTP_502_BAD_GATEWAY,
@@ -378,9 +412,7 @@ def create_app(
         response_model=IndexChunksResponse,
         dependencies=[Depends(_require_token)],
     )
-    async def index_chunks(
-        request: Request, payload: IndexChunksRequest
-    ) -> IndexChunksResponse:
+    async def index_chunks(request: Request, payload: IndexChunksRequest) -> IndexChunksResponse:
         resolved_embedder = _embedder(request)
         resolved_store = _store(request)
         sparse = _sparse_encoder(request)
@@ -393,9 +425,7 @@ def create_app(
         texts = [chunk.embedding_text or chunk.text for chunk in payload.chunks]
         try:
             dense_vectors = await resolved_embedder.embed(texts)
-            sparse_vectors = (
-                await sparse.embed_documents(texts) if sparse is not None else None
-            )
+            sparse_vectors = await sparse.embed_documents(texts) if sparse is not None else None
             indexed_chunks = await resolved_store.upsert_chunks(
                 payload.source_type,
                 document,
@@ -406,7 +436,7 @@ def create_app(
                 active=payload.active,
                 collection_name=payload.target_collection,
             )
-        except (GigaChatError, VectorStoreError, SparseEncoderError) as error:
+        except (CloudRuError, GigaChatError, VectorStoreError, SparseEncoderError) as error:
             logger.exception("index chunks failed")
             raise HTTPException(
                 status_code=status.HTTP_502_BAD_GATEWAY,
@@ -430,9 +460,7 @@ def create_app(
         response_model=ActivateResponse,
         dependencies=[Depends(_require_token)],
     )
-    async def activate_document(
-        request: Request, payload: ActivateRequest
-    ) -> ActivateResponse:
+    async def activate_document(request: Request, payload: ActivateRequest) -> ActivateResponse:
         try:
             activated = await _store(request).activate_document(
                 payload.source_type,
@@ -458,9 +486,7 @@ def create_app(
         response_model=CleanupResponse,
         dependencies=[Depends(_require_token)],
     )
-    async def cleanup_inactive(
-        request: Request, payload: CleanupRequest
-    ) -> CleanupResponse:
+    async def cleanup_inactive(request: Request, payload: CleanupRequest) -> CleanupResponse:
         try:
             deleted = await _store(request).cleanup_inactive(
                 payload.older_than_hours,

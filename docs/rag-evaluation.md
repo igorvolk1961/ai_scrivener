@@ -590,6 +590,133 @@ e2e p50 / p95              = 7.0 с / 98.4 с
 - Следующие шаги: latency-трек, abstention/no-answer, полная переиндексация и расширение golden set.
 
 
+### 7.4. Cloud.ru embeddings и reranker
+
+GigaChat embeddings вернул `402 Payment Required`; для разблокировки подключён Cloud.ru Foundation Models:
+
+- embeddings: `ai-sage/Giga-Embeddings-instruct-480M`, размерность 1024;
+- reranker: `BAAI/bge-reranker-v2-m3` через `/score`;
+- полная переиндексация 30 пилотных документов с PaddleOCR: 30/30, 5538 чанков, коллекция `cloudru_pilot_v1_1793908370`.
+
+Результаты полного answer-eval на Cloud.ru-коллекции (`group_size=5`, без parent, labels-only):
+
+| Метрика | Без RAG-rerank | С Cloud.ru cross-encoder (50) + DeepSeek listwise + answer |
+|---|---:|---:|
+| Recall@10 / MRR / nDCG | 1.0 / 1.0 / 1.0 | 1.0 / 1.0 / 1.0 |
+| found_rate | 0.9333 | **0.9500** |
+| false_refusals | 4 | **3** |
+| expected_clause_in_context | 0.8833 | **0.9333** |
+| citation_precision | 0.8111 | **0.8710** |
+| citation_recall | 0.8333 | **0.8833** |
+| citation_accuracy | 0.8929 | **0.9298** |
+| correctness | 0.9123 | **0.9298** |
+| groundedness | 1.0000 | 1.0000 |
+| no_answer_precision | 0.7143 | **0.7692** |
+| no_answer_recall | 1.0000 | 1.0000 |
+| retrieval p95 | 0.76 с | 17.0 с |
+| e2e p50 / p95 | 6.2 / 13.1 с | 8.3 / 39.1 с |
+
+Выводы:
+
+- Cloud.ru полностью разблокировал индексацию и retrieval; качество немного ниже, чем у v2b на GigaChat, но сервис снова работоспособен.
+- Cloud.ru reranker улучшает found/citation/correctness, но p95 retrieval 17 с и e2e 39 с — для production в таком виде не подходит. Нужно ограничить число кандидатов на реранк и/или батчи, прежде чем включать.
+- Без RAG-reranker качество ниже цели `citation_accuracy ≥ 0.95`, но лучше, чем недоступный сервис.
+- Рекомендуется временно развернуть Cloud.ru embeddings без RAG-reranker для восстановления Q&A, сохранив v2b/GigaChat для сравнения и rollback; reranker включать после тюнинга.
+
+
+Production-переключение выполнено: `rag-service` перезапущен с Cloud.ru embeddings (1024), alias `ai_scrivener_knowledge_current` переведён на `cloudru_pilot_v1_1793908370`. Retrieval на production: Recall@10/MRR/nDCG = 1.0, p95 ≈ 180 мс. Старая GigaChat-конфигурация выведена из эксплуатации: сервер изменил политику, возврат к ней не планируется. Answer-качество production сейчас соответствует колонке «без RAG-rerank»: found_rate 0.933, citation_accuracy 0.893, correctness 0.912, e2e p95 13.1 с.
+
+
+#### Корректное сравнение реранкеров: 15 против 15
+
+Первое сравнение было некорректным: Cloud.ru cross-encoder обрабатывал 50 кандидатов (4 батча `/score`), а DeepSeek listwise — только первые 15. Добавлен параметр `rag.rerank_candidate_limit=15`: cross-encoder теперь оценивает первые 15 кандидатов, остальные сохраняются в порядке RRF, как в 1С.
+
+| Метрика | DeepSeek listwise (15) + DeepSeek answer | Cloud.ru cross-encoder (15) + DeepSeek listwise (15) + DeepSeek answer |
+|---|---:|---:|
+| found_rate | 0.9333 | 0.9492 |
+| citation_accuracy | 0.8929 | 0.9107 |
+| correctness | 0.9123 | 0.9322 |
+| no_answer_precision | 0.7143 | 0.7692 |
+| retrieval p95 | 0.76 с | 1.38 с |
+| e2e p50 / p95 | 6.2 / 13.1 с | 7.1 / 23.9 с |
+
+Важно: DeepSeek в обеих колонках делает **два отдельных вызова** — сначала listwise-реранк, затем ответ. Cloud.ru cross-encoder не формирует ответ; он только переставляет кандидатов перед DeepSeek listwise. То есть в первой колонке два вызова, во второй — три (Cloud.ru `/score` + два вызова DeepSeek).
+
+Вывод: при одинаковом числе кандидатов Cloud.ru cross-encoder даёт около +2 п.п. к found/citation accuracy и correctness, но e2e p50 растёт примерно на 0.9 с, а p95 — заметно выше. Для production это всё ещё плохой размен; DeepSeek listwise остаётся реранкером по умолчанию, cross-encoder — экспериментальный. Предыдущие 17 с retrieval и 39 с e2e относились к режиму 50 кандидатов и не должны использоваться для сравнения.
+
+
+#### Постадийный бенчмарк: почему e2e растёт сильнее retrieval
+
+20 кейсов, последовательно, без кэша и без judge, одинаковые промпты и модель ответа:
+
+Пайплайны:
+
+```text
+A: retrieval → DeepSeek listwise → DeepSeek answer
+B: retrieval → Cloud.ru cross-encoder → DeepSeek listwise → DeepSeek answer
+```
+
+**Важно:** вариант B — это двойное реранжирование. Он был собран для проверки «что даст добавление cross-encoder к уже работающему listwise», а не как кандидат в production. В production нужен **один** реранкер: либо DeepSeek listwise, либо Cloud.ru cross-encoder. Сравнение single-reranker pipeline — отдельный эксперимент.
+
+DeepSeek listwise присутствует **в обоих** пайплайнах; в B он получает уже переставленный Cloud.ru список, поэтому его вход и latency отличаются.
+
+| Этап | A: DeepSeek only, p50 / p95 | B: Cloud.ru 15 + DeepSeek, p50 / p95 |
+|---|---:|---:|
+| RAG retrieval (в B включает Cloud.ru `/score`) | 317 / 496 мс | 700 / 983 мс |
+| — в том числе Cloud.ru cross-encoder | — | ≈ 383 / 487 мс (разница retrieval) |
+| DeepSeek listwise (есть в обоих) | 4 368 / 6 703 мс | 5 031 / 8 108 мс |
+| DeepSeek answer (есть в обоих) | 2 295 / 5 563 мс | 2 286 / 3 919 мс |
+| e2e (сумма этапов) | 6 880 / 12 464 мс | 8 957 / 14 107 мс |
+| контекст, символов (p50) | 13 523 | 13 214 |
+
+Что видно:
+
+- Стадия **answer** присутствует в обоих пайплайнах и практически не изменилась: p50 2.295 с против 2.286 с; разница в p95 — шум и разная длина ответа, а не влияние реранкера.
+- **DeepSeek listwise тоже есть в обоих** пайплайнах. В B он идёт после Cloud.ru cross-encoder и получает другой порядок/состав первых 15 кандидатов, поэтому его latency отличается (+0.66 с p50). Это не «реранкер участвует в формировании ответа».
+- Прирост e2e даёт дополнительный **Cloud.ru `/score`** в retrieval (+≈0.38 с p50) и изменение входа **DeepSeek listwise** (+0.66 с p50).
+- p95 на 20–70 кейсах нестабилен; один долгий LLM-вызов сдвигает его сильнее, чем средний вклад cross-encoder.
+
+Поэтому объяснение простое: answer-стадия одинаковая, а разница e2e — это дополнительный retrieval-вызов плюс изменение входа для listwise-реранка. Вывод по production не меняется: DeepSeek listwise, Cloud.ru cross-encoder — экспериментальный.
+
+
+#### Итоговое paired-сравнение на 70 кейсах
+
+Один и тот же golden set, одна коллекция, одна модель ответа и judge. Различается только реранкер:
+
+- **A**: retrieval → DeepSeek listwise (15) → DeepSeek answer;
+- **B**: retrieval → Cloud.ru cross-encoder (15) → DeepSeek answer (без listwise).
+
+| Метрика | A: DeepSeek listwise | B: Cloud.ru cross-encoder only |
+|---|---:|---:|
+| found_rate | 0.9333 | **0.9500** |
+| false_refusals | 4 | **3** |
+| expected_clause_in_context | 0.8833 | **0.9167** |
+| citation_precision | 0.8111 | **0.8602** |
+| citation_recall | 0.8333 | **0.8667** |
+| citation_accuracy | 0.8929 | **0.9123** |
+| correctness | 0.9123 | **0.9474** |
+| groundedness | 1.0000 | 1.0000 |
+| no_answer_precision | 0.7143 | **0.7692** |
+| no_answer_recall | 1.0000 | 1.0000 |
+| retrieval p50 / p95 | **0.16 / 0.76 с** | 0.70 / 16.69 с |
+| e2e p50 / p95 | 6.20 / **13.13 с** | **2.91** / 52.34 с |
+
+Выводы:
+
+- B немного лучше по качеству: +1.7 п.п. found, +1.9 п.п. citation accuracy, +3.5 п.п. correctness.
+- B существенно лучше по p50 (2.9 с против 6.2 с), но катастрофически хуже по p95: 52 с против 13 с. Причина — хвост Cloud.ru `/score`: retrieval p95 16.7 с.
+- Обе конфигурации не достигают citation_accuracy ≥ 0.95; вопрос качества ещё открыт.
+- Production остаётся на A: стабильный p95 важнее p50. Cloud.ru cross-encoder-only можно пробовать только с таймаутом/fallback на RRF, чтобы срезать хвост; иначе переключать нельзя.
+
+
+Важная поправка: **e2e p95 нельзя использовать как метрику реранкера**. E2E включает answer-стадию и её выбросы; 52 с — это системная latency, а не вклад `/score`. Для выбора реранкера корректны:
+
+- latency самого этапа: retrieval p95 с Cloud.ru cross-encoder = 16.7 с; stage p95 DeepSeek listwise в 20-кейсовом бенчмарке = 6.7 с;
+- качество на одних и тех же кейсах: B лучше на +1.7–3.5 п.п.
+
+То есть вывод «Cloud.ru не подходит» нельзя делать из e2e p95 52 с. Корректный вывод: у Cloud.ru cross-encoder пока высокий **собственный** stage p95 (16.7 с), и его надо либо ограничить таймаутом/fallback, либо разворачивать локально. После этого сравнение качества и stage-latency нужно повторить. Production пока остаётся на DeepSeek из-за stage p95, а не из-за e2e-хвоста.
+
+
 
 
 
@@ -617,3 +744,37 @@ e2e p50 / p95              = 7.0 с / 98.4 с
 - Answer-контур уже реализован в `tools/llm_eval`: RAG → production-промпт → DeepSeek → детерминированная проверка citations → LLM-judge по рубрике → JSON/Markdown-отчёт.
 
 `ragas` имеет смысл добавить позже как optional dev-зависимость, если понадобятся стандартные `faithfulness`, `answer_relevancy`, `context_precision`/`context_recall` для сравнения с внешними бенчмарками. В CI эти прогоны не включаются из-за стоимости и недетерминированности LLM.
+
+## 10. Политика: без зарубежных моделей >1B
+
+Проверка production-контура:
+
+| Компонент | Модель | Происхождение | Размер | Статус |
+|---|---|---|---:|---|
+| Embeddings | `ai-sage/Giga-Embeddings-instruct-480M` | domestic (Cloud.ru/ai-sage) | 480M | соответствует |
+| RAG cross-encoder | `BAAI/bge-reranker-v2-m3` | foreign | 568M | <1B, выключен; если запрещены все foreign — удалить |
+| Listwise rerank + answer | `GigaChat/GigaChat-3-Pro` | domestic | не раскрыт | соответствует |
+| DeepSeek (старый контур) | `deepseek-v4-flash` / `deepseek-chat` | foreign | >1B | **удалён из production** |
+
+Полный eval domestic-контура (`GigaChat-3-Pro` для listwise и answer, 70 кейсов):
+
+| Метрика | DeepSeek | GigaChat-3-Pro |
+|---|---:|---:|
+| found_rate | 0.9333 | **0.9833** |
+| false_refusals | 4 | **1** |
+| citation_precision | 0.8111 | **0.8804** |
+| citation_recall | 0.8333 | **0.8833** |
+| citation_accuracy | 0.8929 | **0.8983** |
+| correctness | 0.9123 | **0.9417** |
+| groundedness | 1.0000 | 0.9536 |
+| no_answer_precision | 0.7143 | **0.9091** |
+| no_answer_recall | 1.0000 | 1.0000 |
+| e2e p50 / p95 | 6.2 / 13.1 с | **3.18 / 6.22 с** |
+
+`GigaChat3-10B` проверен отдельно: быстрый (p50 1.35 с), но качество заметно ниже (found 0.65, correctness 0.575), поэтому выбран `GigaChat-3-Pro`.
+
+1С переключён в коде: `ВызватьИИ` использует `foundation-models.api.cloud.ru`, модель принудительно `GigaChat/GigaChat-3-Pro`; seed-промпты обновлены. Для запуска нужно:
+
+1. записать Cloud.ru-ключ в `Константа.АИС_КлючИИ` (ключ хранится в базе, не в репозитории);
+2. обновить активный промпт `ОтветПоБазеЗнаний` в базе до labels-only (runtime-инструкция уже есть);
+3. опубликовать расширение и прогнать ручной e2e из 1С.

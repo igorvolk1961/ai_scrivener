@@ -35,7 +35,7 @@ rag:
   top_k: 10
   timeout_seconds: 30
   embedding_batch_size: 32
-  embedding_dimension: 2560
+  embedding_dimension: 1024
   chunk_size_chars: 1000
   chunk_overlap_chars: 150
   index_sync_interval_minutes: 5
@@ -47,6 +47,7 @@ rag:
   rerank_enabled: false
   rerank_model: BAAI/bge-reranker-v2-m3-int8
   rerank_batch_size: 16
+  rerank_candidate_limit: 15
   sparse_model: Qdrant/bm25
   sparse_language: russian
   sparse_avg_len: 350

@@ -8,6 +8,10 @@ COPY rag-service/pyproject.toml rag-service/uv.lock ./
 COPY rag-service/src ./src
 
 RUN if [ "$WITH_PADDLE" = "1" ]; then \
+      apt-get update && \
+      DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        libgl1 libglib2.0-0 libgomp1 libsm6 libxext6 libxrender1 && \
+      rm -rf /var/lib/apt/lists/* && \
       uv sync --frozen --no-dev --extra indexer --extra ocr-paddle; \
     else \
       uv sync --frozen --no-dev --extra indexer; \

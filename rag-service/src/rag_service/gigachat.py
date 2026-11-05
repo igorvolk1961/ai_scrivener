@@ -24,6 +24,29 @@ class GigaChatClient:
     ) -> None:
         self._settings = settings
         self._parameters = parameters
+        oauth_url = settings.gigachat_oauth_url
+        api_url = settings.gigachat_api_url
+        client_id = settings.gigachat_client_id
+        client_secret = settings.gigachat_client_secret
+        scope = settings.gigachat_scope
+        model = settings.gigachat_model
+        if (
+            oauth_url is None
+            or api_url is None
+            or client_id is None
+            or client_secret is None
+            or scope is None
+            or model is None
+        ):
+            raise GigaChatError(
+                "GigaChat is no longer configured; use RAG_EMBEDDING_PROVIDER=cloudru"
+            )
+        self._oauth_url = oauth_url
+        self._api_url = api_url
+        self._client_id = client_id
+        self._client_secret = client_secret
+        self._scope = scope
+        self._model = model
         verify: bool | str = settings.gigachat_ca_bundle or True
         self._client = client or httpx.AsyncClient(
             timeout=httpx.Timeout(parameters.gigachat.request_timeout_seconds),
@@ -44,10 +67,7 @@ class GigaChatClient:
         now = time.time()
         if self._token is not None and now < self._token_expires_at:
             return self._token
-        credentials = (
-            f"{self._settings.gigachat_client_id}:"
-            f"{self._settings.gigachat_client_secret.get_secret_value()}"
-        )
+        credentials = f"{self._client_id}:{self._client_secret.get_secret_value()}"
         encoded = base64.b64encode(credentials.encode("utf-8")).decode("ascii")
         headers = {
             "Authorization": f"Basic {encoded}",
@@ -56,9 +76,9 @@ class GigaChatClient:
         }
         response = await self._request_with_retries(
             "POST",
-            str(self._settings.gigachat_oauth_url),
+            self._oauth_url,
             headers=headers,
-            data={"scope": self._settings.gigachat_scope},
+            data={"scope": self._scope},
         )
         payload = response.json()
         token = payload.get("access_token")
@@ -95,9 +115,9 @@ class GigaChatClient:
         token = await self._get_token()
         response = await self._request_with_retries(
             "POST",
-            str(self._settings.gigachat_api_url),
+            self._api_url,
             headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
-            json={"model": self._settings.gigachat_model, "input": texts},
+            json={"model": self._model, "input": texts},
         )
         payload = response.json()
         data = payload.get("data")
