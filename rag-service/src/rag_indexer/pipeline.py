@@ -18,7 +18,7 @@ from rag_indexer.manifest import CorpusRecord
 from rag_indexer.ocr.models import OcrEngine
 from rag_indexer.state import IndexState
 
-PIPELINE_VERSION = "1"
+PIPELINE_VERSION = "2"  # chunker: clause boundaries, heading clauses, list items
 SOURCE_TYPE = "knowledge_material"
 
 

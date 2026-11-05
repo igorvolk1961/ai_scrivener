@@ -9,7 +9,7 @@ from rag_indexer.chunking import ChunkerOptions, ClauseAwareChunker
 from rag_indexer.client import RagClient
 from rag_indexer.extraction import DocumentExtractor
 from rag_indexer.manifest import CorpusRecord
-from rag_indexer.pipeline import IndexPipeline
+from rag_indexer.pipeline import PIPELINE_VERSION, IndexPipeline
 from rag_indexer.state import IndexState
 
 
@@ -109,8 +109,10 @@ def test_pipeline_batches_chunks_and_replaces_only_first_batch(tmp_path: Path) -
     assert [payload["replace_existing"] for payload in client.payloads] == [False, False]
     assert [payload["active"] for payload in client.payloads] == [False, False]
     assert [len(payload["chunks"]) for payload in client.payloads] == [2, 1]
-    assert client.payloads[0]["document"]["version"] == "abc123:1"
-    assert client.activated == [("knowledge_material", "abc123", "abc123:1")]
+    assert client.payloads[0]["document"]["version"] == f"abc123:{PIPELINE_VERSION}"
+    assert client.activated == [
+        ("knowledge_material", "abc123", f"abc123:{PIPELINE_VERSION}")
+    ]
 
 
 def test_pipeline_dry_run_does_not_call_client_or_state(tmp_path: Path) -> None:

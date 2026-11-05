@@ -192,3 +192,109 @@ def test_chunker_merges_small_tail() -> None:
 
     assert len(chunks) == 1
     assert "1 Общие положения" in chunks[0].text
+
+
+def test_chunker_does_not_merge_distinct_clauses() -> None:
+    document = _document(
+        [
+            _block(
+                "28. Акты приемки регистрируются. "
+                "29. Претензия предъявляется отправителю. "
+                "30. По получении претензии руководитель рассматривает её."
+            )
+        ]
+    )
+
+    chunks = ClauseAwareChunker(
+        ChunkerOptions(target_tokens=500, max_tokens=1000, min_tokens=1)
+    ).chunk(document)
+
+    assert [chunk.clause for chunk in chunks] == ["28", "29", "30"]
+
+
+def test_chunker_keeps_inline_clause_marker() -> None:
+    document = _document(
+        [
+            _block(
+                "2 УХЛ4 УХЛ4.1 У5 04 04.1 Т5 ТС2 В5 "
+                "(Введен дополнительно, Изм. № 4). "
+                "2.8. В условное обозначение изделия вводят буквы и цифры."
+            )
+        ]
+    )
+
+    chunks = ClauseAwareChunker(
+        ChunkerOptions(target_tokens=500, max_tokens=1000, min_tokens=1)
+    ).chunk(document)
+
+    assert any(chunk.clause == "2.8" for chunk in chunks)
+    assert any("2.8." in chunk.text for chunk in chunks)
+
+
+def test_chunker_inherits_heading_clause_for_body() -> None:
+    document = _document(
+        [
+            _block(
+                "17.2 Основные виды материальных запасов",
+                kind="heading",
+                heading_level=2,
+            ),
+            _block("Материальные запасы делятся на производственные и товарные."),
+        ]
+    )
+
+    chunks = ClauseAwareChunker().chunk(document)
+
+    assert len(chunks) == 1
+    assert chunks[0].clause == "17.2"
+
+
+def test_chunker_does_not_treat_list_items_as_clauses() -> None:
+    document = _document(
+        [
+            _block(
+                "58. При погрузке груза в таре необходимо соблюдать требования: "
+                "1) тара загружается не более номинальной массы брутто; "
+                "2) груз находится ниже уровня бортов; "
+                "3) стенки тары находятся в закрытом положении."
+            )
+        ]
+    )
+
+    chunks = ClauseAwareChunker(
+        ChunkerOptions(target_tokens=500, max_tokens=1000, min_tokens=1)
+    ).chunk(document)
+
+    assert any(chunk.clause == "58" for chunk in chunks)
+    assert all(chunk.clause in {"", "58"} for chunk in chunks)
+
+
+def test_chunker_does_not_take_table_number_as_clause() -> None:
+    document = _document(
+        [
+            _block(
+                "2 УХЛ4 УХЛ4.1 У5 04 04.1 Т5 ТС2\n"
+                "Наименование | Значение",
+                kind="table",
+            )
+        ]
+    )
+
+    chunks = ClauseAwareChunker().chunk(document)
+
+    assert all(chunk.clause == "" for chunk in chunks)
+
+
+def test_chunker_does_not_merge_small_tail_with_other_clause() -> None:
+    document = _document(
+        [
+            _block("1. Первый пункт."),
+            _block("2. Второй пункт."),
+        ]
+    )
+
+    chunks = ClauseAwareChunker(
+        ChunkerOptions(target_tokens=2, max_tokens=100, min_tokens=50)
+    ).chunk(document)
+
+    assert [chunk.clause for chunk in chunks] == ["1", "2"]

@@ -110,12 +110,35 @@ class ClauseAwareChunker:
     ) -> list[Chunk]:
         chunks: list[Chunk] = []
         buffer: list[Block] = []
+        carry_clause = ""
 
         def flush() -> None:
+            nonlocal carry_clause
             if not buffer:
                 return
-            chunks.append(self._make_chunk(title, section, source_id, buffer))
+            chunk = self._make_chunk(
+                title,
+                section,
+                source_id,
+                buffer,
+                carry_clause,
+            )
+            chunks.append(chunk)
+            if chunk.clause:
+                carry_clause = chunk.clause
             buffer.clear()
+
+        def has_body() -> bool:
+            return any(item.kind != "heading" for item in buffer)
+
+        def buffer_clause() -> str:
+            for item in buffer:
+                if item.kind == "heading":
+                    continue
+                clause = _block_clause(item)
+                if clause:
+                    return clause
+            return carry_clause
 
         for block in section.blocks:
             if not block.text.strip():
@@ -141,6 +164,9 @@ class ClauseAwareChunker:
                     else [expanded_block]
                 )
                 for part in parts:
+                    part_clause = _block_clause(part)
+                    if buffer and has_body() and part_clause and buffer_clause() != part_clause:
+                        flush()
                     candidate = "\n\n".join(item.text for item in [*buffer, part])
                     if buffer and estimate_tokens(candidate) > self._options.target_tokens:
                         flush()
@@ -154,16 +180,10 @@ class ClauseAwareChunker:
         section: Section,
         source_id: str,
         blocks: list[Block],
+        carry_clause: str = "",
     ) -> Chunk:
         text = "\n\n".join(block.text.strip() for block in blocks if block.text.strip())
-        clause = _extract_clause(
-            next(
-                (block.text for block in blocks if block.kind != "heading"),
-                "",
-            )
-        )
-        if not clause:
-            clause = _extract_clause(blocks[0].text)
+        clause = _chunk_clause(blocks, section, carry_clause)
         kinds = {block.kind for block in blocks}
         if "table" in kinds:
             kind = "table"
@@ -218,7 +238,7 @@ class ClauseAwareChunker:
             ]
         if len(groups) <= 1:
             return [block]
-        return [replace(block, text=group) for group in groups]
+        return [_with_clause(block, group) for group in groups]
 
     def _split_table(self, block: Block) -> list[Block]:
         rows = [row.strip() for row in block.text.splitlines() if row.strip()]
@@ -281,6 +301,12 @@ class ClauseAwareChunker:
             previous = chunks[-2]
             if previous.kind == "table" or chunks[-1].kind == "table":
                 break
+            if (
+                previous.clause
+                and chunks[-1].clause
+                and previous.clause != chunks[-1].clause
+            ):
+                break
             merged_text = f"{previous.text}\n\n{chunks[-1].text}"
             if estimate_tokens(merged_text) > self._options.max_tokens:
                 break
@@ -296,8 +322,10 @@ class ClauseAwareChunker:
                         kind=previous.kind,
                         engine="merged",
                         confidence=1.0,
+                        metadata={"clause": previous.clause} if previous.clause else {},
                     )
                 ],
+                previous.clause,
             )
             chunks[-2:] = [merged]
         return chunks
@@ -308,13 +336,70 @@ def _heading_level(block: Block) -> int:
     return int(value) if isinstance(value, int) and value > 0 else 1
 
 
-def _extract_clause(text: str) -> str:
+def _extract_clause(text: str, *, heading: bool = False) -> str:
     stripped = text.strip()
-    match = CLAUSE_RE.match(stripped) or HEADING_CLAUSE_RE.match(stripped)
-    if not match:
-        return ""
-    value = match.group(1).rstrip(".)")
-    return "" if DATE_CLAUSE_RE.match(value) else value
+    match = CLAUSE_RE.match(stripped)
+    if match:
+        raw = match.group(1).strip()
+        value = raw.rstrip(".)").strip()
+        if not heading and raw.endswith(")"):
+            return ""
+        if not heading and re.fullmatch(r"[IVXLC]+", value):
+            return ""
+        return "" if DATE_CLAUSE_RE.match(value) else value
+
+    if heading:
+        heading_match = HEADING_CLAUSE_RE.match(stripped)
+        if heading_match:
+            value = heading_match.group(1).rstrip(".)")
+            return "" if DATE_CLAUSE_RE.match(value) else value
+    return ""
+
+
+def _block_clause(block: Block) -> str:
+    value = block.metadata.get("clause")
+    if isinstance(value, str) and value:
+        return value
+    return _extract_clause(block.text, heading=block.kind == "heading")
+
+
+def _section_clause(section: Section) -> str:
+    for block in reversed(section.blocks):
+        if block.kind == "heading":
+            clause = _block_clause(block)
+            if clause:
+                return clause
+    return ""
+
+
+def _chunk_clause(
+    blocks: list[Block],
+    section: Section,
+    carry_clause: str,
+) -> str:
+    for block in blocks:
+        if block.kind == "heading":
+            continue
+        clause = _block_clause(block)
+        if clause:
+            return clause
+    for block in blocks:
+        if block.kind != "heading":
+            continue
+        clause = _block_clause(block)
+        if clause:
+            return clause
+    return _section_clause(section) or carry_clause
+
+
+def _with_clause(block: Block, text: str) -> Block:
+    metadata = dict(block.metadata)
+    clause = _extract_clause(text, heading=block.kind == "heading")
+    if clause:
+        metadata["clause"] = clause
+    else:
+        metadata.pop("clause", None)
+    return replace(block, text=text, metadata=metadata)
 
 
 def _context_text(
