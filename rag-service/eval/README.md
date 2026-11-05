@@ -29,7 +29,7 @@ uv run --project rag-service python -m rag_service.eval \
   --output artifacts/rag-eval/templates.json
 ```
 
-Метрики: Recall@k, MRR@k, nDCG@k, no-answer accuracy, latency p50/p95.
+Метрики: Recall@k, MRR@k, nDCG@k, no-answer accuracy, latency p50/p95. Формулы, ограничения и answer-метрики — `docs/rag-evaluation.md`.
 
 ## Knowledge golden set (2026-11-05)
 
