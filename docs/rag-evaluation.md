@@ -1,7 +1,7 @@
 # Метрики и оценка RAG
 
 Дата: 2026-11-05
-Статус: рабочая техническая записка. Retrieval-метрики реализованы и измерены; answer-метрики описаны как целевой контур и пока не реализованы.
+Статус: рабочая техническая записка. Retrieval-метрики и answer-контур реализованы в `rag_service.eval` и `tools/llm_eval`; answer-метрики измерены как pre-chunking baseline.
 
 Связанные документы:
 
@@ -191,9 +191,9 @@ match(citation, golden) = citation.source_id == golden.source_id
                           и (golden.clause пуст или citation.clause == golden.clause)
 ```
 
-## 5. Answer-метрики (целевой контур)
+## 5. Answer-метрики
 
-Эти метрики требуют вызова LLM и пока не реализованы. Для них нужен `tools/llm_eval`, который использует тот же промпт `ОтветПоБазеЗнаний` и ту же модель, что production-контур в 1С.
+Эти метрики требуют вызова LLM и реализованы в `tools/llm_eval`, который использует тот же промпт `ОтветПоБазеЗнаний` и ту же модель, что production-контур в 1С.
 
 ### 5.1. Citation validity (precision цитат)
 
@@ -322,6 +322,20 @@ e2e_latency = retrieve + LLM + validation + UI-подготовка
 
 Порог плана — p95 `/v1/retrieve` + LLM < 3 с.
 
+### 5.8. Реализация
+
+`tools/llm_eval` повторяет production-цепочку: `/v1/retrieve` → listwise-реранк теми же кандидатами и промптом → контекст `[S1]…[Sn]` → ответ DeepSeek → детерминированная валидация citations → LLM-judge для correctness и groundedness.
+
+Особенности реализации:
+
+- кэш ответов по ключу `(модель, system, user, temperature, max_tokens)` в `artifacts/llm-eval/cache`;
+- при невалидном citation ответ переводится в `found = false`, как в `АИС_ОтветПоБазеЗнаний`;
+- при недоступности реранка используется порядок RRF, fallback считается отдельно;
+- judge вызывается только для `found = true`; при ошибке разбора его вердикт не подменяется нулём;
+- ошибки retrieval/answer исключаются из answer-метрик и видны отдельно;
+- в отчёт пишутся `expected_clause_in_context`, `raw_citations` и `rerank_error` для диагностики;
+- результат сохраняется в JSON и Markdown.
+
 ## 6. Агрегация и отчётность
 
 Правила, которые важно соблюдать:
@@ -370,16 +384,18 @@ e2e_latency = retrieve + LLM + validation + UI-подготовка
 
 Golden set v0: 70 кейсов, 60 answerable, 10 no-answer, 15 типов, 30 документов пилотной коллекции.
 
+### 7.1. Retrieval
+
 ```text
 Recall@10          = 1.000
-MRR@10             = 0.9833
-nDCG@10            = 0.9877
+MRR@10             = 0.9917
+nDCG@10            = 0.9938
 no-answer accuracy = 0.000
-latency p50        = 138.06 мс
-latency p95        = 266.97 мс
+latency p50        = 160–185 мс
+latency p95        = 295–3928 мс
 ```
 
-Прогон без `filters.doc_types` дал те же значения: запросы сами по себе различают документы. Это baseline только для 30 проиндексированных документов; после полной индексации его нужно переснять.
+Разброс p95 между прогонами объясняется холодным стартом embedding/модели. Прогон без `filters.doc_types` дал те же значения: запросы сами по себе различают документы. Это baseline только для 30 проиндексированных документов; после полной индексации его нужно переснять.
 
 Запуск:
 
@@ -391,14 +407,60 @@ uv run --project rag-service python -m rag_service.eval \
   --output artifacts/rag-eval/knowledge-baseline.json
 ```
 
+### 7.2. Answer (pre-chunking baseline)
+
+```text
+found_rate                     = 0.4167
+false_refusal_rate             = 0.5833
+expected_clause_in_context     = 0.8000
+false_refusals_with_context    = 23 из 35
+citation_precision             = 0.3553
+citation_recall                = 0.4167
+citation_accuracy              = 0.8000
+correctness                    = 0.3661  (56 кейсов)
+groundedness                   = 0.9843  (21 кейс)
+no_answer_precision            = 0.2222
+no_answer_recall               = 1.0000
+rerank_fallbacks               = 22 из 70
+judge_errors                   = 4
+```
+
+Интерпретация:
+
+- документ находится почти всегда (Recall@10 = 1.0), но **ожидаемый пункт попал в контекст только в 80%** answerable-кейсов;
+- из 35 ложных отказов 23 случились при наличии нужного пункта в контексте — это ошибки citations/промпта, а 12 — следствие чанкинга/`group_size`;
+- `citation_precision` низкая потому, что модель часто указывает `source_id` с пунктом, которого нет в конкретном чанке; production-валидация такие citations отбрасывает;
+- `groundedness` высокая только на 21 ответе, где удалось получить вердикт judge; это выборка смещена в сторону удачных ответов;
+- 22 из 70 кейсов ушли в rerank-fallback: listwise-реранк на `deepseek-v4-flash` нестабильно отдаёт JSON;
+- `no_answer` retrieval = 0, потому что порог отсечения не задан; answer-контур отказался от ответа на всех 10 no-answer кейсах, но precision 0.22 из-за 35 ложных отказов на answerable.
+
+Это **не приёмочные метрики**: они измерены до исправления чанкинга и при нестабильном реранке. Использовать их можно как baseline «до», а не как оценку модели или промпта.
+
+E2E-латентность без кэша: p50 ≈ 11.4 с, p95 ≈ 34.3 с. В прогоне с кэшем p50 падает до ~0.18 с, потому что ответы и judge берутся из локального кэша; такие значения не отражают production.
+
+Запуск answer-контура:
+
+```bash
+set -a; . ./.env; set +a
+uv run python -m tools.llm_eval \
+  --dataset rag-service/eval/golden/knowledge.jsonl \
+  --concurrency 8 \
+  --output artifacts/llm-eval/knowledge-answer-eval.json
+```
+
+`tools.llm_eval` читает `DEEPSEEK_*` из `.env` и `RAG_SERVICE_TOKEN` из `rag-service/.env`. Для чистого замера латентности нужен `--no-cache`, для быстрой итерации — кэш.
+
 ## 8. Ограничения текущей оценки
 
 - **Маленькая выборка.** 60 answerable-кейсов дают широкий доверительный интервал; выводы о разнице режимов до 5–10 п.п. ненадёжны.
 - **Один ожидаемый источник на кейс.** Recall — это hit rate; set recall и полноценный nDCG не проверены.
 - **Совпадение по clause без привязки к source_id.** Возможны ложные попадания по общим номерам пунктов.
 - **Фильтр по типу документа.** Baseline с фильтром и без него совпал, но другие наборы запросов могут вести себя иначе.
-- **No-answer не работает без порога.** `search_min_score = 0.0` гарантирует непустую выдачу; answer-метрика no-answer тоже пока не реализована.
-- **Нет answer-метрик.** Citation accuracy, correctness и groundedness описаны, но не измеряются; текущий отчёт — только retrieval.
+- **No-answer retrieval не работает без порога.** `search_min_score = 0.0` гарантирует непустую выдачу; answer-контур отказывается от ответа, но precision падает из-за ложных отказов на answerable.
+- **Answer-метрики — pre-chunking baseline.** 20% answerable-кейсов не имеют ожидаемого пункта в контексте; 23 из 35 ложных отказов произошли при наличии пункта, то есть связаны с citations/промптом, а не только с чанкингом.
+- **Citation precision низкая.** Модель указывает `source_id` с пунктом, отсутствующим в конкретном чанке; production-валидация такие citations отбрасывает и переводит ответ в `found = false`.
+- **Rerank нестабилен.** 22 из 70 кейсов ушли в fallback; это меняет порядок контекста и требует отдельного исправления промпта/модели/JSON-режима.
+- **E2E latency с кэшем нерепрезентативна.** Без кэша p95 ≈ 34 с; с кэшем — ~0.18 с p50.
 - **Нет разбивки latency на cold/warm.** Первый запрос после старта может искажать p95.
 - **LLM-judge подвержен bias.** Нужны калибровка, фиксированные промпты и ручная выборка.
 
@@ -409,6 +471,6 @@ uv run --project rag-service python -m rag_service.eval \
 - Retrieval-метрики уже реализованы в `rag_service.eval` без внешних зависимостей.
 - Citation validity в проекте проверяется детерминированно; это надёжнее LLM-судьи.
 - `ragas` и `DeepEval` добавляют тяжёлые зависимости (`langchain`, `datasets`) и требуют адаптации judge под русский язык и DeepSeek.
-- Для answer-метрик достаточно собственного `tools/llm_eval`: RAG → production-промпт → DeepSeek → детерминированная проверка citations → LLM-judge по рубрике → JSON/Markdown-отчёт.
+- Answer-контур уже реализован в `tools/llm_eval`: RAG → production-промпт → DeepSeek → детерминированная проверка citations → LLM-judge по рубрике → JSON/Markdown-отчёт.
 
 `ragas` имеет смысл добавить позже как optional dev-зависимость, если понадобятся стандартные `faithfulness`, `answer_relevancy`, `context_precision`/`context_recall` для сравнения с внешними бенчмарками. В CI эти прогоны не включаются из-за стоимости и недетерминированности LLM.
