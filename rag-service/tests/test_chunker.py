@@ -109,6 +109,30 @@ def test_chunker_keeps_table_kind() -> None:
     assert chunks[0].kind == "table"
 
 
+def test_chunker_extracts_article_clause() -> None:
+    document = _document([_block("Статья 1. Область применения")])
+
+    chunks = ClauseAwareChunker().chunk(document)
+
+    assert chunks[0].clause == "Статья 1"
+
+
+def test_chunker_extracts_heading_number_as_clause() -> None:
+    document = _document([_block("1 Область применения", kind="heading", heading_level=1)])
+
+    chunks = ClauseAwareChunker().chunk(document)
+
+    assert chunks[0].clause == "1"
+
+
+def test_chunker_does_not_treat_date_as_clause() -> None:
+    document = _document([_block("1965 г. N П-6 введен в действие.")])
+
+    chunks = ClauseAwareChunker().chunk(document)
+
+    assert chunks[0].clause == ""
+
+
 def test_chunker_splits_inline_clauses() -> None:
     document = _document([_block("1. Первый пункт. 2. Второй пункт.")])
 

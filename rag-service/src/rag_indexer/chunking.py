@@ -13,9 +13,11 @@ CLAUSE_RE = re.compile(
     r"|[IVXLC]+[.)]"
     r"|[а-яё]\)"
     r"|(?:п|ст)\.\s*\d+(?:\.\d+)*"
+    r"|(?:статья|пункт|подпункт|раздел|глава|приложение)\s+\d+(?:\.\d+)*\.?"
     r")\s+",
     re.IGNORECASE,
 )
+HEADING_CLAUSE_RE = re.compile(r"^\s*(\d+(?:\.\d+)*)\s+(?=[А-ЯЁA-Z])")
 SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?;:])\s+")
 CHARS_PER_TOKEN = 4
 
@@ -156,9 +158,11 @@ class ClauseAwareChunker:
         clause = _extract_clause(
             next(
                 (block.text for block in blocks if block.kind != "heading"),
-                blocks[0].text,
+                "",
             )
         )
+        if not clause:
+            clause = _extract_clause(blocks[0].text)
         kinds = {block.kind for block in blocks}
         if "table" in kinds:
             kind = "table"
@@ -304,7 +308,8 @@ def _heading_level(block: Block) -> int:
 
 
 def _extract_clause(text: str) -> str:
-    match = CLAUSE_RE.match(text.strip())
+    stripped = text.strip()
+    match = CLAUSE_RE.match(stripped) or HEADING_CLAUSE_RE.match(stripped)
     return match.group(1).rstrip(".)") if match else ""
 
 
