@@ -1,5 +1,7 @@
 # План: эффективный RAG на Qdrant с интеграцией в 1С
 
+Актуальный план следующих шагов: `plans/2026-11-05-rag-quality-next.md`.
+
 Дата: 2026-11-04
 Статус: пересмотрен 2026-11-05: MVP — однократный Q&A по базе знаний; шаблоны/генерация — post-MVP
 Связанные документы: `plans/implementation_plan.md#7`, `docs/design-decisions.md#18`, `reviews/critical-review.md#3`, `plans/1793687400076-knowledge-corpus-storage.md`, `docs/system-analysis/c4-model.md`.
