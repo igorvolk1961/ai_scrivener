@@ -70,6 +70,7 @@
   <dataProcessors>DataProcessor.АИС_ДокументыИАдресаты</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Шаблоны</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ПапкиДокументов</dataProcessors>
+  <dataProcessors>DataProcessor.АИС_ВопросПоБазеЗнаний</dataProcessors>
   <subsystems>Subsystem.АИС_Сервис</subsystems>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>

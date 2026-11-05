@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="5160696f-c87e-478c-b2b5-1a1e0a2ec90f">
+  <producedTypes>
+    <objectType typeId="50440845-9f47-4d1f-bbd3-ce8b69e205c6" valueTypeId="60e21ae3-62ed-49de-a642-cdcf1ec25bdb"/>
+    <managerType typeId="87fb078d-64d3-42e9-9e63-291d6485ad9a" valueTypeId="67a78ce5-73cf-4f7e-aa8d-0bce2e89d646"/>
+  </producedTypes>
+  <name>АИС_ВопросПоБазеЗнаний</name>
+  <synonym>
+    <key>ru</key>
+    <value>Вопрос по базе знаний</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <defaultForm>DataProcessor.АИС_ВопросПоБазеЗнаний.Form.Форма</defaultForm>
+  <forms uuid="8dfbfc64-4998-4ae8-b829-68660a3b7e7d">
+    <name>Форма</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:DataProcessor>
