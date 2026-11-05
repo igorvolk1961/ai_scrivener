@@ -44,7 +44,7 @@ rag:
   group_by_source: true
   group_size: 3
   hybrid_enabled: true
-  rerank_enabled: true
+  rerank_enabled: false
   rerank_model: BAAI/bge-reranker-v2-m3-int8
   rerank_batch_size: 16
   sparse_model: Qdrant/bm25

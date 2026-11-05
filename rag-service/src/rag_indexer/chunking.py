@@ -18,6 +18,7 @@ CLAUSE_RE = re.compile(
     re.IGNORECASE,
 )
 HEADING_CLAUSE_RE = re.compile(r"^\s*(\d+(?:\.\d+)*)\s+(?=[А-ЯЁA-Z])")
+DATE_CLAUSE_RE = re.compile(r"^\d{1,2}\.\d{1,2}\.(?:19|20)\d{2}$")
 SENTENCE_SPLIT_RE = re.compile(r"(?<=[.!?;:])\s+")
 CHARS_PER_TOKEN = 4
 
@@ -310,7 +311,10 @@ def _heading_level(block: Block) -> int:
 def _extract_clause(text: str) -> str:
     stripped = text.strip()
     match = CLAUSE_RE.match(stripped) or HEADING_CLAUSE_RE.match(stripped)
-    return match.group(1).rstrip(".)") if match else ""
+    if not match:
+        return ""
+    value = match.group(1).rstrip(".)")
+    return "" if DATE_CLAUSE_RE.match(value) else value
 
 
 def _context_text(

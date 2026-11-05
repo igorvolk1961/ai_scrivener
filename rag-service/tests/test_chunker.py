@@ -127,10 +127,13 @@ def test_chunker_extracts_heading_number_as_clause() -> None:
 
 def test_chunker_does_not_treat_date_as_clause() -> None:
     document = _document([_block("1965 г. N П-6 введен в действие.")])
+    dotted = _document([_block("16.09.2020 введены новые правила.")])
 
     chunks = ClauseAwareChunker().chunk(document)
+    dotted_chunks = ClauseAwareChunker().chunk(dotted)
 
     assert chunks[0].clause == ""
+    assert dotted_chunks[0].clause == ""
 
 
 def test_chunker_splits_inline_clauses() -> None:

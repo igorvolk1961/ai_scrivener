@@ -403,7 +403,7 @@ uv run --project rag-service python -m rag_indexer alias-switch \
 
 Откат — тот же `alias-switch` на предыдущую коллекцию.
 
-При первом старте FastEmbed скачивает BM25 и reranker (`~0.6 ГБ`) в том `fastembed_cache`. Нужен доступ к Hugging Face или заранее прогретый кэш; иначе `/health` не поднимется.
+При `rerank_enabled=false` FastEmbed скачивает только BM25; при включённом rerank — ещё reranker (~0,6 ГБ) в `fastembed_cache`. Нужен доступ к Hugging Face или заранее прогретый кэш; иначе `/health` не поднимется. На CPU rerank медленный (≈38 с на 50 кандидатов, ≈11 с на 20), поэтому в MVP он выключен; hybrid RRF отвечает примерно за 0,2 с.
 
 Запуск:
 
