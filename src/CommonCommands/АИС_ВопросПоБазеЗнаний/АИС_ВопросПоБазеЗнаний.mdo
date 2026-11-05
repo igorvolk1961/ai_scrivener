@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonCommand xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="0307e65b-b5ff-41a8-9f77-638f6b8dfccc">
+  <name>АИС_ВопросПоБазеЗнаний</name>
+  <synonym>
+    <key>ru</key>
+    <value>Вопрос по базе знаний</value>
+  </synonym>
+  <group>NavigationPanelOrdinary</group>
+  <commandParameterType/>
+  <parameterUse>Optional</parameterUse>
+  <modifiesSavedData>false</modifiesSavedData>
+</mdclass:CommonCommand>

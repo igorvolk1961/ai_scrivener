@@ -5,26 +5,10 @@
     <id>-1</id>
     <horizontalAlign>Left</horizontalAlign>
     <autoFill>true</autoFill>
-  </autoCommandBar>
-  <handlers>
-    <event>OnCreateAtServer</event>
-    <name>ПриСозданииНаСервере</name>
-  </handlers>
-  <autoTitle>true</autoTitle>
-  <autoUrl>true</autoUrl>
-  <group>Vertical</group>
-  <autoFillCheck>true</autoFillCheck>
-  <allowFormCustomize>true</allowFormCustomize>
-  <enabled>true</enabled>
-  <showTitle>true</showTitle>
-  <showCloseButton>true</showCloseButton>
-  <items xsi:type="form:FormGroup">
-    <name>ГруппаКоманд</name>
-    <id>3</id>
-    <group>Horizontal</group>
     <items xsi:type="form:Button">
       <name>Спросить</name>
       <id>4</id>
+      <type>CommandBarButton</type>
       <title>
         <key>ru</key>
         <value>Спросить</value>
@@ -38,12 +22,12 @@
       <representation>Auto</representation>
       <autoMaxWidth>true</autoMaxWidth>
       <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
     <items xsi:type="form:Button">
       <name>Очистить</name>
       <id>5</id>
+      <type>CommandBarButton</type>
       <title>
         <key>ru</key>
         <value>Очистить</value>
@@ -57,10 +41,25 @@
       <representation>Auto</representation>
       <autoMaxWidth>true</autoMaxWidth>
       <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
-  </items>
+  </autoCommandBar>
+  <handlers>
+    <event>OnCreateAtServer</event>
+    <name>ПриСозданииНаСервере</name>
+  </handlers>
+  <handlers>
+    <event>OnOpen</event>
+    <name>ПриОткрытии</name>
+  </handlers>
+  <autoTitle>true</autoTitle>
+  <autoUrl>true</autoUrl>
+  <group>Vertical</group>
+  <autoFillCheck>true</autoFillCheck>
+  <allowFormCustomize>true</allowFormCustomize>
+  <enabled>true</enabled>
+  <showTitle>true</showTitle>
+  <showCloseButton>true</showCloseButton>
   <items xsi:type="form:FormField">
     <name>Вопрос</name>
     <id>6</id>
@@ -78,7 +77,7 @@
     </dataPath>
     <titleLocation>Top</titleLocation>
     <type>InputField</type>
-    <editMode>Enter</editMode>
+    <editMode>Immediate</editMode>
     <showInHeader>true</showInHeader>
     <headerHorizontalAlign>Left</headerHorizontalAlign>
     <showInFooter>true</showInFooter>
@@ -88,6 +87,7 @@
       <horizontalStretch>true</horizontalStretch>
       <verticalStretch>false</verticalStretch>
       <multiLine>true</multiLine>
+      <textEdit>true</textEdit>
     </extInfo>
   </items>
   <items xsi:type="form:FormField">
@@ -256,6 +256,10 @@
       <common>true</common>
     </edit>
   </attributes>
+  <commandInterface>
+    <navigationPanel/>
+    <commandBar/>
+  </commandInterface>
   <formCommands>
     <name>Спросить</name>
     <title>
@@ -271,7 +275,7 @@
         <name>Спросить</name>
       </handler>
     </action>
-    <currentRowUse>Use</currentRowUse>
+    <currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <formCommands>
     <name>Очистить</name>
@@ -288,6 +292,6 @@
         <name>Очистить</name>
       </handler>
     </action>
-    <currentRowUse>Use</currentRowUse>
+    <currentRowUse>DontUse</currentRowUse>
   </formCommands>
 </form:Form>
