@@ -487,7 +487,9 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [ ] Добавить `status`/`authority`/`published_at`/`effective_from` в фильтры и буст официальных источников.
 - [ ] Включить MMR (`mmr_lambda` 0,6–0,8) только если eval показывает рост nDCG/Recall без падения точности.
 - [ ] Проверить overlap-дубли и соседние чанки; при необходимости — dedup/merge.
-- [x] Исправлен чанкер: пункт не теряется при слиянии соседних чанков, номера заголовков наследуются, list items не считаются пунктами; `PIPELINE_VERSION=2`, тесты в `rag-service/tests/test_chunker.py`. Требуется переиндексация пилота и повторный eval.
+- [x] Исправлен чанкер: пункт не теряется при слиянии соседних чанков, номера заголовков наследуются, list items не считаются пунктами; `PIPELINE_VERSION=2`, тесты в `rag-service/tests/test_chunker.py`.
+- [x] Rechunk пилота на 30 документах: MRR@10 1.0, nDCG@10 1.0, found_rate 0.5, correctness 0.466, citation_precision 0.457; alias не переключался. Остаются 30 ложных отказов (19 при наличии пункта), 24 rerank-fallback и no-answer precision 0.25.
+- [ ] Полная переиндексация корпуса с Paddle/OCR и повторный eval на расширенном golden set.
 - [ ] Зафиксировать правило полной переиндексации при изменении `PIPELINE_VERSION`.
 
 **Готово, когда:** knowledge golden set достигает целевых метрик, ручная выборка 20–30 ответов не показывает обрывков пунктов и таблиц.
