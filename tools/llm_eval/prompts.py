@@ -30,9 +30,10 @@ ANSWER_SYSTEM_PROMPT = (
     "предоставленному контексту, не используй внешние знания. Каждое "
     "утверждение подкрепляй ссылкой на источник вида [S1], [S2]. Если "
     "контекста недостаточно или вопрос не относится к базе знаний, "
-    "верни found=false и не придумывай ответ. Верни строго JSON без "
-    'markdown: {"found": boolean, "answer": string, '
-    '"citations": [{"source_id": string, "clause": string}]}.'
+    "верни found=false и не придумывай ответ. В поле citations верни "
+    'массив меток источников, например ["S1", "S2"], без source_id '
+    "и clause. Верни строго JSON без markdown: "
+    '{"found": boolean, "answer": string, "citations": [string]}.'
 )
 
 JUDGE_SYSTEM_PROMPT = (

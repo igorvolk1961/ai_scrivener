@@ -242,7 +242,7 @@ def evaluate_case(
         for candidate in reranked
     )
 
-    context, allowed, citation_sources = build_context(reranked)
+    context, allowed, citation_sources, label_clauses = build_context(reranked)
     user_prompt = f"Вопрос: {case.query}\nКонтекст:\n{context}"
     try:
         raw_answer = answer_client.complete(
@@ -261,6 +261,7 @@ def evaluate_case(
         raw_citations,
         allowed,
         citation_sources,
+        label_clauses,
     )
     if found and not valid_citations:
         found = False
@@ -272,12 +273,16 @@ def evaluate_case(
     result.raw_citation_count = len(raw_citations)
     result.invalid_citation_count = invalid_count
     result.raw_citations = [
-        {
-            "source_id": str(item.get("source_id", "")),
-            "clause": str(item.get("clause", "")),
-        }
+        (
+            {"source_id": item.strip(), "clause": ""}
+            if isinstance(item, str)
+            else {
+                "source_id": str(item.get("source_id", "")),
+                "clause": str(item.get("clause", "")),
+            }
+        )
         for item in raw_citations
-        if isinstance(item, dict)
+        if isinstance(item, (dict, str))
     ]
     result.e2e_ms = (time.perf_counter() - retrieval_started) * 1000
 
@@ -418,10 +423,13 @@ def flatten_candidates(results: list[Any]) -> list[Candidate]:
     return candidates
 
 
-def build_context(candidates: list[Candidate]) -> tuple[str, set[str], dict[str, str]]:
+def build_context(
+    candidates: list[Candidate],
+) -> tuple[str, set[str], dict[str, str], dict[str, str]]:
     lines: list[str] = []
     allowed: set[str] = set()
     sources: dict[str, str] = {}
+    label_clauses: dict[str, str] = {}
     for index, candidate in enumerate(candidates, start=1):
         label = f"S{index}"
         header = f"[{label}] Документ: {candidate.title}"
@@ -436,31 +444,39 @@ def build_context(candidates: list[Candidate]) -> tuple[str, set[str], dict[str,
         allowed.add(label)
         sources[candidate.source_id] = candidate.source_id
         sources[label] = candidate.source_id
+        label_clauses[label] = candidate.clause
         if candidate.clause:
             allowed.add(f"{candidate.source_id}|{candidate.clause}")
             allowed.add(f"{label}|{candidate.clause}")
             sources[f"{candidate.source_id}|{candidate.clause}"] = candidate.source_id
             sources[f"{label}|{candidate.clause}"] = candidate.source_id
-    return "\n".join(lines), allowed, sources
+    return "\n".join(lines), allowed, sources, label_clauses
 
 
 def normalize_citations(
     raw_citations: list[Any],
     allowed: set[str],
     sources: dict[str, str],
+    label_clauses: dict[str, str],
 ) -> tuple[list[dict[str, str]], int]:
     valid: list[dict[str, str]] = []
     invalid = 0
     seen: set[tuple[str, str]] = set()
     for item in raw_citations:
-        if not isinstance(item, dict):
+        if isinstance(item, str):
+            raw_id = item.strip()
+            clause = ""
+        elif isinstance(item, dict):
+            raw_id = str(item.get("source_id", "")).strip()
+            clause = str(item.get("clause", "")).strip()
+        else:
             invalid += 1
             continue
-        raw_id = str(item.get("source_id", "")).strip()
-        clause = str(item.get("clause", "")).strip()
         if not raw_id:
             invalid += 1
             continue
+        if raw_id in label_clauses and not clause:
+            clause = label_clauses[raw_id]
         allowed_key = f"{raw_id}|{clause}" if clause else raw_id
         source_id = sources.get(raw_id)
         if source_id is None or allowed_key not in allowed:

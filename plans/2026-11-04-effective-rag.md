@@ -491,6 +491,8 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [x] Исправлен чанкер: пункт не теряется при слиянии соседних чанков, номера заголовков наследуются, list items не считаются пунктами; `PIPELINE_VERSION=2`, тесты в `rag-service/tests/test_chunker.py`.
 - [x] Rechunk пилота на 30 документах: MRR@10 1.0, nDCG@10 1.0, found_rate 0.5, correctness 0.466, citation_precision 0.457; alias не переключался. Остаются 30 ложных отказов (19 при наличии пункта), 24 rerank-fallback и no-answer precision 0.25.
 - [x] Стабилизирован реранк: JSON mode, первые 15 кандидатов и repair-попытка; полный eval дал 0 fallback, 12 empty ranking, correctness 0.483, citation accuracy 0.867, e2e p95 18.3 с.
+- [x] Контракт citations: модель возвращает только метки `[S1]`, сервер подставляет `source_id`/`clause`. Полный eval: found_rate 0.967, citation precision 0.976, citation accuracy 0.966, correctness 0.939, false_refusals 2; `group_size=5` выбран вместо 10.
+- [ ] Латентность: e2e p50 5.7 с / p95 10.9 с при цели p95 < 3 с; проверить модель, размер контекста и max_tokens.
 - [ ] Полная переиндексация корпуса с Paddle/OCR и повторный eval на расширенном golden set.
 - [ ] Зафиксировать правило полной переиндексации при изменении `PIPELINE_VERSION`.
 

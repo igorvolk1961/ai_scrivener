@@ -30,22 +30,20 @@ def test_normalize_citations_accepts_labels_and_source_ids() -> None:
             page=2,
         )
     ]
-    _, allowed, sources = build_context(candidates)
+    _, allowed, sources, label_clauses = build_context(candidates)
     valid, invalid = normalize_citations(
         [
-            {"source_id": "S1", "clause": "1.1"},
+            "S1",
             {"source_id": "sha1", "clause": "1.1"},
             {"source_id": "S1", "clause": ""},
             {"source_id": "unknown", "clause": ""},
         ],
         allowed,
         sources,
+        label_clauses,
     )
 
-    assert valid == [
-        {"source_id": "sha1", "clause": "1.1"},
-        {"source_id": "sha1", "clause": ""},
-    ]
+    assert valid == [{"source_id": "sha1", "clause": "1.1"}]
     assert invalid == 1
 
 
@@ -62,7 +60,7 @@ def test_build_context_contains_label_and_metadata() -> None:
             page=7,
         )
     ]
-    context, allowed, sources = build_context(candidates)
+    context, allowed, sources, label_clauses = build_context(candidates)
 
     assert "[S1] Документ: ГОСТ 1" in context
     assert "вид: ГОСТ" in context
@@ -70,6 +68,7 @@ def test_build_context_contains_label_and_metadata() -> None:
     assert "пункт: 4.2" in context
     assert "sha1|4.2" in allowed
     assert sources["S1"] == "sha1"
+    assert label_clauses["S1"] == "4.2"
 
 
 def test_flatten_candidates_keeps_chunk_and_document_fields() -> None:
