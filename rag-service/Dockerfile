@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY rag-service/pyproject.toml rag-service/uv.lock ./
 COPY rag-service/src ./src
-COPY config /app/config
+COPY config /config
 
 RUN uv sync --frozen --no-dev
 

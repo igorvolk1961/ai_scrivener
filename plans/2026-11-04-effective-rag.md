@@ -294,6 +294,18 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 
 **Готово, когда:** `/v1/retrieve` работает на v2, метрики гибрида/rerank лучше baseline, alias-switch и rollback проверены.
 
+#### Live alias-swap 2026-11-05
+
+Проверено против реального Qdrant 1.16.3 и RAG-сервиса:
+
+- alias `ai_scrivener_knowledge_current` указывал на `..._v1_1793860874`;
+- создана коллекция `ai_scrivener_knowledge_live_3ff96d69`;
+- документ проиндексирован в неё через `target_collection`;
+- до переключения alias поиск вернул 0 результатов;
+- после `alias-switch` — 1 результат с ожидаемым `source_id`;
+- после rollback на предыдущую коллекцию — снова 0;
+- live integration test index → retrieve → delete прошёл.
+
 ### Этап 2. Индексатор корпуса
 
 - [ ] Добавить пакет `rag-service/src/rag_indexer/` и optional-группу зависимостей `indexer` (docling, python-docx, trafilatura, razdel, tiktoken).

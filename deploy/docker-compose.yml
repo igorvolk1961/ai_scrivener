@@ -13,7 +13,7 @@ services:
     env_file:
       - ../rag-service/.env
     environment:
-      RAG_GIGACHAT_CA_BUNDLE: /app/config/russian_trusted_root_ca.pem
+      RAG_GIGACHAT_CA_BUNDLE: /config/russian_trusted_root_ca.pem
       FASTEMBED_CACHE_PATH: /app/.cache/fastembed
     volumes:
       - fastembed_cache:/app/.cache/fastembed

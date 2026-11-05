@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 DENSE_VECTOR = "dense"
 SPARSE_VECTOR = "sparse"
 DATE_ONLY_LENGTH = len("YYYY-MM-DD")
+DEFAULT_QDRANT_TIMEOUT = 60
 
 
 class VectorStoreError(RuntimeError):
@@ -208,7 +209,11 @@ class QdrantStore:
         api_key: str | None = None,
         client: AsyncQdrantClient | None = None,
     ) -> None:
-        self._client = client or AsyncQdrantClient(url=url, api_key=api_key)
+        self._client = client or AsyncQdrantClient(
+            url=url,
+            api_key=api_key,
+            timeout=DEFAULT_QDRANT_TIMEOUT,
+        )
         self._collection = collection
 
     async def close(self) -> None:
