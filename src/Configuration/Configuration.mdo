@@ -47,9 +47,15 @@
   <constants>Constant.АИС_КаталогКорпусаЗнаний</constants>
   <constants>Constant.АИС_КлючИИ</constants>
   <constants>Constant.АИС_МодельИИ</constants>
+  <constants>Constant.АИС_АдресRAGСервиса</constants>
+  <constants>Constant.АИС_ТокенRAGСервиса</constants>
+  <constants>Constant.АИС_ТаймаутRAGСервиса</constants>
+  <constants>Constant.АИС_ПовторыRAGСервиса</constants>
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <commonModules>CommonModule.АИС_Промпты</commonModules>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
+  <commonModules>CommonModule.АИС_ИнтеграцияСRAG</commonModules>
+  <commonModules>CommonModule.АИС_ОтветПоБазеЗнаний</commonModules>
   <commonModules>CommonModule.АИС_КорпусЗнаний</commonModules>
   <commonModules>CommonModule.АИС_Сотрудники</commonModules>
   <commonModules>CommonModule.АИС_Уведомления</commonModules>

@@ -245,4 +245,23 @@
 			<value>true</value>
 		</right>
 	</object>
+	<object>
+		<name>Constant.АИС_АдресRAGСервиса</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Constant.АИС_ТокенRAGСервиса</name>
+		<right><name>Read</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Constant.АИС_ТаймаутRAGСервиса</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Constant.АИС_ПовторыRAGСервиса</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
 </Rights>

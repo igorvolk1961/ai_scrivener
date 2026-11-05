@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="43e325da-4110-4cf2-ba00-dc6ba5740131">
+  <producedTypes>
+    <managerType typeId="69d560f8-a97e-472b-8fde-a70d123464bd" valueTypeId="7c260c6b-1cce-46fc-a1f4-8d8813bb260f"/>
+    <valueManagerType typeId="7db122fd-219a-4c2e-a809-ae903f0cc61d" valueTypeId="8c4477d0-0ddc-4c4e-aa2d-2177389e75ac"/>
+    <valueKeyType typeId="90440cff-80ea-44b8-ae7d-66c7a4c4f7ac" valueTypeId="6b1c87ae-a729-46fc-bc90-1a78c6010c0a"/>
+  </producedTypes>
+  <name>АИС_ТаймаутRAGСервиса</name>
+  <synonym>
+    <key>ru</key>
+    <value>Таймаут RAG-сервиса, сек</value>
+  </synonym>
+  <comment>Таймаут HTTP-запроса к RAG-сервису в секундах.</comment>
+  <type>
+    <types>Number</types>
+    <numberQualifiers>
+      <precision>5</precision>
+      <scale>0</scale>
+    </numberQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

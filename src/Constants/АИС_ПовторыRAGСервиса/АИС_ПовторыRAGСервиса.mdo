@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="d25d918f-b185-4923-a656-5c8a8af9d7f1">
+  <producedTypes>
+    <managerType typeId="3f6be9be-b488-45ae-aedd-97e3f9cdb4b5" valueTypeId="eb6e7bc0-6d37-408f-8d15-48e7d9e697e4"/>
+    <valueManagerType typeId="f85535de-5284-40f2-aec0-cfb7e9e27984" valueTypeId="fe4db638-d316-42d5-abd0-460c5b1da33c"/>
+    <valueKeyType typeId="4802c487-6d1f-495a-b778-931ff468d84c" valueTypeId="42a6ad24-04bc-4ec5-82c6-54abd489915e"/>
+  </producedTypes>
+  <name>АИС_ПовторыRAGСервиса</name>
+  <synonym>
+    <key>ru</key>
+    <value>Повторы RAG-сервиса</value>
+  </synonym>
+  <comment>Количество повторов HTTP-запроса к RAG-сервису при сетевой ошибке или 5xx.</comment>
+  <type>
+    <types>Number</types>
+    <numberQualifiers>
+      <precision>2</precision>
+      <scale>0</scale>
+    </numberQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>
