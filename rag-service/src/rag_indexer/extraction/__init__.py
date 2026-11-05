@@ -8,6 +8,7 @@ from rag_indexer.extraction.document import DocumentExtractor
 from rag_indexer.extraction.docx import DocxExtractor
 from rag_indexer.extraction.headers import clean_block_headers
 from rag_indexer.extraction.html import HtmlExtractor
+from rag_indexer.extraction.markdown import render_markdown
 from rag_indexer.extraction.merger import LineToParagraphMerger, MergerOptions
 from rag_indexer.extraction.models import Block, ExtractedDocument, ExtractionError
 from rag_indexer.extraction.pdf import ExtractionOptions, PdfExtractor
@@ -39,5 +40,6 @@ __all__ = [
     "clean_block_headers",
     "extract_pdf_tables",
     "merge_table_blocks",
+    "render_markdown",
     "table_blocks",
 ]

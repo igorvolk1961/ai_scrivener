@@ -310,7 +310,7 @@ Point ID: `uuid5("ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}
 - [x] CLI: `python -m rag_indexer index|validate|stats` с `--corpus-dir`, `--manifest`, `--rag-url`, `--token`, `--full`, `--limit`, `--dry-run`, `--statuses`, `--ocr`.
 - [x] Использовать `/v1/index/chunks` и `DELETE` для исчезнувших материалов.
 - [x] Дисковый кэш extraction/chunks по `sha256 + extractor_version + chunker_version` (`rag_indexer.cache`).
-- [ ] Добавить OCR engine/model version в ключ кэша, `--export-markdown`, сжатие JSON и retention старых версий.
+- [x] OCR engine/model version в ключе кэша, `--export-dir`, gzip-сжатие JSON и `rag_indexer cache-cleanup` для retention старых версий.
 - [x] Батчинг payload для больших PDF: `--chunk-batch-size`; батчи пишутся с `active=false`, затем `/v1/index/activate` включает новую версию и удаляет старые.
 - [x] Очистка неактивных staging-версий: `POST /v1/index/cleanup` и `rag_indexer cleanup`; точки получают `created_at`.
 - [ ] Отдельные версии extractor/chunker в state вместо одного `pipeline_version`; в кэше они уже раздельные.

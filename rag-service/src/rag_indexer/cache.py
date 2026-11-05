@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import gzip
 import hashlib
 import json
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -11,6 +13,8 @@ from rag_indexer.ocr import BBox
 
 EXTRACTOR_VERSION = "1"
 CHUNKER_VERSION = "1"
+OCR_VERSION = "none"
+VERSION_SEPARATOR = "__"
 
 
 class DocumentCache:
@@ -20,13 +24,18 @@ class DocumentCache:
         *,
         extractor_version: str = EXTRACTOR_VERSION,
         chunker_version: str = CHUNKER_VERSION,
+        ocr_version: str = OCR_VERSION,
     ) -> None:
         self._cache_dir = cache_dir
-        self._extractor_dir = cache_dir / "extracted" / extractor_version
-        self._chunker_dir = cache_dir / "chunks" / chunker_version
+        self._extractor_dir = cache_dir / "extracted" / _version(
+            extractor_version, ocr_version
+        )
+        self._chunker_dir = cache_dir / "chunks" / _version(
+            extractor_version, ocr_version, chunker_version
+        )
 
     def load_document(self, sha256: str) -> ExtractedDocument | None:
-        payload = _read_json(self._extractor_dir / f"{_key(sha256)}.json")
+        payload = _read_json(self._extractor_dir / f"{_key(sha256)}.json.gz")
         if payload is None:
             return None
         try:
@@ -36,12 +45,12 @@ class DocumentCache:
 
     def save_document(self, sha256: str, document: ExtractedDocument) -> None:
         _write_json(
-            self._extractor_dir / f"{_key(sha256)}.json",
+            self._extractor_dir / f"{_key(sha256)}.json.gz",
             _document_to_dict(document),
         )
 
     def load_chunks(self, sha256: str) -> list[Chunk] | None:
-        payload = _read_json(self._chunker_dir / f"{_key(sha256)}.json")
+        payload = _read_json(self._chunker_dir / f"{_key(sha256)}.json.gz")
         if payload is None:
             return None
         try:
@@ -51,9 +60,31 @@ class DocumentCache:
 
     def save_chunks(self, sha256: str, chunks: list[Chunk]) -> None:
         _write_json(
-            self._chunker_dir / f"{_key(sha256)}.json",
+            self._chunker_dir / f"{_key(sha256)}.json.gz",
             {"chunks": [_chunk_to_dict(chunk) for chunk in chunks]},
         )
+
+    def cleanup(self, keep_versions: int = 2) -> int:
+        if keep_versions < 1:
+            raise ValueError("keep_versions must be positive")
+        removed = 0
+        for category in ("extracted", "chunks"):
+            root = self._cache_dir / category
+            if not root.exists():
+                continue
+            versions = sorted(
+                (path for path in root.iterdir() if path.is_dir()),
+                key=lambda path: path.stat().st_mtime,
+                reverse=True,
+            )
+            for path in versions[keep_versions:]:
+                shutil.rmtree(path)
+                removed += 1
+        return removed
+
+
+def _version(*parts: str) -> str:
+    return VERSION_SEPARATOR.join(part.replace("/", "_") for part in parts)
 
 
 def _key(sha256: str) -> str:
@@ -66,7 +97,8 @@ def _read_json(path: Path) -> dict[str, Any] | None:
     if not path.exists():
         return None
     try:
-        payload = json.loads(path.read_text(encoding="utf-8"))
+        with gzip.open(path, "rt", encoding="utf-8") as handle:
+            payload = json.load(handle)
     except (OSError, json.JSONDecodeError):
         return None
     return payload if isinstance(payload, dict) else None
@@ -75,10 +107,8 @@ def _read_json(path: Path) -> dict[str, Any] | None:
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temp_path = path.with_suffix(path.suffix + ".tmp")
-    temp_path.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
+    with gzip.open(temp_path, "wt", encoding="utf-8") as handle:
+        json.dump(payload, handle, ensure_ascii=False, indent=2)
     temp_path.replace(path)
 
 

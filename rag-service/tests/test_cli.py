@@ -120,6 +120,24 @@ def test_cli_cleanup_requires_token() -> None:
     assert main(["cleanup"]) == 1
 
 
+def test_cli_cache_cleanup(tmp_path: Path) -> None:
+    for category in ("extracted", "chunks"):
+        for name in ("v1", "v2"):
+            (tmp_path / "cache" / category / name).mkdir(parents=True)
+
+    code = main(
+        [
+            "cache-cleanup",
+            "--cache-dir",
+            str(tmp_path / "cache"),
+            "--keep-versions",
+            "1",
+        ]
+    )
+
+    assert code == 0
+
+
 def test_cli_stats(tmp_path: Path) -> None:
     state_path = tmp_path / "state.json"
     state = IndexState(pipeline_version="1")

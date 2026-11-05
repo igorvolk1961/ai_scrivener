@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 from pathlib import Path
 from typing import Any, cast
 
@@ -106,6 +107,31 @@ def test_cache_is_versioned(tmp_path: Path) -> None:
     assert other.load_document("sha") is None
     assert EXTRACTOR_VERSION == "1"
     assert CHUNKER_VERSION == "1"
+
+
+def test_cache_separates_ocr_versions(tmp_path: Path) -> None:
+    cache = DocumentCache(tmp_path, ocr_version="paddle-v5")
+    cache.save_document("sha", _document())
+
+    other = DocumentCache(tmp_path, ocr_version="yandex")
+
+    assert other.load_document("sha") is None
+    assert cache.load_document("sha") is not None
+
+
+def test_cache_cleanup_keeps_latest_versions(tmp_path: Path) -> None:
+    for category in ("extracted", "chunks"):
+        for index, name in enumerate(("v1", "v2", "v3")):
+            path = tmp_path / category / name
+            path.mkdir(parents=True)
+            os.utime(path, (index, index))
+
+    removed = DocumentCache(tmp_path).cleanup(keep_versions=2)
+
+    assert removed == 2
+    assert (tmp_path / "extracted" / "v3").exists()
+    assert (tmp_path / "extracted" / "v2").exists()
+    assert not (tmp_path / "extracted" / "v1").exists()
 
 
 def test_pipeline_uses_document_and_chunk_cache(tmp_path: Path) -> None:

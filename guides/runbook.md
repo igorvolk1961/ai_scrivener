@@ -446,7 +446,14 @@ uv run --project rag-service python -m rag_indexer index \
 
 Состояние индексации хранится в `.rag-index-state.json`; повторный запуск пропускает уже проиндексированные документы. `--full` переиндексирует всё, `--dry-run` не вызывает RAG и не пишет state, `--delete-missing` удаляет из индекса материалы, исчезнувшие из манифеста.
 
-Кэш extraction/chunks хранится в `.rag-index-cache` и версионируется отдельно по extractor/chunker. Для временного отключения используйте `--no-cache`, для другого расположения — `--cache-dir`.
+Кэш extraction/chunks хранится в `.rag-index-cache` в gzip-JSON и версионируется по extractor/OCR/chunker. Для временного отключения используйте `--no-cache`, для другого расположения — `--cache-dir`, для явной версии OCR — `--ocr-version`. Старые версии удаляются командой:
+
+```bash
+uv run --project rag-service python -m rag_indexer cache-cleanup \
+  --cache-dir .rag-index-cache --keep-versions 2
+```
+
+Для ручной проверки извлечённого текста добавьте `--export-dir artifacts/extracted` — рядом с кэшем появятся Markdown-файлы документов.
 
 Для больших PDF используйте `--chunk-batch-size N`: батчи пишутся как неактивная staging-версия, затем `/v1/index/activate` атомарно включает её и удаляет старые версии. До активации поиск продолжает видеть предыдущую версию документа; при падении остаются только неактивные staging-точки, которые перезаписываются повторным запуском.
 

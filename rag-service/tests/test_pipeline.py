@@ -59,6 +59,7 @@ def test_pipeline_indexes_document(tmp_path: Path) -> None:
         chunker=ClauseAwareChunker(),
         client=cast(RagClient, client),
         state=state,
+        export_dir=tmp_path / "export",
     )
 
     report = asyncio.run(pipeline.run([_record()], tmp_path))
@@ -71,6 +72,7 @@ def test_pipeline_indexes_document(tmp_path: Path) -> None:
     assert state.is_indexed("abc123") is True
     assert report.documents[0].status == "indexed"
     assert report.documents[0].chunks > 0
+    assert (tmp_path / "export" / "abc123.md").exists()
 
 
 def test_pipeline_batches_chunks_and_replaces_only_first_batch(tmp_path: Path) -> None:

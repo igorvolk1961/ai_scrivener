@@ -9,7 +9,11 @@ from typing import Any
 from rag_indexer.cache import DocumentCache
 from rag_indexer.chunking import Chunk, ClauseAwareChunker
 from rag_indexer.client import RagClient
-from rag_indexer.extraction import DocumentExtractor, ExtractedDocument
+from rag_indexer.extraction import (
+    DocumentExtractor,
+    ExtractedDocument,
+    render_markdown,
+)
 from rag_indexer.manifest import CorpusRecord
 from rag_indexer.ocr.models import OcrEngine
 from rag_indexer.state import IndexState
@@ -74,6 +78,7 @@ class IndexPipeline:
         state: IndexState | None = None,
         cache: DocumentCache | None = None,
         chunk_batch_size: int = 0,
+        export_dir: Path | None = None,
     ) -> None:
         if chunk_batch_size < 0:
             raise ValueError("chunk_batch_size must be non-negative")
@@ -83,6 +88,7 @@ class IndexPipeline:
         self._state = state or IndexState(pipeline_version=PIPELINE_VERSION)
         self._cache = cache
         self._chunk_batch_size = chunk_batch_size
+        self._export_dir = export_dir
 
     async def run(
         self,
@@ -131,6 +137,13 @@ class IndexPipeline:
                     )
                     if self._cache is not None:
                         self._cache.save_document(record.sha256, document)
+                if self._export_dir is not None:
+                    self._export_dir.mkdir(parents=True, exist_ok=True)
+                    filename = f"{record.sha256.replace('/', '_')}.md"
+                    (self._export_dir / filename).write_text(
+                        render_markdown(document),
+                        encoding="utf-8",
+                    )
                 cached_chunks = (
                     self._cache.load_chunks(record.sha256)
                     if self._cache is not None

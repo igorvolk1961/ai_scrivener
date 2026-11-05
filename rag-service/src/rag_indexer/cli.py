@@ -50,6 +50,13 @@ def build_parser() -> argparse.ArgumentParser:
     cleanup.add_argument("--token", default=os.environ.get("RAG_SERVICE_TOKEN", ""))
     cleanup.add_argument("--older-than-hours", type=float, default=24)
     cleanup.add_argument("--source-type")
+    cache_cleanup = subparsers.add_parser("cache-cleanup")
+    cache_cleanup.add_argument(
+        "--cache-dir",
+        type=Path,
+        default=Path(".rag-index-cache"),
+    )
+    cache_cleanup.add_argument("--keep-versions", type=int, default=2)
     return parser
 
 
@@ -73,6 +80,8 @@ def _add_common_arguments(parser: argparse.ArgumentParser) -> None:
         default=Path(".rag-index-cache"),
     )
     parser.add_argument("--no-cache", action="store_true")
+    parser.add_argument("--ocr-version", default="")
+    parser.add_argument("--export-dir", type=Path)
     parser.add_argument("--chunk-batch-size", type=int, default=0)
     parser.add_argument("--report", type=Path)
     parser.add_argument("--pipeline-version", default=PIPELINE_VERSION)
@@ -100,6 +109,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
     if args.command == "stats":
         return _stats(args)
+    if args.command == "cache-cleanup":
+        return _cache_cleanup(args)
     try:
         if args.command == "cleanup":
             return asyncio.run(_cleanup(args))
@@ -142,7 +153,14 @@ async def _run(args: argparse.Namespace) -> int:
         if not args.token:
             raise RuntimeError("RAG service token is required for indexing")
         client = RagClient(args.rag_url, args.token)
-    cache = None if args.no_cache else DocumentCache(args.cache_dir)
+    cache = (
+        None
+        if args.no_cache
+        else DocumentCache(
+            args.cache_dir,
+            ocr_version=_ocr_version(args),
+        )
+    )
     pipeline = IndexPipeline(
         extractor=DocumentExtractor(ExtractionOptions(render_dpi=args.render_dpi)),
         chunker=None,
@@ -150,6 +168,7 @@ async def _run(args: argparse.Namespace) -> int:
         state=state,
         cache=cache,
         chunk_batch_size=args.chunk_batch_size,
+        export_dir=args.export_dir,
     )
     try:
         report = await pipeline.run(
@@ -182,6 +201,12 @@ async def _run(args: argparse.Namespace) -> int:
     return 0 if report.failed == 0 else 1
 
 
+def _cache_cleanup(args: argparse.Namespace) -> int:
+    removed = DocumentCache(args.cache_dir).cleanup(args.keep_versions)
+    print(f"removed_versions={removed}")
+    return 0
+
+
 async def _cleanup(args: argparse.Namespace) -> int:
     if not args.token:
         raise RuntimeError("RAG service token is required for cleanup")
@@ -201,6 +226,18 @@ def _statuses(value: str) -> set[str]:
     if value.strip().lower() == "all":
         return set()
     return {item.strip() for item in value.split(",") if item.strip()}
+
+
+def _ocr_version(args: argparse.Namespace) -> str:
+    if args.ocr_version:
+        return str(args.ocr_version)
+    if args.ocr == "none":
+        return "none"
+    if args.ocr == "yandex":
+        return "yandex"
+    if args.fallback_yandex:
+        return "paddle-v5+yandex"
+    return "paddle-v5"
 
 
 def _ocr_engine(args: argparse.Namespace) -> OcrEngine | None:
