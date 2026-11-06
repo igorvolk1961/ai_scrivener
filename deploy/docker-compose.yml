@@ -15,8 +15,12 @@ services:
     environment:
       RAG_GIGACHAT_CA_BUNDLE: /config/russian_trusted_root_ca.pem
       FASTEMBED_CACHE_PATH: /app/.cache/fastembed
+      RAG_PDF_CACHE_DIR: /app/.cache/pdf
+      RAG_PDF_PUBLIC_BASE_URL: ${RAG_PDF_PUBLIC_BASE_URL:-http://127.0.0.1:8080}
     volumes:
       - fastembed_cache:/app/.cache/fastembed
+      - rag_pdf_cache:/app/.cache/pdf
+      - ${RAG_CORPUS_DIR_HOST:-/home/igorvolk/1C/ai_scrivener_corpus}:/corpus:ro
     depends_on:
       - qdrant
     ports:
@@ -67,6 +71,7 @@ services:
 volumes:
   qdrant_data:
   fastembed_cache:
+  rag_pdf_cache:
   rag_index_cache:
   rag_index_state:
   paddle_cache:

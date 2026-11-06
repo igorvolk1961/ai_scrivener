@@ -151,6 +151,12 @@ class ServiceSettings(BaseSettings):
     foundation_api_key: SecretStr | None = None
     foundation_embedding_model: str = "ai-sage/Giga-Embeddings-instruct-480M"
     foundation_rerank_model: str = "BAAI/bge-reranker-v2-m3"
+    corpus_dir: Path = Path("/corpus")
+    corpus_manifest: Path = Path("/corpus/manifests/2026-11-04.jsonl")
+    pdf_cache_dir: Path = Path("/app/.cache/pdf")
+    pdf_conversion_timeout_seconds: float = 120.0
+    pdf_view_token_ttl_seconds: int = 300
+    pdf_public_base_url: str = "http://127.0.0.1:8080"
     rerank_provider: str = "cloudru"
     gigachat_oauth_url: str | None = None
     gigachat_api_url: str | None = None

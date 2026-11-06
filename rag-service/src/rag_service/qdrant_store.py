@@ -120,6 +120,14 @@ class VectorStore(Protocol):
         limit: int,
     ) -> list[SearchResult]: ...
 
+    async def fetch_source_chunks(
+        self,
+        source_type: str,
+        source_id: str,
+        limit: int = 10000,
+        collection_name: str | None = None,
+    ) -> list[SearchResult]: ...
+
 
 def point_id(source_type: str, source_id: str, version: str, chunk_index: int) -> str:
     key = f"ai-scrivener:{source_type}:{source_id}:{version}:{chunk_index}"
@@ -259,15 +267,11 @@ class QdrantStore:
         info = await self._client.get_collection(target)
         vectors = info.config.params.vectors
         if vectors is None:
-            raise VectorStoreError(
-                f"collection {target} has no vector configuration"
-            )
+            raise VectorStoreError(f"collection {target} has no vector configuration")
         if isinstance(vectors, dict):
             dense = vectors.get(DENSE_VECTOR)
             if dense is None:
-                raise VectorStoreError(
-                    f"collection {target} has no named {DENSE_VECTOR} vector"
-                )
+                raise VectorStoreError(f"collection {target} has no named {DENSE_VECTOR} vector")
             size = dense.size
         else:
             size = vectors.size
@@ -319,9 +323,7 @@ class QdrantStore:
         operations: list[models.AliasOperations] = []
         if any(item.alias_name == alias for item in aliases.aliases):
             operations.append(
-                models.DeleteAliasOperation(
-                    delete_alias=models.DeleteAlias(alias_name=alias)
-                )
+                models.DeleteAliasOperation(delete_alias=models.DeleteAlias(alias_name=alias))
             )
         operations.append(
             models.CreateAliasOperation(
@@ -331,9 +333,7 @@ class QdrantStore:
                 )
             )
         )
-        await self._client.update_collection_aliases(
-            change_aliases_operations=operations
-        )
+        await self._client.update_collection_aliases(change_aliases_operations=operations)
 
     async def _delete_filter(
         self,
@@ -623,9 +623,7 @@ class QdrantStore:
         ):
             if len(document_chunks) != len(document_vectors):
                 raise VectorStoreError("chunks and vectors count mismatch")
-            document_sparse = (
-                sparse_vectors[position] if sparse_vectors is not None else None
-            )
+            document_sparse = sparse_vectors[position] if sparse_vectors is not None else None
             total += await self.upsert(
                 source_type,
                 document,
@@ -686,6 +684,36 @@ class QdrantStore:
             with_vectors=False,
         )
         return [_payload_to_result(point, "rrf") for point in response.points]
+
+    async def fetch_source_chunks(
+        self,
+        source_type: str,
+        source_id: str,
+        limit: int = 10000,
+        collection_name: str | None = None,
+    ) -> list[SearchResult]:
+        collection = collection_name or self._collection
+        base_filter = _source_filter(source_type, source_id)
+        must = base_filter.must if isinstance(base_filter.must, list) else [base_filter.must]
+        must = [condition for condition in must if condition is not None]
+        must.append(models.FieldCondition(key="active", match=models.MatchValue(value=True)))
+        scroll_filter = models.Filter(must=must)
+        results: list[SearchResult] = []
+        offset: Any = None
+        while len(results) < limit:
+            points, offset = await self._client.scroll(
+                collection_name=collection,
+                scroll_filter=scroll_filter,
+                limit=min(512, limit - len(results)),
+                offset=offset,
+                with_payload=True,
+                with_vectors=False,
+            )
+            results.extend(_payload_to_result(point, "scroll") for point in points)
+            if offset is None:
+                break
+        results.sort(key=lambda item: item.chunk_index)
+        return results
 
     async def fetch_parent_chunks(
         self,

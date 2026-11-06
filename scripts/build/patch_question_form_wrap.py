@@ -10,7 +10,8 @@ FORMS: dict[str, tuple[str, ...]] = {
         "Настройки",
         "Ответ",
         "Вопрос",
-        "ИсточникиТекст",
+        "ФрагментТекст",
+        "ТаблицаЦитатПредставление",
     ),
 }
 
@@ -30,8 +31,30 @@ def main() -> int:
             text, count = pattern.subn(_enable_wrap, text, count=1)
             if count != 1:
                 raise SystemExit(f"field not found: {relative}: {name}")
+        text = _enable_table_scroll(text)
         path.write_text(text, encoding="utf-8")
     return 0
+
+
+def _enable_table_scroll(text: str) -> str:
+    pattern = re.compile(
+        r'(<Table name="ТаблицаЦитат".*?</Table>)',
+        re.DOTALL,
+    )
+
+    def replace(match: re.Match[str]) -> str:
+        block = match.group(1)
+        block = block.replace(
+            "<VerticalScrollBar>DontUse</VerticalScrollBar>",
+            "<VerticalScrollBar>AutoUse</VerticalScrollBar>",
+            1,
+        )
+        return block
+
+    text, count = pattern.subn(replace, text, count=1)
+    if count != 1:
+        raise SystemExit("citation table not found")
+    return text
 
 
 def _enable_wrap(match: re.Match[str]) -> str:

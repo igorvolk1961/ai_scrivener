@@ -247,3 +247,33 @@ class HealthResponse(BaseModel):
     qdrant: bool
     embedding_dimension: int | None
     collection_state: dict[str, Any] | None = None
+
+
+class DocumentChunk(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    chunk_index: int
+    clause: str = ""
+    section_path: list[str] = Field(default_factory=list)
+    page_start: int | None = None
+    page_end: int | None = None
+    kind: str = "text"
+    text: str
+
+
+class DocumentTextResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source_type: str
+    source_id: str
+    version: str
+    title: str
+    doc_type: str = ""
+    text: str
+    chunks: list[DocumentChunk]
+
+
+class PdfLinkResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    url: str

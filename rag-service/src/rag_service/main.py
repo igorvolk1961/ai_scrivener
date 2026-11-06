@@ -4,9 +4,12 @@ import logging
 import secrets
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import Annotated, Any, Protocol, cast
+from urllib.parse import quote
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
+from fastapi.responses import FileResponse
 
 from rag_service.chunking import ChunkingError, TextChunk, chunk_structured_text
 from rag_service.cloudru import CloudRuEmbedder, CloudRuError, CloudRuReranker
@@ -17,6 +20,7 @@ from rag_service.config import (
     load_parameters,
     load_settings,
 )
+from rag_service.corpus import CorpusResolver
 from rag_service.gigachat import GigaChatClient, GigaChatError
 from rag_service.models import (
     ActivateRequest,
@@ -26,12 +30,15 @@ from rag_service.models import (
     CreateCollectionRequest,
     CreateCollectionResponse,
     DeleteResponse,
+    DocumentChunk,
+    DocumentTextResponse,
     HealthResponse,
     IndexChunksRequest,
     IndexChunksResponse,
     IndexItem,
     IndexRequest,
     IndexResponse,
+    PdfLinkResponse,
     ReplaceRequest,
     RetrieveRequest,
     RetrieveResponse,
@@ -40,10 +47,12 @@ from rag_service.models import (
     SwitchAliasRequest,
     SwitchAliasResponse,
 )
+from rag_service.pdf_conversion import PdfConversionError, PdfConverter
 from rag_service.qdrant_store import IndexedDocument, QdrantStore, VectorStore, VectorStoreError
 from rag_service.rerank import FastEmbedReranker, Reranker, RerankerError
 from rag_service.retrieval import Retriever
 from rag_service.sparse import FastEmbedSparseEncoder, SparseEncoder, SparseEncoderError
+from rag_service.view_tokens import create_view_token, verify_view_token
 
 logger = logging.getLogger(__name__)
 
@@ -59,12 +68,16 @@ class Embedder(Protocol):
     async def close(self) -> None: ...
 
 
+def _service_token_valid(settings: ServiceSettings, value: str | None) -> bool:
+    expected = settings.service_token.get_secret_value()
+    return value is not None and secrets.compare_digest(value, expected)
+
+
 def _require_token(
     request: Request, x_service_token: Annotated[str | None, Header()] = None
 ) -> None:
     settings: ServiceSettings = request.app.state.settings
-    expected = settings.service_token.get_secret_value()
-    if x_service_token is None or not secrets.compare_digest(x_service_token, expected):
+    if not _service_token_valid(settings, x_service_token):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="invalid service token",
@@ -171,6 +184,14 @@ def create_app(
         await resolved_store.ensure_collection(dimension)
         app.state.parameters = resolved_parameters
         app.state.settings = resolved_settings
+        app.state.corpus = CorpusResolver(
+            resolved_settings.corpus_manifest,
+            resolved_settings.corpus_dir,
+        )
+        app.state.pdf_converter = PdfConverter(
+            resolved_settings.pdf_cache_dir,
+            resolved_settings.pdf_conversion_timeout_seconds,
+        )
         app.state.embedder = resolved_embedder
         app.state.dimension = dimension
         app.state.store = resolved_store
@@ -249,6 +270,132 @@ def create_app(
             qdrant=await resolved_store.health(),
             embedding_dimension=resolved_embedder.dimension,
             collection_state=collection_state,
+        )
+
+    @app.get(
+        "/v1/documents/{source_id}/text",
+        response_model=DocumentTextResponse,
+        dependencies=[Depends(_require_token)],
+    )
+    async def document_text(
+        request: Request,
+        source_id: str,
+        source_type: str = "knowledge_material",
+    ) -> DocumentTextResponse:
+        resolved_store: VectorStore = request.app.state.store
+        try:
+            chunks = await resolved_store.fetch_source_chunks(source_type, source_id)
+        except VectorStoreError as error:
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail="document text lookup failed",
+            ) from error
+        if not chunks:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="document not found")
+        first = chunks[0]
+        return DocumentTextResponse(
+            source_type=first.source_type,
+            source_id=first.source_id,
+            version=first.version,
+            title=first.title,
+            doc_type=str(first.metadata.get("doc_type", "")),
+            text="\n\n".join(chunk.text for chunk in chunks),
+            chunks=[
+                DocumentChunk(
+                    chunk_index=chunk.chunk_index,
+                    clause=chunk.clause,
+                    section_path=chunk.section_path,
+                    page_start=chunk.page_start,
+                    page_end=chunk.page_end,
+                    kind=chunk.kind,
+                    text=chunk.text,
+                )
+                for chunk in chunks
+            ],
+        )
+
+    @app.get(
+        "/v1/documents/{source_id}/file",
+        dependencies=[Depends(_require_token)],
+    )
+    async def document_file(request: Request, source_id: str) -> FileResponse:
+        resolver: CorpusResolver = request.app.state.corpus
+        resolved = resolver.resolve(source_id)
+        if resolved is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="document file not found"
+            )
+        return FileResponse(
+            path=resolved.path,
+            media_type=resolved.mime,
+            filename=resolved.original_name,
+        )
+
+    @app.post(
+        "/v1/documents/{source_id}/pdf-link",
+        response_model=PdfLinkResponse,
+        dependencies=[Depends(_require_token)],
+    )
+    async def document_pdf_link(request: Request, source_id: str) -> PdfLinkResponse:
+        resolver: CorpusResolver = request.app.state.corpus
+        if resolver.resolve(source_id) is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="document not found"
+            )
+        settings: ServiceSettings = request.app.state.settings
+        token = create_view_token(
+            settings.service_token.get_secret_value(),
+            source_id,
+            settings.pdf_view_token_ttl_seconds,
+        )
+        base_url = settings.pdf_public_base_url.rstrip("/")
+        return PdfLinkResponse(
+            url=f"{base_url}/v1/documents/{source_id}/pdf?token={token}"
+        )
+
+    @app.get("/v1/documents/{source_id}/pdf")
+    async def document_pdf(
+        request: Request,
+        source_id: str,
+        token: str | None = None,
+        x_service_token: Annotated[str | None, Header()] = None,
+    ) -> FileResponse:
+        settings: ServiceSettings = request.app.state.settings
+        authorized = (
+            verify_view_token(settings.service_token.get_secret_value(), source_id, token)
+            if token is not None
+            else _service_token_valid(settings, x_service_token)
+        )
+        if not authorized:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="invalid access token",
+            )
+        resolver: CorpusResolver = request.app.state.corpus
+        resolved = resolver.resolve(source_id)
+        if resolved is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="document not found"
+            )
+        converter: PdfConverter = request.app.state.pdf_converter
+        try:
+            pdf_path = await converter.to_pdf(source_id, resolved)
+        except PdfConversionError as error:
+            logger.exception("PDF conversion failed")
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail="PDF conversion failed",
+            ) from error
+        filename = f"{Path(resolved.original_name).stem}.pdf"
+        ascii_name = filename.encode("ascii", "ignore").decode("ascii") or "document.pdf"
+        disposition = (
+            f'inline; filename="{ascii_name}"; '
+            f"filename*=UTF-8''{quote(filename)}"
+        )
+        return FileResponse(
+            path=pdf_path,
+            media_type="application/pdf",
+            headers={"Content-Disposition": disposition},
         )
 
     @app.post(
