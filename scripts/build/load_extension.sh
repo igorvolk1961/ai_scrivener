@@ -10,7 +10,7 @@ EXT_NAME=${EXT_NAME:-ai_scrivener}
 IB_USER=${IB_USER:-Администратор}
 FILE_IB=${FILE_IB:-/home/igorvolk/1C/ai_scrivener_docmng}
 PG_SERVER=${PG_SERVER:-localhost:1541}
-PG_BASE=${PG_BASE:-ai_scrivener}
+PG_BASE=${PG_BASE:-ai_scrivener_fixed}
 XML_DIR=${XML_DIR:-$REPO_ROOT/artifacts/extension-xml}
 LOG=${LOG:-${TMPDIR:-/tmp}/kilo/load_extension.log}
 

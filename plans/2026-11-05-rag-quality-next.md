@@ -118,6 +118,15 @@ Dev-контур собран: BAAI 15 + DeepSeek answer, таймаут BAAI 3 
 - [ ] Метрики `/health`, points_count, latency, доля found=false.
 - [ ] Инструкция по переиндексации и rollback в `guides/runbook.md`.
 
+### Серверная PostgreSQL-база
+
+- Старый инстанс `ai_scrivener` в кластере блокируется («Сеанс работы завершен администратором») из-за перехвата host:5432.
+- Создан рабочий инстанс `ai_scrivener_fixed` на той же БД `ai_scrivener` через `DBSrvr=127.0.0.2` и Docker-прокси `pg-proxy2`.
+- Расширение загружено в `ai_scrivener_fixed`: `Extension loaded successfully`.
+- Константы RAG заполнены: адрес `http://127.0.0.1:8080`, токен, таймаут 30, повторы 3.
+- `scripts/run/1c.sh` и `load_extension.sh` по умолчанию используют `ai_scrivener_fixed`.
+- Долгосрочно: убрать перехват `127.0.0.1:5432` и вернуть старый инстанс.
+
 ## 3. Команды для повторного eval
 
 ```bash

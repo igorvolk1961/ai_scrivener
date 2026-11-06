@@ -4,7 +4,7 @@ set -euo pipefail
 ONEC=/opt/1cv8/x86_64/8.3.27.2342/1cv8
 IB=${AIS_IB:-/home/igorvolk/1C/ai_scrivener_docmng}
 PG_SERVER=localhost:1541
-PG_BASE=ai_scrivener
+PG_BASE=${PG_BASE:-ai_scrivener_fixed}
 LOGIN=${2:-Администратор}
 
 usage() {
