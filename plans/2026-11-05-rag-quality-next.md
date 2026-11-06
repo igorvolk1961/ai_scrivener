@@ -120,8 +120,9 @@ Dev-контур собран: BAAI 15 + DeepSeek answer, таймаут BAAI 3 
 
 ### Серверная PostgreSQL-база
 
-- Старый инстанс `ai_scrivener` в кластере блокируется («Сеанс работы завершен администратором») из-за перехвата host:5432.
-- Создан рабочий инстанс `ai_scrivener_fixed` на той же БД `ai_scrivener` через `DBSrvr=127.0.0.2` и Docker-прокси `pg-proxy2`.
+- Причина: Happ/xray `tun0` использует `172.18.0.0/30` и правило `to 172.18.0.0/30 lookup 2022`, а Docker PostgreSQL имеет адрес `172.18.0.2`; host-трафик к .2 уходит в VPN и получает HTTP 403. `docker-proxy`/DNAT исправны.
+- Маршруты на `172.18.0.2` и перенаправление `172.18.0.0/16` в main не использовать: это peer Happ, они ломают VPN/Kilo Code.
+- Создан безопасный обход: `pg-proxy2` на `127.0.0.2:5432` и инстанс `ai_scrivener_fixed` на той же БД `ai_scrivener`.
 - Расширение загружено в `ai_scrivener_fixed`: `Extension loaded successfully`.
 - Константы RAG заполнены: адрес `http://127.0.0.1:8080`, токен, таймаут 30, повторы 3.
 - `scripts/run/1c.sh` и `load_extension.sh` по умолчанию используют `ai_scrivener_fixed`.
