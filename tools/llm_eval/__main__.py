@@ -52,6 +52,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--concurrency", type=int, default=4)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--timeout", type=float, default=90.0)
+    parser.add_argument(
+        "--skip-listwise-if-rag-rerank",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
     parser.add_argument("--no-rerank", action="store_true")
     parser.add_argument("--rerank-max-candidates", type=int, default=15)
     parser.add_argument("--rerank-text-limit", type=int, default=1200)
@@ -103,6 +108,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         concurrency=max(1, args.concurrency),
         limit=args.limit,
         timeout=args.timeout,
+        skip_listwise_if_rag_rerank=args.skip_listwise_if_rag_rerank,
         no_rerank=args.no_rerank,
         rerank_max_candidates=max(1, args.rerank_max_candidates),
         rerank_text_limit=max(1, args.rerank_text_limit),
@@ -140,6 +146,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             "include_parent": settings.include_parent,
             "prompt_version": PROMPT_VERSION,
             "rerank": not settings.no_rerank,
+            "skip_listwise_if_rag_rerank": settings.skip_listwise_if_rag_rerank,
             "judge": not settings.no_judge,
         },
         "retrieval": metrics["retrieval"],

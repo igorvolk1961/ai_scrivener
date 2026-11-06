@@ -25,6 +25,8 @@ class CaseResult:
     expected_clause_in_context: bool = False
     rerank_fallback: bool = False
     rerank_empty: bool = False
+    rag_rerank_used: bool = False
+    listwise_used: bool = False
     rerank_error: str | None = None
     raw_citations: list[dict[str, str]] = field(default_factory=list)
     correctness: float | None = None
@@ -51,6 +53,8 @@ class CaseResult:
             "expected_clause_in_context": self.expected_clause_in_context,
             "rerank_fallback": self.rerank_fallback,
             "rerank_empty": self.rerank_empty,
+            "rag_rerank_used": self.rag_rerank_used,
+            "listwise_used": self.listwise_used,
             "rerank_error": self.rerank_error,
             "raw_citations": self.raw_citations,
             "correctness": self.correctness,
@@ -206,6 +210,8 @@ def aggregate(cases: list[CaseResult], top_k: int) -> dict[str, Any]:
         "hallucinated_answers": false_negative,
         "rerank_fallbacks": sum(1 for case in cases if case.rerank_fallback),
         "rerank_empty_rankings": sum(1 for case in cases if case.rerank_empty),
+        "rag_rerank_cases": sum(1 for case in cases if case.rag_rerank_used),
+        "listwise_fallback_cases": sum(1 for case in cases if case.listwise_used),
         "judge_errors": sum(1 for case in cases if case.judge_error),
         "errors": sum(1 for case in cases if case.error),
         "e2e_latency_p50_ms": _round(percentile([case.e2e_ms for case in cases], 50)),

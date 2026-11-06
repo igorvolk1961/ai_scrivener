@@ -100,6 +100,7 @@ class Settings:
     no_rerank: bool
     group_size: int | None
     include_parent: bool | None
+    skip_listwise_if_rag_rerank: bool
     rerank_max_candidates: int
     rerank_text_limit: int
     rerank_json_mode: bool
@@ -219,15 +220,24 @@ def evaluate_case(
         result.e2e_ms = retrieval_ms
         return result
 
-    reranked, rerank_error, rerank_empty = rerank_candidates(
-        answer_client,
-        case.query,
-        candidates,
-        enabled=not settings.no_rerank,
-        max_candidates=settings.rerank_max_candidates,
-        text_limit=settings.rerank_text_limit,
-        json_mode=settings.rerank_json_mode,
-    )
+    diagnostics = response.get("diagnostics")
+    rag_rerank_used = bool(diagnostics.get("rerank") if isinstance(diagnostics, dict) else False)
+    result.rag_rerank_used = rag_rerank_used
+    if settings.no_rerank or (settings.skip_listwise_if_rag_rerank and rag_rerank_used):
+        reranked = candidates
+        rerank_error = None
+        rerank_empty = False
+    else:
+        result.listwise_used = True
+        reranked, rerank_error, rerank_empty = rerank_candidates(
+            answer_client,
+            case.query,
+            candidates,
+            enabled=True,
+            max_candidates=settings.rerank_max_candidates,
+            text_limit=settings.rerank_text_limit,
+            json_mode=settings.rerank_json_mode,
+        )
     if rerank_error is not None:
         result.rerank_fallback = True
         result.rerank_error = rerank_error

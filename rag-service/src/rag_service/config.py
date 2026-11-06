@@ -75,6 +75,7 @@ class RagParameters(BaseModel):
     rerank_model: str
     rerank_batch_size: int
     rerank_candidate_limit: int
+    rerank_timeout_seconds: float
     sparse_model: str
     sparse_language: str
     sparse_avg_len: float

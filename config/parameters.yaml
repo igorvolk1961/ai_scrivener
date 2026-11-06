@@ -44,10 +44,11 @@ rag:
   group_by_source: true
   group_size: 5
   hybrid_enabled: true
-  rerank_enabled: false
+  rerank_enabled: true
   rerank_model: BAAI/bge-reranker-v2-m3-int8
-  rerank_batch_size: 16
+  rerank_batch_size: 15
   rerank_candidate_limit: 15
+  rerank_timeout_seconds: 3.0
   sparse_model: Qdrant/bm25
   sparse_language: russian
   sparse_avg_len: 350

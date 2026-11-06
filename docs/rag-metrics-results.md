@@ -23,8 +23,8 @@
 |---|---|---|---|
 | Production (цель) | `GigaChat/GigaChat-3-Pro` | `BAAI/bge-reranker-v2-m3` (568M, foreign <1B) | соответствует правилу «без зарубежных >1B» |
 | Development | `deepseek-chat` / `deepseek-v4-flash` | `BAAI/bge-reranker-v2-m3` | дешевле; foreign >1B допустим только вне production |
-| Текущий RAG-сервис | Cloud.ru embeddings `ai-sage/Giga-Embeddings-instruct-480M` (480M) | BAAI **выключен** (`rerank_enabled=false`) | BAAI нужно включить для production |
-| Текущий 1С | модель из `Константа.АИС_МодельИИ`; для production — GigaChat-3-Pro, для dev — deepseek-chat | listwise, если RAG BAAI выключен | при включении BAAI listwise в 1С нужно пропускать |
+| Текущий RAG-сервис | Cloud.ru embeddings `ai-sage/Giga-Embeddings-instruct-480M` (480M) | BAAI **включён** (15, timeout 3 с) | dev-контур собран |
+| Текущий 1С | `АИС_МодельИИ` пустая → `deepseek-chat`; ключ `АИС_КлючИИ` задан | listwise только если `diagnostics.rerank=false` | dev-контур собран |
 
 Важно: целевая production-пара **BAAI + GigaChat-3-Pro** ещё не измерена одним прогоном. Есть две ближайшие точки: `BAAI + DeepSeek answer` (dev) и `GigaChat-3-Pro listwise + answer` (production без BAAI).
 
@@ -65,6 +65,7 @@
 | CloudRu full: BAAI 50 + DeepSeek listwise | DeepSeek | listwise | yes | 70 | 0.9500 | 0.8710 | 0.8833 | 0.9298 | 0.9298 | 1.0000 | 0.7692 | 8313.4661 / 39112.8319 | double rerank; not production |
 | CloudRu full: BAAI 15 + DeepSeek listwise | DeepSeek | listwise | yes | 70 | 0.9492 | 0.8587 | 0.8644 | 0.9107 | 0.9322 | 0.9964 | 0.7692 | 7082.3390 / 23935.8093 | double rerank; fair candidate count |
 | CloudRu full: BAAI 15 only | DeepSeek | none | yes | 70 | 0.9500 | 0.8602 | 0.8667 | 0.9123 | 0.9474 | 1.0000 | 0.7692 | 2906.0611 / 52338.3613 | development candidate |
+| Dev: BAAI 15 + DeepSeek answer, timeout 3s | DeepSeek | none | yes | 70 | 0.9500 | 0.8605 | 0.8667 | 0.9123 | 0.9375 | 0.9991 | 0.7692 | 3063.9 / 10459.0 | dev target; 68/70 BAAI, 2 listwise fallback |
 | CloudRu full: GigaChat-3-Pro listwise | GigaChat-3-Pro | listwise | no | 70 | 0.9833 | 0.8804 | 0.8833 | 0.8983 | 0.9417 | 0.9536 | 0.9091 | 3179.7440 / 6218.0755 | production candidate without BAAI |
 | Paired 20: DeepSeek listwise | DeepSeek | listwise | no | 20 | 1.0000 | 0.8182 | 0.8000 | 0.8000 | 1.0000 | 0.9947 | — | 5507.7440 / 10753.3315 | same 20 cases |
 | Paired 20: BAAI 15 only | DeepSeek | none | yes | 20 | 1.0000 | 0.9032 | 0.8500 | 0.8500 | 1.0000 | 1.0000 | — | 3400.6920 / 95163.3861 | same 20 cases |
@@ -148,6 +149,33 @@ Answer-стадия в обоих вариантах практически од
 
 GigaChat3-10B самый быстрый, но качество существенно ниже: 7 ложных отказов и citation recall 0.45. Для production не выбран. Полный прогон на 70 кейсах для этой модели не выполнялся — только 20-кейсовый paired-срез; это отмечено в разделе 7.
 
+### 5.5. Dev-пайплайн: BAAI 15 + DeepSeek answer, timeout 3 с
+
+Артефакт: `artifacts/llm-eval/dev-baai-deepseek-full.json`.
+Условия: RAG BAAI включён (`rerank_candidate_limit=15`, `rerank_batch_size=15`, `rerank_timeout_seconds=3`), 1С-подобная логика: если `/v1/retrieve` вернул `diagnostics.rerank=true`, listwise не вызывается; иначе — fallback на DeepSeek listwise.
+
+| Метрика | Значение |
+|---|---:|
+| found_rate | 0.9500 |
+| false_refusals | 3 |
+| expected_clause_in_context | 0.9167 |
+| citation_precision | 0.8605 |
+| citation_recall | 0.8667 |
+| citation_accuracy | 0.9123 |
+| correctness | 0.9375 |
+| groundedness | 0.9991 |
+| no_answer_precision | 0.7692 |
+| retrieval p50 / p95 | 658 / 1125 мс |
+| e2e p50 / p95 | 3064 / 10459 мс |
+| BAAI успешно / listwise fallback | 68 / 2 |
+
+Это лучше DeepSeek listwise по found/cit/correctness и p50, а таймаут убрал прежний retrieval p95 16.7 с. Остаточные 3 ложных отказа:
+
+1. «Каким международным стандартам соответствует ГОСТ 9733.4-83?» — нужный п. 4 не попал в контекст;
+2. два вопроса по учебнику логистики — в контексте только заголовки разделов 17.2/17.4, без самого перечня. Это ограничение extraction/полноты корпуса.
+
+Из-за них citation_accuracy 0.912 < 0.95 и no_answer_precision 0.769 < 0.90. Для исправления нужны: контекст/ранжирование для п. 4 и полная переиндексация книги с OCR/извлечением содержимого (п. 6).
+
 ## 6. Промежуточные и непригодные для выбора прогоны
 
 - **Pre-chunk baseline** (`knowledge-answer-eval.json`): chunker терял пункты, citations в старом формате; found 0.4167, correctness 0.3661. Не использовать как оценку модели.
@@ -165,6 +193,7 @@ GigaChat3-10B самый быстрый, но качество существе�
 4. No-answer threshold для retrieval: `search_min_score=0.0`, retrieval no-answer accuracy 0.0.
 5. Полная переиндексация после последних изменений чанкера/конфига (текущая Cloud.ru-коллекция — 30 документов, 5538 чанков).
 6. Полный 70-кейсовый прогон `GigaChat3-10B` (есть только 20-кейсовый paired; см. 5.4).
+7. Полная переиндексация 170 уникальных документов запущена в фоне: коллекция `cloudru_full_v1_1793918359`, отчёт появится в `artifacts/rag-reindex-full/report.json`. Alias не переключался.
 
 ## 8. Артефакты
 

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import math
 import time
 from collections import defaultdict
@@ -101,26 +102,43 @@ class Retriever:
         retrieval_ms = (time.perf_counter() - started) * 1000
 
         rerank_ms = 0.0
+        rerank_succeeded = False
+        rerank_error = ""
         if use_rerank and reranker is not None and candidates:
             rerank_started = time.perf_counter()
             rerank_limit = max(1, rag.rerank_candidate_limit)
             head = candidates[:rerank_limit]
             tail = candidates[rerank_limit:]
             documents = [candidate.embedding_text or candidate.text for candidate in head]
-            scores = await reranker.score(query, documents)
-            if len(scores) != len(head):
-                raise RuntimeError("reranker returned unexpected score count")
-            for candidate, raw_score in zip(head, scores, strict=True):
-                candidate.rerank_score = raw_score
-                candidate.score = _sigmoid(raw_score)
-                candidate.score_type = "rerank_sigmoid"
-            head.sort(key=lambda candidate: candidate.score, reverse=True)
-            candidates = [*head, *tail]
+            try:
+                scores = await asyncio.wait_for(
+                    reranker.score(query, documents),
+                    timeout=rag.rerank_timeout_seconds,
+                )
+            except TimeoutError:
+                rerank_error = f"timeout after {rag.rerank_timeout_seconds:g}s"
+                scores = None
+            except Exception as error:
+                rerank_error = str(error)[:200]
+                scores = None
+            if scores is not None:
+                if len(scores) != len(head):
+                    rerank_error = "reranker returned unexpected score count"
+                else:
+                    for candidate, raw_score in zip(head, scores, strict=True):
+                        candidate.rerank_score = raw_score
+                        candidate.score = _sigmoid(raw_score)
+                        candidate.score_type = "rerank_sigmoid"
+                    head.sort(key=lambda candidate: candidate.score, reverse=True)
+                    candidates = [*head, *tail]
+                    rerank_succeeded = True
+                    if rag.search_min_score > 0:
+                        candidates = [
+                            candidate
+                            for candidate in candidates
+                            if candidate.score >= rag.search_min_score
+                        ]
             rerank_ms = (time.perf_counter() - rerank_started) * 1000
-            if rag.search_min_score > 0:
-                candidates = [
-                    candidate for candidate in candidates if candidate.score >= rag.search_min_score
-                ]
 
         group_by_source = (
             request.group_by_source if request.group_by_source is not None else rag.group_by_source
@@ -161,7 +179,9 @@ class Retriever:
                 "candidates": len(candidates),
                 "returned": len(results),
                 "hybrid": use_hybrid,
-                "rerank": use_rerank,
+                "rerank": rerank_succeeded,
+                "rerank_requested": use_rerank,
+                "rerank_error": rerank_error,
                 "retrieval_ms": round(retrieval_ms, 2),
                 "rerank_ms": round(rerank_ms, 2),
             },

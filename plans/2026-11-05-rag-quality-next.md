@@ -46,7 +46,9 @@
 
 ### Решение по реранкеру
 
-**GigaChat не использовать до явного указания владельца продукта.** Метрики GigaChat-3-Pro и GigaChat3-10B в этом плане и в `docs/rag-metrics-results.md` — исторические; новые прогоны с ними не запускать. Текущий дефолт 1С — `deepseek-chat`; модель задаётся `Константа.АИС_МодельИИ`. Для production-политики (GigaChat + BAAI) нужно отдельное явное указание и повторный eval; до этого production-конфигурацию не менять.
+**GigaChat не использовать до явного указания владельца продукта.** Метрики GigaChat-3-Pro и GigaChat3-10B в этом плане и в `docs/rag-metrics-results.md` — исторические; новые прогоны с ними не запускать. Текущий дефолт 1С — `deepseek-chat`; модель задаётся `Константа.АИС_МодельИИ`.
+
+Dev-контур собран: BAAI 15 + DeepSeek answer, таймаут BAAI 3 с и fallback на listwise. В 1С `ВызватьИИ` берёт модель из константы, ключ `АИС_КлючИИ` задан; при `diagnostics.rerank=true` listwise пропускается. Полный eval: found 0.95, citation accuracy 0.912, correctness 0.9375, no-answer precision 0.769, retrieval p95 1.1 с, e2e p95 10.5 с; 68/70 BAAI, 2 fallback. Остаточные 3 ложных отказа: один пункт ГОСТ не попал в контекст и два вопроса по учебнику, где в контексте только заголовки разделов.
 
 ## 2. Приоритеты
 
@@ -58,14 +60,16 @@
 - [x] Исправить системные зависимости OCR: `libgl1`, `libglib2.0-0`, `libgomp1`, `libsm6`, `libxext6`, `libxrender1` в `rag-service/Dockerfile.indexer`; OCR проверен на реальной странице.
 - [x] Создать новую коллекцию через `collection-create`.
 - [x] Переиндексировать 30 пилотных документов с `--ocr paddle`, `PIPELINE_VERSION=2`, `--target-collection <new>`.
-- [x] Перейти на Cloud.ru Foundation Models (`ai-sage/Giga-Embeddings-instruct-480M`, 1024); reranker `BAAI/bge-reranker-v2-m3` подключён кодом, но не включён в production.
+- [x] Перейти на Cloud.ru Foundation Models (`ai-sage/Giga-Embeddings-instruct-480M`, 1024); reranker `BAAI/bge-reranker-v2-m3` включён с лимитом 15 и таймаутом 3 с.
 - [x] Проверить, что в новой коллекции у 2 «учебниковых» кейсов есть текст разделов: полная переиндексация 30/30, 5538 чанков.
 - [x] Прогнать retrieval-eval и answer-eval на новой коллекции с `group_size=5`, без parent, labels-only.
 - [x] Сравнить с текущими метриками; зафиксировать результат в `docs/rag-evaluation.md`.
 - [x] Rollout: production 8080 перезапущен с Cloud.ru embeddings, alias `ai_scrivener_knowledge_current` переведён на `cloudru_pilot_v1_1793908370`; retrieval eval 1.0/1.0/1.0, p95 180 мс.
-- [ ] Если включать Cloud.ru reranker — сначала ограничить число кандидатов/батчи: сейчас p95 retrieval 17 с, e2e p95 39 с.
+- [x] BAAI включён с `rerank_candidate_limit=15`, `rerank_batch_size=15`, `rerank_timeout_seconds=3`; при таймауте/ошибке используется RRF/listwise fallback.
 
-Критерий: found_rate ≥ 0.9667, citation_accuracy ≥ 0.95, no_answer_precision ≥ 0.90 на полной переиндексации, а не на rechunk.
+Критерий: found_rate ≥ 0.9667, citation_accuracy ≥ 0.95, no_answer_precision ≥ 0.90 на полной переиндексации, а не на rechunk. Текущий dev: found 0.95, citation_accuracy 0.912, no_answer_precision 0.769; 3 ложных отказа.
+
+- [~] Полная переиндексация 170 уникальных документов запущена: коллекция `cloudru_full_v1_1793918359`, прогресс в `artifacts/rag-reindex-full`; alias не переключён.
 
 ### P1. Развернуть проверенные изменения
 
@@ -75,7 +79,7 @@
 - [ ] Прогнать ручной e2e-сценарий из 1С на 5–10 вопросах: found, citations, источники, ошибки.
 - [ ] Зафиксировать rollback: alias обратно на старую коллекцию невозможен без GigaChat; хранить старую коллекцию только как архив.
 
-Критерий: 1С получает ответы с валидными citations, alias переключён. Текущее качество на Cloud.ru без RAG-reranker: found_rate 0.933, citation_accuracy 0.893, correctness 0.912, e2e p95 13.1 с.
+Критерий: 1С получает ответы с валидными citations, alias переключён. Текущий dev-контур: found 0.95, citation_accuracy 0.912, correctness 0.9375, e2e p95 10.5 с; ключ `АИС_КлючИИ` задан, модель — deepseek-chat.
 
 ### P1. Латентность
 
@@ -85,7 +89,7 @@
 - [ ] Оценить streaming/асинхронную выдачу для UI 1С.
 - [ ] Зафиксировать реалистичный target, если p95 < 3 с недостижим на текущей модели.
 
-Критерий: p95 e2e либо < 3 с, либо согласованный и задокументированный новый target.
+Критерий: p95 e2e либо < 3 с, либо согласованный новый target. Текущий dev p95 10.5 с; основной вклад — answer-стадия.
 
 ### P2. No-answer и abstention
 
@@ -108,7 +112,7 @@
 
 ### P2. 1С: аудит и мониторинг
 
-- [ ] Аудит Q&A в `АИС_ИсторияДействийИИ`: вопрос, citation ID, latency, ошибки, без полного текста документов.
+- [x] Аудит Q&A: `АИС_ОтветПоБазеЗнаний` пишет запись в `АИС_ИсторияДействийИИ` (вопрос JSON, ответ LLM, модель, результат, ошибка, длительность). Требуется публикация расширения.
 - [ ] Метрики `/health`, points_count, latency, доля found=false.
 - [ ] Инструкция по переиндексации и rollback в `guides/runbook.md`.
 
