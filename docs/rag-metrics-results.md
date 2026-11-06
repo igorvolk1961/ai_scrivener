@@ -38,6 +38,7 @@
 | `knowledge-cloudru-rerank.json` | 70 | 60 | 1.0000 | 1.0000 | 1.0000 | 0.0 | 885.6 / 1096.1 |
 | `knowledge-cloudru-rerank15.json` | 70 | 60 | 1.0000 | 1.0000 | 1.0000 | 0.0 | 374.8 / 536.6 |
 | `knowledge-cloudru.json` | 70 | 60 | 1.0000 | 1.0000 | 1.0000 | 0.0 | 134.9 / 212.1 |
+| `knowledge-full-cloudru.json` | 70 | 60 | 1.0000 | 0.9833 | 0.9877 | 0.0 | 609.3 / 903.2 |
 | `knowledge-production-cloudru.json` | 70 | 60 | 1.0000 | 1.0000 | 1.0000 | 0.0 | 136.4 / 179.6 |
 | `knowledge-rechunk.json` | 70 | 60 | 1.0000 | 1.0000 | 1.0000 | 0.0 | 137.9 / 283.1 |
 
@@ -65,6 +66,7 @@
 | CloudRu full: BAAI 50 + DeepSeek listwise | DeepSeek | listwise | yes | 70 | 0.9500 | 0.8710 | 0.8833 | 0.9298 | 0.9298 | 1.0000 | 0.7692 | 8313.4661 / 39112.8319 | double rerank; not production |
 | CloudRu full: BAAI 15 + DeepSeek listwise | DeepSeek | listwise | yes | 70 | 0.9492 | 0.8587 | 0.8644 | 0.9107 | 0.9322 | 0.9964 | 0.7692 | 7082.3390 / 23935.8093 | double rerank; fair candidate count |
 | CloudRu full: BAAI 15 only | DeepSeek | none | yes | 70 | 0.9500 | 0.8602 | 0.8667 | 0.9123 | 0.9474 | 1.0000 | 0.7692 | 2906.0611 / 52338.3613 | development candidate |
+| Dev: BAAI 15 + DeepSeek answer, full corpus | DeepSeek | none | yes | 70 | 0.9492 | 0.8764 | 0.8305 | 0.8750 | 0.9182 | 1.0000 | 0.7692 | 3089.6 / 6974.4 | full 170 docs, 34 506 chunks; 1 error |
 | Dev: BAAI 15 + DeepSeek answer, timeout 3s | DeepSeek | none | yes | 70 | 0.9500 | 0.8605 | 0.8667 | 0.9123 | 0.9375 | 0.9991 | 0.7692 | 3063.9 / 10459.0 | dev target; 68/70 BAAI, 2 listwise fallback |
 | CloudRu full: GigaChat-3-Pro listwise | GigaChat-3-Pro | listwise | no | 70 | 0.9833 | 0.8804 | 0.8833 | 0.8983 | 0.9417 | 0.9536 | 0.9091 | 3179.7440 / 6218.0755 | production candidate without BAAI |
 | Paired 20: DeepSeek listwise | DeepSeek | listwise | no | 20 | 1.0000 | 0.8182 | 0.8000 | 0.8000 | 1.0000 | 0.9947 | — | 5507.7440 / 10753.3315 | same 20 cases |
@@ -193,7 +195,7 @@ GigaChat3-10B самый быстрый, но качество существе�
 4. No-answer threshold для retrieval: `search_min_score=0.0`, retrieval no-answer accuracy 0.0.
 5. Полная переиндексация после последних изменений чанкера/конфига (текущая Cloud.ru-коллекция — 30 документов, 5538 чанков).
 6. Полный 70-кейсовый прогон `GigaChat3-10B` (есть только 20-кейсовый paired; см. 5.4).
-7. Полная переиндексация 170 уникальных документов запущена в фоне: коллекция `cloudru_full_v1_1793918359`, отчёт появится в `artifacts/rag-reindex-full/report.json`. Alias не переключался.
+7. Полная переиндексация 170 уникальных документов завершена: 170/170, 34 506 чанков, коллекция `cloudru_full_v1_1793918359`; alias не переключался. Полный retrieval: Recall 1.0, MRR 0.9833, nDCG 0.9877. Полный answer-eval (dev BAAI+DeepSeek): found 0.9492, citation_accuracy 0.8750, correctness 0.9182, no-answer_precision 0.7692, e2e p50/p95 3.09/6.97 с. Качество на полном корпусе чуть ниже 30-документного среза из-за большего числа дистракторов.
 
 ## 8. Артефакты
 

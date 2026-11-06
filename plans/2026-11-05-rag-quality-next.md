@@ -69,7 +69,8 @@ Dev-контур собран: BAAI 15 + DeepSeek answer, таймаут BAAI 3 
 
 Критерий: found_rate ≥ 0.9667, citation_accuracy ≥ 0.95, no_answer_precision ≥ 0.90 на полной переиндексации, а не на rechunk. Текущий dev: found 0.95, citation_accuracy 0.912, no_answer_precision 0.769; 3 ложных отказа.
 
-- [~] Полная переиндексация 170 уникальных документов запущена: коллекция `cloudru_full_v1_1793918359`, прогресс в `artifacts/rag-reindex-full`; alias не переключён.
+- [x] Полная переиндексация 170 уникальных документов: 170/170, 34 506 чанков, коллекция `cloudru_full_v1_1793918359`; alias не переключён. Полный retrieval: Recall 1.0, MRR 0.9833, nDCG 0.9877. Answer-eval: found 0.9492, citation_accuracy 0.8750, correctness 0.9182, no_answer_precision 0.7692.
+- [ ] Расширить golden set на все 68 типов и пересчитать метрики на полном корпусе.
 
 ### P1. Развернуть проверенные изменения
 
