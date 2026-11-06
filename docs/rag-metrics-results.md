@@ -40,6 +40,7 @@
 | `knowledge-cloudru.json` | 70 | 60 | 1.0000 | 1.0000 | 1.0000 | 0.0 | 134.9 / 212.1 |
 | `knowledge-full-cloudru.json` | 70 | 60 | 1.0000 | 0.9833 | 0.9877 | 0.0 | 609.3 / 903.2 |
 | `knowledge-production-cloudru.json` | 70 | 60 | 1.0000 | 1.0000 | 1.0000 | 0.0 | 136.4 / 179.6 |
+| `knowledge-production-full.json` | 70 | 60 | 1.0000 | 0.9833 | 0.9877 | 0.0 | 416.8 / 601.8 |
 | `knowledge-rechunk.json` | 70 | 60 | 1.0000 | 1.0000 | 1.0000 | 0.0 | 137.9 / 283.1 |
 
 Примечания:
@@ -195,7 +196,7 @@ GigaChat3-10B самый быстрый, но качество существе�
 4. No-answer threshold для retrieval: `search_min_score=0.0`, retrieval no-answer accuracy 0.0.
 5. Полная переиндексация после последних изменений чанкера/конфига (текущая Cloud.ru-коллекция — 30 документов, 5538 чанков).
 6. Полный 70-кейсовый прогон `GigaChat3-10B` (есть только 20-кейсовый paired; см. 5.4).
-7. Полная переиндексация 170 уникальных документов завершена: 170/170, 34 506 чанков, коллекция `cloudru_full_v1_1793918359`; alias не переключался. Полный retrieval: Recall 1.0, MRR 0.9833, nDCG 0.9877. Полный answer-eval (dev BAAI+DeepSeek): found 0.9492, citation_accuracy 0.8750, correctness 0.9182, no-answer_precision 0.7692, e2e p50/p95 3.09/6.97 с. Качество на полном корпусе чуть ниже 30-документного среза из-за большего числа дистракторов.
+7. Полная переиндексация 170 уникальных документов завершена: 170/170, 34 506 чанков, коллекция `cloudru_full_v1_1793918359`. Alias `ai_scrivener_knowledge_current` переключён на неё; production retrieval: Recall 1.0, MRR 0.9833, nDCG 0.9877, p50/p95 417/602 мс. Полный answer-eval (dev BAAI+DeepSeek): found 0.9492, citation_accuracy 0.8750, correctness 0.9182, no-answer_precision 0.7692, e2e p50/p95 3.09/6.97 с. Rollback alias: `cloudru_pilot_v1_1793908370`.
 
 ## 8. Артефакты
 

@@ -52,5 +52,6 @@ rsync -a --delete "$REPO_ROOT/src/" "$WORKSPACE_PROJECT/src/"
   --configuration-files "$OUTPUT_DIR"
 
 python3 "$REPO_ROOT/scripts/build/patch_folder_form.py" "$OUTPUT_DIR"
+python3 "$REPO_ROOT/scripts/build/patch_question_form_wrap.py" "$OUTPUT_DIR"
 
 echo "Extension XML exported to $OUTPUT_DIR"

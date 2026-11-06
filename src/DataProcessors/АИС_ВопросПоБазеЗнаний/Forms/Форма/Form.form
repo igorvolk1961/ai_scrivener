@@ -1,48 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:form="http://g5.1c.ru/v8/dt/form">
+  <title>
+    <key>ru</key>
+    <value>Чат по базе знаний</value>
+  </title>
   <autoCommandBar>
     <name>ФормаКоманднаяПанель</name>
     <id>-1</id>
-    <horizontalAlign>Left</horizontalAlign>
-    <autoFill>true</autoFill>
-    <items xsi:type="form:Button">
-      <name>Спросить</name>
-      <id>4</id>
-      <type>CommandBarButton</type>
-      <title>
-        <key>ru</key>
-        <value>Спросить</value>
-      </title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible>
-        <common>true</common>
-      </userVisible>
-      <commandName>Form.Command.Спросить</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
-    <items xsi:type="form:Button">
-      <name>Очистить</name>
-      <id>5</id>
-      <type>CommandBarButton</type>
-      <title>
-        <key>ru</key>
-        <value>Очистить</value>
-      </title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible>
-        <common>true</common>
-      </userVisible>
-      <commandName>Form.Command.Очистить</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
+    <autoFill>false</autoFill>
   </autoCommandBar>
   <handlers>
     <event>OnCreateAtServer</event>
@@ -60,123 +25,317 @@
   <enabled>true</enabled>
   <showTitle>true</showTitle>
   <showCloseButton>true</showCloseButton>
-  <items xsi:type="form:FormField">
-    <name>Вопрос</name>
-    <id>6</id>
-    <title>
-      <key>ru</key>
-      <value>Вопрос</value>
-    </title>
-    <visible>true</visible>
-    <enabled>true</enabled>
-    <userVisible>
-      <common>true</common>
-    </userVisible>
-    <dataPath xsi:type="form:DataPath">
-      <segments>Вопрос</segments>
-    </dataPath>
-    <titleLocation>Top</titleLocation>
-    <type>InputField</type>
-    <editMode>Immediate</editMode>
-    <showInHeader>true</showInHeader>
-    <headerHorizontalAlign>Left</headerHorizontalAlign>
-    <showInFooter>true</showInFooter>
-    <extInfo xsi:type="form:InputFieldExtInfo">
-      <height>5</height>
-      <autoMaxHeight>true</autoMaxHeight>
-      <horizontalStretch>true</horizontalStretch>
-      <verticalStretch>false</verticalStretch>
-      <multiLine>true</multiLine>
-      <textEdit>true</textEdit>
-    </extInfo>
-  </items>
-  <items xsi:type="form:FormField">
-    <name>Ответ</name>
-    <id>7</id>
-    <title>
-      <key>ru</key>
-      <value>Ответ</value>
-    </title>
-    <visible>true</visible>
-    <enabled>true</enabled>
-    <userVisible>
-      <common>true</common>
-    </userVisible>
-    <dataPath xsi:type="form:DataPath">
-      <segments>Ответ</segments>
-    </dataPath>
-    <titleLocation>Top</titleLocation>
-    <type>InputField</type>
-    <editMode>Enter</editMode>
-    <showInHeader>true</showInHeader>
-    <headerHorizontalAlign>Left</headerHorizontalAlign>
-    <showInFooter>true</showInFooter>
-    <extInfo xsi:type="form:InputFieldExtInfo">
-      <readOnly>true</readOnly>
-      <height>12</height>
-      <autoMaxHeight>true</autoMaxHeight>
+  <items xsi:type="form:FormGroup">
+    <name>ГруппаЧат</name>
+    <id>10</id>
+    <items xsi:type="form:FormGroup">
+      <name>ГруппаЛевая</name>
+      <id>11</id>
+      <items xsi:type="form:FormField">
+        <name>Диалоги</name>
+        <id>12</id>
+        <title>
+          <key>ru</key>
+          <value>Диалоги</value>
+        </title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <dataPath xsi:type="form:DataPath">
+          <segments>Диалоги</segments>
+        </dataPath>
+        <titleLocation>Top</titleLocation>
+        <type>InputField</type>
+        <editMode>Enter</editMode>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo">
+          <readOnly>true</readOnly>
+          <height>12</height>
+          <autoMaxHeight>false</autoMaxHeight>
+          <horizontalStretch>true</horizontalStretch>
+          <verticalStretch>true</verticalStretch>
+          <multiLine>true</multiLine>
+          <textEdit>true</textEdit>
+        </extInfo>
+      </items>
+      <items xsi:type="form:FormField">
+        <name>Настройки</name>
+        <id>13</id>
+        <title>
+          <key>ru</key>
+          <value>Настройки чата</value>
+        </title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <dataPath xsi:type="form:DataPath">
+          <segments>Настройки</segments>
+        </dataPath>
+        <titleLocation>Top</titleLocation>
+        <type>InputField</type>
+        <editMode>Enter</editMode>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo">
+          <readOnly>true</readOnly>
+          <height>5</height>
+          <autoMaxHeight>false</autoMaxHeight>
+          <horizontalStretch>true</horizontalStretch>
+          <verticalStretch>false</verticalStretch>
+          <multiLine>true</multiLine>
+          <textEdit>true</textEdit>
+        </extInfo>
+      </items>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible>
+        <common>true</common>
+      </userVisible>
+      <title>
+        <key>ru</key>
+        <value>Диалоги и настройки</value>
+      </title>
+      <type>UsualGroup</type>
+      <extInfo xsi:type="form:UsualGroupExtInfo">
+        <group>Vertical</group>
+        <showLeftMargin>false</showLeftMargin>
+        <united>false</united>
+        <throughAlign>Auto</throughAlign>
+        <currentRowUse>Auto</currentRowUse>
+      </extInfo>
+      <width>25</width>
+      <horizontalStretch>false</horizontalStretch>
+      <verticalStretch>true</verticalStretch>
+    </items>
+    <items xsi:type="form:FormGroup">
+      <name>ГруппаЦентр</name>
+      <id>20</id>
+      <items xsi:type="form:FormField">
+        <name>Ответ</name>
+        <id>21</id>
+        <title>
+          <key>ru</key>
+          <value>История ответов</value>
+        </title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <dataPath xsi:type="form:DataPath">
+          <segments>Ответ</segments>
+        </dataPath>
+        <titleLocation>Top</titleLocation>
+        <type>InputField</type>
+        <editMode>Enter</editMode>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo">
+          <readOnly>true</readOnly>
+          <height>12</height>
+          <autoMaxHeight>false</autoMaxHeight>
+          <horizontalStretch>true</horizontalStretch>
+          <verticalStretch>true</verticalStretch>
+          <multiLine>true</multiLine>
+          <textEdit>true</textEdit>
+        </extInfo>
+      </items>
+      <items xsi:type="form:FormField">
+        <name>Вопрос</name>
+        <id>22</id>
+        <title>
+          <key>ru</key>
+          <value>Вопрос</value>
+        </title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <dataPath xsi:type="form:DataPath">
+          <segments>Вопрос</segments>
+        </dataPath>
+        <titleLocation>Top</titleLocation>
+        <type>InputField</type>
+        <editMode>Immediate</editMode>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo">
+          <height>4</height>
+          <autoMaxHeight>false</autoMaxHeight>
+          <horizontalStretch>true</horizontalStretch>
+          <verticalStretch>false</verticalStretch>
+          <multiLine>true</multiLine>
+          <textEdit>true</textEdit>
+        </extInfo>
+      </items>
+      <items xsi:type="form:Button">
+        <name>Спросить</name>
+        <id>24</id>
+        <title>
+          <key>ru</key>
+          <value>Отправить</value>
+        </title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <type>UsualButton</type>
+        <commandName>Form.Command.Спросить</commandName>
+        <representation>Auto</representation>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+      </items>
+      <items xsi:type="form:Button">
+        <name>Очистить</name>
+        <id>25</id>
+        <title>
+          <key>ru</key>
+          <value>Очистить</value>
+        </title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <type>UsualButton</type>
+        <commandName>Form.Command.Очистить</commandName>
+        <representation>Auto</representation>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+      </items>
+      <items xsi:type="form:FormField">
+        <name>Статус</name>
+        <id>26</id>
+        <title>
+          <key>ru</key>
+          <value>Статус</value>
+        </title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <dataPath xsi:type="form:DataPath">
+          <segments>Статус</segments>
+        </dataPath>
+        <titleLocation>Top</titleLocation>
+        <type>InputField</type>
+        <editMode>Enter</editMode>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo">
+          <readOnly>true</readOnly>
+          <autoMaxWidth>true</autoMaxWidth>
+          <autoMaxHeight>true</autoMaxHeight>
+          <horizontalStretch>true</horizontalStretch>
+        </extInfo>
+      </items>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible>
+        <common>true</common>
+      </userVisible>
+      <title>
+        <key>ru</key>
+        <value>Чат</value>
+      </title>
+      <type>UsualGroup</type>
+      <extInfo xsi:type="form:UsualGroupExtInfo">
+        <group>Vertical</group>
+        <showLeftMargin>false</showLeftMargin>
+        <united>false</united>
+        <throughAlign>Auto</throughAlign>
+        <currentRowUse>Auto</currentRowUse>
+      </extInfo>
       <horizontalStretch>true</horizontalStretch>
       <verticalStretch>true</verticalStretch>
-      <multiLine>true</multiLine>
-    </extInfo>
-  </items>
-  <items xsi:type="form:FormField">
-    <name>ИсточникиТекст</name>
-    <id>8</id>
-    <title>
-      <key>ru</key>
-      <value>Источники</value>
-    </title>
+    </items>
+    <items xsi:type="form:FormGroup">
+      <name>ГруппаПравая</name>
+      <id>30</id>
+      <items xsi:type="form:FormField">
+        <name>ИсточникиТекст</name>
+        <id>31</id>
+        <title>
+          <key>ru</key>
+          <value>Цитаты</value>
+        </title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <dataPath xsi:type="form:DataPath">
+          <segments>ИсточникиТекст</segments>
+        </dataPath>
+        <titleLocation>Top</titleLocation>
+        <type>InputField</type>
+        <editMode>Enter</editMode>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo">
+          <readOnly>true</readOnly>
+          <height>12</height>
+          <autoMaxHeight>false</autoMaxHeight>
+          <horizontalStretch>true</horizontalStretch>
+          <verticalStretch>true</verticalStretch>
+          <multiLine>true</multiLine>
+          <textEdit>true</textEdit>
+        </extInfo>
+      </items>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible>
+        <common>true</common>
+      </userVisible>
+      <title>
+        <key>ru</key>
+        <value>Цитаты</value>
+      </title>
+      <type>UsualGroup</type>
+      <extInfo xsi:type="form:UsualGroupExtInfo">
+        <group>Vertical</group>
+        <showLeftMargin>false</showLeftMargin>
+        <united>false</united>
+        <throughAlign>Auto</throughAlign>
+        <currentRowUse>Auto</currentRowUse>
+      </extInfo>
+      <width>30</width>
+      <horizontalStretch>false</horizontalStretch>
+      <verticalStretch>true</verticalStretch>
+    </items>
     <visible>true</visible>
     <enabled>true</enabled>
     <userVisible>
       <common>true</common>
     </userVisible>
-    <dataPath xsi:type="form:DataPath">
-      <segments>ИсточникиТекст</segments>
-    </dataPath>
-    <titleLocation>Top</titleLocation>
-    <type>InputField</type>
-    <editMode>Enter</editMode>
-    <showInHeader>true</showInHeader>
-    <headerHorizontalAlign>Left</headerHorizontalAlign>
-    <showInFooter>true</showInFooter>
-    <extInfo xsi:type="form:InputFieldExtInfo">
-      <readOnly>true</readOnly>
-      <height>8</height>
-      <autoMaxHeight>true</autoMaxHeight>
-      <horizontalStretch>true</horizontalStretch>
-      <verticalStretch>false</verticalStretch>
-      <multiLine>true</multiLine>
-    </extInfo>
-  </items>
-  <items xsi:type="form:FormField">
-    <name>Статус</name>
-    <id>9</id>
     <title>
       <key>ru</key>
-      <value>Статус</value>
+      <value>Чат</value>
     </title>
-    <visible>true</visible>
-    <enabled>true</enabled>
-    <userVisible>
-      <common>true</common>
-    </userVisible>
-    <dataPath xsi:type="form:DataPath">
-      <segments>Статус</segments>
-    </dataPath>
-    <titleLocation>Top</titleLocation>
-    <type>InputField</type>
-    <editMode>Enter</editMode>
-    <showInHeader>true</showInHeader>
-    <headerHorizontalAlign>Left</headerHorizontalAlign>
-    <showInFooter>true</showInFooter>
-    <extInfo xsi:type="form:InputFieldExtInfo">
-      <readOnly>true</readOnly>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <horizontalStretch>true</horizontalStretch>
+    <type>UsualGroup</type>
+    <extInfo xsi:type="form:UsualGroupExtInfo">
+      <group>AlwaysHorizontal</group>
+      <showLeftMargin>false</showLeftMargin>
+      <united>false</united>
+      <throughAlign>Auto</throughAlign>
+      <currentRowUse>Auto</currentRowUse>
     </extInfo>
+    <horizontalStretch>true</horizontalStretch>
+    <verticalStretch>true</verticalStretch>
   </items>
   <attributes>
     <name>Объект</name>
@@ -256,6 +415,38 @@
       <common>true</common>
     </edit>
   </attributes>
+  <attributes>
+    <name>Диалоги</name>
+    <id>6</id>
+    <valueType>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
+    </valueType>
+    <view>
+      <common>true</common>
+    </view>
+    <edit>
+      <common>true</common>
+    </edit>
+  </attributes>
+  <attributes>
+    <name>Настройки</name>
+    <id>7</id>
+    <valueType>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
+    </valueType>
+    <view>
+      <common>true</common>
+    </view>
+    <edit>
+      <common>true</common>
+    </edit>
+  </attributes>
   <commandInterface>
     <navigationPanel/>
     <commandBar/>
@@ -264,7 +455,7 @@
     <name>Спросить</name>
     <title>
       <key>ru</key>
-      <value>Спросить</value>
+      <value>Отправить</value>
     </title>
     <id>1</id>
     <use>

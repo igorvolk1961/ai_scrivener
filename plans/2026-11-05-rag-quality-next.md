@@ -69,7 +69,7 @@ Dev-контур собран: BAAI 15 + DeepSeek answer, таймаут BAAI 3 
 
 Критерий: found_rate ≥ 0.9667, citation_accuracy ≥ 0.95, no_answer_precision ≥ 0.90 на полной переиндексации, а не на rechunk. Текущий dev: found 0.95, citation_accuracy 0.912, no_answer_precision 0.769; 3 ложных отказа.
 
-- [x] Полная переиндексация 170 уникальных документов: 170/170, 34 506 чанков, коллекция `cloudru_full_v1_1793918359`; alias не переключён. Полный retrieval: Recall 1.0, MRR 0.9833, nDCG 0.9877. Answer-eval: found 0.9492, citation_accuracy 0.8750, correctness 0.9182, no_answer_precision 0.7692.
+- [x] Полная переиндексация 170 уникальных документов: 170/170, 34 506 чанков, коллекция `cloudru_full_v1_1793918359`. Alias `ai_scrivener_knowledge_current` переключён на неё; production retrieval: Recall 1.0, MRR 0.9833, nDCG 0.9877, p50/p95 417/602 мс. Answer-eval: found 0.9492, citation_accuracy 0.8750, correctness 0.9182, no_answer_precision 0.7692. Rollback alias: `cloudru_pilot_v1_1793908370`.
 - [ ] Расширить golden set на все 68 типов и пересчитать метрики на полном корпусе.
 
 ### P1. Развернуть проверенные изменения
@@ -77,6 +77,7 @@ Dev-контур собран: BAAI 15 + DeepSeek answer, таймаут BAAI 3 
 - [x] Пересобрать/перезапустить `rag-service` с `group_size=5`, `include_parent=false`, Cloud.ru provider.
 - [x] Переключить alias на `cloudru_pilot_v1_1793908370`; retrieval eval на production: 1.0/1.0/1.0, p95 180 мс.
 - [ ] Обновить активный промпт `ОтветПоБазеЗнаний` в базе 1С на формат `citations: [string]`; runtime-инструкция уже добавлена, но текст промпта в БД нужно привести к той же схеме.
+- [ ] Заполнить `АИС_АдресRAGСервиса`, `АИС_ТокенRAGСервиса`, `АИС_ТаймаутRAGСервиса`, `АИС_ПовторыRAGСервиса`. В текущей БД этих констант нет; `scripts/build/load_extension.sh server` падает с «Сеанс работы завершен администратором» даже после полного перезапуска кластера 1С. `pg_stat_activity` не видит подключения 1С к `ai_scrivener`, то есть infobase не открывается до загрузки. Нужен рабочий сеанс Конфигуратора/кластер 1С (лицензия, эксклюзивный режим, доступ Конфигуратора), затем загрузка расширения и заполнение констант.
 - [ ] Прогнать ручной e2e-сценарий из 1С на 5–10 вопросах: found, citations, источники, ошибки.
 - [ ] Зафиксировать rollback: alias обратно на старую коллекцию невозможен без GigaChat; хранить старую коллекцию только как архив.
 
