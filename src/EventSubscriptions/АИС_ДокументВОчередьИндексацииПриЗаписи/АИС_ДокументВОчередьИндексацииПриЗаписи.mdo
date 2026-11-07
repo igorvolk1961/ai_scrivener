@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:EventSubscription xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="e8f4598e-ded3-4bf5-9e21-b341b1e4e555">
+  <name>АИС_ДокументВОчередьИндексацииПриЗаписи</name>
+  <synonym>
+    <key>ru</key>
+    <value>Документ в очередь индексации при записи</value>
+  </synonym>
+  <source>
+    <types>CatalogObject.ВнутренниеДокументы</types>
+    <types>CatalogObject.ВходящиеДокументы</types>
+    <types>CatalogObject.ИсходящиеДокументы</types>
+  </source>
+  <event>OnWrite</event>
+  <handler>CommonModule.АИС_ИндексацияДокументов.ДокументПриЗаписи</handler>
+</mdclass:EventSubscription>

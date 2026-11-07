@@ -264,4 +264,21 @@
 		<right><name>Read</name><value>true</value></right>
 		<right><name>View</name><value>true</value></right>
 	</object>
+	<object>
+		<name>Constant.АИС_НастройкиИндексацииДокументов</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Constant.АИС_ИндексацияRAGВключена</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>InformationRegister.АИС_СостоянияИндексации</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+		<right><name>Insert</name><value>true</value></right>
+		<right><name>Update</name><value>true</value></right>
+	</object>
 </Rights>

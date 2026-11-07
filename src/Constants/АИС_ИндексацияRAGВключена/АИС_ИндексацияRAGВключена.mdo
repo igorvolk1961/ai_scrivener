@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="4c54996f-cea8-4e91-8fd5-ef4a0ccdae90">
+  <producedTypes>
+    <managerType typeId="4d97c530-5b9a-444a-ae6a-00370370c813" valueTypeId="fb599831-bffe-43f5-b6f3-d06abe3b7836"/>
+    <valueManagerType typeId="4c7d8c4c-f1d3-4c1b-bf26-698ff9445a4d" valueTypeId="39d9b8a0-acac-4f13-95f0-7f845b3f8f1d"/>
+    <valueKeyType typeId="315941c8-2a03-4dd5-99f6-041d38d7e3a5" valueTypeId="2e59cd90-d20a-42e6-b620-6611976c3289"/>
+  </producedTypes>
+  <name>АИС_ИндексацияRAGВключена</name>
+  <synonym>
+    <key>ru</key>
+    <value>Индексация документов в RAG включена</value>
+  </synonym>
+  <comment>Включает регламентную индексацию документов документооборота.</comment>
+  <type>
+    <types>Boolean</types>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

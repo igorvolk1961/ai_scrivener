@@ -62,6 +62,17 @@ rag:
   chunk_min_tokens: 80
   chunk_overlap_sentences: 1
   index_batch_size: 64
+  documents_file_max_mb: 50
+  documents_upload_timeout_seconds: 120
+  documents_allowed_mime:
+    - application/pdf
+    - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+    - text/html
+    - text/plain
+    - text/markdown
+  documents_index_batch_size: 64
+  documents_cleanup_retention_days: 90
+  documents_scope_enabled: true
 gigachat:
   token_refresh_skew_seconds: 60
   request_timeout_seconds: 30

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="a14eb5c2-fb0b-42cc-a6d2-e837cccc978b">
+  <name>АИС_ИндексацияДокументов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Индексация документов в RAG</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>false</externalConnection>
+  <clientOrdinaryApplication>false</clientOrdinaryApplication>
+  <serverCall>false</serverCall>
+</mdclass:CommonModule>

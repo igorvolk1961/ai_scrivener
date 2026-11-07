@@ -51,11 +51,15 @@
   <constants>Constant.АИС_ТокенRAGСервиса</constants>
   <constants>Constant.АИС_ТаймаутRAGСервиса</constants>
   <constants>Constant.АИС_ПовторыRAGСервиса</constants>
+  <constants>Constant.АИС_НастройкиИндексацииДокументов</constants>
+  <constants>Constant.АИС_ИндексацияRAGВключена</constants>
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <commonModules>CommonModule.АИС_Промпты</commonModules>
   <commonCommands>CommonCommand.АИС_ВопросПоБазеЗнаний</commonCommands>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
   <commonModules>CommonModule.АИС_ИнтеграцияСRAG</commonModules>
+  <commonModules>CommonModule.АИС_ПраваДоступа</commonModules>
+  <commonModules>CommonModule.АИС_ИндексацияДокументов</commonModules>
   <commonModules>CommonModule.АИС_ОтветПоБазеЗнаний</commonModules>
   <commonModules>CommonModule.АИС_КорпусЗнаний</commonModules>
   <commonModules>CommonModule.АИС_Сотрудники</commonModules>
@@ -66,6 +70,11 @@
   <httpServices>HTTPService.АИС_Симулятор</httpServices>
   <eventSubscriptions>EventSubscription.АИС_ВнутреннийДокументПриЗаписи</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_ДокументВПапкуПриЗаписи</eventSubscriptions>
+  <eventSubscriptions>EventSubscription.АИС_ДокументВОчередьИндексацииПриЗаписи</eventSubscriptions>
+  <eventSubscriptions>EventSubscription.АИС_ФайлВОчередьИндексации</eventSubscriptions>
+  <eventSubscriptions>EventSubscription.АИС_РабочаяГруппаВОчередь</eventSubscriptions>
+  <eventSubscriptions>EventSubscription.АИС_СостояниеДокументаВОчередь</eventSubscriptions>
+  <scheduledJobs>ScheduledJob.АИС_ИндексацияRAG</scheduledJobs>
   <dataProcessors>DataProcessor.АИС_ДолжностныеИнструкции</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ДокументыИАдресаты</dataProcessors>
@@ -89,6 +98,8 @@
   <catalogs>Catalog.ШаблоныВнутреннихДокументов</catalogs>
   <catalogs>Catalog.ИсточникиДанных</catalogs>
   <catalogs>Catalog.ВнутренниеДокументы</catalogs>
+  <catalogs>Catalog.Файлы</catalogs>
+  <catalogs>Catalog.ВерсииФайлов</catalogs>
   <enums>Enum.АИС_СпособыЗаполнения</enums>
   <enums>Enum.АИС_СостоянияЗадач</enums>
   <enums>Enum.АИС_СостоянияРазделов</enums>
@@ -100,10 +111,14 @@
   <enums>Enum.АИС_НазначенияПапокДокументов</enums>
   <enums>Enum.АИС_ИсточникиПривязкиДокументов</enums>
   <enums>Enum.АИС_СостоянияЗапросовОжидания</enums>
+  <enums>Enum.АИС_ТипыИндексируемыхДокументов</enums>
   <informationRegisters>InformationRegister.АИС_КонтекстЗадачИИ</informationRegisters>
   <informationRegisters>InformationRegister.АИС_СостоянияПлейсхолдеров</informationRegisters>
   <informationRegisters>InformationRegister.АИС_НормативыИИ</informationRegisters>
   <informationRegisters>InformationRegister.АИС_ИсторияДействийИИ</informationRegisters>
   <informationRegisters>InformationRegister.АИС_ДокументыВПапках</informationRegisters>
   <informationRegisters>InformationRegister.АИС_ПодчиненностьДолжностей</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_СостоянияИндексации</informationRegisters>
+  <informationRegisters>InformationRegister.РабочиеГруппы</informationRegisters>
+  <informationRegisters>InformationRegister.СостоянияДокументов</informationRegisters>
 </mdclass:Configuration>

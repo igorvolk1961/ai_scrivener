@@ -178,6 +178,32 @@
           <textEdit>true</textEdit>
         </extInfo>
       </items>
+      <items xsi:type="form:FormField">
+        <name>ИскатьВДокументах</name>
+        <id>26</id>
+        <title>
+          <key>ru</key>
+          <value>Искать в документах документооборота</value>
+        </title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <dataPath xsi:type="form:DataPath">
+          <segments>ИскатьВДокументах</segments>
+        </dataPath>
+        <titleLocation>Right</titleLocation>
+        <type>CheckBoxField</type>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:CheckBoxFieldExtInfo">
+          <width>10</width>
+          <autoMaxWidth>true</autoMaxWidth>
+          <autoMaxHeight>true</autoMaxHeight>
+        </extInfo>
+      </items>
       <items xsi:type="form:FormGroup">
         <name>ГруппаКнопок</name>
         <id>40</id>
@@ -346,7 +372,7 @@
       </items>      <items xsi:type="form:Button">
         <name>ПоказатьДокумент</name>
         <id>39</id>
-        <title><key>ru</key><value>Открыть PDF</value></title>
+        <title><key>ru</key><value>Открыть источник</value></title>
         <visible>true</visible>
         <enabled>true</enabled>
         <userVisible><common>true</common></userVisible>
@@ -650,6 +676,18 @@
       <view><common>true</common></view>
       <edit><common>true</common></edit>
     </columns>
+    <columns>
+      <name>ИсточникТип</name>
+      <id>10</id>
+      <valueType>
+        <types>String</types>
+        <stringQualifiers>
+          <length>40</length>
+        </stringQualifiers>
+      </valueType>
+      <view><common>true</common></view>
+      <edit><common>true</common></edit>
+    </columns>
   </attributes>
   <attributes>
     <name>ФрагментТекст</name>
@@ -662,6 +700,19 @@
     <id>12</id>
     <valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType>
     <view><common>true</common></view><edit><common>true</common></edit>
+  </attributes>
+  <attributes>
+    <name>ИскатьВДокументах</name>
+    <id>30</id>
+    <valueType>
+      <types>Boolean</types>
+    </valueType>
+    <view>
+      <common>true</common>
+    </view>
+    <edit>
+      <common>true</common>
+    </edit>
   </attributes>
   <formCommands>
     <name>Спросить</name>
@@ -699,7 +750,7 @@
   </formCommands>
   <formCommands>
     <name>ПоказатьДокумент</name>
-    <title><key>ru</key><value>Открыть PDF</value></title>
+    <title><key>ru</key><value>Открыть источник</value></title>
     <id>4</id>
     <use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer">

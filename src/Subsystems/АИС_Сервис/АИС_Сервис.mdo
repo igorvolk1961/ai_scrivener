@@ -23,4 +23,6 @@
   <content>InformationRegister.АИС_КонтекстЗадачИИ</content>
   <content>InformationRegister.АИС_СостоянияПлейсхолдеров</content>
   <content>InformationRegister.АИС_ДокументыВПапках</content>
+  <content>InformationRegister.АИС_СостоянияИндексации</content>
+  <content>ScheduledJob.АИС_ИндексацияRAG</content>
 </mdclass:Subsystem>

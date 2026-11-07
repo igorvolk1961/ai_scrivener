@@ -7,7 +7,7 @@ from typing import Any, cast
 
 import yaml
 from jsonschema import Draft202012Validator
-from pydantic import BaseModel, ConfigDict, SecretStr, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, SecretStr, ValidationError
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
@@ -89,6 +89,20 @@ class RagParameters(BaseModel):
     chunk_min_tokens: int
     chunk_overlap_sentences: int
     index_batch_size: int
+    documents_file_max_mb: int = 50
+    documents_upload_timeout_seconds: float = 120.0
+    documents_allowed_mime: list[str] = Field(
+        default_factory=lambda: [
+            "application/pdf",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "text/html",
+            "text/plain",
+            "text/markdown",
+        ]
+    )
+    documents_index_batch_size: int = 64
+    documents_cleanup_retention_days: int = 90
+    documents_scope_enabled: bool = True
 
 
 class GigaChatParameters(BaseModel):
@@ -145,6 +159,7 @@ class ServiceSettings(BaseSettings):
     service_token: SecretStr
     qdrant_url: str
     qdrant_collection: str
+    qdrant_documents_collection: str | None = None
     qdrant_api_key: SecretStr | None = None
     embedding_provider: str = "cloudru"
     foundation_api_url: str = "https://foundation-models.api.cloud.ru"

@@ -80,6 +80,16 @@ class VectorStore(Protocol):
         source_id: str,
         version: str,
         collection_name: str | None = None,
+        keep_inactive: bool = False,
+    ) -> bool: ...
+
+    async def update_payload(
+        self,
+        source_type: str,
+        source_id: str,
+        payload: dict[str, Any],
+        version: str | None = None,
+        collection_name: str | None = None,
     ) -> bool: ...
 
     async def cleanup_inactive(
@@ -146,25 +156,48 @@ def _source_filter(source_type: str, source_id: str | None = None) -> models.Fil
 
 
 def _filter_conditions(filters: SearchFilters) -> list[models.Condition]:
-    conditions: list[models.Condition] = [
-        models.FieldCondition(key="active", match=models.MatchValue(value=filters.active))
-    ]
+    conditions: list[models.Condition] = []
+    if filters.active is not None:
+        conditions.append(
+            models.FieldCondition(key="active", match=models.MatchValue(value=filters.active))
+        )
+    if filters.is_current is not None:
+        conditions.append(
+            models.FieldCondition(
+                key="is_current",
+                match=models.MatchValue(value=filters.is_current),
+            )
+        )
     for field_name, values in (
         ("source_type", filters.source_types),
         ("doc_type", filters.doc_types),
         ("status", filters.statuses),
         ("authority", filters.authorities),
         ("document_key", filters.document_keys),
+        ("family_id", filters.family_ids),
         ("position_ids", filters.position_ids),
         ("metadata.folders", filters.folders),
         ("metadata.employees", filters.employees),
         ("metadata.purposes", filters.purposes),
+        ("acl_principals", filters.acl_principals),
     ):
         if values:
             conditions.append(
                 models.FieldCondition(key=field_name, match=models.MatchAny(any=values))
             )
     return conditions
+
+
+def _filter_must_not(filters: SearchFilters) -> list[models.Condition]:
+    principals = [*filters.acl_principals, *filters.acl_deny_principals]
+    if not principals:
+        return []
+    return [
+        models.FieldCondition(
+            key="acl_deny_principals",
+            match=models.MatchAny(any=principals),
+        )
+    ]
 
 
 def _string_list(value: object) -> list[str]:
@@ -196,6 +229,8 @@ def _payload_to_result(point: object, score_type: str) -> SearchResult:
         metadata=dict(payload.get("metadata", {})),
         embedding_text=str(payload.get("embedding_text", "")),
         document_key=str(payload.get("document_key", f"{source_type}:{source_id}")),
+        family_id=str(payload.get("family_id", "")),
+        is_current=payload.get("is_current"),
         section_path=_string_list(payload.get("section_path")),
         section_text=str(payload.get("section_text", "")),
         clause=str(payload.get("clause", "")),
@@ -297,15 +332,23 @@ class QdrantStore:
             ("source_type", models.PayloadSchemaType.KEYWORD),
             ("source_id", models.PayloadSchemaType.KEYWORD),
             ("document_key", models.PayloadSchemaType.KEYWORD),
+            ("family_id", models.PayloadSchemaType.KEYWORD),
             ("doc_type", models.PayloadSchemaType.KEYWORD),
+            ("doc_kind", models.PayloadSchemaType.KEYWORD),
+            ("registration_number", models.PayloadSchemaType.KEYWORD),
             ("status", models.PayloadSchemaType.KEYWORD),
             ("authority", models.PayloadSchemaType.KEYWORD),
             ("position_ids", models.PayloadSchemaType.KEYWORD),
             ("parent_id", models.PayloadSchemaType.KEYWORD),
             ("kind", models.PayloadSchemaType.KEYWORD),
+            ("acl_principals", models.PayloadSchemaType.KEYWORD),
+            ("acl_deny_principals", models.PayloadSchemaType.KEYWORD),
             ("active", models.PayloadSchemaType.BOOL),
+            ("is_current", models.PayloadSchemaType.BOOL),
             ("page_start", models.PayloadSchemaType.INTEGER),
             ("published_at", models.PayloadSchemaType.DATETIME),
+            ("document_date", models.PayloadSchemaType.DATETIME),
+            ("approved_at", models.PayloadSchemaType.DATETIME),
             ("effective_from", models.PayloadSchemaType.DATETIME),
             ("created_at", models.PayloadSchemaType.DATETIME),
             ("metadata.folders", models.PayloadSchemaType.KEYWORD),
@@ -380,11 +423,18 @@ class QdrantStore:
         created_at: str | None = None,
     ) -> dict[str, Any]:
         merged_metadata = {**document.metadata, **(metadata or {})}
+        family_id = str(merged_metadata.get("family_id", "") or "")
+        document_key = (
+            f"{source_type}:{family_id}"
+            if family_id
+            else f"{source_type}:{document.source_id}"
+        )
         return {
             "source_type": source_type,
             "source_id": document.source_id,
             "version": document.version,
-            "document_key": f"{source_type}:{document.source_id}",
+            "document_key": document_key,
+            "family_id": family_id,
             "title": document.title,
             "chunk_index": chunk_index,
             "text": text,
@@ -399,13 +449,25 @@ class QdrantStore:
             "char_start": char_start,
             "char_end": char_end,
             "active": active,
+            "is_current": bool(merged_metadata.get("is_current", True)),
             "created_at": created_at or datetime.now(UTC).isoformat(),
             "doc_type": merged_metadata.get("doc_type"),
+            "doc_kind": merged_metadata.get("doc_kind"),
+            "registration_number": merged_metadata.get("registration_number"),
+            "document_date": _rfc3339(merged_metadata.get("document_date")),
+            "approved_at": _rfc3339(merged_metadata.get("approved_at")),
             "status": merged_metadata.get("status"),
             "authority": merged_metadata.get("authority"),
             "published_at": _rfc3339(merged_metadata.get("published_at")),
             "effective_from": _rfc3339(merged_metadata.get("effective_from")),
             "position_ids": merged_metadata.get("position_ids", []),
+            "acl_principals": merged_metadata.get("acl_principals", []),
+            "acl_deny_principals": merged_metadata.get("acl_deny_principals", []),
+            "acl_version": merged_metadata.get("acl_version", ""),
+            "content_hash": merged_metadata.get("content_hash", ""),
+            "file_hash": merged_metadata.get("file_hash", ""),
+            "superseded_by": merged_metadata.get("superseded_by"),
+            "superseded_at": _rfc3339(merged_metadata.get("superseded_at")),
             "metadata": merged_metadata,
         }
 
@@ -518,6 +580,7 @@ class QdrantStore:
         source_id: str,
         version: str,
         collection_name: str | None = None,
+        keep_inactive: bool = False,
     ) -> bool:
         target_filter = models.Filter(
             must=[
@@ -544,12 +607,50 @@ class QdrantStore:
             return False
         await self._client.set_payload(
             collection_name=collection_name or self._collection,
-            payload={"active": True},
+            payload={"active": True, "is_current": True},
             points=target_filter,
             wait=True,
         )
-        await self._delete_filter(
-            models.Filter(
+        old_filter = models.Filter(
+            must=[
+                models.FieldCondition(
+                    key="source_type",
+                    match=models.MatchValue(value=source_type),
+                ),
+                models.FieldCondition(
+                    key="source_id",
+                    match=models.MatchValue(value=source_id),
+                ),
+            ],
+            must_not=[
+                models.FieldCondition(
+                    key="version",
+                    match=models.MatchValue(value=version),
+                )
+            ],
+        )
+        if keep_inactive:
+            await self._client.set_payload(
+                collection_name=collection_name or self._collection,
+                payload={"active": False, "is_current": False},
+                points=old_filter,
+                wait=True,
+            )
+        else:
+            await self._delete_filter(old_filter, collection_name)
+        return True
+
+    async def update_payload(
+        self,
+        source_type: str,
+        source_id: str,
+        payload: dict[str, Any],
+        version: str | None = None,
+        collection_name: str | None = None,
+    ) -> bool:
+        target_filter = _source_filter(source_type, source_id)
+        if version is not None:
+            target_filter = models.Filter(
                 must=[
                     models.FieldCondition(
                         key="source_type",
@@ -559,15 +660,24 @@ class QdrantStore:
                         key="source_id",
                         match=models.MatchValue(value=source_id),
                     ),
-                ],
-                must_not=[
                     models.FieldCondition(
                         key="version",
                         match=models.MatchValue(value=version),
-                    )
-                ],
-            ),
-            collection_name,
+                    ),
+                ]
+            )
+        count = await self._client.count(
+            collection_name=collection_name or self._collection,
+            count_filter=target_filter,
+            exact=True,
+        )
+        if count.count == 0:
+            return False
+        await self._client.set_payload(
+            collection_name=collection_name or self._collection,
+            payload=payload,
+            points=target_filter,
+            wait=True,
         )
         return True
 
@@ -644,7 +754,10 @@ class QdrantStore:
             collection_name=self._collection,
             query=vector,
             using=DENSE_VECTOR,
-            query_filter=models.Filter(must=_filter_conditions(filters)),
+            query_filter=models.Filter(
+                must=_filter_conditions(filters),
+                must_not=_filter_must_not(filters),
+            ),
             limit=limit,
             score_threshold=min_score,
             with_payload=True,
@@ -678,7 +791,10 @@ class QdrantStore:
                 ),
             ],
             query=models.FusionQuery(fusion=models.Fusion.RRF),
-            query_filter=models.Filter(must=_filter_conditions(filters)),
+            query_filter=models.Filter(
+                must=_filter_conditions(filters),
+                must_not=_filter_must_not(filters),
+            ),
             limit=limit,
             with_payload=True,
             with_vectors=False,

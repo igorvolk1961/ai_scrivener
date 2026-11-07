@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -200,3 +202,122 @@ def test_index_chunks_accepts_structured_chunks(
     assert response.status_code == 200
     assert response.json()["indexed_chunks"] == 1
     assert ("knowledge_material", "sha-1") in store.documents
+
+
+def test_index_document_text_updates_metadata_and_scope(
+    client: TestClient,
+    store: FakeStore,
+) -> None:
+    snapshot = {
+        "source_id": "doc-1",
+        "family_id": "family-1",
+        "version": "content-v1",
+        "title": "Приказ о назначении",
+        "doc_type": "Приказ",
+        "doc_kind": "Внутренний",
+        "status": "approved",
+        "is_current": True,
+        "acl_principals": ["user:1", "position:2"],
+        "acl_deny_principals": [],
+        "acl_version": "acl-v1",
+    }
+    response = client.post(
+        "/v1/index/document",
+        data={
+            "source_type": "document_internal",
+            "document": json.dumps(snapshot, ensure_ascii=False),
+            "text": "1. Общие положения\n\n1.1. Настоящий приказ устанавливает порядок.",
+        },
+        headers=AUTH_HEADERS,
+    )
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["indexed_chunks"] >= 1
+    assert body["requires_ocr"] is False
+    assert ("document_internal", "doc-1") in store.documents
+    assert store.activated[-1] == ("document_internal", "doc-1", "content-v1")
+
+    retrieved = client.post(
+        "/v1/retrieve",
+        json={
+            "query": "порядок назначения",
+            "scope": "documents",
+            "filters": {
+                "source_types": ["document_internal"],
+                "is_current": True,
+                "acl_principals": ["user:1"],
+            },
+        },
+        headers=AUTH_HEADERS,
+    )
+    assert retrieved.status_code == 200
+    assert retrieved.json()["diagnostics"]["scope"] == "documents"
+    assert retrieved.json()["results"][0]["source_id"] == "doc-1"
+
+
+def test_index_metadata_updates_existing_document(
+    client: TestClient,
+    store: FakeStore,
+) -> None:
+    snapshot = {
+        "source_id": "doc-1",
+        "family_id": "family-1",
+        "version": "content-v1",
+        "title": "Приказ",
+    }
+    indexed = client.post(
+        "/v1/index/document",
+        data={
+            "source_type": "document_internal",
+            "document": json.dumps(snapshot, ensure_ascii=False),
+            "text": "Текст приказа.",
+        },
+        headers=AUTH_HEADERS,
+    )
+    assert indexed.status_code == 200
+
+    response = client.post(
+        "/v1/index/metadata",
+        json={
+            "source_type": "document_internal",
+            "source_id": "doc-1",
+            "version": "content-v1",
+            "payload": {"active": False, "is_current": False},
+        },
+        headers=AUTH_HEADERS,
+    )
+
+    assert response.status_code == 200
+    assert response.json()["updated"] is True
+    document, _ = store.documents[("document_internal", "doc-1")]
+    assert document.metadata["active"] is False
+    assert document.metadata["is_current"] is False
+
+
+def test_index_document_base64_accepts_file(
+    client: TestClient,
+    store: FakeStore,
+) -> None:
+    snapshot = {
+        "source_id": "doc-file-1",
+        "family_id": "family-file-1",
+        "version": "content-v1",
+        "title": "Акт обследования",
+    }
+    response = client.post(
+        "/v1/index/document/base64",
+        json={
+            "source_type": "document_internal",
+            "document": snapshot,
+            "text": "1. Общие сведения",
+            "file_base64": "0J/RgNC40LrQsNC3IDEu",
+            "file_name": "act.txt",
+            "mime": "text/plain",
+        },
+        headers=AUTH_HEADERS,
+    )
+
+    assert response.status_code == 200
+    assert response.json()["indexed_chunks"] >= 1
+    assert ("document_internal", "doc-file-1") in store.documents

@@ -145,3 +145,53 @@ def test_retrieve_applies_reranker_order() -> None:
     assert response.results[0].source_id == "doc-b"
     assert response.results[0].score_type == "rerank_sigmoid"
     assert response.diagnostics["rerank"] is True
+
+
+def test_retrieve_routes_documents_scope_to_documents_store() -> None:
+    knowledge = StubStore([_candidate("knowledge-1", 0, 0.9)])
+    documents = StubStore([_candidate("document-1", 0, 0.8)])
+    retriever = Retriever(
+        _parameters(),
+        StubEmbedder(),
+        cast(VectorStore, knowledge),
+        documents_store=cast(VectorStore, documents),
+    )
+
+    response = asyncio.run(
+        retriever.retrieve(
+            RetrieveRequest(
+                query="приказ",
+                scope="documents",
+                filters=SearchFilters(
+                    source_types=["document_internal"],
+                    acl_principals=["user:1"],
+                ),
+            )
+        )
+    )
+
+    assert response.diagnostics["scope"] == "documents"
+    assert response.results[0].source_id == "document-1"
+
+
+def test_retrieve_documents_scope_requires_acl_principals() -> None:
+    documents = StubStore([_candidate("document-1", 0, 0.8)])
+    retriever = Retriever(
+        _parameters(),
+        StubEmbedder(),
+        cast(VectorStore, StubStore([])),
+        documents_store=cast(VectorStore, documents),
+    )
+
+    response = asyncio.run(
+        retriever.retrieve(
+            RetrieveRequest(
+                query="приказ",
+                scope="documents",
+                filters=SearchFilters(source_types=["document_internal"]),
+            )
+        )
+    )
+
+    assert response.results == []
+    assert response.diagnostics["acl_principals_required"] is True

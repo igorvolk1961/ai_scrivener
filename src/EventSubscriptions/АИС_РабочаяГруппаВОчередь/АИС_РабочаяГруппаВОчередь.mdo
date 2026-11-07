@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:EventSubscription xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="20ab2940-d3fd-4361-be68-f9373eb26618">
+  <name>АИС_РабочаяГруппаВОчередь</name>
+  <synonym>
+    <key>ru</key>
+    <value>Рабочая группа в очередь индексации</value>
+  </synonym>
+  <source>
+    <types>InformationRegisterRecordSet.РабочиеГруппы</types>
+  </source>
+  <event>OnWrite</event>
+  <handler>CommonModule.АИС_ИндексацияДокументов.РабочаяГруппаПриЗаписи</handler>
+</mdclass:EventSubscription>

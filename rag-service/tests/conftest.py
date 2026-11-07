@@ -118,8 +118,24 @@ class FakeStore:
         source_id: str,
         version: str,
         collection_name: str | None = None,
+        keep_inactive: bool = False,
     ) -> bool:
         self.activated.append((source_type, source_id, version))
+        return True
+
+    async def update_payload(
+        self,
+        source_type: str,
+        source_id: str,
+        payload: dict[str, Any],
+        version: str | None = None,
+        collection_name: str | None = None,
+    ) -> bool:
+        key = (source_type, source_id)
+        if key not in self.documents:
+            return False
+        document, _ = self.documents[key]
+        document.metadata.update(payload)
         return True
 
     async def cleanup_inactive(
@@ -273,7 +289,13 @@ def client(
     embedder: FakeEmbedder,
     store: FakeStore,
 ) -> Iterator[TestClient]:
-    app = create_app(parameters=parameters, settings=settings, embedder=embedder, store=store)
+    app = create_app(
+        parameters=parameters,
+        settings=settings,
+        embedder=embedder,
+        store=store,
+        documents_store=store,
+    )
     with TestClient(app) as test_client:
         yield test_client
 

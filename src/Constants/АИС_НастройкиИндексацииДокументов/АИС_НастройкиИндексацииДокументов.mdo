@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="ff38b5d7-6879-4412-a0f1-eadb0272d15d">
+  <producedTypes>
+    <managerType typeId="14975903-b0fd-412c-8c31-81b1876a7bb4" valueTypeId="2a4c7aeb-c9d5-4479-a41b-321193ccc6e3"/>
+    <valueManagerType typeId="c81c8f35-879f-4e19-be11-6e6cbbf38cf1" valueTypeId="bdbceb1e-8e27-4b72-a953-4bb40b68df25"/>
+    <valueKeyType typeId="0e8a806b-4fa2-46e9-93be-66e42a5f66bc" valueTypeId="52044d79-d658-40e8-8dbf-695c0fad4d19"/>
+  </producedTypes>
+  <name>АИС_НастройкиИндексацииДокументов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Настройки индексации документов</value>
+  </synonym>
+  <comment>JSON-матрица финальных состояний и параметров индексации документов документооборота.</comment>
+  <type>
+    <types>String</types>
+    <stringQualifiers>
+      <length>0</length>
+    </stringQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>
