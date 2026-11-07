@@ -94,6 +94,23 @@
       <placementArea>UserCmds</placementArea>
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
+    <items xsi:type="form:Button">
+      <name>Инвентаризация</name>
+      <id>30</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Инвентаризация</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Инвентаризация</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <width>20</width>
+      <height>1</height>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
   </items>
   <items xsi:type="form:FormField">
     <name>МаксимумЗаписей</name>
@@ -158,7 +175,7 @@
     <extInfo xsi:type="form:InputFieldExtInfo">
       <readOnly>true</readOnly>
       <width>60</width>
-      <height>3</height>
+      <height>15</height>
       <autoMaxHeight>true</autoMaxHeight>
       <horizontalStretch>true</horizontalStretch>
       <multiLine>true</multiLine>
@@ -684,6 +701,14 @@
     <id>13</id>
     <use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ВозможныеВерсии</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>Инвентаризация</name>
+    <title><key>ru</key><value>Инвентаризация</value></title>
+    <id>14</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Инвентаризация</name></handler></action>
     <currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <extInfo xsi:type="form:ObjectFormExtInfo"/>
