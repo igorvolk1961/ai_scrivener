@@ -56,8 +56,8 @@
         <extInfo xsi:type="form:InputFieldExtInfo">
           <readOnly>true</readOnly>
           <height>10</height>
-          <width>5</width>
-          <autoMaxWidth>false</autoMaxWidth>
+          <width>0</width>
+          <autoMaxWidth>true</autoMaxWidth>
           <autoMaxHeight>false</autoMaxHeight>
           <horizontalStretch>true</horizontalStretch>
           <verticalStretch>true</verticalStretch>
@@ -73,7 +73,7 @@
           <id>26</id>
           <title>
             <key>ru</key>
-            <value>Искать в документах 1С</value>
+            <value>Искать в 1С</value>
           </title>
           <visible>true</visible>
           <enabled>true</enabled>
@@ -83,13 +83,13 @@
           <dataPath xsi:type="form:DataPath">
             <segments>ИскатьВДокументах</segments>
           </dataPath>
-          <titleLocation>Right</titleLocation>
+          <titleLocation>Top</titleLocation>
           <type>CheckBoxField</type>
           <showInHeader>true</showInHeader>
           <headerHorizontalAlign>Left</headerHorizontalAlign>
           <showInFooter>true</showInFooter>
           <extInfo xsi:type="form:CheckBoxFieldExtInfo">
-            <width>5</width>
+            <width>0</width>
             <autoMaxWidth>true</autoMaxWidth>
             <autoMaxHeight>true</autoMaxHeight>
           </extInfo>
@@ -103,17 +103,17 @@
           <key>ru</key>
           <value>Настройки чата</value>
         </title>
-        <showTitle>true</showTitle>
+        <showTitle>false</showTitle>
         <type>UsualGroup</type>
         <extInfo xsi:type="form:UsualGroupExtInfo">
           <group>Vertical</group>
           <showLeftMargin>false</showLeftMargin>
-          <united>true</united>
+          <united>false</united>
           <throughAlign>Auto</throughAlign>
           <currentRowUse>Auto</currentRowUse>
         </extInfo>
-        <width>5</width>
-        <horizontalStretch>false</horizontalStretch>
+        <width>0</width>
+        <horizontalStretch>true</horizontalStretch>
         <verticalStretch>false</verticalStretch>
       </items>
       <visible>true</visible>
@@ -134,7 +134,7 @@
         <currentRowUse>Auto</currentRowUse>
       </extInfo>
       <width>5</width>
-      <horizontalStretch>false</horizontalStretch>
+      <horizontalStretch>true</horizontalStretch>
       <verticalStretch>true</verticalStretch>
     </items>
     <items xsi:type="form:FormGroup">
