@@ -1,22 +1,60 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ONEC=/opt/1cv8/x86_64/8.3.27.2342/1cv8
-IB=${AIS_IB:-/home/igorvolk/1C/ai_scrivener_docmng}
-PG_SERVER=localhost:1541
+ONEC=${ONEC:-/opt/1cv8/x86_64/8.3.27.2342/1cv8}
+IB=${AIS_IB:-${IB:-/home/igorvolk/1C/ai_scrivener_knowledge}}
+IB_USER=${AIS_IB_USER:-${IB_USER:-Администратор}}
+IB_PASSWORD=${AIS_IB_PASSWORD:-${IB_PASSWORD:-}}
+PG_SERVER=${PG_SERVER:-localhost:1541}
 PG_BASE=${PG_BASE:-ai_scrivener_fixed}
-LOGIN=${2:-Администратор}
+LOG_DIR=${AIS_LOG_DIR:-${TMPDIR:-/tmp}/kilo}
+LOGIN=${2:-$IB_USER}
 
 usage() {
   printf '%s\n' "Usage: $0 [launcher|designer [login]|enterprise [login]|check|pg-enterprise [login]|pg-designer [login]|pg-check|pg-db]" >&2
   printf '%s\n' "  launcher      - окно запуска 1С" >&2
-  printf '%s\n' "  designer      - Конфигуратор на файловой демо-базе" >&2
-  printf '%s\n' "  enterprise    - 1С:Предприятие на файловой демо-базе (логин по умолчанию: Администратор)" >&2
-  printf '%s\n' "  check         - CheckConfig файловой демо-базы" >&2
+  printf '%s\n' "  designer      - Конфигуратор на файловой базе" >&2
+  printf '%s\n' "  enterprise    - 1С:Предприятие на файловой базе (логин по умолчанию: Администратор)" >&2
+  printf '%s\n' "  check         - CheckConfig файловой базы" >&2
   printf '%s\n' "  pg-enterprise - 1С:Предприятие на серверной базе PostgreSQL" >&2
   printf '%s\n' "  pg-designer   - Конфигуратор на серверной базе PostgreSQL" >&2
   printf '%s\n' "  pg-check      - CheckConfig серверной базы PostgreSQL" >&2
   printf '%s\n' "  pg-db         - psql к базе 1С в Docker" >&2
+  printf '%s\n' "" >&2
+  printf '%s\n' "По умолчанию открывается ai_scrivener_knowledge (расширение активно)." >&2
+  printf '%s\n' "Демо-база: IB=/home/igorvolk/1C/ai_scrivener_docmng." >&2
+  printf '%s\n' "Переопределение через окружение: ONEC, IB (или AIS_IB), IB_USER, IB_PASSWORD, PG_BASE." >&2
+}
+
+if [[ ! -x "$ONEC" ]]; then
+  echo "1C executable not found: $ONEC (set ONEC=/path/to/1cv8)" >&2
+  exit 1
+fi
+
+AUTH_ARGS=(/N "$LOGIN")
+if [[ -n "$IB_PASSWORD" ]]; then
+  AUTH_ARGS+=(/P "$IB_PASSWORD")
+fi
+
+warn_inactive_extension() {
+  local ibcmd
+  ibcmd=$(dirname -- "$ONEC")/ibcmd
+  [[ -x "$ibcmd" && -d "$IB" ]] || return 0
+  local active
+  active=$(timeout 3 "$ibcmd" infobase config extension list \
+    --db-path="$IB" --user="$IB_USER" </dev/null 2>/dev/null \
+    | awk '/name/{name=$3} /active/{if(name=="\"ai_scrivener\""){print $3; exit}}' || true)
+  if [[ "$active" == "no" ]]; then
+    echo "WARNING: расширение ai_scrivener выключено в $IB — раздел «ИИ-Помощник» (АИС_Сервис) будет скрыт." >&2
+    echo "         Включите расширение или используйте базу ai_scrivener_knowledge." >&2
+  fi
+}
+
+require_file_base() {
+  if [[ ! -d "$IB" ]]; then
+    echo "File infobase not found: $IB (set IB=/path/to/base)" >&2
+    exit 1
+  fi
 }
 
 case "${1:-launcher}" in
@@ -24,27 +62,43 @@ case "${1:-launcher}" in
     exec "$ONEC"
     ;;
   designer)
-    exec "$ONEC" DESIGNER /F"$IB" /N "$LOGIN"
+    require_file_base
+    warn_inactive_extension
+    exec "$ONEC" DESIGNER /F"$IB" "${AUTH_ARGS[@]}"
     ;;
   enterprise)
-    exec "$ONEC" ENTERPRISE /F"$IB" /N "$LOGIN"
+    require_file_base
+    warn_inactive_extension
+    exec "$ONEC" ENTERPRISE /F"$IB" "${AUTH_ARGS[@]}"
     ;;
   check)
-    exec "$ONEC" DESIGNER /F"$IB" /N Администратор \
-      /CheckConfig /Out /tmp/kilo/check.log /DisableStartupDialogs
+    require_file_base
+    warn_inactive_extension
+    mkdir -p "$LOG_DIR"
+    exec "$ONEC" DESIGNER /F"$IB" "${AUTH_ARGS[@]}" \
+      /CheckConfig /Out "$LOG_DIR/check.log" \
+      /DisableStartupDialogs /DisableStartupMessages
     ;;
   pg-enterprise)
-    exec "$ONEC" ENTERPRISE /S"$PG_SERVER/$PG_BASE" /N "$LOGIN"
+    exec "$ONEC" ENTERPRISE /S"$PG_SERVER/$PG_BASE" "${AUTH_ARGS[@]}"
     ;;
   pg-designer)
-    exec "$ONEC" DESIGNER /S"$PG_SERVER/$PG_BASE" /N "$LOGIN"
+    exec "$ONEC" DESIGNER /S"$PG_SERVER/$PG_BASE" "${AUTH_ARGS[@]}"
     ;;
   pg-check)
-    exec "$ONEC" DESIGNER /S"$PG_SERVER/$PG_BASE" /N Администратор \
-      /CheckConfig /Out /tmp/kilo/check_pg.log /DisableStartupDialogs
+    mkdir -p "$LOG_DIR"
+    exec "$ONEC" DESIGNER /S"$PG_SERVER/$PG_BASE" "${AUTH_ARGS[@]}" \
+      /CheckConfig /Out "$LOG_DIR/check_pg.log" \
+      /DisableStartupDialogs /DisableStartupMessages
     ;;
   pg-db)
-    exec docker exec -it deploy-postgres-1 psql -U ai_scrivener -d ai_scrivener
+    DOCKER_TTY=()
+    if [[ -t 0 && -t 1 ]]; then
+      DOCKER_TTY=(-it)
+    else
+      DOCKER_TTY=(-i)
+    fi
+    exec docker exec "${DOCKER_TTY[@]}" deploy-postgres-1 psql -U ai_scrivener -d ai_scrivener
     ;;
   *)
     usage

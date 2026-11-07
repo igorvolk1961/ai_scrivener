@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJECT_DIR=/home/igorvolk/PycharmProjects/ai_scrivener
-RAGENT=/opt/1cv8/x86_64/8.3.27.2342/ragent
-DATA_DIR=/home/igorvolk/1C/1cv8-server-data
-COMPOSE_FILE=deploy/docker-compose.1c-db.yml
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+PROJECT_DIR=$(cd -- "$SCRIPT_DIR/../.." && pwd)
+RAGENT=${RAGENT:-/opt/1cv8/x86_64/8.3.27.2342/ragent}
+DATA_DIR=${AIS_PG_DATA_DIR:-/home/igorvolk/1C/1cv8-server-data}
+COMPOSE_FILE=${COMPOSE_FILE:-deploy/docker-compose.1c-db.yml}
 
 cd "$PROJECT_DIR"
+
+if [[ ! -x "$RAGENT" ]]; then
+  echo "1C server agent not found: $RAGENT (set RAGENT=/path/to/ragent)" >&2
+  exit 1
+fi
 
 if [[ "${1:-start}" == "stop" ]]; then
   pkill -f "ragent.*1cv8-server-data" || true
