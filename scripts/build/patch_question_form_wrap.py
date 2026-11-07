@@ -7,7 +7,6 @@ from pathlib import Path
 FORMS: dict[str, tuple[str, ...]] = {
     "DataProcessors/АИС_ВопросПоБазеЗнаний/Forms/Форма/Ext/Form.xml": (
         "Диалоги",
-        "Настройки",
         "Ответ",
         "Вопрос",
         "ФрагментТекст",

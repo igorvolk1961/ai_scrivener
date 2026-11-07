@@ -3,7 +3,7 @@
   <name>АИС_Сервис</name>
   <synonym>
     <key>ru</key>
-    <value>АИС: Сервис</value>
+    <value>ИИ-Помощник</value>
   </synonym>
   <includeInCommandInterface>true</includeInCommandInterface>
   <content>DataProcessor.АИС_ДолжностныеИнструкции</content>
