@@ -10,9 +10,11 @@ import sys
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Protocol
+from typing import Any, Literal, Protocol
 
 import httpx
+
+EvalScope = Literal["knowledge", "documents"]
 
 
 @dataclass(frozen=True)
@@ -22,22 +24,30 @@ class EvalCase:
     expected_clauses: tuple[str, ...] = ()
     filters: dict[str, Any] = field(default_factory=dict)
     no_answer: bool = False
+    scope: EvalScope = "knowledge"
+    stale_source_ids: tuple[str, ...] = ()
+    forbidden_source_ids: tuple[str, ...] = ()
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> EvalCase:
         query = str(payload.get("query", "")).strip()
         if not query:
             raise ValueError("eval case is missing query")
+        scope = str(payload.get("scope", "knowledge")).strip() or "knowledge"
+        if scope not in ("knowledge", "documents"):
+            raise ValueError(f"unknown scope: {scope}")
+        resolved_scope: EvalScope = "documents" if scope == "documents" else "knowledge"
         return cls(
             query=query,
-            expected_source_ids=tuple(
-                str(item) for item in payload.get("expected_source_ids", [])
-            ),
-            expected_clauses=tuple(
-                str(item) for item in payload.get("expected_clauses", [])
-            ),
+            expected_source_ids=tuple(str(item) for item in payload.get("expected_source_ids", [])),
+            expected_clauses=tuple(str(item) for item in payload.get("expected_clauses", [])),
             filters=dict(payload.get("filters", {})),
             no_answer=bool(payload.get("no_answer", False)),
+            scope=resolved_scope,
+            stale_source_ids=tuple(str(item) for item in payload.get("stale_source_ids", [])),
+            forbidden_source_ids=tuple(
+                str(item) for item in payload.get("forbidden_source_ids", [])
+            ),
         )
 
 
@@ -52,6 +62,11 @@ class CaseResult:
     answerable: bool
     latency_ms: float
     results: list[dict[str, Any]]
+    scope: EvalScope = "knowledge"
+    top_source_id: str | None = None
+    stale_leak: bool | None = None
+    acl_leak: bool | None = None
+    current_version_ok: bool | None = None
 
 
 @dataclass
@@ -65,6 +80,7 @@ class EvalReport:
             "cases": [
                 {
                     "query": case.query,
+                    "scope": case.scope,
                     "rank": case.rank,
                     "recall": case.recall,
                     "mrr": case.mrr,
@@ -72,6 +88,10 @@ class EvalReport:
                     "no_answer_ok": case.no_answer_ok,
                     "answerable": case.answerable,
                     "latency_ms": case.latency_ms,
+                    "top_source_id": case.top_source_id,
+                    "stale_leak": case.stale_leak,
+                    "acl_leak": case.acl_leak,
+                    "current_version_ok": case.current_version_ok,
                     "results": case.results,
                 }
                 for case in self.cases
@@ -85,6 +105,7 @@ class EvalClient(Protocol):
         query: str,
         filters: dict[str, Any],
         top_k: int,
+        scope: EvalScope = "knowledge",
     ) -> dict[str, Any]: ...
 
 
@@ -109,10 +130,11 @@ class HttpEvalClient:
         query: str,
         filters: dict[str, Any],
         top_k: int,
+        scope: EvalScope = "knowledge",
     ) -> dict[str, Any]:
         response = await self._client.post(
             "/v1/retrieve",
-            json={"query": query, "filters": filters, "top_k": top_k},
+            json={"query": query, "filters": filters, "top_k": top_k, "scope": scope},
         )
         response.raise_for_status()
         payload = response.json()
@@ -149,7 +171,7 @@ async def run_eval(
     results: list[CaseResult] = []
     for case in cases:
         started = time.perf_counter()
-        payload = await client.retrieve(case.query, case.filters, top_k)
+        payload = await client.retrieve(case.query, case.filters, top_k, case.scope)
         latency_ms = (time.perf_counter() - started) * 1000
         ranked = list(payload.get("results", []))[:top_k]
         rank = _find_rank(case, ranked)
@@ -157,6 +179,22 @@ async def run_eval(
         mrr = 1.0 / rank if rank is not None else 0.0
         ndcg = _ndcg(case, rank, top_k)
         no_answer_ok = None if not case.no_answer else not ranked
+        top_source_id = _source_id(ranked[0]) if ranked else None
+        stale_leak = (
+            any(_is_stale(result, case.stale_source_ids) for result in ranked)
+            if case.stale_source_ids
+            else None
+        )
+        acl_leak = (
+            any(_source_id(result) in set(case.forbidden_source_ids) for result in ranked)
+            if case.forbidden_source_ids
+            else None
+        )
+        current_version_ok = (
+            top_source_id in case.expected_source_ids
+            if case.scope == "documents" and case.expected_source_ids and not case.no_answer
+            else None
+        )
         results.append(
             CaseResult(
                 query=case.query,
@@ -168,9 +206,47 @@ async def run_eval(
                 answerable=bool(case.expected_source_ids or case.expected_clauses),
                 latency_ms=round(latency_ms, 2),
                 results=ranked,
+                scope=case.scope,
+                top_source_id=top_source_id,
+                stale_leak=stale_leak,
+                acl_leak=acl_leak,
+                current_version_ok=current_version_ok,
             )
         )
     return EvalReport(cases=results, metrics=_metrics(results))
+
+
+def _source_id(result: dict[str, Any]) -> str:
+    return str(result.get("source_id", ""))
+
+
+def _is_stale(result: dict[str, Any], stale_source_ids: tuple[str, ...]) -> bool:
+    if _source_id(result) in set(stale_source_ids):
+        return True
+    if result.get("is_current") is False:
+        return True
+    metadata = result.get("metadata")
+    if isinstance(metadata, dict):
+        if metadata.get("is_current") is False:
+            return True
+        if str(metadata.get("status", "")) == "superseded":
+            return True
+    chunks = result.get("chunks")
+    if isinstance(chunks, list):
+        for chunk in chunks:
+            if not isinstance(chunk, dict):
+                continue
+            if chunk.get("is_current") is False:
+                return True
+            if _source_id(chunk) in set(stale_source_ids):
+                return True
+            chunk_metadata = chunk.get("metadata")
+            if isinstance(chunk_metadata, dict):
+                if chunk_metadata.get("is_current") is False:
+                    return True
+                if str(chunk_metadata.get("status", "")) == "superseded":
+                    return True
+    return False
 
 
 def _find_rank(case: EvalCase, ranked: list[dict[str, Any]]) -> int | None:
@@ -209,14 +285,25 @@ def _ndcg(case: EvalCase, rank: int | None, top_k: int) -> float:
 def _metrics(cases: list[CaseResult]) -> dict[str, float]:
     answerable = [case for case in cases if case.answerable]
     no_answer = [case for case in cases if case.no_answer_ok is not None]
+    document_cases = [case for case in cases if case.scope == "documents"]
+    stale_cases = [case for case in cases if case.stale_leak is not None]
+    acl_cases = [case for case in cases if case.acl_leak is not None]
+    current_cases = [case for case in cases if case.current_version_ok is not None]
     metrics: dict[str, float] = {
         "cases": float(len(cases)),
         "answerable_cases": float(len(answerable)),
+        "document_cases": float(len(document_cases)),
         "recall_at_k": _mean([case.recall for case in answerable]),
         "mrr_at_k": _mean([case.mrr for case in answerable]),
         "ndcg_at_k": _mean([case.ndcg for case in answerable]),
-        "no_answer_accuracy": _mean(
-            [1.0 if case.no_answer_ok else 0.0 for case in no_answer]
+        "no_answer_accuracy": _mean([1.0 if case.no_answer_ok else 0.0 for case in no_answer]),
+        "stale_cases": float(len(stale_cases)),
+        "stale_version_leak_rate": _mean([1.0 if case.stale_leak else 0.0 for case in stale_cases]),
+        "acl_cases": float(len(acl_cases)),
+        "acl_leak_rate": _mean([1.0 if case.acl_leak else 0.0 for case in acl_cases]),
+        "current_version_cases": float(len(current_cases)),
+        "current_version_accuracy": _mean(
+            [1.0 if case.current_version_ok else 0.0 for case in current_cases]
         ),
         "latency_p50_ms": _percentile([case.latency_ms for case in cases], 50),
         "latency_p95_ms": _percentile([case.latency_ms for case in cases], 95),

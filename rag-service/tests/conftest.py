@@ -210,6 +210,33 @@ class FakeStore:
     ) -> list[SearchResult]:
         return []
 
+    async def fetch_source_chunks(
+        self,
+        source_type: str,
+        source_id: str,
+        limit: int = 10000,
+        collection_name: str | None = None,
+    ) -> list[SearchResult]:
+        entry = self.documents.get((source_type, source_id))
+        if entry is None:
+            return []
+        document, chunks = entry
+        return [
+            SearchResult(
+                score=1.0,
+                source_type=source_type,
+                source_id=source_id,
+                version=document.version,
+                title=document.title,
+                chunk_index=chunk.index,
+                text=chunk.text,
+                embedding_text=chunk.text,
+                document_key=f"{source_type}:{source_id}",
+                metadata=document.metadata,
+            )
+            for chunk in chunks[:limit]
+        ]
+
 
 class FakeSparseEncoder:
     def __init__(self) -> None:

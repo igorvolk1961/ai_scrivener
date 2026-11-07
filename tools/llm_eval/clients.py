@@ -133,8 +133,11 @@ class RagClient:
         candidate_k: int | None = None,
         group_size: int | None = None,
         include_parent: bool | None = None,
+        scope: str | None = None,
     ) -> dict[str, Any]:
         payload: dict[str, Any] = {"query": query, "filters": filters}
+        if scope is not None:
+            payload["scope"] = scope
         if top_k is not None:
             payload["top_k"] = top_k
         if candidate_k is not None:

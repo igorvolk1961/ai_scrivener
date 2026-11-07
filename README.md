@@ -25,6 +25,7 @@
 ## Планы и ревью
 
 - `plans/implementation_plan.md` — план реализации.
+- `plans/2026-11-06-documents-rag.md` — RAG-поиск по документам документооборота: коллекция, ACL, финальные версии, индексация 1С и golden set.
 - `plans/2026-10-26-enterprise-simulator.md` — симулятор предприятия: LLM-агенты, HTTP-сервис расширения, кадровый контур и текущие ограничения.
 - `plans/2026-10-28-two-stage-corpus-and-templates.md` — двухэтапная разработка: корпус знаний и шаблонов (симулятор + мощная модель), затем поиск шаблонов и RAG без симулятора.
 - `plans/2026-10-26-enterprise-scenarios-roadmap.md` — сценарии первого этапа: концепция плана, корпус знаний, оргструктура и штат, служба Главного инженера, внешняя переписка и подготовка к зиме.
@@ -90,6 +91,8 @@ bash scripts/run/1c-pg-server.sh stop # остановить PostgreSQL и кл�
 ## Статус
 
 Актуальный MVP пересмотрен 2026-11-05: однократный вопрос пользователя по базе знаний → RAG → ответ LLM с цитатами. Шаблоны, плейсхолдеры и генерация документов перенесены в post-MVP; см. `plans/implementation_plan.md` §1.1.
+
+С 2026-11-06 в RAG добавлен отдельный контур поиска по документам документооборота (`scope=documents`, коллекция `ai_scrivener_documents_current`, ACL по рабочим группам, только финальные актуальные версии). 1С ставит документы в очередь подписками, регламентное задание `АИС_ИндексацияRAG` разбирает очередь и раз в сутки запускает полную сверку; ответ по документам формирует `АИС_ОтветПоБазеЗнаний.ОтветитьПоДокументам` с пост-проверкой прав. План и статус — `plans/2026-11-06-documents-rag.md`.
 
 Сформированы требования, матрица трассируемости, конфигурация числовых параметров и пре-коммит-проверки. Реализована инфраструктура RAG-сервиса (naive RAG): FastAPI, GigaChat Embeddings (`EmbeddingsGigaR`, 2560), Qdrant, API индексации и поиска, тесты. Проверен сценарий на 3 шаблонах — поиск вернул релевантный первым; это подтверждает работу инфраструктуры на маленьком корпусе, а не качество поиска в целом. RAG-сервис переведён на схему v2: named vectors `dense`/`sparse`, гибридный поиск с RRF, reranker `BAAI/bge-reranker-v2-m3-int8`, группировка по источнику, parent expansion и endpoint `/v1/retrieve`. Добавлены OCR-абстракция `rag_indexer.ocr` (PaddleOCR + page-level fallback на Yandex OCR), проверка текстового слоя `rag_indexer.pdf`, `PdfExtractor` с line-to-paragraph merger и фильтром колонтитулов, а также DOCX/HTML/TXT-экстракторы, `DocumentExtractor`, извлечение таблиц из PDF через `pdfplumber`, `StructureBuilder` и clause-aware чанкер с context header, дроблением пунктов и таблиц, а также CLI `python -m rag_indexer index|validate|stats` с state-файлом, gzip-кэшем extraction/chunks, экспортом Markdown, батчингом чанков со staged-активацией, alias-swap и очисткой неактивных версий и индексацией через `/v1/index/chunks`, one-shot Docker-профиль `rag-indexer`, gated live integration test и eval-харнесс `python -m rag_service.eval` (Recall@k, MRR, nDCG, no-answer, latency). В 1С добавлены `АИС_ИнтеграцияСRAG`, `АИС_ОтветПоБазеЗнаний` с DeepSeek listwise-реранком и диалог `АИС_ВопросПоБазеЗнаний`. Остаются golden set/baseline, аудит Q&A, borderless/merged-таблицы и полная индексация корпуса — см. `plans/2026-11-04-effective-rag.md`.
 

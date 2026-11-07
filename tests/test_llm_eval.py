@@ -6,6 +6,7 @@ from tools.llm_eval.clients import extract_json
 from tools.llm_eval.metrics import CaseResult, aggregate, find_rank
 from tools.llm_eval.run import (
     Candidate,
+    EvalCase,
     build_context,
     flatten_candidates,
     normalize_citations,
@@ -189,3 +190,15 @@ def test_aggregate_counts_correctly() -> None:
     assert answer["false_refusals"] == 1
     assert answer["hallucinated_answers"] == 1
     assert answer["errors"] == 0
+
+
+def test_eval_case_supports_documents_scope() -> None:
+    case = EvalCase.from_dict({"query": "q", "scope": "documents"})
+
+    assert case.scope == "documents"
+    assert EvalCase.from_dict({"query": "q"}).scope == "knowledge"
+
+
+def test_eval_case_rejects_unknown_scope() -> None:
+    with pytest.raises(ValueError):
+        EvalCase.from_dict({"query": "q", "scope": "all"})

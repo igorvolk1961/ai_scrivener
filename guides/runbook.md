@@ -529,6 +529,44 @@ RAG_INDEXER_OCR=paddle \
 
 Путь к корпусу на хосте задаётся `RAG_CORPUS_DIR_HOST` (по умолчанию `/home/igorvolk/1C/ai_scrivener_corpus`). Кэш и state вынесены в тома `rag_index_cache` и `rag_index_state`, модели Paddle — в `paddle_cache`.
 
+### 5.3. Документы документооборота
+
+Документы индексируются в отдельную коллекцию `ai_scrivener_documents_current`; alias корпуса знаний не затрагивается. Переменная `RAG_QDRANT_DOCUMENTS_COLLECTION` уже задана в `rag-service/.env.example` и `deploy/docker-compose.yml`.
+
+1. Пересоберите и перезапустите сервис, чтобы применился код с endpoint-ами документов и создалась коллекция:
+
+```bash
+docker compose -f deploy/docker-compose.yml up --build -d rag-service
+curl -s http://127.0.0.1:8080/health | python -m json.tool
+```
+
+В `/health` должны появиться `documents_collection_state.alias = ai_scrivener_documents_current` и target-коллекция.
+
+2. В 1С включите `Константа.АИС_ИндексацияRAGВключена` и проверьте расписание регламентного задания `АИС_ИндексацияRAG` (каждые 5 минут). Заполните `Константа.АИС_НастройкиИндексацииДокументов`, если матрица финальных состояний отличается от значений по умолчанию.
+
+3. Первичный backfill выполняется автоматически: при отсутствии записи `system/full_reconcile` в `АИС_СостоянияИндексации` первый запуск задания ставит в очередь все карточки. Чтобы запустить полную сверку повторно, очистите `ДатаИндексации` этой служебной записи или удалите её.
+
+4. Проверка поиска по документам (нужен реальный `acl_principals` пользователя):
+
+```bash
+curl -X POST http://127.0.0.1:8080/v1/retrieve \
+  -H "X-Service-Token: $RAG_SERVICE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"query":"действующая редакция приказа","scope":"documents","filters":{"source_types":["document_internal"],"statuses":["approved"],"is_current":true,"active":true,"acl_principals":["user:<uuid-пользователя>"]}}'
+```
+
+5. Retrieval eval по документам после сбора golden set:
+
+```bash
+uv run --project rag-service python -m rag_service.eval \
+  --dataset rag-service/eval/golden/documents.jsonl \
+  --top-k 10 \
+  --output artifacts/rag-eval/documents.json
+```
+
+Формат `documents.jsonl`, метрики `stale_version_leak_rate`/`acl_leak_rate`/`current_version_accuracy` и запуск answer-eval — `rag-service/eval/README.md` и `docs/rag-evaluation.md` §11.
+
+
 ## 6. Проверки проекта
 
 ```bash
