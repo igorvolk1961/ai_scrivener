@@ -88,6 +88,18 @@ uv run python -m tools.llm_eval \
   --output artifacts/llm-eval/documents-answer-eval.json
 ```
 
+## Documents golden set (2026-11-07)
+
+`rag-service/eval/golden/documents.jsonl` — первый срез по реальной базе документооборота:
+
+- 23 кейса: 19 answerable, 2 ACL-negative и 2 no-answer;
+- 5 кейсов содержат `stale_source_ids` (старые редакции должностных инструкций и приказа);
+- source_ids — UUID карточек 1С; загружены 31 утверждённый внутренний документ из восстановленной базы (504 внутренних документа, 31 финальный);
+- ACL-кейсы используют принципалы `user:f02c8390-745d-4992-11f1-d3e1efc25d0b` (ГенДиректор); 2 документа, недоступные этому пользователю, вынесены в `forbidden_source_ids`;
+- для пилота документы извлечены SQL-скриптом из `.dt`-копии рабочей базы и загружены через `/v1/index/document/base64`; в штатном контуре тот же контракт снимка формирует `АИС_ИндексацияДокументов`.
+
+Baseline на коллекции `ai_scrivener_documents_current`: Recall@10 = 1.000, MRR@10 = 0.974, nDCG@10 = 0.981, `current_version_accuracy` = 0.947, `stale_version_leak_rate` = 0, `acl_leak_rate` = 0, no-answer accuracy = 0.000. Нулевая no-answer accuracy — то же ограничение `search_min_score = 0.0`, что и для корпуса знаний.
+
 ## Knowledge golden set (2026-11-05)
 
 `rag-service/eval/golden/knowledge.jsonl` — первый срез по 15 типам документов и 30 материалам пилотной коллекции `ai_scrivener_knowledge_pilot_1793864097`:
