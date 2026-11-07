@@ -644,4 +644,13 @@
       <httpMethod>GET</httpMethod><handler>ПолучитьСводкуКорпуса_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="0f1e2d3c-4b5a-6978-8796-a5b4c3d2e1f0">
+    <name>Индексация</name>
+    <synonym><key>ru</key><value>Индексация RAG</value></synonym>
+    <template>/indexing</template>
+    <methods uuid="1a2b3c4d-5e6f-7081-92a3-b4c5d6e7f809">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>Индексация_GET</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>

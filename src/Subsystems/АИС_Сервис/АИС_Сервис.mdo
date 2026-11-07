@@ -3,7 +3,7 @@
   <name>АИС_Сервис</name>
   <synonym>
     <key>ru</key>
-    <value>АИС: Сервис</value>
+    <value>ИИ-Помощник</value>
   </synonym>
   <includeInCommandInterface>true</includeInCommandInterface>
   <content>DataProcessor.АИС_ДолжностныеИнструкции</content>
@@ -11,6 +11,7 @@
   <content>DataProcessor.АИС_ДокументыИАдресаты</content>
   <content>DataProcessor.АИС_Шаблоны</content>
   <content>DataProcessor.АИС_ПапкиДокументов</content>
+  <content>DataProcessor.АИС_ИндексацияДокументов</content>
   <content>CommonCommand.АИС_ВопросПоБазеЗнаний</content>
   <content>Catalog.АИС_ТипыДействий</content>
   <content>Catalog.АИС_ТипыТриггеров</content>
@@ -23,4 +24,6 @@
   <content>InformationRegister.АИС_КонтекстЗадачИИ</content>
   <content>InformationRegister.АИС_СостоянияПлейсхолдеров</content>
   <content>InformationRegister.АИС_ДокументыВПапках</content>
+  <content>InformationRegister.АИС_СостоянияИндексации</content>
+  <content>ScheduledJob.АИС_ИндексацияRAG</content>
 </mdclass:Subsystem>

@@ -41,7 +41,7 @@ def test_ensure_collection_creates_vectors_and_indexes() -> None:
     asyncio.run(store.ensure_collection(3))
 
     client.create_collection.assert_awaited_once()
-    assert client.create_payload_index.await_count == 17
+    assert client.create_payload_index.await_count == 25
 
 
 def test_ensure_collection_resolves_alias_target() -> None:
@@ -165,6 +165,114 @@ def test_search_applies_folder_employee_and_purpose_filters() -> None:
     assert keys["metadata.folders"] == ["folder-1"]
     assert keys["metadata.employees"] == ["ГенДиректор"]
     assert keys["metadata.purposes"] == ["Сформированные"]
+
+
+def test_search_applies_acl_and_current_version_filters() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    client.query_points.return_value = SimpleNamespace(points=[])
+
+    asyncio.run(
+        store.search(
+            [1.0, 2.0, 3.0],
+            SearchFilters(
+                source_types=["document_internal"],
+                family_ids=["family-1"],
+                is_current=True,
+                acl_principals=["user:1", "position:2"],
+            ),
+            limit=10,
+            min_score=0.0,
+        )
+    )
+
+    query_filter = client.query_points.await_args.kwargs["query_filter"]
+    conditions = query_filter.must
+    keys = {condition.key for condition in conditions}
+    assert "family_id" in keys
+    assert "is_current" in keys
+    assert "acl_principals" in keys
+    assert query_filter.must_not
+    assert query_filter.must_not[0].key == "acl_deny_principals"
+
+
+def test_upsert_chunks_builds_document_payload() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    document = IndexedDocument(
+        source_id="doc-1",
+        version="v1",
+        title="Приказ",
+        metadata={
+            "family_id": "family-1",
+            "status": "approved",
+            "is_current": True,
+            "acl_principals": ["user:1"],
+            "acl_deny_principals": ["user:2"],
+            "acl_version": "acl-v1",
+            "doc_kind": "Внутренний",
+            "registration_number": "12",
+        },
+    )
+
+    asyncio.run(
+        store.upsert_chunks(
+            "document_internal",
+            document,
+            [IndexChunk(index=0, text="Текст")],
+            [[1.0, 2.0, 3.0]],
+            replace_existing=False,
+            active=False,
+        )
+    )
+
+    point = client.upsert.await_args.kwargs["points"][0]
+    assert point.payload["document_key"] == "document_internal:family-1"
+    assert point.payload["family_id"] == "family-1"
+    assert point.payload["is_current"] is True
+    assert point.payload["acl_principals"] == ["user:1"]
+    assert point.payload["acl_deny_principals"] == ["user:2"]
+    assert point.payload["active"] is False
+
+
+def test_update_payload_updates_existing_source() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    client.count.return_value = SimpleNamespace(count=1)
+
+    updated = asyncio.run(
+        store.update_payload(
+            "document_internal",
+            "doc-1",
+            {"active": False, "is_current": False},
+            version="v1",
+        )
+    )
+
+    assert updated is True
+    client.set_payload.assert_awaited_once()
+    payload = client.set_payload.await_args.kwargs["payload"]
+    assert payload["active"] is False
+    assert payload["is_current"] is False
+
+
+def test_activate_document_can_keep_old_versions_inactive() -> None:
+    client = AsyncMock()
+    store = _store(client)
+    client.count.return_value = SimpleNamespace(count=1)
+
+    activated = asyncio.run(
+        store.activate_document(
+            "document_internal",
+            "doc-1",
+            "v2",
+            keep_inactive=True,
+        )
+    )
+
+    assert activated is True
+    assert client.set_payload.await_count == 2
+    client.delete.assert_not_awaited()
 
 
 def test_upsert_chunks_builds_structured_payload() -> None:

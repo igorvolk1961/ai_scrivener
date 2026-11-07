@@ -19,7 +19,7 @@ def test_docx_converted_to_cached_pdf(tmp_path: Path) -> None:
     document = Document()
     document.add_heading("Проверка DOCX", level=1)
     document.add_paragraph("Текст для конвертации в PDF.")
-    document.save(source)
+    document.save(str(source))
 
     corpus_file = CorpusFile(
         path=source,

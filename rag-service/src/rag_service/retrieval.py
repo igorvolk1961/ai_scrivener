@@ -13,7 +13,7 @@ from rag_service.models import (
     RetrieveResult,
     SearchResult,
 )
-from rag_service.qdrant_store import VectorStore
+from rag_service.qdrant_store import VectorStore, VectorStoreError
 from rag_service.rerank import Reranker
 from rag_service.sparse import SparseEncoder
 
@@ -58,15 +58,31 @@ class Retriever:
         store: VectorStore,
         sparse: SparseEncoder | None = None,
         reranker: Reranker | None = None,
+        documents_store: VectorStore | None = None,
     ) -> None:
         self._parameters = parameters
         self._embedder = embedder
         self._store = store
+        self._documents_store = documents_store
         self._sparse = sparse
         self._reranker = reranker
 
     async def retrieve(self, request: RetrieveRequest) -> RetrieveResponse:
         rag = self._parameters.rag
+        store = self._store
+        if request.scope == "documents":
+            if self._documents_store is None:
+                raise VectorStoreError("documents collection is not configured")
+            if not request.filters.acl_principals:
+                return RetrieveResponse(
+                    query=request.query,
+                    results=[],
+                    diagnostics={
+                        "scope": "documents",
+                        "acl_principals_required": True,
+                    },
+                )
+            store = self._documents_store
         query = request.query[: rag.query_max_chars]
         candidate_k = min(
             request.candidate_k or rag.candidate_k,
@@ -85,7 +101,7 @@ class Retriever:
         dense_vector = (await self._embedder.embed([query]))[0]
         if use_hybrid and sparse is not None:
             sparse_query = await sparse.embed_query(query)
-            candidates = await self._store.search_hybrid(
+            candidates = await store.search_hybrid(
                 dense_vector,
                 sparse_query,
                 request.filters,
@@ -93,7 +109,7 @@ class Retriever:
                 rag.hnsw_ef,
             )
         else:
-            candidates = await self._store.search(
+            candidates = await store.search(
                 dense_vector,
                 request.filters,
                 candidate_k,
@@ -170,12 +186,17 @@ class Retriever:
             ]
 
         if include_parent:
-            results = await self._with_parent_chunks(results, rag.context_max_tokens)
+            results = await self._with_parent_chunks(
+                results,
+                rag.context_max_tokens,
+                store,
+            )
 
         return RetrieveResponse(
             query=query,
             results=results,
             diagnostics={
+                "scope": request.scope,
                 "candidates": len(candidates),
                 "returned": len(results),
                 "hybrid": use_hybrid,
@@ -229,6 +250,7 @@ class Retriever:
         self,
         results: list[RetrieveResult],
         max_tokens: int,
+        store: VectorStore,
     ) -> list[RetrieveResult]:
         expanded: list[RetrieveResult] = []
         cache: dict[tuple[str, str, str], list[SearchResult]] = {}
@@ -241,7 +263,7 @@ class Retriever:
                     continue
                 cache_key = (chunk.source_type, chunk.source_id, chunk.parent_id)
                 if cache_key not in cache:
-                    cache[cache_key] = await self._store.fetch_parent_chunks(
+                    cache[cache_key] = await store.fetch_parent_chunks(
                         chunk.source_type,
                         chunk.source_id,
                         chunk.parent_id,

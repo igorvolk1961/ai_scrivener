@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="9e7078b8-78e6-44f7-a095-c46403ad5a3c">
+  <producedTypes>
+    <refType typeId="63d3c1e8-bf3c-40fc-9909-58a3f5726146" valueTypeId="55674c59-ea27-403f-9350-f3cafd9585b5"/>
+    <listType typeId="9b590f14-b317-4981-b595-a0ffd91cd5bb" valueTypeId="e814927f-65e5-44fc-815b-e38270481a8d"/>
+    <managerType typeId="ba2e81ad-2d81-489d-a662-c3fb12e37344" valueTypeId="772b1f9c-284c-47aa-af10-debf3bf2559c"/>
+  </producedTypes>
+  <name>АИС_ТипыИндексируемыхДокументов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Типы индексируемых документов</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="b066614c-7a99-4933-a845-fbbb71934555">
+    <name>Внутренний</name>
+    <synonym>
+      <key>ru</key>
+      <value>Внутренний документ</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="28fe0ef1-6fa5-46d7-8b4b-d44ecb9571d6">
+    <name>Входящий</name>
+    <synonym>
+      <key>ru</key>
+      <value>Входящий документ</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="455fba68-e75b-4846-9421-ff1535a87141">
+    <name>Исходящий</name>
+    <synonym>
+      <key>ru</key>
+      <value>Исходящий документ</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="e6783dba-7c53-43a8-8eaf-645335f9f527">
+    <name>ДолжностнаяИнструкция</name>
+    <synonym>
+      <key>ru</key>
+      <value>Должностная инструкция</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

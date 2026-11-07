@@ -42,6 +42,7 @@ class EvalCase:
     no_answer: bool
     difficulty: str
     notes: str
+    scope: str = "knowledge"
 
     @classmethod
     def from_dict(cls, payload: dict[str, Any]) -> EvalCase:
@@ -49,6 +50,9 @@ class EvalCase:
         if not query:
             raise ValueError("eval case is missing query")
         filters = payload.get("filters")
+        scope = str(payload.get("scope", "knowledge")).strip() or "knowledge"
+        if scope not in ("knowledge", "documents"):
+            raise ValueError(f"unknown scope: {scope}")
         return cls(
             query=query,
             doc_type=str(payload.get("doc_type", "")),
@@ -63,6 +67,7 @@ class EvalCase:
             no_answer=bool(payload.get("no_answer", False)),
             difficulty=str(payload.get("difficulty", "")),
             notes=str(payload.get("notes", "")),
+            scope=scope,
         )
 
     def expected_pairs(self) -> list[tuple[str, str]]:
@@ -190,6 +195,7 @@ def evaluate_case(
             candidate_k=settings.candidate_k,
             group_size=settings.group_size,
             include_parent=settings.include_parent,
+            scope=case.scope,
         )
     except (HttpError, OSError) as error:
         return _failed_result(case, error)

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="758034d7-41ff-4be9-a1be-9f3684add6eb" extendedConfigurationObject="3329625c-62ec-4dd3-94a2-5552873ff329">
+  <producedTypes>
+    <selectionType typeId="bbc24941-5338-4b75-979a-d696ca8a4652" valueTypeId="3742b1b3-09b5-4734-9ecf-651b1e685563"/>
+    <listType typeId="960876d8-6306-4762-aac9-ef9621d5b397" valueTypeId="cf3102f6-9535-43a4-8541-e9807bb856aa"/>
+    <managerType typeId="7c0ae6aa-d374-42d6-a2f9-fdeaabfb7d7e" valueTypeId="26f0afb6-b9b8-49cd-8e59-ab8507ff968d"/>
+    <recordSetType typeId="62bb0644-a82c-4710-898b-a5218ddfc308" valueTypeId="a4e379c2-2c85-4db2-ba35-47ac13cedbf5"/>
+    <recordKeyType typeId="cd13a8d1-8af6-4341-af00-8d1cc022436d" valueTypeId="509d8d61-e553-4aa8-900a-ea350effe982"/>
+    <recordType typeId="a9b53cb7-906e-48bb-8d36-831bd9630b1b" valueTypeId="c0ecd4fa-bfc4-4b1d-ae05-b6177a2cc3e4"/>
+    <recordManagerType typeId="fb852774-7d5d-4432-990c-bb90b95f394e" valueTypeId="49705dbd-2724-464e-806f-eff7970ad55c"/>
+  </producedTypes>
+  <name>СостоянияДокументов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Состояния документов</value>
+  </synonym>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:InformationRegisterExtension">
+    <extendedConfigurationObject>Checked</extendedConfigurationObject>
+  </extension>
+</mdclass:InformationRegister>

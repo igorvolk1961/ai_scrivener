@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -13,11 +13,15 @@ class SearchFilters(BaseModel):
     statuses: list[str] = Field(default_factory=list)
     authorities: list[str] = Field(default_factory=list)
     document_keys: list[str] = Field(default_factory=list)
+    family_ids: list[str] = Field(default_factory=list)
     active: bool = True
+    is_current: bool | None = None
     position_ids: list[str] = Field(default_factory=list)
     folders: list[str] = Field(default_factory=list)
     employees: list[str] = Field(default_factory=list)
     purposes: list[str] = Field(default_factory=list)
+    acl_principals: list[str] = Field(default_factory=list)
+    acl_deny_principals: list[str] = Field(default_factory=list)
 
 
 class SearchRequest(BaseModel):
@@ -40,6 +44,8 @@ class SearchResult(BaseModel):
     metadata: dict[str, Any]
     embedding_text: str = ""
     document_key: str = ""
+    family_id: str = ""
+    is_current: bool | None = None
     section_path: list[str] = Field(default_factory=list)
     section_text: str = ""
     clause: str = ""
@@ -106,6 +112,7 @@ class RetrieveRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     query: str = Field(min_length=1)
+    scope: Literal["knowledge", "documents"] = "knowledge"
     filters: SearchFilters = Field(default_factory=SearchFilters)
     top_k: int | None = Field(default=None, ge=1, le=100)
     candidate_k: int | None = Field(default=None, ge=1, le=500)
@@ -206,6 +213,7 @@ class CleanupRequest(BaseModel):
 
     older_than_hours: float = Field(default=24, gt=0)
     source_type: str | None = None
+    scope: Literal["knowledge", "documents"] = "knowledge"
 
 
 class CleanupResponse(BaseModel):
@@ -247,6 +255,7 @@ class HealthResponse(BaseModel):
     qdrant: bool
     embedding_dimension: int | None
     collection_state: dict[str, Any] | None = None
+    documents_collection_state: dict[str, Any] | None = None
 
 
 class DocumentChunk(BaseModel):
@@ -277,3 +286,65 @@ class PdfLinkResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     url: str
+
+
+class DocumentSnapshot(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source_id: str = Field(min_length=1)
+    family_id: str = ""
+    version: str = Field(min_length=1)
+    title: str = Field(min_length=1)
+    doc_type: str = ""
+    doc_kind: str = ""
+    registration_number: str = ""
+    document_date: str | None = None
+    status: str = "approved"
+    approved_at: str | None = None
+    effective_from: str | None = None
+    is_current: bool = True
+    content_hash: str = ""
+    file_hash: str = ""
+    acl_principals: list[str] = Field(default_factory=list)
+    acl_deny_principals: list[str] = Field(default_factory=list)
+    acl_version: str = ""
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class DocumentIndexResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source_type: str
+    source_id: str
+    version: str
+    indexed_chunks: int
+    content_hash: str
+    requires_ocr: bool = False
+
+
+class DocumentBase64Request(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source_type: str = Field(min_length=1)
+    document: DocumentSnapshot
+    text: str | None = None
+    file_base64: str | None = None
+    file_name: str | None = None
+    mime: str | None = None
+
+
+class MetadataUpdateRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source_type: str = Field(min_length=1)
+    source_id: str = Field(min_length=1)
+    version: str | None = None
+    payload: dict[str, Any] = Field(min_length=1)
+
+
+class MetadataUpdateResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source_type: str
+    source_id: str
+    updated: bool

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:ScheduledJob xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="49f6cb79-6a62-4698-b563-52f5b8b1b8d8">
+  <producedTypes>
+    <managerType typeId="dc86fc39-fd39-40d2-aee7-d9f49c1356b1" valueTypeId="91267b63-4a49-439b-8a1b-dbc5f1420f17"/>
+  </producedTypes>
+  <name>АИС_ИндексацияRAG</name>
+  <synonym>
+    <key>ru</key>
+    <value>Индексация документов в RAG</value>
+  </synonym>
+  <methodName>CommonModule.АИС_ИндексацияДокументов.ВыполнитьИндексацию</methodName>
+  <description>Разбирает очередь индексации документов документооборота в RAG.</description>
+  <key>АИС_ИндексацияRAG</key>
+  <use>true</use>
+  <predefined>false</predefined>
+  <restartCountOnFailure>3</restartCountOnFailure>
+  <restartIntervalOnFailure>10</restartIntervalOnFailure>
+</mdclass:ScheduledJob>

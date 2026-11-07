@@ -40,6 +40,7 @@ class FakeStore:
         self.closed = False
         self.activated: list[tuple[str, str, str]] = []
         self.cleanup_calls: list[tuple[float, str | None]] = []
+        self.delete_calls: list[tuple[str, str]] = []
         self.alias: tuple[str, str] | None = None
 
     async def ensure_collection(self, dimension: int) -> None:
@@ -118,8 +119,24 @@ class FakeStore:
         source_id: str,
         version: str,
         collection_name: str | None = None,
+        keep_inactive: bool = False,
     ) -> bool:
         self.activated.append((source_type, source_id, version))
+        return True
+
+    async def update_payload(
+        self,
+        source_type: str,
+        source_id: str,
+        payload: dict[str, Any],
+        version: str | None = None,
+        collection_name: str | None = None,
+    ) -> bool:
+        key = (source_type, source_id)
+        if key not in self.documents:
+            return False
+        document, _ = self.documents[key]
+        document.metadata.update(payload)
         return True
 
     async def cleanup_inactive(
@@ -136,6 +153,7 @@ class FakeStore:
         source_id: str,
         collection_name: str | None = None,
     ) -> bool:
+        self.delete_calls.append((source_type, source_id))
         existed = (source_type, source_id) in self.documents
         self.documents.pop((source_type, source_id), None)
         return existed
@@ -193,6 +211,33 @@ class FakeStore:
         limit: int,
     ) -> list[SearchResult]:
         return []
+
+    async def fetch_source_chunks(
+        self,
+        source_type: str,
+        source_id: str,
+        limit: int = 10000,
+        collection_name: str | None = None,
+    ) -> list[SearchResult]:
+        entry = self.documents.get((source_type, source_id))
+        if entry is None:
+            return []
+        document, chunks = entry
+        return [
+            SearchResult(
+                score=1.0,
+                source_type=source_type,
+                source_id=source_id,
+                version=document.version,
+                title=document.title,
+                chunk_index=chunk.index,
+                text=chunk.text,
+                embedding_text=chunk.text,
+                document_key=f"{source_type}:{source_id}",
+                metadata=document.metadata,
+            )
+            for chunk in chunks[:limit]
+        ]
 
 
 class FakeSparseEncoder:
@@ -273,7 +318,13 @@ def client(
     embedder: FakeEmbedder,
     store: FakeStore,
 ) -> Iterator[TestClient]:
-    app = create_app(parameters=parameters, settings=settings, embedder=embedder, store=store)
+    app = create_app(
+        parameters=parameters,
+        settings=settings,
+        embedder=embedder,
+        store=store,
+        documents_store=store,
+    )
     with TestClient(app) as test_client:
         yield test_client
 

@@ -6,7 +6,7 @@ COPY rag-service/pyproject.toml rag-service/uv.lock ./
 COPY rag-service/src ./src
 COPY config /config
 
-RUN uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev --extra indexer
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

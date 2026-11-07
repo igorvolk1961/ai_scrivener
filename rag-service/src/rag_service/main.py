@@ -1,16 +1,31 @@
 from __future__ import annotations
 
+import base64
+import hashlib
 import logging
 import secrets
+import tempfile
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Annotated, Any, Protocol, cast
 from urllib.parse import quote
 
-from fastapi import Depends, FastAPI, Header, HTTPException, Request, status
+from fastapi import (
+    Depends,
+    FastAPI,
+    File,
+    Form,
+    Header,
+    HTTPException,
+    Request,
+    UploadFile,
+    status,
+)
 from fastapi.responses import FileResponse
 
+from rag_indexer.chunking import ChunkerOptions
+from rag_indexer.extraction.models import ExtractionError
 from rag_service.chunking import ChunkingError, TextChunk, chunk_structured_text
 from rag_service.cloudru import CloudRuEmbedder, CloudRuError, CloudRuReranker
 from rag_service.config import (
@@ -21,6 +36,11 @@ from rag_service.config import (
     load_settings,
 )
 from rag_service.corpus import CorpusResolver
+from rag_service.document_index import (
+    DocumentBuildError,
+    build_extracted_document,
+    chunk_document,
+)
 from rag_service.gigachat import GigaChatClient, GigaChatError
 from rag_service.models import (
     ActivateRequest,
@@ -30,7 +50,10 @@ from rag_service.models import (
     CreateCollectionRequest,
     CreateCollectionResponse,
     DeleteResponse,
+    DocumentBase64Request,
     DocumentChunk,
+    DocumentIndexResponse,
+    DocumentSnapshot,
     DocumentTextResponse,
     HealthResponse,
     IndexChunksRequest,
@@ -38,6 +61,8 @@ from rag_service.models import (
     IndexItem,
     IndexRequest,
     IndexResponse,
+    MetadataUpdateRequest,
+    MetadataUpdateResponse,
     PdfLinkResponse,
     ReplaceRequest,
     RetrieveRequest,
@@ -92,6 +117,27 @@ def _store(request: Request) -> VectorStore:
     return cast(VectorStore, request.app.state.store)
 
 
+def _documents_store(request: Request) -> VectorStore:
+    store = cast(VectorStore | None, request.app.state.documents_store)
+    if store is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="documents collection is not configured",
+        )
+    return store
+
+
+def _scope_store(request: Request, scope: str) -> VectorStore:
+    if scope == "documents":
+        return _documents_store(request)
+    if scope == "knowledge":
+        return _store(request)
+    raise HTTPException(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        detail=f"unknown scope: {scope}",
+    )
+
+
 def _sparse_encoder(request: Request) -> SparseEncoder | None:
     return cast(SparseEncoder | None, request.app.state.sparse_encoder)
 
@@ -125,6 +171,160 @@ async def _prepare_item(
     return document, chunks, vectors
 
 
+def _snapshot_metadata(
+    snapshot: DocumentSnapshot,
+    *,
+    file_hash: str,
+) -> dict[str, Any]:
+    metadata = dict(snapshot.metadata)
+    metadata.update(
+        {
+            "family_id": snapshot.family_id or snapshot.source_id,
+            "doc_type": snapshot.doc_type,
+            "doc_kind": snapshot.doc_kind,
+            "registration_number": snapshot.registration_number,
+            "document_date": snapshot.document_date,
+            "status": snapshot.status,
+            "approved_at": snapshot.approved_at,
+            "effective_from": snapshot.effective_from,
+            "is_current": snapshot.is_current,
+            "content_hash": snapshot.content_hash or snapshot.version,
+            "file_hash": file_hash or snapshot.file_hash,
+            "acl_principals": snapshot.acl_principals,
+            "acl_deny_principals": snapshot.acl_deny_principals,
+            "acl_version": snapshot.acl_version,
+        }
+    )
+    return metadata
+
+
+def _chunker_options(parameters: ApplicationParameters) -> ChunkerOptions:
+    rag = parameters.rag
+    return ChunkerOptions(
+        target_tokens=rag.chunk_target_tokens,
+        max_tokens=rag.chunk_max_tokens,
+        min_tokens=rag.chunk_min_tokens,
+        overlap_sentences=rag.chunk_overlap_sentences,
+    )
+
+
+async def _index_document_snapshot(
+    *,
+    parameters: ApplicationParameters,
+    embedder: Embedder,
+    store: VectorStore,
+    sparse: SparseEncoder | None,
+    source_type: str,
+    snapshot: DocumentSnapshot,
+    text: str | None,
+    file_bytes: bytes | None,
+    file_name: str | None,
+    mime: str | None,
+) -> DocumentIndexResponse:
+    tmp_path: Path | None = None
+    file_hash = ""
+    try:
+        if file_bytes is not None:
+            content_type = (mime or "").split(";", 1)[0].strip().lower()
+            if content_type not in parameters.rag.documents_allowed_mime:
+                raise HTTPException(
+                    status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
+                    detail=f"unsupported file type: {content_type or 'unknown'}",
+                )
+            max_bytes = parameters.rag.documents_file_max_mb * 1024 * 1024
+            if len(file_bytes) > max_bytes:
+                raise HTTPException(
+                    status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                    detail="document file is too large",
+                )
+            file_hash = hashlib.sha256(file_bytes).hexdigest()
+            suffix = Path(file_name or "").suffix
+            with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as handle:
+                handle.write(file_bytes)
+                tmp_path = Path(handle.name)
+
+        extracted, requires_ocr = await build_extracted_document(
+            title=snapshot.title,
+            text=text or None,
+            file_path=tmp_path,
+            mime=mime,
+            original_name=file_name,
+        )
+        if requires_ocr and not extracted.blocks:
+            return DocumentIndexResponse(
+                source_type=source_type,
+                source_id=snapshot.source_id,
+                version=snapshot.version,
+                indexed_chunks=0,
+                content_hash=snapshot.content_hash or snapshot.version,
+                requires_ocr=True,
+            )
+
+        chunks = chunk_document(
+            extracted,
+            source_id=snapshot.source_id,
+            options=_chunker_options(parameters),
+        )
+        if not chunks:
+            raise DocumentBuildError("document produced no chunks")
+        texts = [chunk.embedding_text or chunk.text for chunk in chunks]
+        dense_vectors = await embedder.embed(texts)
+        sparse_vectors = await sparse.embed_documents(texts) if sparse is not None else None
+        metadata = _snapshot_metadata(snapshot, file_hash=file_hash)
+        indexed_document = IndexedDocument(
+            source_id=snapshot.source_id,
+            version=snapshot.version,
+            title=snapshot.title,
+            metadata=metadata,
+        )
+        indexed_chunks = await store.upsert_chunks(
+            source_type,
+            indexed_document,
+            chunks,
+            dense_vectors,
+            sparse_vectors,
+            replace_existing=False,
+            active=False,
+        )
+        if indexed_chunks == 0:
+            raise DocumentBuildError("document produced no indexable chunks")
+        activated = await store.activate_document(
+            source_type,
+            snapshot.source_id,
+            snapshot.version,
+            keep_inactive=True,
+        )
+        if not activated:
+            raise VectorStoreError("staged document version was not found")
+        return DocumentIndexResponse(
+            source_type=source_type,
+            source_id=snapshot.source_id,
+            version=snapshot.version,
+            indexed_chunks=indexed_chunks,
+            content_hash=snapshot.content_hash or snapshot.version,
+            requires_ocr=requires_ocr,
+        )
+    except (DocumentBuildError, ChunkingError, ExtractionError) as error:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=str(error),
+        ) from error
+    except (
+        CloudRuError,
+        GigaChatError,
+        VectorStoreError,
+        SparseEncoderError,
+    ) as error:
+        logger.exception("document indexing failed")
+        raise HTTPException(
+            status_code=status.HTTP_502_BAD_GATEWAY,
+            detail="document indexing dependency failed",
+        ) from error
+    finally:
+        if tmp_path is not None:
+            tmp_path.unlink(missing_ok=True)
+
+
 def create_app(
     parameters: ApplicationParameters | None = None,
     settings: ServiceSettings | None = None,
@@ -132,6 +332,7 @@ def create_app(
     store: VectorStore | None = None,
     sparse_encoder: SparseEncoder | None = None,
     reranker: Reranker | None = None,
+    documents_store: VectorStore | None = None,
 ) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -182,6 +383,19 @@ def create_app(
                 f"configured embedding dimension {configured} does not match GigaChat {dimension}"
             )
         await resolved_store.ensure_collection(dimension)
+        resolved_documents_store = documents_store
+        if resolved_documents_store is None and resolved_settings.qdrant_documents_collection:
+            resolved_documents_store = QdrantStore(
+                url=str(resolved_settings.qdrant_url),
+                collection=str(resolved_settings.qdrant_documents_collection),
+                api_key=(
+                    resolved_settings.qdrant_api_key.get_secret_value()
+                    if resolved_settings.qdrant_api_key is not None
+                    else None
+                ),
+            )
+        if resolved_documents_store is not None:
+            await resolved_documents_store.ensure_collection(dimension)
         app.state.parameters = resolved_parameters
         app.state.settings = resolved_settings
         app.state.corpus = CorpusResolver(
@@ -195,6 +409,7 @@ def create_app(
         app.state.embedder = resolved_embedder
         app.state.dimension = dimension
         app.state.store = resolved_store
+        app.state.documents_store = resolved_documents_store
         app.state.sparse_encoder = resolved_sparse
         app.state.reranker = resolved_reranker
         app.state.retriever = Retriever(
@@ -203,6 +418,7 @@ def create_app(
             resolved_store,
             resolved_sparse,
             resolved_reranker,
+            resolved_documents_store,
         )
         try:
             yield
@@ -213,6 +429,11 @@ def create_app(
             if resolved_reranker is not None:
                 await resolved_reranker.close()
             await resolved_store.close()
+            if (
+                resolved_documents_store is not None
+                and resolved_documents_store is not resolved_store
+            ):
+                await resolved_documents_store.close()
 
     app = FastAPI(title="ai_scrivener RAG", version="0.1.0", lifespan=lifespan)
 
@@ -259,17 +480,28 @@ def create_app(
     @app.get("/health", response_model=HealthResponse)
     async def health(request: Request) -> HealthResponse:
         resolved_store: VectorStore = request.app.state.store
+        resolved_documents_store = cast(
+            VectorStore | None,
+            request.app.state.documents_store,
+        )
         resolved_embedder: Embedder = request.app.state.embedder
         collection_state: dict[str, Any] | None = None
+        documents_collection_state: dict[str, Any] | None = None
         try:
             collection_state = await resolved_store.collection_state()
         except Exception:
             logger.exception("collection state lookup failed")
+        if resolved_documents_store is not None:
+            try:
+                documents_collection_state = await resolved_documents_store.collection_state()
+            except Exception:
+                logger.exception("documents collection state lookup failed")
         return HealthResponse(
             status="ok",
             qdrant=await resolved_store.health(),
             embedding_dimension=resolved_embedder.dimension,
             collection_state=collection_state,
+            documents_collection_state=documents_collection_state,
         )
 
     @app.get(
@@ -555,6 +787,121 @@ def create_app(
         )
 
     @app.post(
+        "/v1/index/document",
+        response_model=DocumentIndexResponse,
+        dependencies=[Depends(_require_token)],
+    )
+    async def index_document(
+        request: Request,
+        source_type: Annotated[str, Form()],
+        document: Annotated[str, Form()],
+        text: Annotated[str | None, Form()] = None,
+        file: Annotated[UploadFile | None, File()] = None,
+    ) -> DocumentIndexResponse:
+        resolved_parameters = _parameters(request)
+        resolved_embedder = _embedder(request)
+        resolved_store = _documents_store(request)
+        sparse = _sparse_encoder(request)
+        try:
+            snapshot = DocumentSnapshot.model_validate_json(document)
+        except ValueError as error:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"invalid document snapshot: {error}",
+            ) from error
+        file_bytes: bytes | None = None
+        file_name: str | None = None
+        mime: str | None = None
+        if file is not None:
+            max_bytes = resolved_parameters.rag.documents_file_max_mb * 1024 * 1024
+            file_bytes = await file.read(max_bytes + 1)
+            file_name = file.filename
+            mime = file.content_type
+        return await _index_document_snapshot(
+            parameters=resolved_parameters,
+            embedder=resolved_embedder,
+            store=resolved_store,
+            sparse=sparse,
+            source_type=source_type,
+            snapshot=snapshot,
+            text=text,
+            file_bytes=file_bytes,
+            file_name=file_name,
+            mime=mime,
+        )
+
+    @app.post(
+        "/v1/index/document/base64",
+        response_model=DocumentIndexResponse,
+        dependencies=[Depends(_require_token)],
+    )
+    async def index_document_base64(
+        request: Request,
+        payload: DocumentBase64Request,
+    ) -> DocumentIndexResponse:
+        resolved_parameters = _parameters(request)
+        resolved_embedder = _embedder(request)
+        resolved_store = _documents_store(request)
+        sparse = _sparse_encoder(request)
+        file_bytes: bytes | None = None
+        if payload.file_base64:
+            max_bytes = resolved_parameters.rag.documents_file_max_mb * 1024 * 1024
+            if len(payload.file_base64) > (max_bytes * 4 // 3) + 8:
+                raise HTTPException(
+                    status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                    detail="document file is too large",
+                )
+            try:
+                encoded = payload.file_base64.replace("\n", "").replace("\r", "").strip()
+                file_bytes = base64.b64decode(encoded, validate=True)
+            except ValueError as error:
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail="invalid file_base64",
+                ) from error
+        return await _index_document_snapshot(
+            parameters=resolved_parameters,
+            embedder=resolved_embedder,
+            store=resolved_store,
+            sparse=sparse,
+            source_type=payload.source_type,
+            snapshot=payload.document,
+            text=payload.text,
+            file_bytes=file_bytes,
+            file_name=payload.file_name,
+            mime=payload.mime,
+        )
+
+    @app.post(
+        "/v1/index/metadata",
+        response_model=MetadataUpdateResponse,
+        dependencies=[Depends(_require_token)],
+    )
+    async def index_metadata(
+        request: Request,
+        payload: MetadataUpdateRequest,
+    ) -> MetadataUpdateResponse:
+        resolved_store = _documents_store(request)
+        try:
+            updated = await resolved_store.update_payload(
+                payload.source_type,
+                payload.source_id,
+                payload.payload,
+                version=payload.version,
+            )
+        except VectorStoreError as error:
+            logger.exception("metadata update failed")
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail="metadata update dependency failed",
+            ) from error
+        return MetadataUpdateResponse(
+            source_type=payload.source_type,
+            source_id=payload.source_id,
+            updated=updated,
+        )
+
+    @app.post(
         "/v1/index/chunks",
         response_model=IndexChunksResponse,
         dependencies=[Depends(_require_token)],
@@ -635,7 +982,7 @@ def create_app(
     )
     async def cleanup_inactive(request: Request, payload: CleanupRequest) -> CleanupResponse:
         try:
-            deleted = await _store(request).cleanup_inactive(
+            deleted = await _scope_store(request, payload.scope).cleanup_inactive(
                 payload.older_than_hours,
                 payload.source_type,
             )
@@ -657,8 +1004,9 @@ def create_app(
         source_type: str,
         source_id: str,
         target_collection: str | None = None,
+        scope: str = "knowledge",
     ) -> DeleteResponse:
-        resolved_store = _store(request)
+        resolved_store = _scope_store(request, scope)
         try:
             deleted = await resolved_store.delete(
                 source_type,

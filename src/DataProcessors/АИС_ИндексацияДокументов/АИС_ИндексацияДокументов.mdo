@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="5983f52f-f41d-41ea-988a-cb9807b122d8">
+  <producedTypes>
+    <objectType typeId="d59a2c69-37c3-4772-bf46-13622337176a" valueTypeId="e93154cd-8a8f-478a-a13b-bfbed6401a70"/>
+    <managerType typeId="206a4776-bef1-449b-b102-c05923da198c" valueTypeId="e3a74a7a-7096-45f3-a6f8-186018f0f22b"/>
+  </producedTypes>
+  <name>АИС_ИндексацияДокументов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Индексация документов в RAG</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <defaultForm>DataProcessor.АИС_ИндексацияДокументов.Form.Форма</defaultForm>
+  <forms uuid="0a8642bf-f24f-4af6-8587-8db5ffe426eb">
+    <name>Форма</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:DataProcessor>
