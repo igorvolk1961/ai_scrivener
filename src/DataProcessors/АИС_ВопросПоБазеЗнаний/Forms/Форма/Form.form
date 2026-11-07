@@ -56,10 +56,10 @@
         <extInfo xsi:type="form:InputFieldExtInfo">
           <readOnly>true</readOnly>
           <height>10</height>
-          <width>10</width>
+          <width>5</width>
           <autoMaxWidth>false</autoMaxWidth>
           <autoMaxHeight>false</autoMaxHeight>
-          <horizontalStretch>false</horizontalStretch>
+          <horizontalStretch>true</horizontalStretch>
           <verticalStretch>true</verticalStretch>
           <multiLine>true</multiLine>
           <textEdit>true</textEdit>
@@ -89,7 +89,7 @@
           <headerHorizontalAlign>Left</headerHorizontalAlign>
           <showInFooter>true</showInFooter>
           <extInfo xsi:type="form:CheckBoxFieldExtInfo">
-            <width>10</width>
+            <width>5</width>
             <autoMaxWidth>true</autoMaxWidth>
             <autoMaxHeight>true</autoMaxHeight>
           </extInfo>
@@ -112,7 +112,7 @@
           <throughAlign>Auto</throughAlign>
           <currentRowUse>Auto</currentRowUse>
         </extInfo>
-        <width>10</width>
+        <width>5</width>
         <horizontalStretch>false</horizontalStretch>
         <verticalStretch>false</verticalStretch>
       </items>
@@ -133,7 +133,7 @@
         <throughAlign>Auto</throughAlign>
         <currentRowUse>Auto</currentRowUse>
       </extInfo>
-      <width>10</width>
+      <width>5</width>
       <horizontalStretch>false</horizontalStretch>
       <verticalStretch>true</verticalStretch>
     </items>
@@ -206,111 +206,8 @@
           <textEdit>true</textEdit>
         </extInfo>
       </items>
-      <items xsi:type="form:FormGroup">
-        <name>ГруппаКнопок</name>
-        <id>40</id>
-        <items xsi:type="form:Button">
-          <name>Спросить</name>
-          <id>24</id>
-          <title>
-            <key>ru</key>
-            <value>Отправить</value>
-          </title>
-          <visible>true</visible>
-          <enabled>true</enabled>
-          <userVisible>
-            <common>true</common>
-          </userVisible>
-          <type>UsualButton</type>
-          <commandName>Form.Command.Спросить</commandName>
-          <representation>Auto</representation>
-          <autoMaxWidth>true</autoMaxWidth>
-          <autoMaxHeight>true</autoMaxHeight>
-          <placementArea>UserCmds</placementArea>
-        </items>
-        <items xsi:type="form:Button">
-          <name>Очистить</name>
-          <id>25</id>
-          <title>
-            <key>ru</key>
-            <value>Очистить</value>
-          </title>
-          <visible>true</visible>
-          <enabled>true</enabled>
-          <userVisible>
-            <common>true</common>
-          </userVisible>
-          <type>UsualButton</type>
-          <commandName>Form.Command.Очистить</commandName>
-          <representation>Auto</representation>
-          <autoMaxWidth>true</autoMaxWidth>
-          <autoMaxHeight>true</autoMaxHeight>
-          <placementArea>UserCmds</placementArea>
-        </items>
-        <items xsi:type="form:FormGroup">
-          <name>РаспоркаКнопок</name>
-          <id>83</id>
-          <visible>true</visible>
-          <enabled>true</enabled>
-          <userVisible><common>true</common></userVisible>
-          <type>UsualGroup</type>
-          <extInfo xsi:type="form:UsualGroupExtInfo">
-            <group>AlwaysHorizontal</group>
-            <showLeftMargin>false</showLeftMargin>
-            <united>false</united>
-            <throughAlign>Auto</throughAlign>
-            <currentRowUse>Auto</currentRowUse>
-          </extInfo>
-          <width>1</width>
-          <horizontalStretch>true</horizontalStretch>
-          <verticalStretch>false</verticalStretch>
-        </items>
-        <items xsi:type="form:Button">
-          <name>КнопкаСкрытьПоказатьЦитаты</name>
-          <id>84</id>
-          <title><key>ru</key><value>Скрыть цитаты</value></title>
-          <visible>true</visible>
-          <enabled>true</enabled>
-          <userVisible><common>true</common></userVisible>
-          <type>UsualButton</type>
-          <commandName>Form.Command.СкрытьПоказатьЦитаты</commandName>
-          <representation>Auto</representation>
-          <autoMaxWidth>true</autoMaxWidth>
-          <autoMaxHeight>true</autoMaxHeight>
-          <placementArea>UserCmds</placementArea>
-        </items>
-        <visible>true</visible>
-        <enabled>true</enabled>
-        <userVisible><common>true</common></userVisible>
-        <type>UsualGroup</type>
-        <extInfo xsi:type="form:UsualGroupExtInfo">
-          <group>AlwaysHorizontal</group>
-          <showLeftMargin>false</showLeftMargin>
-          <united>false</united>
-          <throughAlign>Auto</throughAlign>
-          <currentRowUse>Auto</currentRowUse>
-        </extInfo>
-        <horizontalStretch>true</horizontalStretch>
-        <verticalStretch>false</verticalStretch>
-      </items>
-      <items xsi:type="form:FormGroup">
-        <name>ОтступСнизуКнопок</name>
-        <id>85</id>
-        <visible>true</visible>
-        <enabled>true</enabled>
-        <userVisible><common>true</common></userVisible>
-        <type>UsualGroup</type>
-        <extInfo xsi:type="form:UsualGroupExtInfo">
-          <group>Vertical</group>
-          <showLeftMargin>false</showLeftMargin>
-          <united>false</united>
-          <throughAlign>Auto</throughAlign>
-          <currentRowUse>Auto</currentRowUse>
-        </extInfo>
-        <height>2</height>
-        <horizontalStretch>true</horizontalStretch>
-        <verticalStretch>false</verticalStretch>
-      </items>
+
+
 
 
       <visible>true</visible>
@@ -459,6 +356,76 @@
     </extInfo>
     <horizontalStretch>true</horizontalStretch>
     <verticalStretch>true</verticalStretch>
+  </items>
+<items xsi:type="form:FormGroup">
+    <name>ГруппаКнопок</name>
+    <id>40</id>
+    <items xsi:type="form:Button">
+      <name>Спросить</name>
+      <id>24</id>
+      <title>
+        <key>ru</key>
+        <value>Отправить</value>
+      </title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible>
+        <common>true</common>
+      </userVisible>
+      <type>UsualButton</type>
+      <commandName>Form.Command.Спросить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+    </items>
+    <items xsi:type="form:Button">
+      <name>Очистить</name>
+      <id>25</id>
+      <title>
+        <key>ru</key>
+        <value>Очистить</value>
+      </title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible>
+        <common>true</common>
+      </userVisible>
+      <type>UsualButton</type>
+      <commandName>Form.Command.Очистить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+    </items>
+
+    <items xsi:type="form:Button">
+      <name>КнопкаСкрытьПоказатьЦитаты</name>
+      <id>84</id>
+      <title><key>ru</key><value>Скрыть цитаты</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <type>UsualButton</type>
+      <commandName>Form.Command.СкрытьПоказатьЦитаты</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+    </items>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible><common>true</common></userVisible>
+    <type>UsualGroup</type>
+    <extInfo xsi:type="form:UsualGroupExtInfo">
+      <group>AlwaysHorizontal</group>
+      <showLeftMargin>false</showLeftMargin>
+      <united>false</united>
+      <throughAlign>Auto</throughAlign>
+      <currentRowUse>Auto</currentRowUse>
+    </extInfo>
+    <horizontalStretch>true</horizontalStretch>
+    <verticalStretch>false</verticalStretch>
   </items>
   <items xsi:type="form:FormGroup">
     <name>ГруппаСтатус</name>
