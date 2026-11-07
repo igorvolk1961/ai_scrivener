@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:form="http://g5.1c.ru/v8/dt/form">
+  <autoCommandBar>
+    <name>ФормаКоманднаяПанель</name>
+    <id>-1</id>
+    <horizontalAlign>Left</horizontalAlign>
+    <autoFill>true</autoFill>
+  </autoCommandBar>
+  <handlers>
+    <event>OnCreateAtServer</event>
+    <name>ПриСозданииНаСервере</name>
+  </handlers>
+  <autoTitle>true</autoTitle>
+  <autoUrl>true</autoUrl>
+  <group>Vertical</group>
+  <autoFillCheck>true</autoFillCheck>
+  <allowFormCustomize>true</allowFormCustomize>
+  <enabled>true</enabled>
+  <showTitle>true</showTitle>
+  <showCloseButton>true</showCloseButton>
+  <items xsi:type="form:FormGroup">
+    <name>ГруппаКоманд</name>
+    <id>3</id>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <autoMaxWidth>true</autoMaxWidth>
+    <autoMaxHeight>true</autoMaxHeight>
+    <horizontalStretch>true</horizontalStretch>
+    <items xsi:type="form:Button">
+      <name>Обновить</name>
+      <id>4</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Обновить</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Обновить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <width>16</width>
+      <height>1</height>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
+      <name>РазобратьОчередь</name>
+      <id>5</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Разобрать очередь</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.РазобратьОчередь</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <width>20</width>
+      <height>1</height>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
+      <name>Переиндексировать</name>
+      <id>6</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Переиндексировать</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Переиндексировать</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <width>20</width>
+      <height>1</height>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
+      <name>ВозможныеВерсии</name>
+      <id>7</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Возможные версии</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.ВозможныеВерсии</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <width>20</width>
+      <height>1</height>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>МаксимумЗаписей</name>
+    <id>8</id>
+    <title><key>ru</key><value>Записей за запуск</value></title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath">
+      <segments>МаксимумЗаписей</segments>
+    </dataPath>
+    <titleLocation>None</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:InputFieldExtInfo">
+      <width>10</width>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <horizontalStretch>false</horizontalStretch>
+    </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>ТолькоОшибки</name>
+    <id>9</id>
+    <title><key>ru</key><value>Только ошибки</value></title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath">
+      <segments>ТолькоОшибки</segments>
+    </dataPath>
+    <titleLocation>Right</titleLocation>
+    <type>CheckBoxField</type>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:CheckBoxFieldExtInfo">
+      <width>10</width>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+    </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Статистика</name>
+    <id>10</id>
+    <title><key>ru</key><value>Результат</value></title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath">
+      <segments>Статистика</segments>
+    </dataPath>
+    <titleLocation>None</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:InputFieldExtInfo">
+      <readOnly>true</readOnly>
+      <width>60</width>
+      <height>3</height>
+      <autoMaxHeight>true</autoMaxHeight>
+      <horizontalStretch>true</horizontalStretch>
+      <multiLine>true</multiLine>
+    </extInfo>
+  </items>
+  <items xsi:type="form:Table">
+    <name>ТаблицаОчереди</name>
+    <id>11</id>
+    <title><key>ru</key><value>Очередь индексации</value></title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath">
+      <segments>ТаблицаОчереди</segments>
+    </dataPath>
+    <titleLocation>None</titleLocation>
+    <handlers>
+      <event>OnActivateRow</event>
+      <name>ТаблицаОчередиПриАктивизацииСтроки</name>
+    </handlers>
+    <items xsi:type="form:FormField">
+      <name>ТипИсточника</name>
+      <id>12</id>
+      <title><key>ru</key><value>Тип</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаОчереди</segments>
+        <segments>ТипИсточника</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>20</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>false</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>Документ</name>
+      <id>13</id>
+      <title><key>ru</key><value>Документ</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаОчереди</segments>
+        <segments>Документ</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>Состояние</name>
+      <id>14</id>
+      <title><key>ru</key><value>Состояние</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаОчереди</segments>
+        <segments>Состояние</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>15</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>false</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>Семейство</name>
+      <id>15</id>
+      <title><key>ru</key><value>Семейство</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаОчереди</segments>
+        <segments>Семейство</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>Попытки</name>
+      <id>16</id>
+      <title><key>ru</key><value>Попытки</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаОчереди</segments>
+        <segments>Попытки</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>10</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>false</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>Ошибка</name>
+      <id>17</id>
+      <title><key>ru</key><value>Ошибка</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаОчереди</segments>
+        <segments>Ошибка</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>60</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>ДатаПостановки</name>
+      <id>18</id>
+      <title><key>ru</key><value>Дата постановки</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаОчереди</segments>
+        <segments>ДатаПостановки</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>20</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>false</horizontalStretch>
+      </extInfo>
+    </items>
+  </items>
+  <items xsi:type="form:Table">
+    <name>ТаблицаВерсий</name>
+    <id>20</id>
+    <title><key>ru</key><value>Возможные версии</value></title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath">
+      <segments>ТаблицаВерсий</segments>
+    </dataPath>
+    <titleLocation>None</titleLocation>
+    <handlers>
+      <event>OnActivateRow</event>
+      <name>ТаблицаВерсийПриАктивизацииСтроки</name>
+    </handlers>
+    <items xsi:type="form:FormField">
+      <name>Заголовок</name>
+      <id>21</id>
+      <title><key>ru</key><value>Заголовок</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаВерсий</segments>
+        <segments>Заголовок</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>50</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>Вид</name>
+      <id>22</id>
+      <title><key>ru</key><value>Вид</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаВерсий</segments>
+        <segments>Вид</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>25</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>Номер</name>
+      <id>23</id>
+      <title><key>ru</key><value>Номер</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаВерсий</segments>
+        <segments>Номер</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>15</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>false</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>Дата</name>
+      <id>24</id>
+      <title><key>ru</key><value>Дата</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаВерсий</segments>
+        <segments>Дата</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>15</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>false</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>Состояние</name>
+      <id>25</id>
+      <title><key>ru</key><value>Состояние</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаВерсий</segments>
+        <segments>Состояние</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <readOnly>true</readOnly>
+        <width>20</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>false</horizontalStretch>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>Финальный</name>
+      <id>26</id>
+      <title><key>ru</key><value>Финальный</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>ТаблицаВерсий</segments>
+        <segments>Финальный</segments>
+      </dataPath>
+      <titleLocation>None</titleLocation>
+      <type>CheckBoxField</type>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:CheckBoxFieldExtInfo">
+        <width>10</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+      </extInfo>
+    </items>
+  </items>
+  <attributes>
+    <name>Объект</name>
+    <id>1</id>
+    <valueType>
+      <types>DataProcessorObject.АИС_ИндексацияДокументов</types>
+    </valueType>
+    <view><common>true</common></view>
+    <edit><common>true</common></edit>
+    <main>true</main>
+  </attributes>
+  <attributes>
+    <name>МаксимумЗаписей</name>
+    <id>2</id>
+    <valueType>
+      <types>Number</types>
+      <numberQualifiers><digits>5</digits><fractionDigits>0</fractionDigits><nonnegative>true</nonnegative></numberQualifiers>
+    </valueType>
+    <view><common>true</common></view>
+    <edit><common>true</common></edit>
+  </attributes>
+  <attributes>
+    <name>ТолькоОшибки</name>
+    <id>3</id>
+    <valueType>
+      <types>Boolean</types>
+    </valueType>
+    <view><common>true</common></view>
+    <edit><common>true</common></edit>
+  </attributes>
+  <attributes>
+    <name>Статистика</name>
+    <id>4</id>
+    <valueType>
+      <types>String</types>
+      <stringQualifiers><length>0</length></stringQualifiers>
+    </valueType>
+    <view><common>true</common></view>
+    <edit><common>true</common></edit>
+  </attributes>
+  <attributes>
+    <name>ТаблицаОчереди</name>
+    <id>5</id>
+    <valueType>
+      <types>ValueTable</types>
+    </valueType>
+    <view><common>true</common></view>
+    <edit><common>true</common></edit>
+    <columns>
+      <name>ТипИсточника</name><id>1</id>
+      <valueType><types>String</types><stringQualifiers><length>30</length></stringQualifiers></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Идентификатор</name><id>2</id>
+      <valueType><types>String</types><stringQualifiers><length>36</length></stringQualifiers></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Документ</name><id>3</id>
+      <valueType><types>AnyRef</types></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Состояние</name><id>4</id>
+      <valueType><types>String</types><stringQualifiers><length>30</length></stringQualifiers></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Семейство</name><id>5</id>
+      <valueType><types>String</types><stringQualifiers><length>120</length></stringQualifiers></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Попытки</name><id>6</id>
+      <valueType><types>Number</types><numberQualifiers><digits>3</digits><fractionDigits>0</fractionDigits><nonnegative>true</nonnegative></numberQualifiers></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Ошибка</name><id>7</id>
+      <valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>ДатаПостановки</name><id>8</id>
+      <valueType><types>Date</types><dateQualifiers/></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+  </attributes>
+  <attributes>
+    <name>ТаблицаВерсий</name>
+    <id>6</id>
+    <valueType>
+      <types>ValueTable</types>
+    </valueType>
+    <view><common>true</common></view>
+    <edit><common>true</common></edit>
+    <columns>
+      <name>Заголовок</name><id>1</id>
+      <valueType><types>String</types><stringQualifiers><length>255</length></stringQualifiers></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Вид</name><id>2</id>
+      <valueType><types>String</types><stringQualifiers><length>150</length></stringQualifiers></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Номер</name><id>3</id>
+      <valueType><types>String</types><stringQualifiers><length>50</length></stringQualifiers></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Дата</name><id>4</id>
+      <valueType><types>Date</types><dateQualifiers/></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Состояние</name><id>5</id>
+      <valueType><types>String</types><stringQualifiers><length>50</length></stringQualifiers></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Финальный</name><id>6</id>
+      <valueType><types>Boolean</types></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Документ</name><id>7</id>
+      <valueType><types>AnyRef</types></valueType>
+      <view><common>true</common></view><edit><common>true</common></edit>
+    </columns>
+  </attributes>
+  <commandInterface>
+    <navigationPanel/>
+    <commandBar/>
+  </commandInterface>
+  <formCommands>
+    <name>Обновить</name>
+    <title><key>ru</key><value>Обновить</value></title>
+    <id>10</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Обновить</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>РазобратьОчередь</name>
+    <title><key>ru</key><value>Разобрать очередь</value></title>
+    <id>11</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>РазобратьОчередь</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>Переиндексировать</name>
+    <title><key>ru</key><value>Переиндексировать</value></title>
+    <id>12</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Переиндексировать</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ВозможныеВерсии</name>
+    <title><key>ru</key><value>Возможные версии</value></title>
+    <id>13</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ВозможныеВерсии</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <extInfo xsi:type="form:ObjectFormExtInfo"/>
+</form:Form>

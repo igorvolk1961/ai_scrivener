@@ -81,6 +81,7 @@
   <dataProcessors>DataProcessor.АИС_Шаблоны</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ПапкиДокументов</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ВопросПоБазеЗнаний</dataProcessors>
+  <dataProcessors>DataProcessor.АИС_ИндексацияДокументов</dataProcessors>
   <subsystems>Subsystem.АИС_Сервис</subsystems>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>

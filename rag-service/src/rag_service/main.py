@@ -127,6 +127,17 @@ def _documents_store(request: Request) -> VectorStore:
     return store
 
 
+def _scope_store(request: Request, scope: str) -> VectorStore:
+    if scope == "documents":
+        return _documents_store(request)
+    if scope == "knowledge":
+        return _store(request)
+    raise HTTPException(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        detail=f"unknown scope: {scope}",
+    )
+
+
 def _sparse_encoder(request: Request) -> SparseEncoder | None:
     return cast(SparseEncoder | None, request.app.state.sparse_encoder)
 
@@ -971,7 +982,7 @@ def create_app(
     )
     async def cleanup_inactive(request: Request, payload: CleanupRequest) -> CleanupResponse:
         try:
-            deleted = await _store(request).cleanup_inactive(
+            deleted = await _scope_store(request, payload.scope).cleanup_inactive(
                 payload.older_than_hours,
                 payload.source_type,
             )
@@ -993,8 +1004,9 @@ def create_app(
         source_type: str,
         source_id: str,
         target_collection: str | None = None,
+        scope: str = "knowledge",
     ) -> DeleteResponse:
-        resolved_store = _store(request)
+        resolved_store = _scope_store(request, scope)
         try:
             deleted = await resolved_store.delete(
                 source_type,

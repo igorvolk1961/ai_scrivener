@@ -40,6 +40,7 @@ class FakeStore:
         self.closed = False
         self.activated: list[tuple[str, str, str]] = []
         self.cleanup_calls: list[tuple[float, str | None]] = []
+        self.delete_calls: list[tuple[str, str]] = []
         self.alias: tuple[str, str] | None = None
 
     async def ensure_collection(self, dimension: int) -> None:
@@ -152,6 +153,7 @@ class FakeStore:
         source_id: str,
         collection_name: str | None = None,
     ) -> bool:
+        self.delete_calls.append((source_type, source_id))
         existed = (source_type, source_id) in self.documents
         self.documents.pop((source_type, source_id), None)
         return existed

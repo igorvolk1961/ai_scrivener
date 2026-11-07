@@ -213,6 +213,7 @@ class CleanupRequest(BaseModel):
 
     older_than_hours: float = Field(default=24, gt=0)
     source_type: str | None = None
+    scope: Literal["knowledge", "documents"] = "knowledge"
 
 
 class CleanupResponse(BaseModel):

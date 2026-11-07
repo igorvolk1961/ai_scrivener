@@ -118,6 +118,61 @@ def test_delete_document(client: TestClient, store: FakeStore) -> None:
     assert ("template", "doc-1") not in store.documents
 
 
+def test_delete_document_uses_documents_scope(
+    parameters: ApplicationParameters,
+    settings: ServiceSettings,
+    embedder: FakeEmbedder,
+    store: FakeStore,
+) -> None:
+    documents_store = FakeStore()
+    app = create_app(
+        parameters=parameters,
+        settings=settings,
+        embedder=embedder,
+        store=store,
+        documents_store=documents_store,
+    )
+    with TestClient(app) as scoped_client:
+        response = scoped_client.delete(
+            "/v1/index/document_internal/doc-1?scope=documents",
+            headers=AUTH_HEADERS,
+        )
+
+    assert response.status_code == 200
+    assert documents_store.delete_calls == [("document_internal", "doc-1")]
+    assert store.delete_calls == []
+
+
+def test_cleanup_inactive_uses_documents_scope(
+    parameters: ApplicationParameters,
+    settings: ServiceSettings,
+    embedder: FakeEmbedder,
+    store: FakeStore,
+) -> None:
+    documents_store = FakeStore()
+    app = create_app(
+        parameters=parameters,
+        settings=settings,
+        embedder=embedder,
+        store=store,
+        documents_store=documents_store,
+    )
+    with TestClient(app) as scoped_client:
+        response = scoped_client.post(
+            "/v1/index/cleanup",
+            json={
+                "older_than_hours": 12,
+                "source_type": "document_internal",
+                "scope": "documents",
+            },
+            headers=AUTH_HEADERS,
+        )
+
+    assert response.status_code == 200
+    assert documents_store.cleanup_calls == [(12, "document_internal")]
+    assert store.cleanup_calls == []
+
+
 def test_configured_dimension_mismatch_fails_startup(
     parameters: ApplicationParameters,
     settings: ServiceSettings,

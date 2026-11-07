@@ -56,8 +56,10 @@
         <extInfo xsi:type="form:InputFieldExtInfo">
           <readOnly>true</readOnly>
           <height>10</height>
+          <width>10</width>
+          <autoMaxWidth>false</autoMaxWidth>
           <autoMaxHeight>false</autoMaxHeight>
-          <horizontalStretch>true</horizontalStretch>
+          <horizontalStretch>false</horizontalStretch>
           <verticalStretch>true</verticalStretch>
           <multiLine>true</multiLine>
           <textEdit>true</textEdit>
@@ -110,8 +112,8 @@
           <throughAlign>Auto</throughAlign>
           <currentRowUse>Auto</currentRowUse>
         </extInfo>
-        <width>25</width>
-        <horizontalStretch>true</horizontalStretch>
+        <width>10</width>
+        <horizontalStretch>false</horizontalStretch>
         <verticalStretch>false</verticalStretch>
       </items>
       <visible>true</visible>
@@ -131,8 +133,8 @@
         <throughAlign>Auto</throughAlign>
         <currentRowUse>Auto</currentRowUse>
       </extInfo>
-      <width>25</width>
-      <horizontalStretch>true</horizontalStretch>
+      <width>10</width>
+      <horizontalStretch>false</horizontalStretch>
       <verticalStretch>true</verticalStretch>
     </items>
     <items xsi:type="form:FormGroup">
@@ -162,6 +164,8 @@
         <showInFooter>true</showInFooter>
         <extInfo xsi:type="form:InputFieldExtInfo">
           <readOnly>true</readOnly>
+          <width>30</width>
+          <autoMaxWidth>false</autoMaxWidth>
           <height>10</height>
           <autoMaxHeight>false</autoMaxHeight>
           <horizontalStretch>true</horizontalStretch>
@@ -193,6 +197,8 @@
         <showInFooter>true</showInFooter>
         <extInfo xsi:type="form:InputFieldExtInfo">
           <height>3</height>
+          <width>30</width>
+          <autoMaxWidth>false</autoMaxWidth>
           <autoMaxHeight>false</autoMaxHeight>
           <horizontalStretch>true</horizontalStretch>
           <verticalStretch>true</verticalStretch>
@@ -203,7 +209,7 @@
       <items xsi:type="form:FormGroup">
         <name>ГруппаКнопок</name>
         <id>40</id>
-      <items xsi:type="form:Button">
+        <items xsi:type="form:Button">
           <name>Спросить</name>
           <id>24</id>
           <title>
@@ -241,15 +247,33 @@
           <autoMaxHeight>true</autoMaxHeight>
           <placementArea>UserCmds</placementArea>
         </items>
+        <items xsi:type="form:FormGroup">
+          <name>РаспоркаКнопок</name>
+          <id>83</id>
+          <visible>true</visible>
+          <enabled>true</enabled>
+          <userVisible><common>true</common></userVisible>
+          <type>UsualGroup</type>
+          <extInfo xsi:type="form:UsualGroupExtInfo">
+            <group>AlwaysHorizontal</group>
+            <showLeftMargin>false</showLeftMargin>
+            <united>false</united>
+            <throughAlign>Auto</throughAlign>
+            <currentRowUse>Auto</currentRowUse>
+          </extInfo>
+          <width>1</width>
+          <horizontalStretch>true</horizontalStretch>
+          <verticalStretch>false</verticalStretch>
+        </items>
         <items xsi:type="form:Button">
-          <name>ПоказатьДокументКнопка</name>
-          <id>81</id>
-          <title><key>ru</key><value>Открыть источник</value></title>
+          <name>КнопкаСкрытьПоказатьЦитаты</name>
+          <id>84</id>
+          <title><key>ru</key><value>Скрыть цитаты</value></title>
           <visible>true</visible>
           <enabled>true</enabled>
           <userVisible><common>true</common></userVisible>
           <type>UsualButton</type>
-          <commandName>Form.Command.ПоказатьДокумент</commandName>
+          <commandName>Form.Command.СкрытьПоказатьЦитаты</commandName>
           <representation>Auto</representation>
           <autoMaxWidth>true</autoMaxWidth>
           <autoMaxHeight>true</autoMaxHeight>
@@ -259,8 +283,32 @@
         <enabled>true</enabled>
         <userVisible><common>true</common></userVisible>
         <type>UsualGroup</type>
-        <extInfo xsi:type="form:ButtonGroupExtInfo"/>
-        <horizontalStretch>false</horizontalStretch>
+        <extInfo xsi:type="form:UsualGroupExtInfo">
+          <group>AlwaysHorizontal</group>
+          <showLeftMargin>false</showLeftMargin>
+          <united>false</united>
+          <throughAlign>Auto</throughAlign>
+          <currentRowUse>Auto</currentRowUse>
+        </extInfo>
+        <horizontalStretch>true</horizontalStretch>
+        <verticalStretch>false</verticalStretch>
+      </items>
+      <items xsi:type="form:FormGroup">
+        <name>ОтступСнизуКнопок</name>
+        <id>85</id>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible><common>true</common></userVisible>
+        <type>UsualGroup</type>
+        <extInfo xsi:type="form:UsualGroupExtInfo">
+          <group>Vertical</group>
+          <showLeftMargin>false</showLeftMargin>
+          <united>false</united>
+          <throughAlign>Auto</throughAlign>
+          <currentRowUse>Auto</currentRowUse>
+        </extInfo>
+        <height>2</height>
+        <horizontalStretch>true</horizontalStretch>
         <verticalStretch>false</verticalStretch>
       </items>
 
@@ -282,6 +330,7 @@
         <throughAlign>Auto</throughAlign>
         <currentRowUse>Auto</currentRowUse>
       </extInfo>
+      <width>30</width>
       <horizontalStretch>true</horizontalStretch>
       <verticalStretch>true</verticalStretch>
     </items>
@@ -296,6 +345,7 @@
         <enabled>true</enabled>
         <userVisible><common>true</common></userVisible>
         <dataPath xsi:type="form:DataPath"><segments>Цитаты</segments></dataPath>
+        <width>20</width>
         <titleLocation>None</titleLocation>
         <representation>Table</representation>
         <header>true</header>
@@ -345,6 +395,8 @@
         <showInFooter>true</showInFooter>
         <extInfo xsi:type="form:InputFieldExtInfo">
           <readOnly>true</readOnly>
+          <width>20</width>
+          <autoMaxWidth>false</autoMaxWidth>
           <height>6</height>
           <autoMaxHeight>false</autoMaxHeight>
           <horizontalStretch>true</horizontalStretch>
@@ -352,6 +404,20 @@
           <multiLine>true</multiLine>
           <textEdit>true</textEdit>
         </extInfo>
+      </items>
+      <items xsi:type="form:Button">
+        <name>ПоказатьДокументКнопка</name>
+        <id>81</id>
+        <title><key>ru</key><value>Открыть источник</value></title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible><common>true</common></userVisible>
+        <type>UsualButton</type>
+        <commandName>Form.Command.ПоказатьДокумент</commandName>
+        <representation>Auto</representation>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <placementArea>UserCmds</placementArea>
       </items>
       <visible>true</visible>
       <enabled>true</enabled>
@@ -370,7 +436,7 @@
         <throughAlign>Auto</throughAlign>
         <currentRowUse>Auto</currentRowUse>
       </extInfo>
-      <width>30</width>
+      <width>20</width>
       <horizontalStretch>true</horizontalStretch>
       <verticalStretch>true</verticalStretch>
     </items>
@@ -385,10 +451,10 @@
     </title>
     <type>UsualGroup</type>
     <extInfo xsi:type="form:UsualGroupExtInfo">
-      <group>AlwaysHorizontal</group>
+      <group>Horizontal</group>
       <showLeftMargin>false</showLeftMargin>
       <united>false</united>
-      <throughAlign>Auto</throughAlign>
+      <throughAlign>DontUse</throughAlign>
       <currentRowUse>Auto</currentRowUse>
     </extInfo>
     <horizontalStretch>true</horizontalStretch>
@@ -399,7 +465,7 @@
     <id>80</id>
       <items xsi:type="form:FormField">
         <name>Статус</name>
-        <id>26</id>
+        <id>82</id>
         <title>
           <key>ru</key>
           <value>Статус</value>
@@ -772,6 +838,16 @@
     <use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer">
       <handler><name>ПоказатьДокумент</name></handler>
+    </action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>СкрытьПоказатьЦитаты</name>
+    <title><key>ru</key><value>Скрыть цитаты</value></title>
+    <id>5</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer">
+      <handler><name>СкрытьПоказатьЦитаты</name></handler>
     </action>
     <currentRowUse>DontUse</currentRowUse>
   </formCommands>
