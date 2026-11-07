@@ -31,9 +31,10 @@
     <items xsi:type="form:FormGroup">
       <name>ГруппаЛевая</name>
       <id>11</id>
+
       <items xsi:type="form:FormField">
         <name>Диалоги</name>
-        <id>12</id>
+        <id>13</id>
         <title>
           <key>ru</key>
           <value>Диалоги</value>
@@ -46,7 +47,7 @@
         <dataPath xsi:type="form:DataPath">
           <segments>Диалоги</segments>
         </dataPath>
-        <titleLocation>Top</titleLocation>
+        <titleLocation>None</titleLocation>
         <type>InputField</type>
         <editMode>Enter</editMode>
         <showInHeader>true</showInHeader>
@@ -137,6 +138,7 @@
     <items xsi:type="form:FormGroup">
       <name>ГруппаЦентр</name>
       <id>20</id>
+
       <items xsi:type="form:FormField">
         <name>Ответ</name>
         <id>21</id>
@@ -152,7 +154,7 @@
         <dataPath xsi:type="form:DataPath">
           <segments>Ответ</segments>
         </dataPath>
-        <titleLocation>Top</titleLocation>
+        <titleLocation>None</titleLocation>
         <type>InputField</type>
         <editMode>Enter</editMode>
         <showInHeader>true</showInHeader>
@@ -307,13 +309,14 @@
         <enabled>true</enabled>
         <userVisible><common>true</common></userVisible>
         <dataPath xsi:type="form:DataPath"><segments>Цитаты</segments></dataPath>
-        <titleLocation>Top</titleLocation>
+        <titleLocation>None</titleLocation>
         <representation>Table</representation>
-        <header>false</header>
+        <header>true</header>
+        <headerHeight>1</headerHeight>
         <items xsi:type="form:FormField">
           <name>ТаблицаЦитатПредставление</name>
           <id>32</id>
-          <title><key>ru</key><value>Цитата</value></title>
+          <title><key>ru</key><value>Цитаты</value></title>
           <visible>true</visible>
           <enabled>true</enabled>
           <userVisible><common>true</common></userVisible>
