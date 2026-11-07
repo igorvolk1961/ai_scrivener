@@ -62,6 +62,12 @@ def _enable_wrap(match: re.Match[str]) -> str:
         return block.replace("<Wrap>false</Wrap>", "<Wrap>true</Wrap>", 1)
     if "<Wrap>true</Wrap>" in block:
         return block
+    if "<MultiLine>true</MultiLine>" in block:
+        return block.replace(
+            "<MultiLine>true</MultiLine>",
+            "<MultiLine>true</MultiLine>\n\t\t\t\t\t\t<Wrap>true</Wrap>",
+            1,
+        )
     raise SystemExit("Wrap property not found in field")
 
 

@@ -648,8 +648,8 @@
       <key>ru</key>
       <value>Чат</value>
     </title>
-    <horizontalStretch>false</horizontalStretch>
-    <verticalStretch>false</verticalStretch>
+    <horizontalStretch>true</horizontalStretch>
+    <verticalStretch>true</verticalStretch>
     <extendedTooltip>
       <name>ГруппаЧатРасширеннаяПодсказка</name>
       <id>85</id>
