@@ -56,6 +56,7 @@
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <commonModules>CommonModule.АИС_Промпты</commonModules>
   <commonCommands>CommonCommand.АИС_ВопросПоБазеЗнаний</commonCommands>
+  <commonCommands>CommonCommand.АИС_ОпубликоватьВRAG</commonCommands>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
   <commonModules>CommonModule.АИС_ИнтеграцияСRAG</commonModules>
   <commonModules>CommonModule.АИС_ПраваДоступа</commonModules>

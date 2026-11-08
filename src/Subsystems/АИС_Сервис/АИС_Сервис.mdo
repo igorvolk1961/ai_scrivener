@@ -13,6 +13,7 @@
   <content>DataProcessor.АИС_ПапкиДокументов</content>
   <content>DataProcessor.АИС_ИндексацияДокументов</content>
   <content>CommonCommand.АИС_ВопросПоБазеЗнаний</content>
+  <content>CommonCommand.АИС_ОпубликоватьВRAG</content>
   <content>Catalog.АИС_ТипыДействий</content>
   <content>Catalog.АИС_ТипыТриггеров</content>
   <content>Catalog.АИС_ПромптПараметры</content>
