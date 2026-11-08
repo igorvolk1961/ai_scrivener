@@ -576,6 +576,24 @@
       <httpMethod>POST</httpMethod><handler>УтвердитьДокумент_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="67a79950-71f0-4039-895f-162ac71d2d0d">
+    <name>ВосстановитьДокумент</name>
+    <synonym><key>ru</key><value>Восстановить документ</value></synonym>
+    <template>/documents/restore</template>
+    <methods uuid="10b18cfe-15c2-4eed-8a05-ab62490d803f">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ВосстановитьДокумент_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="5f43c79b-0783-4e5d-90d9-519747c074b9">
+    <name>ОбновитьДокумент</name>
+    <synonym><key>ru</key><value>Обновить документ</value></synonym>
+    <template>/documents/update</template>
+    <methods uuid="eca12051-7918-4d04-8f73-48de1dc7bea1">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ОбновитьВнутреннийДокумент_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="e3874e48-de0d-47d9-812a-75b26b3413e4">
     <name>РазделыДокументов</name>
     <synonym><key>ru</key><value>Разделы документов</value></synonym>
