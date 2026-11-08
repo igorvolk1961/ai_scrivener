@@ -738,4 +738,58 @@
       <httpMethod>POST</httpMethod><handler>ПроверитьДоступКДокументу_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="78b38991-1545-4f2a-b39a-a220d965e128">
+    <name>Черновики</name>
+    <synonym><key>ru</key><value>Черновики документов</value></synonym>
+    <template>/drafts</template>
+    <methods uuid="c9a31f57-775e-4026-844b-0e1a7f4bca99">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>СоздатьЧерновик_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="ac7c10c9-3a79-466f-a2f8-625684865e98">
+    <name>ОтправкаЧерновика</name>
+    <synonym><key>ru</key><value>Отправка черновика</value></synonym>
+    <template>/drafts/send</template>
+    <methods uuid="42b096ad-49dc-4555-955e-22d6bf795441">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ОтправитьЧерновик_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="a5ac4614-2f05-4134-81b5-4ae447a55ad2">
+    <name>ДоработкаЧерновика</name>
+    <synonym><key>ru</key><value>Доработка черновика</value></synonym>
+    <template>/drafts/rework</template>
+    <methods uuid="17948345-0eb2-4f9b-924d-f2e2088a4dbb">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ВернутьЧерновикНаДоработку_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="4a01c5de-517a-4b58-8b80-59f024754b65">
+    <name>ОтклонениеЧерновика</name>
+    <synonym><key>ru</key><value>Отклонение черновика</value></synonym>
+    <template>/drafts/reject</template>
+    <methods uuid="50622cc6-037d-4cef-a665-2993a5d6bbcd">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ОтклонитьЧерновик_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="6e8c1a40-43e7-4011-926c-f1054c902341">
+    <name>УтверждениеСвязанного</name>
+    <synonym><key>ru</key><value>Утверждение связанного документа</value></synonym>
+    <template>/drafts/approve-referenced</template>
+    <methods uuid="e5cdd517-af63-4173-bd6c-29e2f81c1e54">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>УтвердитьСвязанныйДокумент_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="13cbdf86-2f9b-4575-9852-08097a84416c">
+    <name>ЗапросыИнформации</name>
+    <synonym><key>ru</key><value>Запросы информации</value></synonym>
+    <template>/information-requests</template>
+    <methods uuid="0ab5e66a-1bdd-4c04-bd88-ee440a9ddfa0">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>СоздатьЗапросИнформации_POST</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>

@@ -20,7 +20,7 @@ set -euo pipefail
 #   APACHE_WORKER_USER     - пользователь воркеров Apache (по умолчанию определяется)
 #   AIS_STATE_DIR          - каталог состояния (по умолчанию /tmp/kilo)
 
-IB=${AIS_IB:-${IB:-/home/igorvolk/1C/ai_scrivener_knowledge}}
+IB=${AIS_IB:-${IB:-/home/igorvolk/1C/ai_scrivener_stage2}}
 PARK_IB=${AIS_PARK_IB:-/home/igorvolk/1C/ai_scrivener_final}
 VRD=${AIS_VRD:-/var/www/ai_scrivener/default.vrd}
 STATE_DIR=${AIS_STATE_DIR:-${TMPDIR:-/tmp}/kilo}

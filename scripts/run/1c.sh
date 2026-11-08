@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ONEC=${ONEC:-/opt/1cv8/x86_64/8.3.27.2342/1cv8}
-IB=${AIS_IB:-${IB:-/home/igorvolk/1C/ai_scrivener_knowledge}}
+IB=${AIS_IB:-${IB:-/home/igorvolk/1C/ai_scrivener_stage2}}
 IB_USER=${AIS_IB_USER:-${IB_USER:-Администратор}}
 IB_PASSWORD=${AIS_IB_PASSWORD:-${IB_PASSWORD:-}}
 PG_SERVER=${PG_SERVER:-localhost:1541}
@@ -21,7 +21,7 @@ usage() {
   printf '%s\n' "  pg-check      - CheckConfig серверной базы PostgreSQL" >&2
   printf '%s\n' "  pg-db         - psql к базе 1С в Docker" >&2
   printf '%s\n' "" >&2
-  printf '%s\n' "По умолчанию открывается ai_scrivener_knowledge (расширение активно)." >&2
+  printf '%s\n' "По умолчанию открывается ai_scrivener_stage2 (расширение активно)." >&2
   printf '%s\n' "Демо-база: IB=/home/igorvolk/1C/ai_scrivener_docmng." >&2
   printf '%s\n' "Переопределение через окружение: ONEC, IB (или AIS_IB), IB_USER, IB_PASSWORD, PG_BASE." >&2
 }
@@ -46,7 +46,7 @@ warn_inactive_extension() {
     | awk '/name/{name=$3} /active/{if(name=="\"ai_scrivener\""){print $3; exit}}' || true)
   if [[ "$active" == "no" ]]; then
     echo "WARNING: расширение ai_scrivener выключено в $IB — раздел «ИИ-Помощник» (АИС_Сервис) будет скрыт." >&2
-    echo "         Включите расширение или используйте базу ai_scrivener_knowledge." >&2
+    echo "         Включите расширение или используйте базу ai_scrivener_stage2." >&2
   fi
 }
 

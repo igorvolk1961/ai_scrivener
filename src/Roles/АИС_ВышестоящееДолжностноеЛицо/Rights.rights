@@ -421,4 +421,46 @@
 			<value>true</value>
 		</right>
 	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.Черновики.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ОтправкаЧерновика.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ДоработкаЧерновика.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ОтклонениеЧерновика.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.УтверждениеСвязанного.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ЗапросыИнформации.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
 </Rights>
