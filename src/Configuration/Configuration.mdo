@@ -71,6 +71,7 @@
   <httpServices>HTTPService.АИС_Симулятор</httpServices>
   <eventSubscriptions>EventSubscription.АИС_ВнутреннийДокументПриЗаписи</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_ДокументВПапкуПриЗаписи</eventSubscriptions>
+  <eventSubscriptions>EventSubscription.АИС_ДокументПапкаПередЗаписью</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_ДокументВОчередьИндексацииПриЗаписи</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_ФайлВОчередьИндексации</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_РабочаяГруппаВОчередь</eventSubscriptions>

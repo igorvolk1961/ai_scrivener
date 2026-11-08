@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:EventSubscription xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="549e2b2a-1f13-4a0d-ae02-f26768c9986a">
+  <name>АИС_ДокументПапкаПередЗаписью</name>
+  <synonym>
+    <key>ru</key>
+    <value>Документ в стандартную папку перед записью</value>
+  </synonym>
+  <source>
+    <types>CatalogObject.ВнутренниеДокументы</types>
+  </source>
+  <event>BeforeWrite</event>
+  <handler>CommonModule.АИС_ПапкиДокументов.ДокументПередЗаписью</handler>
+</mdclass:EventSubscription>

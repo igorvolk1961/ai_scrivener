@@ -49,6 +49,28 @@
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
     <items xsi:type="form:Button">
+      <name>ПоказатьДокументы</name>
+      <id>7</id>
+      <type>UsualButton</type>
+      <title>
+        <key>ru</key>
+        <value>Показать документы</value>
+      </title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible>
+        <common>true</common>
+      </userVisible>
+      <commandName>Form.Command.ПоказатьДокументы</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <width>20</width>
+      <height>1</height>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
       <name>СоздатьПапки</name>
       <id>5</id>
       <type>UsualButton</type>
@@ -528,6 +550,14 @@
     <id>10</id>
     <use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Обновить</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ПоказатьДокументы</name>
+    <title><key>ru</key><value>Показать документы</value></title>
+    <id>25</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ПоказатьДокументы</name></handler></action>
     <currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <formCommands>

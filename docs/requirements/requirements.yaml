@@ -1584,6 +1584,35 @@ requirements:
     test_files:
       - tests/1c/test_job_description_uniqueness.md
     status: in_progress
+  - id: FR-058
+    type: functional
+    title: Стандартная папка документа заполняется при записи
+    description: >-
+      Внутренний документ получает стандартный реквизит `Папка` при записи:
+      документы автора попадают в его папку «Сформированные», а не в корень
+      иерархии. Многопапочная раскладка «Полученные/Сформированные» для
+      отправителя и адресата по-прежнему ведётся в регистре папок.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - При записи нового внутреннего документа стандартная папка не пустая.
+      - Документы автора отображаются в его папке «Сформированные», а не в корне.
+      - Существующие документы мигрируются командой «Разложить все» / backfill.
+      - Многопапочная раскладка для получателя сохраняется в регистре `АИС_ДокументыВПапках`.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/CommonModules/АИС_ПапкиДокументов/Module.bsl
+      - src/EventSubscriptions/АИС_ДокументПапкаПередЗаписью/АИС_ДокументПапкаПередЗаписью.mdo
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+    tests:
+      - TEST-FR-058-01
+    test_files:
+      - tests/1c/test_folders.md
+    status: in_progress
   - id: NFR-001
     type: nonfunctional
     title: Отклик интерфейса не более 2 секунд
