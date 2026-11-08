@@ -1613,6 +1613,34 @@ requirements:
     test_files:
       - tests/1c/test_folders.md
     status: in_progress
+  - id: FR-059
+    type: functional
+    title: Автоматическое замещение предыдущих версий документа
+    description: >-
+      При утверждении новой версии устава или должностной инструкции
+      предыдущая утверждённая версия автоматически получает штатную связь
+      «Не действует в соответствии» и реквизит `НеДействует`.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - При утверждении нового устава предыдущий утверждённый устав становится недействующим.
+      - При утверждении новой должностной инструкции предыдущая инструкция по той же должности становится недействующей.
+      - Замещение оформляется штатной связью «Не действует в соответствии».
+      - Существующие пары версий можно заместить через `POST /documents/supersede`.
+      - Замещённая версия исключается из актуального индекса RAG.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/CommonModules/АИС_ОбщегоНазначения/Module.bsl
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+    tests:
+      - TEST-FR-059-01
+    test_files:
+      - tests/1c/test_supersession.md
+    status: in_progress
   - id: NFR-001
     type: nonfunctional
     title: Отклик интерфейса не более 2 секунд

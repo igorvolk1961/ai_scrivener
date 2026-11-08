@@ -792,4 +792,13 @@
       <httpMethod>POST</httpMethod><handler>СоздатьЗапросИнформации_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="3d96389c-dbd0-47d7-8501-1f666b0b9a6b">
+    <name>ЗамещениеВерсий</name>
+    <synonym><key>ru</key><value>Замещение версий документа</value></synonym>
+    <template>/documents/supersede</template>
+    <methods uuid="4c8dcabd-89ef-40b4-96e8-f6d0c4501c36">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ЗаместитьВерсииДокумента_POST</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>
