@@ -425,9 +425,7 @@ class QdrantStore:
         merged_metadata = {**document.metadata, **(metadata or {})}
         family_id = str(merged_metadata.get("family_id", "") or "")
         document_key = (
-            f"{source_type}:{family_id}"
-            if family_id
-            else f"{source_type}:{document.source_id}"
+            f"{source_type}:{family_id}" if family_id else f"{source_type}:{document.source_id}"
         )
         return {
             "source_type": source_type,

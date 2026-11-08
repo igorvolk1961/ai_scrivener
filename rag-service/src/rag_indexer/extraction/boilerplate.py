@@ -63,9 +63,8 @@ def _is_edge_line(
 ) -> bool:
     if line.bbox is not None and page_height > 0:
         center = (line.bbox.y0 + line.bbox.y1) / 2
-        return (
-            center <= page_height * options.top_zone_ratio
-            or center >= page_height * (1 - options.bottom_zone_ratio)
+        return center <= page_height * options.top_zone_ratio or center >= page_height * (
+            1 - options.bottom_zone_ratio
         )
     effective = max(1, min(options.edge_lines, line_count // 3))
     return index < effective or index >= line_count - effective
@@ -211,9 +210,7 @@ class BoilerplateFilter:
         repeated: set[str],
     ) -> OcrLine | None:
         original_tokens = line.text.split()
-        normalized_tokens = [
-            normalize_boilerplate_text(token) for token in original_tokens
-        ]
+        normalized_tokens = [normalize_boilerplate_text(token) for token in original_tokens]
         for text in sorted(repeated, key=len, reverse=True):
             prefix_tokens = text.split()
             if len(text) < self._options.min_chars:
@@ -222,9 +219,7 @@ class BoilerplateFilter:
                 continue
             if normalized_tokens[: len(prefix_tokens)] != prefix_tokens:
                 continue
-            remainder = " ".join(original_tokens[len(prefix_tokens) :]).lstrip(
-                " .:;—-"
-            )
+            remainder = " ".join(original_tokens[len(prefix_tokens) :]).lstrip(" .:;—-")
             if not remainder:
                 continue
             return OcrLine(

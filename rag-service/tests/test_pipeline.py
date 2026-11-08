@@ -94,9 +94,7 @@ def test_pipeline_batches_chunks_and_replaces_only_first_batch(tmp_path: Path) -
     client = FakeClient()
     pipeline = IndexPipeline(
         extractor=DocumentExtractor(),
-        chunker=ClauseAwareChunker(
-            ChunkerOptions(target_tokens=1, max_tokens=100, min_tokens=1)
-        ),
+        chunker=ClauseAwareChunker(ChunkerOptions(target_tokens=1, max_tokens=100, min_tokens=1)),
         client=cast(RagClient, client),
         state=_state(),
         chunk_batch_size=2,
@@ -110,9 +108,7 @@ def test_pipeline_batches_chunks_and_replaces_only_first_batch(tmp_path: Path) -
     assert [payload["active"] for payload in client.payloads] == [False, False]
     assert [len(payload["chunks"]) for payload in client.payloads] == [2, 1]
     assert client.payloads[0]["document"]["version"] == f"abc123:{PIPELINE_VERSION}"
-    assert client.activated == [
-        ("knowledge_material", "abc123", f"abc123:{PIPELINE_VERSION}")
-    ]
+    assert client.activated == [("knowledge_material", "abc123", f"abc123:{PIPELINE_VERSION}")]
 
 
 def test_pipeline_dry_run_does_not_call_client_or_state(tmp_path: Path) -> None:
@@ -159,9 +155,7 @@ def test_pipeline_deletes_missing_documents(tmp_path: Path) -> None:
         state=state,
     )
 
-    report = asyncio.run(
-        pipeline.run([_record()], tmp_path, delete_missing=True)
-    )
+    report = asyncio.run(pipeline.run([_record()], tmp_path, delete_missing=True))
 
     assert report.deleted == 1
     assert client.deleted == [("knowledge_material", "old")]

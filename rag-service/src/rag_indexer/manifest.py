@@ -101,11 +101,7 @@ def select_records(
     selected: dict[str, CorpusRecord] = {}
     for record in records:
         selected[record.sha256] = record
-    return [
-        record
-        for record in selected.values()
-        if not statuses or record.status in statuses
-    ]
+    return [record for record in selected.values() if not statuses or record.status in statuses]
 
 
 def latest_manifest(corpus_dir: Path) -> Path:

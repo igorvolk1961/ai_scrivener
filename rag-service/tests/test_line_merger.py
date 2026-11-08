@@ -31,9 +31,7 @@ def test_merges_lines_into_paragraph() -> None:
 
     assert len(blocks) == 1
     assert blocks[0].kind == "paragraph"
-    assert blocks[0].text == (
-        "Настоящая инструкция применяется во всех случаях приемки продукции."
-    )
+    assert blocks[0].text == ("Настоящая инструкция применяется во всех случаях приемки продукции.")
 
 
 def test_starts_new_block_after_sentence_and_capital() -> None:

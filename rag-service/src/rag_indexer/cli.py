@@ -58,11 +58,15 @@ def build_parser() -> argparse.ArgumentParser:
     )
     cache_cleanup.add_argument("--keep-versions", type=int, default=2)
     collection_create = subparsers.add_parser("collection-create")
-    collection_create.add_argument("--rag-url", default=os.environ.get("RAG_URL", "http://127.0.0.1:8080"))
+    collection_create.add_argument(
+        "--rag-url", default=os.environ.get("RAG_URL", "http://127.0.0.1:8080")
+    )
     collection_create.add_argument("--token", default=os.environ.get("RAG_SERVICE_TOKEN", ""))
     collection_create.add_argument("--name", required=True)
     alias_switch = subparsers.add_parser("alias-switch")
-    alias_switch.add_argument("--rag-url", default=os.environ.get("RAG_URL", "http://127.0.0.1:8080"))
+    alias_switch.add_argument(
+        "--rag-url", default=os.environ.get("RAG_URL", "http://127.0.0.1:8080")
+    )
     alias_switch.add_argument("--token", default=os.environ.get("RAG_SERVICE_TOKEN", ""))
     alias_switch.add_argument("--alias", required=True)
     alias_switch.add_argument("--collection", required=True)
@@ -285,9 +289,7 @@ def _ocr_engine(args: argparse.Namespace) -> OcrEngine | None:
 
 def _yandex_engine(args: argparse.Namespace) -> YandexOcrEngine:
     if not args.yandex_iam_token or not args.yandex_folder_id:
-        raise RuntimeError(
-            "Yandex OCR requires --yandex-iam-token and --yandex-folder-id"
-        )
+        raise RuntimeError("Yandex OCR requires --yandex-iam-token and --yandex-folder-id")
     return YandexOcrEngine(
         iam_token=args.yandex_iam_token,
         folder_id=args.yandex_folder_id,

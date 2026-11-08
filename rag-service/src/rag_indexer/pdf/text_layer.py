@@ -60,15 +60,9 @@ def classify_page_text(
     normalized = text.strip()
     char_count = len(normalized)
     word_count = len(normalized.split())
-    printable_ratio = (
-        sum(1 for char in text if char.isprintable()) / len(text)
-        if text
-        else 0.0
-    )
+    printable_ratio = sum(1 for char in text if char.isprintable()) / len(text) if text else 0.0
     content_ratio = (
-        sum(1 for char in normalized if char.isalnum()) / char_count
-        if char_count
-        else 0.0
+        sum(1 for char in normalized if char.isalnum()) / char_count if char_count else 0.0
     )
     is_textual = (
         char_count >= resolved.min_chars_per_page
@@ -114,8 +108,5 @@ def detect_pdf_text_layer(
 ) -> TextLayerReport:
     texts = list(page_texts) if page_texts is not None else _extract_page_texts(path)
     return TextLayerReport(
-        pages=[
-            classify_page_text(index + 1, text, options)
-            for index, text in enumerate(texts)
-        ]
+        pages=[classify_page_text(index + 1, text, options) for index, text in enumerate(texts)]
     )

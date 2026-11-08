@@ -95,9 +95,7 @@ def test_document_extractor_uses_mime_without_suffix(tmp_path: Path) -> None:
     path = tmp_path / "blob-without-extension"
     path.write_text("1 Общие положения\n\nТекст.", encoding="utf-8")
 
-    document = asyncio.run(
-        DocumentExtractor().extract(path, mime="text/plain; charset=utf-8")
-    )
+    document = asyncio.run(DocumentExtractor().extract(path, mime="text/plain; charset=utf-8"))
 
     assert document.metadata["engines"] == ["text"]
 
@@ -106,9 +104,7 @@ def test_document_extractor_uses_original_name_suffix(tmp_path: Path) -> None:
     path = tmp_path / "blob-without-extension"
     path.write_text("1 Общие положения\n\nТекст.", encoding="utf-8")
 
-    document = asyncio.run(
-        DocumentExtractor().extract(path, original_name="instruction.txt")
-    )
+    document = asyncio.run(DocumentExtractor().extract(path, original_name="instruction.txt"))
 
     assert document.metadata["engines"] == ["text"]
 

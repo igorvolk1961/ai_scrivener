@@ -53,10 +53,7 @@ class IndexState:
         path.parent.mkdir(parents=True, exist_ok=True)
         payload = {
             "pipeline_version": self.pipeline_version,
-            "documents": {
-                sha: asdict(document)
-                for sha, document in self.documents.items()
-            },
+            "documents": {sha: asdict(document) for sha, document in self.documents.items()},
         }
         temp_path = path.with_suffix(path.suffix + ".tmp")
         temp_path.write_text(
@@ -97,8 +94,5 @@ class IndexState:
     def as_dict(self) -> dict[str, Any]:
         return {
             "pipeline_version": self.pipeline_version,
-            "documents": {
-                sha: asdict(document)
-                for sha, document in self.documents.items()
-            },
+            "documents": {sha: asdict(document) for sha, document in self.documents.items()},
         }

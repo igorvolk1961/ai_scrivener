@@ -62,9 +62,7 @@ def test_replace_removes_stale_documents(client: TestClient, store: FakeStore) -
     assert ("template", "doc-2") not in store.documents
 
 
-def test_create_collection_and_switch_alias(
-    client: TestClient, store: FakeStore
-) -> None:
+def test_create_collection_and_switch_alias(client: TestClient, store: FakeStore) -> None:
     created = client.post(
         "/v1/admin/collections",
         json={"name": "knowledge_v3"},

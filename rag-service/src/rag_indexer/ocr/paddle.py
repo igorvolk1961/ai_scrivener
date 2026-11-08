@@ -29,9 +29,7 @@ def _to_bbox(value: Any) -> BBox | None:
     points = _as_list(value)
     if not points:
         return None
-    if len(points) == BOX_COORDS and all(
-        isinstance(item, (int, float)) for item in points
-    ):
+    if len(points) == BOX_COORDS and all(isinstance(item, (int, float)) for item in points):
         x0, y0, x1, y1 = (int(item) for item in points)
         return BBox(
             x0=min(x0, x1),

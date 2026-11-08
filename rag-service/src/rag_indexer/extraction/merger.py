@@ -73,9 +73,7 @@ class LineToParagraphMerger:
         if not ordered:
             return []
         heights = [
-            line.bbox.height
-            for line in ordered
-            if line.bbox is not None and line.bbox.height > 0
+            line.bbox.height for line in ordered if line.bbox is not None and line.bbox.height > 0
         ]
         median_height = statistics.median(heights) if heights else 1.0
         indent_threshold = self._options.indent_ratio * max(
@@ -92,9 +90,7 @@ class LineToParagraphMerger:
                 indent_threshold,
                 page_widths or {},
             ):
-                blocks.append(
-                    self._build_block(current, engine_by_page or {})
-                )
+                blocks.append(self._build_block(current, engine_by_page or {}))
                 current = []
             current.append(line)
         if current:
@@ -115,9 +111,7 @@ class LineToParagraphMerger:
             return True
         if _starts_new_block_text(line.text):
             return True
-        if SENTENCE_END_RE.search(previous.text) and UPPER_OR_NUMBER_START_RE.match(
-            line.text
-        ):
+        if SENTENCE_END_RE.search(previous.text) and UPPER_OR_NUMBER_START_RE.match(line.text):
             return True
         if previous.bbox is None or line.bbox is None:
             return False
@@ -182,13 +176,9 @@ def _classify_kind(text: str, heading_max_chars: int) -> str:
 
 def _is_heading(text: str, heading_max_chars: int) -> bool:
     stripped = text.strip()
-    is_heading = bool(
-        HEADING_NUMBER_RE.match(stripped) or HEADING_WORD_RE.match(stripped)
-    )
+    is_heading = bool(HEADING_NUMBER_RE.match(stripped) or HEADING_WORD_RE.match(stripped))
     return bool(
-        is_heading
-        and len(stripped) <= heading_max_chars
-        and not SENTENCE_END_RE.search(stripped)
+        is_heading and len(stripped) <= heading_max_chars and not SENTENCE_END_RE.search(stripped)
     )
 
 

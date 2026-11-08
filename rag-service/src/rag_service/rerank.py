@@ -26,9 +26,7 @@ class FastEmbedReranker:
     async def score(self, query: str, documents: list[str]) -> list[float]:
         if not documents:
             return []
-        return await asyncio.to_thread(
-            self._score, query, documents
-        )
+        return await asyncio.to_thread(self._score, query, documents)
 
     async def close(self) -> None:
         return None

@@ -88,11 +88,7 @@ def merge_table_blocks(blocks: list[Block], tables: list[PdfTable]) -> list[Bloc
     if not tables:
         return blocks
     table_texts = [" ".join(table.text.split()) for table in tables]
-    filtered = [
-        block
-        for block in blocks
-        if not _is_table_fragment(block.text, table_texts)
-    ]
+    filtered = [block for block in blocks if not _is_table_fragment(block.text, table_texts)]
     merged = [*filtered, *table_blocks(tables)]
     merged.sort(key=lambda block: block.page_start)
     return merged
@@ -108,10 +104,7 @@ def _is_table_fragment(text: str, table_texts: list[str]) -> bool:
 def _clean_rows(rows: list[list[str | None]]) -> list[list[str]]:
     cleaned: list[list[str]] = []
     for row in rows:
-        values = [
-            " ".join(str(cell or "").split())
-            for cell in row
-        ]
+        values = [" ".join(str(cell or "").split()) for cell in row]
         if any(values):
             cleaned.append(values)
     return cleaned

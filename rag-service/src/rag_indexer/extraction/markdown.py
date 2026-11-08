@@ -15,11 +15,7 @@ def render_markdown(document: ExtractedDocument) -> str:
             last_page = block.page_start
         if block.kind == "heading":
             level = block.metadata.get("heading_level", 1)
-            depth = (
-                level
-                if isinstance(level, int) and 1 <= level <= MAX_HEADING_DEPTH
-                else 1
-            )
+            depth = level if isinstance(level, int) and 1 <= level <= MAX_HEADING_DEPTH else 1
             lines.append(f"{'#' * depth} {block.text}")
         elif block.kind == "table":
             lines.append(block.text)

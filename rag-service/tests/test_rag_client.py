@@ -47,9 +47,7 @@ def test_retrieve_posts_query_and_filters() -> None:
         return httpx.Response(200, json={"results": []})
 
     client = _client(httpx.MockTransport(handler))
-    result = asyncio.run(
-        client.retrieve("вопрос", {"source_types": ["template"]}, 5)
-    )
+    result = asyncio.run(client.retrieve("вопрос", {"source_types": ["template"]}, 5))
     asyncio.run(client.close())
 
     assert result == {"results": []}
@@ -70,9 +68,7 @@ def test_activate_posts_version() -> None:
         return httpx.Response(200, json={"activated": True})
 
     client = _client(httpx.MockTransport(handler))
-    result = asyncio.run(
-        client.activate("knowledge_material", "sha-1", "v2")
-    )
+    result = asyncio.run(client.activate("knowledge_material", "sha-1", "v2"))
     asyncio.run(client.close())
 
     assert result == {"activated": True}

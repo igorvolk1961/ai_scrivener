@@ -21,7 +21,5 @@ def verify_view_token(secret: str, source_id: str, token: str) -> bool:
     if expires_at < int(time.time()):
         return False
     payload = f"{source_id}:{expires_at}"
-    expected = hmac.new(
-        secret.encode("utf-8"), payload.encode("utf-8"), hashlib.sha256
-    ).hexdigest()
+    expected = hmac.new(secret.encode("utf-8"), payload.encode("utf-8"), hashlib.sha256).hexdigest()
     return hmac.compare_digest(signature, expected)

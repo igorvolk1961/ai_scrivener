@@ -34,9 +34,7 @@ def test_ensure_collection_creates_vectors_and_indexes() -> None:
     client.collection_exists.return_value = False
     client.get_aliases.return_value = SimpleNamespace(aliases=[])
     client.get_collection.return_value = SimpleNamespace(
-        config=SimpleNamespace(
-            params=SimpleNamespace(vectors=SimpleNamespace(size=3))
-        )
+        config=SimpleNamespace(params=SimpleNamespace(vectors=SimpleNamespace(size=3)))
     )
     asyncio.run(store.ensure_collection(3))
 
@@ -56,9 +54,7 @@ def test_ensure_collection_resolves_alias_target() -> None:
         ]
     )
     client.get_collection.return_value = SimpleNamespace(
-        config=SimpleNamespace(
-            params=SimpleNamespace(vectors=SimpleNamespace(size=3))
-        )
+        config=SimpleNamespace(params=SimpleNamespace(vectors=SimpleNamespace(size=3)))
     )
 
     asyncio.run(store.ensure_collection(3))
@@ -344,9 +340,7 @@ def test_activate_document_marks_version_and_removes_others() -> None:
     store = _store(client)
     client.count.return_value = SimpleNamespace(count=1)
 
-    activated = asyncio.run(
-        store.activate_document("knowledge_material", "sha-1", "v2")
-    )
+    activated = asyncio.run(store.activate_document("knowledge_material", "sha-1", "v2"))
 
     assert activated is True
     client.set_payload.assert_awaited_once()
@@ -358,9 +352,7 @@ def test_activate_document_returns_false_without_points() -> None:
     store = _store(client)
     client.count.return_value = SimpleNamespace(count=0)
 
-    activated = asyncio.run(
-        store.activate_document("knowledge_material", "sha-1", "v2")
-    )
+    activated = asyncio.run(store.activate_document("knowledge_material", "sha-1", "v2"))
 
     assert activated is False
     client.set_payload.assert_not_awaited()
@@ -372,9 +364,7 @@ def test_cleanup_inactive_deletes_old_staging_points() -> None:
     store = _store(client)
     client.count.return_value = SimpleNamespace(count=2)
 
-    deleted = asyncio.run(
-        store.cleanup_inactive(24, "knowledge_material")
-    )
+    deleted = asyncio.run(store.cleanup_inactive(24, "knowledge_material"))
 
     assert deleted == 2
     client.delete.assert_awaited_once()
@@ -410,9 +400,7 @@ def test_switch_alias_replaces_existing_alias() -> None:
     )
     asyncio.run(store.switch_alias("current", "test_v2"))
 
-    operations = client.update_collection_aliases.await_args.kwargs[
-        "change_aliases_operations"
-    ]
+    operations = client.update_collection_aliases.await_args.kwargs["change_aliases_operations"]
     assert len(operations) == 2
     assert isinstance(operations[0], models.DeleteAliasOperation)
     assert isinstance(operations[1], models.CreateAliasOperation)
@@ -446,9 +434,7 @@ def test_fetch_parent_chunks_sorts_and_limits() -> None:
         },
     )
     client.scroll.return_value = ([second, first], None)
-    results = asyncio.run(
-        store.fetch_parent_chunks("knowledge_material", "sha-1", "sha-1:4.1", 20)
-    )
+    results = asyncio.run(store.fetch_parent_chunks("knowledge_material", "sha-1", "sha-1:4.1", 20))
 
     assert [result.chunk_index for result in results] == [0, 1]
     assert client.scroll.await_args.kwargs["limit"] == 20

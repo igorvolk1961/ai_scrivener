@@ -148,9 +148,7 @@ class ClauseAwareChunker:
                 buffer.append(block)
                 continue
             expanded = (
-                self._split_table(block)
-                if block.kind == "table"
-                else self._split_clauses(block)
+                self._split_table(block) if block.kind == "table" else self._split_clauses(block)
             )
             for expanded_block in expanded:
                 if expanded_block.kind == "table":
@@ -265,9 +263,7 @@ class ClauseAwareChunker:
 
     def _split_block(self, block: Block) -> list[Block]:
         sentences = [
-            sentence.strip()
-            for sentence in SENTENCE_SPLIT_RE.split(block.text)
-            if sentence.strip()
+            sentence.strip() for sentence in SENTENCE_SPLIT_RE.split(block.text) if sentence.strip()
         ]
         if len(sentences) <= 1:
             return [
@@ -301,11 +297,7 @@ class ClauseAwareChunker:
             previous = chunks[-2]
             if previous.kind == "table" or chunks[-1].kind == "table":
                 break
-            if (
-                previous.clause
-                and chunks[-1].clause
-                and previous.clause != chunks[-1].clause
-            ):
+            if previous.clause and chunks[-1].clause and previous.clause != chunks[-1].clause:
                 break
             merged_text = f"{previous.text}\n\n{chunks[-1].text}"
             if estimate_tokens(merged_text) > self._options.max_tokens:

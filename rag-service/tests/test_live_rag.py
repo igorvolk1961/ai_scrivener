@@ -59,9 +59,7 @@ def test_live_index_retrieve_delete() -> None:
                 {"source_types": ["integration_test"], "active": True},
                 5,
             )
-            assert any(
-                item["source_id"] == source_id for item in result["results"]
-            )
+            assert any(item["source_id"] == source_id for item in result["results"])
         finally:
             try:
                 await client.delete("integration_test", source_id)

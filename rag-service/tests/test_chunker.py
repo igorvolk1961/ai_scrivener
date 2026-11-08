@@ -85,9 +85,7 @@ def test_chunker_splits_long_text() -> None:
     long_text = " ".join(["Настоящий пункт применяется для проверки."] * 80)
     document = _document([_block(long_text)])
 
-    chunks = ClauseAwareChunker(ChunkerOptions(max_tokens=100, target_tokens=80)).chunk(
-        document
-    )
+    chunks = ClauseAwareChunker(ChunkerOptions(max_tokens=100, target_tokens=80)).chunk(document)
 
     assert len(chunks) > 1
     assert all(estimate_tokens(chunk.text) <= 100 for chunk in chunks)
@@ -164,10 +162,7 @@ def test_chunker_extracts_clause_with_trailing_dot() -> None:
 
 def test_chunker_splits_table_rows_with_header() -> None:
     header = "Наименование | Количество | Примечание"
-    rows = [
-        f"Товар {index} | {index} | " + "описание " * 5
-        for index in range(5)
-    ]
+    rows = [f"Товар {index} | {index} | " + "описание " * 5 for index in range(5)]
     document = _document([_block("\n".join([header, *rows]), kind="table")])
 
     chunks = ClauseAwareChunker(
@@ -273,8 +268,7 @@ def test_chunker_does_not_take_table_number_as_clause() -> None:
     document = _document(
         [
             _block(
-                "2 УХЛ4 УХЛ4.1 У5 04 04.1 Т5 ТС2\n"
-                "Наименование | Значение",
+                "2 УХЛ4 УХЛ4.1 У5 04 04.1 Т5 ТС2\nНаименование | Значение",
                 kind="table",
             )
         ]

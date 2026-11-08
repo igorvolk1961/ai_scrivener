@@ -1,7 +1,7 @@
 # Расширенная оценка RAG на golden set v1
 
-**Дата:** 2026-11-06  
-**Ветка:** `agent/expanded-golden-set`  
+**Дата:** 2026-11-06
+**Ветка:** `agent/expanded-golden-set`
 **Статус:** эксперимент; production alias, конфиг и код не менялись, merge/deploy не выполнялись.
 
 ## 1. Контур оценки

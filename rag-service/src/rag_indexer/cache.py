@@ -27,11 +27,9 @@ class DocumentCache:
         ocr_version: str = OCR_VERSION,
     ) -> None:
         self._cache_dir = cache_dir
-        self._extractor_dir = cache_dir / "extracted" / _version(
-            extractor_version, ocr_version
-        )
-        self._chunker_dir = cache_dir / "chunks" / _version(
-            extractor_version, ocr_version, chunker_version
+        self._extractor_dir = cache_dir / "extracted" / _version(extractor_version, ocr_version)
+        self._chunker_dir = (
+            cache_dir / "chunks" / _version(extractor_version, ocr_version, chunker_version)
         )
 
     def load_document(self, sha256: str) -> ExtractedDocument | None:

@@ -605,9 +605,7 @@ def create_app(
     async def document_pdf_link(request: Request, source_id: str) -> PdfLinkResponse:
         resolver: CorpusResolver = request.app.state.corpus
         if resolver.resolve(source_id) is None:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="document not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="document not found")
         settings: ServiceSettings = request.app.state.settings
         token = create_view_token(
             settings.service_token.get_secret_value(),
@@ -615,9 +613,7 @@ def create_app(
             settings.pdf_view_token_ttl_seconds,
         )
         base_url = settings.pdf_public_base_url.rstrip("/")
-        return PdfLinkResponse(
-            url=f"{base_url}/v1/documents/{source_id}/pdf?token={token}"
-        )
+        return PdfLinkResponse(url=f"{base_url}/v1/documents/{source_id}/pdf?token={token}")
 
     @app.get("/v1/documents/{source_id}/pdf")
     async def document_pdf(
@@ -640,9 +636,7 @@ def create_app(
         resolver: CorpusResolver = request.app.state.corpus
         resolved = resolver.resolve(source_id)
         if resolved is None:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail="document not found"
-            )
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="document not found")
         converter: PdfConverter = request.app.state.pdf_converter
         try:
             pdf_path = await converter.to_pdf(source_id, resolved)
@@ -654,10 +648,7 @@ def create_app(
             ) from error
         filename = f"{Path(resolved.original_name).stem}.pdf"
         ascii_name = filename.encode("ascii", "ignore").decode("ascii") or "document.pdf"
-        disposition = (
-            f'inline; filename="{ascii_name}"; '
-            f"filename*=UTF-8''{quote(filename)}"
-        )
+        disposition = f"inline; filename=\"{ascii_name}\"; filename*=UTF-8''{quote(filename)}"
         return FileResponse(
             path=pdf_path,
             media_type="application/pdf",

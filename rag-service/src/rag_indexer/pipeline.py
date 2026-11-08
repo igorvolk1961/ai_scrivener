@@ -61,9 +61,7 @@ class IndexReport:
             "failed": self.failed,
             "deleted": self.deleted,
             "chunks": self.chunks,
-            "errors": [
-                {"sha256": sha, "error": error} for sha, error in self.errors
-            ],
+            "errors": [{"sha256": sha, "error": error} for sha, error in self.errors],
             "documents": [asdict(document) for document in self.documents],
         }
 
@@ -126,9 +124,7 @@ class IndexPipeline:
                 if not source_path.exists():
                     raise PipelineError(f"file not found: {source_path}")
                 document = (
-                    self._cache.load_document(record.sha256)
-                    if self._cache is not None
-                    else None
+                    self._cache.load_document(record.sha256) if self._cache is not None else None
                 )
                 if document is None:
                     document = await self._extractor.extract(
@@ -147,9 +143,7 @@ class IndexPipeline:
                         encoding="utf-8",
                     )
                 cached_chunks = (
-                    self._cache.load_chunks(record.sha256)
-                    if self._cache is not None
-                    else None
+                    self._cache.load_chunks(record.sha256) if self._cache is not None else None
                 )
                 if cached_chunks is not None:
                     chunks = cached_chunks
@@ -161,21 +155,13 @@ class IndexPipeline:
                     raise PipelineError("no chunks produced")
                 report.chunks += len(chunks)
                 if dry_run:
-                    report.documents.append(
-                        _document_report(record, document, chunks, "validated")
-                    )
+                    report.documents.append(_document_report(record, document, chunks, "validated"))
                     continue
                 if client is None:
                     raise PipelineError("RAG client is required for indexing")
                 staged = self._chunk_batch_size > 0
-                index_version = (
-                    f"{record.version}:{PIPELINE_VERSION}"
-                    if staged
-                    else record.version
-                )
-                for batch_index, batch in enumerate(
-                    _batches(chunks, self._chunk_batch_size)
-                ):
+                index_version = f"{record.version}:{PIPELINE_VERSION}" if staged else record.version
+                for batch_index, batch in enumerate(_batches(chunks, self._chunk_batch_size)):
                     await client.index_chunks(
                         build_payload(
                             record,
@@ -201,9 +187,7 @@ class IndexPipeline:
                     indexed_at=datetime.now(UTC).isoformat(),
                 )
                 report.indexed += 1
-                report.documents.append(
-                    _document_report(record, document, chunks, "indexed")
-                )
+                report.documents.append(_document_report(record, document, chunks, "indexed"))
             except Exception as error:
                 report.failed += 1
                 report.errors.append((record.sha256, str(error)))

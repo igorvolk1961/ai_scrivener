@@ -74,8 +74,7 @@ class FallbackOcrEngine(BaseOcrEngine):
                 raise
 
         needs_fallback = primary_page is None or (
-            self._policy.fallback_low_quality
-            and self._is_low_quality(primary_page, options)
+            self._policy.fallback_low_quality and self._is_low_quality(primary_page, options)
         )
         if not needs_fallback:
             if primary_page is None:

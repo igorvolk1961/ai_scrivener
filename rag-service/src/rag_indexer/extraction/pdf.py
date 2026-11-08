@@ -134,9 +134,7 @@ class PdfExtractor:
 
         tables: list[PdfTable] = []
         if self._options.extract_tables:
-            textual_pages = {
-                page.page_number for page in report.textual_pages
-            }
+            textual_pages = {page.page_number for page in report.textual_pages}
             tables = await asyncio.to_thread(
                 extract_pdf_tables,
                 path,
@@ -164,8 +162,7 @@ class PdfExtractor:
         tables: list[PdfTable] | None = None,
     ) -> ExtractedDocument:
         ocr_pages = {
-            page.page_number: page
-            for page in (ocr_document.pages if ocr_document else [])
+            page.page_number: page for page in (ocr_document.pages if ocr_document else [])
         }
         pages: list[OcrPage] = []
         for page in report.pages:
@@ -175,9 +172,7 @@ class PdfExtractor:
                 continue
             recognized = ocr_pages.get(page.page_number)
             if recognized is None:
-                raise ExtractionError(
-                    f"OCR did not return page {page.page_number} for {path}"
-                )
+                raise ExtractionError(f"OCR did not return page {page.page_number} for {path}")
             pages.append(recognized)
         boilerplate = BoilerplateFilter(options.boilerplate).apply(pages)
         blocks = merger.merge_document(
