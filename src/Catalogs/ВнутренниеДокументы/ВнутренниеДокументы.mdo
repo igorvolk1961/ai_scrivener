@@ -75,6 +75,21 @@
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
   </attributes>
+  <attributes uuid="a96b1f1f-990c-48b7-8327-151b986e46cd">
+    <name>АИС_ПубликоватьВRAG</name>
+    <synonym>
+      <key>ru</key>
+      <value>Публиковать в RAG</value>
+    </synonym>
+    <comment>Истина - документ индексируется в RAG даже без финального состояния (например, рабочий ответ на запрос). Исключение, а не правило: промежуточные версии согласований не публикуются.</comment>
+    <type>
+      <types>Boolean</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
   <tabularSections uuid="fba50749-0d04-48d8-8ac2-c473cb1ec7dd">
     <name>АИС_ЗапрашиваемыеДолжности</name>
     <synonym>
