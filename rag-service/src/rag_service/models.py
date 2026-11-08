@@ -112,7 +112,7 @@ class RetrieveRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     query: str = Field(min_length=1)
-    scope: Literal["knowledge", "documents"] = "knowledge"
+    scope: Literal["knowledge", "documents", "examples"] = "knowledge"
     filters: SearchFilters = Field(default_factory=SearchFilters)
     top_k: int | None = Field(default=None, ge=1, le=100)
     candidate_k: int | None = Field(default=None, ge=1, le=500)
@@ -213,7 +213,7 @@ class CleanupRequest(BaseModel):
 
     older_than_hours: float = Field(default=24, gt=0)
     source_type: str | None = None
-    scope: Literal["knowledge", "documents"] = "knowledge"
+    scope: Literal["knowledge", "documents", "examples"] = "knowledge"
 
 
 class CleanupResponse(BaseModel):
@@ -331,6 +331,7 @@ class DocumentBase64Request(BaseModel):
     file_base64: str | None = None
     file_name: str | None = None
     mime: str | None = None
+    scope: Literal["documents", "examples"] = "documents"
 
 
 class MetadataUpdateRequest(BaseModel):
@@ -340,6 +341,7 @@ class MetadataUpdateRequest(BaseModel):
     source_id: str = Field(min_length=1)
     version: str | None = None
     payload: dict[str, Any] = Field(min_length=1)
+    scope: Literal["documents", "examples"] = "documents"
 
 
 class MetadataUpdateResponse(BaseModel):

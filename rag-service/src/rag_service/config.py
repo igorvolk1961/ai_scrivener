@@ -160,6 +160,7 @@ class ServiceSettings(BaseSettings):
     qdrant_url: str
     qdrant_collection: str
     qdrant_documents_collection: str | None = None
+    qdrant_examples_collection: str | None = None
     qdrant_api_key: SecretStr | None = None
     embedding_provider: str = "cloudru"
     foundation_api_url: str = "https://foundation-models.api.cloud.ru"

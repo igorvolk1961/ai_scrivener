@@ -127,9 +127,21 @@ def _documents_store(request: Request) -> VectorStore:
     return store
 
 
+def _examples_store(request: Request) -> VectorStore:
+    store = cast(VectorStore | None, request.app.state.examples_store)
+    if store is None:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="examples collection is not configured",
+        )
+    return store
+
+
 def _scope_store(request: Request, scope: str) -> VectorStore:
     if scope == "documents":
         return _documents_store(request)
+    if scope == "examples":
+        return _examples_store(request)
     if scope == "knowledge":
         return _store(request)
     raise HTTPException(
@@ -333,6 +345,7 @@ def create_app(
     sparse_encoder: SparseEncoder | None = None,
     reranker: Reranker | None = None,
     documents_store: VectorStore | None = None,
+    examples_store: VectorStore | None = None,
 ) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -396,6 +409,19 @@ def create_app(
             )
         if resolved_documents_store is not None:
             await resolved_documents_store.ensure_collection(dimension)
+        resolved_examples_store = examples_store
+        if resolved_examples_store is None and resolved_settings.qdrant_examples_collection:
+            resolved_examples_store = QdrantStore(
+                url=str(resolved_settings.qdrant_url),
+                collection=str(resolved_settings.qdrant_examples_collection),
+                api_key=(
+                    resolved_settings.qdrant_api_key.get_secret_value()
+                    if resolved_settings.qdrant_api_key is not None
+                    else None
+                ),
+            )
+        if resolved_examples_store is not None:
+            await resolved_examples_store.ensure_collection(dimension)
         app.state.parameters = resolved_parameters
         app.state.settings = resolved_settings
         app.state.corpus = CorpusResolver(
@@ -410,6 +436,7 @@ def create_app(
         app.state.dimension = dimension
         app.state.store = resolved_store
         app.state.documents_store = resolved_documents_store
+        app.state.examples_store = resolved_examples_store
         app.state.sparse_encoder = resolved_sparse
         app.state.reranker = resolved_reranker
         app.state.retriever = Retriever(
@@ -419,6 +446,7 @@ def create_app(
             resolved_sparse,
             resolved_reranker,
             resolved_documents_store,
+            resolved_examples_store,
         )
         try:
             yield
@@ -434,6 +462,12 @@ def create_app(
                 and resolved_documents_store is not resolved_store
             ):
                 await resolved_documents_store.close()
+            if (
+                resolved_examples_store is not None
+                and resolved_examples_store is not resolved_store
+                and resolved_examples_store is not resolved_documents_store
+            ):
+                await resolved_examples_store.close()
 
     app = FastAPI(title="ai_scrivener RAG", version="0.1.0", lifespan=lifespan)
 
@@ -797,10 +831,11 @@ def create_app(
         document: Annotated[str, Form()],
         text: Annotated[str | None, Form()] = None,
         file: Annotated[UploadFile | None, File()] = None,
+        scope: Annotated[str, Form()] = "documents",
     ) -> DocumentIndexResponse:
         resolved_parameters = _parameters(request)
         resolved_embedder = _embedder(request)
-        resolved_store = _documents_store(request)
+        resolved_store = _scope_store(request, scope)
         sparse = _sparse_encoder(request)
         try:
             snapshot = DocumentSnapshot.model_validate_json(document)
@@ -841,7 +876,7 @@ def create_app(
     ) -> DocumentIndexResponse:
         resolved_parameters = _parameters(request)
         resolved_embedder = _embedder(request)
-        resolved_store = _documents_store(request)
+        resolved_store = _scope_store(request, payload.scope)
         sparse = _sparse_encoder(request)
         file_bytes: bytes | None = None
         if payload.file_base64:
@@ -881,7 +916,7 @@ def create_app(
         request: Request,
         payload: MetadataUpdateRequest,
     ) -> MetadataUpdateResponse:
-        resolved_store = _documents_store(request)
+        resolved_store = _scope_store(request, payload.scope)
         try:
             updated = await resolved_store.update_payload(
                 payload.source_type,

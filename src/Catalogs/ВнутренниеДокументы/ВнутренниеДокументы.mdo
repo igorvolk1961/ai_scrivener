@@ -112,4 +112,38 @@
       <dataHistory>Use</dataHistory>
     </attributes>
   </tabularSections>
+  <attributes uuid="74002587-90f8-43c4-b3e1-24eed157ca77">
+    <name>АИС_ЧекЛист</name>
+    <synonym>
+      <key>ru</key>
+      <value>Чек-лист</value>
+    </synonym>
+    <comment>Чек-лист, по которому разработана должностная инструкция.</comment>
+    <type>
+      <types>CatalogRef.АИС_ЧекЛисты</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="b14d25b9-b0d6-43f1-b874-9f61b69180ac">
+    <name>АИС_ВерсияЧекЛиста</name>
+    <synonym>
+      <key>ru</key>
+      <value>Версия чек-листа</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>20</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
 </mdclass:Catalog>

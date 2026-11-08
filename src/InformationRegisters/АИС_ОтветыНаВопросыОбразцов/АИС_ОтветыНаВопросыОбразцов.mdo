@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="24faeeb3-f3ce-4ecf-aeff-2cef127ace45">
+  <producedTypes>
+    <selectionType typeId="523b6808-1eb0-4f47-9cd0-d0ae164415f4" valueTypeId="13f8a0c6-7546-4dbc-92af-c3b0df9b9d17"/>
+    <listType typeId="660e5d3d-743b-40ff-8d4b-db94570a8156" valueTypeId="5ca1108e-aaad-4235-b971-2a2f791c04ac"/>
+    <managerType typeId="a91ab82c-c1c6-44e7-9a0d-de573762c7f8" valueTypeId="a302c007-6def-4023-89ad-c5eebee946b0"/>
+    <recordSetType typeId="e9a69d28-acf2-4b7c-80bb-d1cc86ebeb36" valueTypeId="b3c13292-f429-4102-bc1d-0b0106ee0e5a"/>
+    <recordKeyType typeId="d7bbcfe5-a861-4a1f-bddd-f11564868dc6" valueTypeId="21f81d88-4469-449b-8593-35f3f7e1a88a"/>
+    <recordType typeId="0ac487c4-6d35-4b89-96ee-fc458221107f" valueTypeId="15eef565-a7a2-44b2-8c29-100231ae63ea"/>
+    <recordManagerType typeId="cff9b04d-ba3b-4638-a051-11c9ff5813a0" valueTypeId="81536562-2bdb-4acb-9179-4525d3522b3c"/>
+  </producedTypes>
+  <name>АИС_ОтветыНаВопросыОбразцов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Ответы на вопросы об образцах</value>
+  </synonym>
+  <editType>InDialog</editType>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Active</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>LineNumber</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Recorder</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Period</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <recordPresentation>
+    <key>ru</key>
+    <value>Ответ на вопрос об образце</value>
+  </recordPresentation>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <resources uuid="470005ed-dd74-4b8a-b578-f725ea01ba90">
+    <name>ОтветJSON</name>
+    <synonym>
+      <key>ru</key>
+      <value>ОтветJSON</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </resources>
+  <resources uuid="67947c58-3d03-4e1a-8f8b-fd8d6c95a326">
+    <name>СвободныйТекст</name>
+    <synonym>
+      <key>ru</key>
+      <value>СвободныйТекст</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </resources>
+  <resources uuid="388a51ae-f6a2-45c6-874b-582148432dc1">
+    <name>ДатаОтвета</name>
+    <synonym>
+      <key>ru</key>
+      <value>ДатаОтвета</value>
+    </synonym>
+    <type>
+      <types>Date</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </resources>
+  <dimensions uuid="366f9a66-3dac-4746-89c2-b64d277936ee">
+    <name>Образец</name>
+    <synonym>
+      <key>ru</key>
+      <value>Образец</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.АИС_ОбразцыДокументов</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillFromFillingValue>true</fillFromFillingValue>
+    <master>true</master>
+    <mainFilter>true</mainFilter>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </dimensions>
+  <dimensions uuid="bfcbfe07-0c8d-4e9a-b3e8-85d351d6420d">
+    <name>Вопрос</name>
+    <synonym>
+      <key>ru</key>
+      <value>Вопрос</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.АИС_ВопросыПриСозданииДокументаПоОбразцу</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillFromFillingValue>true</fillFromFillingValue>
+    <master>true</master>
+    <mainFilter>true</mainFilter>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </dimensions>
+  <dimensions uuid="05a1f417-26a3-4ddb-b5a8-6c4ceca84b58">
+    <name>Пользователь</name>
+    <synonym>
+      <key>ru</key>
+      <value>Пользователь</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.Пользователи</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillFromFillingValue>true</fillFromFillingValue>
+    <master>true</master>
+    <mainFilter>true</mainFilter>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </dimensions>
+</mdclass:InformationRegister>

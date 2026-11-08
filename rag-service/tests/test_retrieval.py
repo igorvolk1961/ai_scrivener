@@ -3,9 +3,11 @@ from __future__ import annotations
 import asyncio
 from typing import Any, cast
 
+import pytest
+
 from rag_service.config import ApplicationParameters
 from rag_service.models import RetrieveRequest, SearchFilters, SearchResult
-from rag_service.qdrant_store import VectorStore
+from rag_service.qdrant_store import VectorStore, VectorStoreError
 from rag_service.retrieval import Retriever
 
 
@@ -172,6 +174,49 @@ def test_retrieve_routes_documents_scope_to_documents_store() -> None:
 
     assert response.diagnostics["scope"] == "documents"
     assert response.results[0].source_id == "document-1"
+
+
+def test_retrieve_routes_examples_scope_to_examples_store() -> None:
+    knowledge = StubStore([_candidate("knowledge-1", 0, 0.9)])
+    examples = StubStore([_candidate("example-1", 0, 0.85)])
+    retriever = Retriever(
+        _parameters(),
+        StubEmbedder(),
+        cast(VectorStore, knowledge),
+        examples_store=cast(VectorStore, examples),
+    )
+
+    response = asyncio.run(
+        retriever.retrieve(
+            RetrieveRequest(
+                query="приказ о приёме",
+                scope="examples",
+                filters=SearchFilters(source_types=["document_example"]),
+            )
+        )
+    )
+
+    assert response.diagnostics["scope"] == "examples"
+    assert response.results[0].source_id == "example-1"
+
+
+def test_retrieve_examples_scope_requires_collection() -> None:
+    retriever = Retriever(
+        _parameters(),
+        StubEmbedder(),
+        cast(VectorStore, StubStore([])),
+    )
+
+    with pytest.raises(VectorStoreError):
+        asyncio.run(
+            retriever.retrieve(
+                RetrieveRequest(
+                    query="приказ",
+                    scope="examples",
+                    filters=SearchFilters(),
+                )
+            )
+        )
 
 
 def test_retrieve_documents_scope_requires_acl_principals() -> None:

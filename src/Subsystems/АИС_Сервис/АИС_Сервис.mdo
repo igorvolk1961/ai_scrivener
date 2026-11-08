@@ -20,6 +20,11 @@
   <content>Catalog.АИС_Промпты</content>
   <content>Catalog.АИС_РасписаниеТриггеров</content>
   <content>Catalog.АИС_ЛистОжидания</content>
+  <content>Catalog.АИС_ОбразцыДокументов</content>
+  <content>Catalog.АИС_ВопросыПриСозданииДокументаПоОбразцу</content>
+  <content>Catalog.АИС_ЧекЛисты</content>
+  <content>Catalog.АИС_ПунктыЧекЛиста</content>
+  <content>Catalog.АИС_ЧерновикиДокументов</content>
   <content>InformationRegister.АИС_НормативыИИ</content>
   <content>InformationRegister.АИС_ИсторияДействийИИ</content>
   <content>InformationRegister.АИС_КонтекстЗадачИИ</content>

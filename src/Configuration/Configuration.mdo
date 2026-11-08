@@ -95,6 +95,11 @@
   <catalogs>Catalog.АИС_ЗагрузкиМатериалов</catalogs>
   <catalogs>Catalog.АИС_ЛистОжидания</catalogs>
   <catalogs>Catalog.АИС_РасписаниеТриггеров</catalogs>
+  <catalogs>Catalog.АИС_ОбразцыДокументов</catalogs>
+  <catalogs>Catalog.АИС_ВопросыПриСозданииДокументаПоОбразцу</catalogs>
+  <catalogs>Catalog.АИС_ЧекЛисты</catalogs>
+  <catalogs>Catalog.АИС_ПунктыЧекЛиста</catalogs>
+  <catalogs>Catalog.АИС_ЧерновикиДокументов</catalogs>
   <catalogs>Catalog.ШаблоныИсходящихДокументов</catalogs>
   <catalogs>Catalog.ШаблоныВходящихДокументов</catalogs>
   <catalogs>Catalog.ШаблоныВнутреннихДокументов</catalogs>
@@ -121,6 +126,8 @@
   <informationRegisters>InformationRegister.АИС_ДокументыВПапках</informationRegisters>
   <informationRegisters>InformationRegister.АИС_ПодчиненностьДолжностей</informationRegisters>
   <informationRegisters>InformationRegister.АИС_СостоянияИндексации</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_ОтветыНаВопросыОбразцов</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_РазрешенияОбменаИнформацией</informationRegisters>
   <informationRegisters>InformationRegister.РабочиеГруппы</informationRegisters>
   <informationRegisters>InformationRegister.СостоянияДокументов</informationRegisters>
 </mdclass:Configuration>

@@ -671,4 +671,71 @@
       <httpMethod>GET</httpMethod><handler>Индексация_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="a7e04fd1-ef63-4cab-bac0-ff77fdb6fddf">
+    <name>ЧекЛисты</name>
+    <synonym><key>ru</key><value>Чек-листы</value></synonym>
+    <template>/checklists</template>
+    <methods uuid="db03f80d-9125-44ce-b93e-f06cdf65b6f7">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПолучитьЧекЛисты_GET</handler>
+    </methods>
+    <methods uuid="696efe6b-3e93-4297-b92a-e07ac5ab583f">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>СохранитьЧекЛист_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="5b807f96-2745-41ac-aab2-7b07f7fda4ed">
+    <name>ДолжностнаяИнструкция</name>
+    <synonym><key>ru</key><value>Должностная инструкция по должности</value></synonym>
+    <template>/job-descriptions</template>
+    <methods uuid="473d59d2-a452-43fe-ae18-80fc140dcba7">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПолучитьДолжностнуюИнструкцию_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="fd7bf040-c859-49c5-b732-10afc4233896">
+    <name>ДолжностныеОбязанностиПублично</name>
+    <synonym><key>ru</key><value>Публичные должностные обязанности</value></synonym>
+    <template>/job-duties</template>
+    <methods uuid="52d2cf7e-89c7-4046-8c14-37476bc69be5">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПолучитьДолжностныеОбязанностиПублично_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="948fc7ab-ac50-4c3d-b46d-14301806c5bc">
+    <name>ПоискОбразцов</name>
+    <synonym><key>ru</key><value>Поиск образцов</value></synonym>
+    <template>/examples/search</template>
+    <methods uuid="bce3cd18-a8a0-43dd-a329-e2bf60502f15">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ПоискОбразцов_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="8362ca58-b2fc-45dd-a5b6-241f14b25e29">
+    <name>ВнешниеОбразцы</name>
+    <synonym><key>ru</key><value>Внешние образцы</value></synonym>
+    <template>/examples</template>
+    <methods uuid="0f1bf64a-5f16-4556-aeb8-5304de29a220">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>СохранитьВнешнийОбразец_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="c430fe10-6f95-4505-a120-4cc5d01fa305">
+    <name>ПоискНСИ</name>
+    <synonym><key>ru</key><value>Поиск НСИ</value></synonym>
+    <template>/knowledge/search</template>
+    <methods uuid="e4bf4ac4-1996-493a-b435-03318b973668">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ПоискНСИ_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="024fd685-dfda-4d41-b8fe-21dd1757e170">
+    <name>ДоступКДокументу</name>
+    <synonym><key>ru</key><value>Проверка доступа к документу</value></synonym>
+    <template>/documents/access</template>
+    <methods uuid="73b9366f-1ef7-4cde-a430-1d2cd706c564">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ПроверитьДоступКДокументу_POST</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>

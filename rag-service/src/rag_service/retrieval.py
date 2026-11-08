@@ -59,11 +59,13 @@ class Retriever:
         sparse: SparseEncoder | None = None,
         reranker: Reranker | None = None,
         documents_store: VectorStore | None = None,
+        examples_store: VectorStore | None = None,
     ) -> None:
         self._parameters = parameters
         self._embedder = embedder
         self._store = store
         self._documents_store = documents_store
+        self._examples_store = examples_store
         self._sparse = sparse
         self._reranker = reranker
 
@@ -83,6 +85,10 @@ class Retriever:
                     },
                 )
             store = self._documents_store
+        elif request.scope == "examples":
+            if self._examples_store is None:
+                raise VectorStoreError("examples collection is not configured")
+            store = self._examples_store
         query = request.query[: rag.query_max_chars]
         candidate_k = min(
             request.candidate_k or rag.candidate_k,
