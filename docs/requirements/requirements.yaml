@@ -1,6 +1,6 @@
 meta:
   version: 1
-  updated: "2026-10-23"
+  updated: "2026-11-08"
   source_of_truth: docs/requirements/requirements.yaml
 requirements:
   - id: FR-001
@@ -1250,6 +1250,340 @@ requirements:
     test_files:
       - tests/1c/test_proofreading.md
     status: planned
+  - id: FR-047
+    type: functional
+    title: RAG-поиск образцов документов с интернет-фолбэком
+    description: >-
+      Агент ищет образцы документов через RAG-инструмент `search_example`,
+      который возвращает текст образца, источник и вопросы об изменениях.
+      Интернет-поиск образцов разрешён только после пустого RAG-результата.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - "`search_example` возвращает `status=ok|empty`, текст образца и вопросы."
+      - Интернет-поиск образцов выполняется только после пустого `search_example`.
+      - При непустом RAG-результате интернет-поиск образцов запрещён и возвращает `fallback_not_allowed`.
+      - Результат содержит `source_type=rag`, оценку релевантности и идентификатор образца.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - rag-service/src/rag_service/main.py
+      - rag-service/src/rag_service/retrieval.py
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/deepseek_agent.py
+    tests:
+      - TEST-FR-047-01
+    test_files:
+      - rag-service/tests/test_retrieval.py
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
+  - id: FR-048
+    type: functional
+    title: RAG-поиск нормативно-справочной информации с интернет-фолбэком
+    description: >-
+      Агент ищет НСИ через RAG-инструмент `search_knowledge_base`, который
+      возвращает фрагменты, источники и признак свежести. Интернет-поиск НСИ
+      разрешён только после пустого RAG-результата.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - "`search_knowledge_base` возвращает `status=ok|empty`, фрагменты, источники и `freshness_status`."
+      - Интернет-поиск НСИ выполняется только после пустого `search_knowledge_base`.
+      - При непустом RAG-результате интернет-поиск НСИ запрещён и возвращает `fallback_not_allowed`.
+      - Результаты образцов и НСИ не смешиваются между собой.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - rag-service/src/rag_service/main.py
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/deepseek_agent.py
+    tests:
+      - TEST-FR-048-01
+    test_files:
+      - rag-service/tests/test_retrieval.py
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
+  - id: FR-049
+    type: functional
+    title: Вопросы пользователю об изменениях образца
+    description: >-
+      Агент задаёт пользователю вопросы об изменениях образца. Для внешнего
+      образца вопросы формулирует модель, для локального — используются вопросы
+      `search_example`. На вопрос приходится 1–7 вариантов, свободный ввод
+      доступен всегда, рекомендуемые варианты идут первыми.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - Вопрос имеет тип `single` или `multiple`.
+      - На вопрос приходится от 1 до 7 предопределённых вариантов.
+      - Свободный ввод доступен всегда и не входит в лимит 7 вариантов.
+      - Для локального образца используются вопросы из `search_example`.
+      - Для внешнего образца вопросы формулирует модель.
+      - Рекомендуемые варианты идут первыми; для `single` рекомендация ровно одна.
+      - Вариант `request_info` содержит явные логин и должность адресата.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/deepseek_agent.py
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/ui.py
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/interactions.py
+    tests:
+      - TEST-FR-049-01
+      - TEST-FR-049-02
+    test_files:
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
+  - id: FR-050
+    type: functional
+    title: Вопросы пользователю о решении
+    description: >-
+      Агент задаёт пользователю вопросы о выборе решения с контекстом и
+      вариантами. Действуют те же ограничения: 1–7 вариантов, свободный ввод,
+      рекомендуемые варианты первыми, вариант запроса информации с адресатом.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - Вопрос о решении содержит контекст и последствия вариантов.
+      - На вопрос приходится от 1 до 7 предопределённых вариантов.
+      - Свободный ввод доступен всегда.
+      - Рекомендуемые варианты идут первыми.
+      - Вариант `request_info` содержит явного адресата.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/deepseek_agent.py
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/ui.py
+    tests:
+      - TEST-FR-050-01
+    test_files:
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
+  - id: FR-051
+    type: functional
+    title: Сохранение внешнего образца с вопросами
+    description: >-
+      Образец, полученный из интернета, сохраняется до вопросов пользователю
+      вместе с URL, датой, текстом и вопросами. Варианты ответов вместе с
+      образцом не сохраняются; дубликаты по URL и хешу не создаются.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - Внешний образец сохраняется до задания вопросов.
+      - Сохраняются URL, дата получения, текст, модель и вопросы.
+      - Варианты ответов не передаются и не сохраняются.
+      - Повторное сохранение того же URL и хеша обновляет запись, а не создаёт дубль.
+      - Новый внешний образец имеет статус `unconfirmed`; после ответов — `confirmed`.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/Catalogs/АИС_ОбразцыДокументов/АИС_ОбразцыДокументов.mdo
+      - src/Catalogs/АИС_ВопросыПриСозданииДокументаПоОбразцу/АИС_ВопросыПриСозданииДокументаПоОбразцу.mdo
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/client.py
+    tests:
+      - TEST-FR-051-01
+    test_files:
+      - tests/1c/test_external_examples.md
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
+  - id: FR-052
+    type: functional
+    title: Черновик, согласование и отправка документа
+    description: >-
+      Документ сначала существует как черновик и не виден адресату. Пользователь
+      может согласовать отправку, вернуть на доработку с замечаниями, утвердить
+      связанный документ без замечаний или отклонить отправку. После отказа агент
+      обязан уточнить судьбу черновика.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - Черновик не создаёт входящий документ и задачу у адресата до `approve_send`.
+      - "`approve_send` отправляет отредактированный текст адресату."
+      - "`rework` сохраняет замечания и возвращает черновик на доработку."
+      - "`approve_referenced` утверждает связанный документ без замечаний."
+      - "`reject_send` не отправляет черновик и требует вопроса о его дальнейшей судьбе."
+      - Редактирование текста пользователем необязательно.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/Catalogs/АИС_ЧерновикиДокументов/АИС_ЧерновикиДокументов.mdo
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/deepseek_agent.py
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/ui.py
+    tests:
+      - TEST-FR-052-01
+      - TEST-FR-052-02
+    test_files:
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
+  - id: FR-053
+    type: functional
+    title: Проверка доступа при чтении и передаче сведений
+    description: >-
+      Перед чтением чужого документа и перед передачей сведений другому ДЛ
+      выполняется проверка доступа. Смежному ДЛ запрещено передавать закрытые
+      сведения, кроме случая действующего распоряжения общего начальника с явно
+      указанным объёмом и кругом получателей.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - Доступ проверяется до чтения чужого документа и до передачи сведений.
+      - Закрытые сведения не передаются смежному ДЛ без действующего распоряжения.
+      - Распоряжение должно явно задавать объём, категории/документы и получателей.
+      - Сервер повторно проверяет доступ при отправке и отклоняет нарушение.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/InformationRegisters/АИС_РазрешенияОбменаИнформацией/АИС_РазрешенияОбменаИнформацией.mdo
+      - src/CommonModules/АИС_ПраваДоступа/Module.bsl
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/deepseek_agent.py
+    tests:
+      - TEST-FR-053-01
+    test_files:
+      - tests/1c/test_access_control.md
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
+  - id: FR-054
+    type: functional
+    title: Запрос информации у другого должностного лица
+    description: >-
+      Агент запрашивает информацию у другого ДЛ только при отсутствии данных,
+      признаках устаревания, явном требовании подтвердить актуальность или
+      отсутствии обязательных сведений. Адресат выбирается по общедоступным
+      должностным обязанностям, а формулировка зависит от отношения:
+      руководитель, подчинённый или смежник.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - Запрос допускается только по одному из явных оснований.
+      - Основание и доказательство фиксируются в черновике запроса.
+      - Адресат выбирается по должностным обязанностям и оргструктуре.
+      - Формулировка различается для руководителя, подчинённого и смежника.
+      - Запрос проходит проверку доступа и согласование перед отправкой.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/client.py
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/deepseek_agent.py
+    tests:
+      - TEST-FR-054-01
+    test_files:
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
+  - id: FR-055
+    type: functional
+    title: Публичность должностных обязанностей и чек-листов
+    description: >-
+      Информация о должностных обязанностях всех ДЛ и чек-листы доступна всем
+      авторизованным сотрудникам без ограничений ACL документов.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - Список обязанностей возвращает должность, подразделение, руководителя и полный текст.
+      - Чтение обязанностей не применяет ACL документов.
+      - Чтение чек-листов не применяет ACL документов.
+      - Если обязанности хранятся в закрытом документе, публикуется только текст обязанностей.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+      - src/Catalogs/АИС_ЧекЛисты/АИС_ЧекЛисты.mdo
+    tests:
+      - TEST-FR-055-01
+    test_files:
+      - tests/1c/test_public_duties.md
+    status: in_progress
+  - id: FR-056
+    type: functional
+    title: Справочник чек-листов и разработка должностной инструкции
+    description: >-
+      Чек-листы хранятся в справочнике `АИС_ЧекЛисты` с пунктами. Сейчас в нём
+      один чек-лист — для разработки новой должностной инструкции. Чек-лист
+      используется при подготовке инструкции, хранит версию и не является
+      документом.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - "`АИС_ЧекЛисты` содержит чек-лист разработки должностной инструкции."
+      - Пункты чек-листа хранятся в `АИС_ПунктыЧекЛиста` с разделом и обязательностью.
+      - Чек-лист доступен всем ДЛ без ACL.
+      - В инструкции сохраняются использованный чек-лист и его версия.
+      - Существующий документ-чек-лист перенесён в справочник и не создаётся заново.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/Catalogs/АИС_ЧекЛисты/АИС_ЧекЛисты.mdo
+      - src/Catalogs/АИС_ПунктыЧекЛиста/АИС_ПунктыЧекЛиста.mdo
+      - src/Catalogs/ВнутренниеДокументы/ВнутренниеДокументы.mdo
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+    tests:
+      - TEST-FR-056-01
+    test_files:
+      - ai-scrivener-enterprise-sim/tests/test_db_admin.py
+    status: in_progress
+  - id: FR-057
+    type: functional
+    title: Одна действующая должностная инструкция на должность
+    description: >-
+      Должностная инструкция разрабатывается на должность, а не на сотрудника.
+      Несколько ДЛ на одной должности используют один общий документ; вторая
+      активная инструкция по той же должности запрещена.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - Ключ инструкции — должность; привязки к сотруднику нет.
+      - На одну должность допускается одна действующая инструкция.
+      - Несколько ДЛ на одной должности используют общий документ.
+      - Повторный найм на должность не создаёт новую инструкцию и задачу.
+      - Сервер отклоняет вторую активную инструкцию с `duplicate_job_description`.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/CommonModules/АИС_ОбщегоНазначения/Module.bsl
+      - src/CommonModules/АИС_Уведомления/Module.bsl
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+    tests:
+      - TEST-FR-057-01
+      - TEST-FR-057-02
+    test_files:
+      - tests/1c/test_job_description_uniqueness.md
+    status: in_progress
   - id: NFR-001
     type: nonfunctional
     title: Отклик интерфейса не более 2 секунд
@@ -2062,3 +2396,56 @@ requirements:
     test_files:
       - tests/1c/test_llm_quotas.md
     status: planned
+  - id: NFR-033
+    type: nonfunctional
+    title: Минимизация хранения вариантов ответов
+    description: >-
+      Варианты ответов на вопросы не сохраняются вместе с внешним образцом и
+      вопросами. Они формируются в момент задания вопроса; в базе сохраняются
+      только вопросы и фактические ответы пользователя.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    acceptance:
+      - Варианты ответов не передаются в сохранение внешнего образца.
+      - Вопросы хранятся без вариантов ответов.
+      - Варианты формируются при задании вопроса.
+      - Фактические ответы пользователя сохраняются отдельно.
+    design:
+      - plans/2026-11-08-agent-rag-questions-drafts-access.md
+    implementation:
+      - src/Catalogs/АИС_ВопросыПриСозданииДокументаПоОбразцу/АИС_ВопросыПриСозданииДокументаПоОбразцу.mdo
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/deepseek_agent.py
+    tests:
+      - TEST-NFR-033-01
+    test_files:
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
+  - id: NFR-034
+    type: nonfunctional
+    title: Устойчивость pre-commit к исчерпанию памяти
+    description: >-
+      Локальный pre-commit не должен вызывать OOM при BSL-анализе. Анализатор
+      ограничивается по heap и числу процессоров, а рабочей областью является
+      только `src`, без обхода `.kilo/worktrees` и других копий проекта.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-08
+    acceptance:
+      - BSL language server запускается с ограниченным heap.
+      - Число процессоров для анализа ограничено.
+      - Анализируется только `src`; `.kilo/worktrees` не сканируются.
+      - Полный локальный pre-commit не приводит к OOM.
+    design:
+      - guides/development.md
+    implementation:
+      - scripts/precommit/bsl_lint.sh
+    tests:
+      - TEST-NFR-034-01
+    test_files:
+      - tests/precommit/test_precommit_config.py
+    status: implemented

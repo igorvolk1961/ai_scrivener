@@ -55,7 +55,7 @@ uv sync
 uv run pre-commit install
 ```
 
-Для полной BSL-проверки установить `bsl-language-server` и добавить его в `PATH`. Если инструмент не установлен, pre-commit пропускает BSL-хук с предупреждением; EDT build/validate при этом остаётся обязательным.
+Для полной BSL-проверки установить `bsl-language-server` и добавить его в `PATH`. Если инструмент не установлен, pre-commit пропускает BSL-хук с предупреждением; EDT build/validate при этом остаётся обязательным. Хук `scripts/precommit/bsl_lint.sh` ограничивает JVM (`-Xmx2g`, 4 процессора) и анализирует только `src`, чтобы не сканировать `.kilo/worktrees` и не вызывать OOM; при необходимости лимит переопределяется `BSL_LINT_JAVA_OPTS`.
 
 Схема среды разработки и роли инструментов — `guides/dev-environment.md`.
 

@@ -49,6 +49,7 @@ IMPLEMENTATION_PREFIXES = (
     "scripts",
     "tests/",
     "tests",
+    "ai-scrivener-enterprise-sim/",
     "docs/",
     "docs",
     "plans/",
@@ -59,7 +60,11 @@ IMPLEMENTATION_PREFIXES = (
     "Makefile",
     ".pre-commit-config.yaml",
 )
-TEST_FILE_PREFIXES = ("tests/", "rag-service/tests/")
+TEST_FILE_PREFIXES = (
+    "tests/",
+    "rag-service/tests/",
+    "ai-scrivener-enterprise-sim/tests/",
+)
 
 
 @dataclass(frozen=True)
