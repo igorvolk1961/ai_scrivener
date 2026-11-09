@@ -819,4 +819,13 @@
       <httpMethod>POST</httpMethod><handler>УстановитьАвтоодобрениеДляВсех_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="f0d2c4eb-4c14-40dd-91d0-968b7474ce8b">
+    <name>ПраваЗапускаКлиентов</name>
+    <synonym><key>ru</key><value>Выдать права запуска клиентов</value></synonym>
+    <template>/admin/grant-client-launch</template>
+    <methods uuid="3e1edae5-4705-493c-870a-78b5ed9f9cd5">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ВыдатьПраваЗапускаКлиентов_POST</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>
