@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:form="http://g5.1c.ru/v8/dt/form">
+<form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:form="http://g5.1c.ru/v8/dt/form" xmlns:core="http://g5.1c.ru/v8/dt/mcore">
   <autoCommandBar><name>ФормаКоманднаяПанель</name><id>-1</id><horizontalAlign>Left</horizontalAlign><autoFill>true</autoFill></autoCommandBar>
   <autoTitle>true</autoTitle><autoUrl>true</autoUrl><group>Vertical</group><autoFillCheck>true</autoFillCheck>
   <allowFormCustomize>true</allowFormCustomize><enabled>true</enabled><showTitle>true</showTitle><showCloseButton>true</showCloseButton>
@@ -26,7 +26,7 @@
     <dataPath xsi:type="form:DataPath"><segments>Объект</segments><segments>РежимПоУмолчанию</segments></dataPath>
     <titleLocation>Left</titleLocation><type>InputField</type><editMode>Enter</editMode>
     <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
-    <extInfo xsi:type="form:InputFieldExtInfo"><width>25</width><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch></extInfo>
+    <extInfo xsi:type="form:InputFieldExtInfo"><width>25</width><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><choiceListButton>true</choiceListButton><listChoiceMode>true</listChoiceMode><choiceList><presentation><key>ru</key><value>Выключено</value></presentation><value xsi:type="core:StringValue"><value>off</value></value></choiceList><choiceList><presentation><key>ru</key><value>Включено</value></presentation><value xsi:type="core:StringValue"><value>on</value></value></choiceList><choiceList><presentation><key>ru</key><value>Зависит от автора</value></presentation><value xsi:type="core:StringValue"><value>depends_on_author</value></value></choiceList></extInfo>
   </items>
   <items xsi:type="form:FormField">
     <name>Активность</name><id>4</id><title><key>ru</key><value>Активность</value></title>
