@@ -42,7 +42,7 @@
       <name>Закрыть</name><id>22</id><type>UsualButton</type>
       <title><key>ru</key><value>Закрыть</value></title>
       <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-      <commandName>Form.Command.Закрыть</commandName><representation>Auto</representation>
+      <commandName>Form.Command.ЗакрытьФорму</commandName><representation>Auto</representation>
       <autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><width>20</width><height>1</height>
       <placementArea>UserCmds</placementArea><representationInContextMenu>Auto</representationInContextMenu>
     </items>
@@ -58,6 +58,6 @@
   </attributes>
   <formCommands><name>Сохранить</name><title><key>ru</key><value>Сохранить</value></title><id>10</id><use><common>true</common></use><action xsi:type="form:FormCommandHandlerContainer"><handler><name>Сохранить</name></handler></action><currentRowUse>DontUse</currentRowUse></formCommands>
   <formCommands><name>УстановитьДляВсех</name><title><key>ru</key><value>Установить режим для всех типов</value></title><id>11</id><use><common>true</common></use><action xsi:type="form:FormCommandHandlerContainer"><handler><name>УстановитьДляВсех</name></handler></action><currentRowUse>DontUse</currentRowUse></formCommands>
-  <formCommands><name>Закрыть</name><title><key>ru</key><value>Закрыть</value></title><id>12</id><use><common>true</common></use><action xsi:type="form:FormCommandHandlerContainer"><handler><name>Закрыть</name></handler></action><currentRowUse>DontUse</currentRowUse></formCommands>
+  <formCommands><name>ЗакрытьФорму</name><title><key>ru</key><value>Закрыть</value></title><id>12</id><use><common>true</common></use><action xsi:type="form:FormCommandHandlerContainer"><handler><name>ЗакрытьФорму</name></handler></action><currentRowUse>DontUse</currentRowUse></formCommands>
   <commandInterface><navigationPanel/><commandBar/></commandInterface>
 </form:Form>
