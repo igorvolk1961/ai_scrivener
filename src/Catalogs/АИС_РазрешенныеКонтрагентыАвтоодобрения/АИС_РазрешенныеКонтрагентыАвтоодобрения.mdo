@@ -10,7 +10,7 @@
   <name>АИС_РазрешенныеКонтрагентыАвтоодобрения</name>
   <synonym>
     <key>ru</key>
-    <value>Разрешённые контрагенты автоодобрения</value>
+    <value>Контрагенты обрабатываемых документов</value>
   </synonym>
   <useStandardCommands>true</useStandardCommands>
   <inputByString>Catalog.АИС_РазрешенныеКонтрагентыАвтоодобрения.StandardAttribute.Description</inputByString>

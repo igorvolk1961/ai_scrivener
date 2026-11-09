@@ -10,7 +10,7 @@
   <name>АИС_РазрешенныеАвторыАвтоодобрения</name>
   <synonym>
     <key>ru</key>
-    <value>Разрешённые авторы автоодобрения</value>
+    <value>Авторы обрабатываемых документов</value>
   </synonym>
   <useStandardCommands>true</useStandardCommands>
   <inputByString>Catalog.АИС_РазрешенныеАвторыАвтоодобрения.StandardAttribute.Description</inputByString>
