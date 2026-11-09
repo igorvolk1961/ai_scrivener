@@ -58,6 +58,21 @@
       <items xsi:type="form:FormGroup">
         <name>ГруппаНастройкиЧата</name>
         <id>50</id>
+      <items xsi:type="form:Button">
+        <name>КнопкаАвтоодобрение</name>
+        <id>130</id>
+        <type>UsualButton</type>
+        <title><key>ru</key><value>Автоодобрение</value></title>
+        <visible>true</visible><enabled>true</enabled>
+        <userVisible><common>true</common></userVisible>
+        <commandName>Form.Command.Автоодобрение</commandName>
+        <representation>Auto</representation>
+        <autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <width>20</width><height>1</height>
+        <placementArea>UserCmds</placementArea>
+        <representationInContextMenu>Auto</representationInContextMenu>
+      </items>
+
         <items xsi:type="form:FormField">
           <name>ИскатьВДокументах</name>
           <id>26</id>
@@ -1055,6 +1070,14 @@
       <common>true</common>
     </edit>
   </attributes>
+  <formCommands>
+    <name>Автоодобрение</name>
+    <title><key>ru</key><value>Автоодобрение</value></title>
+    <id>30</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Автоодобрение</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
   <formCommands>
     <name>Спросить</name>
     <title>

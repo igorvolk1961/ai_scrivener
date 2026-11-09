@@ -1641,6 +1641,79 @@ requirements:
     test_files:
       - tests/1c/test_supersession.md
     status: in_progress
+  - id: FR-060
+    type: functional
+    title: Обязательное одобрение изменяющих действий ИИ-помощника
+    description: >-
+      Каждая сессия агента обязана запросить у пользователя одобрение
+      изменяющих действий. Инструмент содержит ровно два варианта:
+      «Одобряю. Действуй» и свободный текст (отклонение). Агент не выполняет
+      изменения до ответа.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-09
+      - plans/2026-11-09-ai-assistant-action-approval.md
+    acceptance:
+      - Инструмент вызывается до первого изменяющего действия.
+      - Первый вариант строго «Одобряю. Действуй».
+      - Последний вариант — свободный текст, означающий отклонение.
+      - approved возвращает пустой answer_text.
+      - rejected возвращает непустой answer_text с указаниями.
+      - При отказе первоначальные намерения отменяются.
+      - Проверка противоречия с первоначальными намерениями не выполняется.
+      - После доработки требуется повторное одобрение.
+      - Агент не получает сведений об автоодобрении.
+    design:
+      - plans/2026-11-09-ai-assistant-action-approval.md
+    implementation:
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/deepseek_agent.py
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/ui.py
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/interactions.py
+    tests:
+      - TEST-FR-060-01
+      - TEST-FR-060-02
+    test_files:
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
+  - id: FR-061
+    type: functional
+    title: Автоодобрение по настройкам текущего пользователя
+    description: >-
+      Оркестратор перед сессией получает настройки автоодобрения текущего
+      пользователя и при выполнении условий возвращает агенту approved без
+      обращения к UI. Настройки ведутся по типам документов, по умолчанию
+      выключены, поддерживают режимы off/on/depends_on_author и общий режим.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-09
+      - plans/2026-11-09-ai-assistant-action-approval.md
+    acceptance:
+      - Настройки относятся только к текущему пользователю.
+      - По умолчанию автоодобрение выключено.
+      - Настройки получаются HTTP-запросом перед каждой сессией.
+      - При ошибке настроек автоодобрение выключено.
+      - "Режимы: off, on, depends_on_author."
+      - depends_on_author учитывает разрешённых авторов и контрагентов.
+      - Автоодобрение применяется только если все документы сессии соответствуют условиям.
+      - При автоодобрении UI не вызывается.
+      - Агент не получает признаков автоодобрения.
+      - Управление доступно командой на панели «Пользовательские настройки» формы «Вопросы по базе знаний».
+    design:
+      - plans/2026-11-09-ai-assistant-action-approval.md
+    implementation:
+      - src/Catalogs/АИС_НастройкиАвтоодобрения/АИС_НастройкиАвтоодобрения.mdo
+      - src/Catalogs/АИС_ПравилаАвтоодобренияПоТипам/АИС_ПравилаАвтоодобренияПоТипам.mdo
+      - src/HTTPServices/АИС_Симулятор/Module.bsl
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/client.py
+      - ai-scrivener-enterprise-sim/src/enterprise_sim/deepseek_agent.py
+    tests:
+      - TEST-FR-061-01
+      - TEST-FR-061-02
+    test_files:
+      - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
+    status: in_progress
   - id: NFR-001
     type: nonfunctional
     title: Отклик интерфейса не более 2 секунд

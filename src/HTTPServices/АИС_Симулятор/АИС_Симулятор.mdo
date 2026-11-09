@@ -801,4 +801,22 @@
       <httpMethod>POST</httpMethod><handler>ЗаместитьВерсииДокумента_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="fcb115d0-c7c1-4ebb-949a-77d139776eb0">
+    <name>Автоодобрение</name>
+    <synonym><key>ru</key><value>Настройки автоодобрения</value></synonym>
+    <template>/auto-approval</template>
+    <methods uuid="cc88d137-34bf-449d-b1aa-40cfd117c6df">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПолучитьАвтоодобрение_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="ff3ad86f-a894-4008-9fb2-110df29eda37">
+    <name>АвтоодобрениеВсеТипы</name>
+    <synonym><key>ru</key><value>Автоодобрение для всех типов</value></synonym>
+    <template>/auto-approval/set-all</template>
+    <methods uuid="895f9527-69e3-46a8-95f5-e2fa31ffdc4e">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>УстановитьАвтоодобрениеДляВсех_POST</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>

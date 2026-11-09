@@ -918,4 +918,46 @@
 			<value>true</value>
 		</right>
 	</object>
+	<object>
+		<name>Catalog.АИС_НастройкиАвтоодобрения</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+		<right><name>Insert</name><value>true</value></right>
+		<right><name>Update</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Catalog.АИС_ПравилаАвтоодобренияПоТипам</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+		<right><name>Insert</name><value>true</value></right>
+		<right><name>Update</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Catalog.АИС_РазрешенныеАвторыАвтоодобрения</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+		<right><name>Insert</name><value>true</value></right>
+		<right><name>Update</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Catalog.АИС_РазрешенныеКонтрагентыАвтоодобрения</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+		<right><name>Insert</name><value>true</value></right>
+		<right><name>Update</name><value>true</value></right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.Автоодобрение.Method.get</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.АвтоодобрениеВсеТипы.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
 </Rights>

@@ -77,6 +77,7 @@
   <eventSubscriptions>EventSubscription.АИС_РабочаяГруппаВОчередь</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_СостояниеДокументаВОчередь</eventSubscriptions>
   <scheduledJobs>ScheduledJob.АИС_ИндексацияRAG</scheduledJobs>
+  <dataProcessors>DataProcessor.АИС_Автоодобрение</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ДолжностныеИнструкции</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ДокументыИАдресаты</dataProcessors>
@@ -101,6 +102,10 @@
   <catalogs>Catalog.АИС_ЧекЛисты</catalogs>
   <catalogs>Catalog.АИС_ПунктыЧекЛиста</catalogs>
   <catalogs>Catalog.АИС_ЧерновикиДокументов</catalogs>
+  <catalogs>Catalog.АИС_НастройкиАвтоодобрения</catalogs>
+  <catalogs>Catalog.АИС_ПравилаАвтоодобренияПоТипам</catalogs>
+  <catalogs>Catalog.АИС_РазрешенныеАвторыАвтоодобрения</catalogs>
+  <catalogs>Catalog.АИС_РазрешенныеКонтрагентыАвтоодобрения</catalogs>
   <catalogs>Catalog.ШаблоныИсходящихДокументов</catalogs>
   <catalogs>Catalog.ШаблоныВходящихДокументов</catalogs>
   <catalogs>Catalog.ШаблоныВнутреннихДокументов</catalogs>
