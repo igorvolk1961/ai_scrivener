@@ -149,4 +149,10 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
+  <defaultObjectForm>Catalog.АИС_ПравилаАвтоодобренияПоТипам.Form.ФормаЭлемента</defaultObjectForm>
+  <forms uuid="b3729e4d-82d5-487b-bfd3-771424eb340c">
+    <name>ФормаЭлемента</name>
+    <synonym><key>ru</key><value>Форма правила</value></synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+  </forms>
 </mdclass:Catalog>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:form="http://g5.1c.ru/v8/dt/form" xmlns:core="http://g5.1c.ru/v8/dt/mcore">
+  <title><key>ru</key><value>Правило автоодобрения</value></title>
+  <autoCommandBar><name>ФормаКоманднаяПанель</name><id>-1</id><horizontalAlign>Left</horizontalAlign><autoFill>false</autoFill></autoCommandBar>
+  <handlers><event>OnCreateAtServer</event><name>ПриСозданииНаСервере</name></handlers>
+  <autoTitle>true</autoTitle><autoUrl>true</autoUrl><group>Vertical</group><autoFillCheck>true</autoFillCheck>
+  <allowFormCustomize>true</allowFormCustomize><enabled>true</enabled><showTitle>true</showTitle><showCloseButton>true</showCloseButton>
+  <items xsi:type="form:FormField">
+    <name>ВидДокумента</name><id>1</id><title><key>ru</key><value>Тип документа</value></title>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath"><segments>Объект</segments><segments>ВидДокумента</segments></dataPath>
+    <titleLocation>Left</titleLocation><type>InputField</type><editMode>Enter</editMode>
+    <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:InputFieldExtInfo"><width>40</width><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch></extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Режим</name><id>2</id><title><key>ru</key><value>Режим</value></title>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath"><segments>Объект</segments><segments>Режим</segments></dataPath>
+    <titleLocation>Left</titleLocation><type>InputField</type><editMode>Enter</editMode>
+    <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:InputFieldExtInfo"><width>25</width><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><choiceListButton>true</choiceListButton><listChoiceMode>true</listChoiceMode><choiceList><presentation><key>ru</key><value>Выключено</value></presentation><value xsi:type="core:StringValue"><value>off</value></value></choiceList><choiceList><presentation><key>ru</key><value>Включено</value></presentation><value xsi:type="core:StringValue"><value>on</value></value></choiceList><choiceList><presentation><key>ru</key><value>Зависит от автора</value></presentation><value xsi:type="core:StringValue"><value>depends_on_author</value></value></choiceList></extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Активность</name><id>3</id><title><key>ru</key><value>Активность</value></title>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath"><segments>Объект</segments><segments>Активность</segments></dataPath>
+    <titleLocation>Left</titleLocation><type>CheckBoxField</type>
+    <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:CheckBoxFieldExtInfo"/>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Авторы</name><id>4</id><title><key>ru</key><value>Разрешённые авторы (логины через запятую)</value></title>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath"><segments>Авторы</segments></dataPath>
+    <titleLocation>Left</titleLocation><type>InputField</type><editMode>Enter</editMode>
+    <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:InputFieldExtInfo"><width>60</width><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch></extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Контрагенты</name><id>5</id><title><key>ru</key><value>Разрешённые контрагенты (UUID через запятую)</value></title>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath"><segments>Контрагенты</segments></dataPath>
+    <titleLocation>Left</titleLocation><type>InputField</type><editMode>Enter</editMode>
+    <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:InputFieldExtInfo"><width>60</width><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch></extInfo>
+  </items>
+  <items xsi:type="form:Button">
+    <name>СохранитьПравило</name><id>10</id><type>UsualButton</type>
+    <title><key>ru</key><value>Сохранить</value></title>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <commandName>Form.Command.СохранитьПравило</commandName><representation>Auto</representation>
+    <autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><width>20</width><height>1</height>
+    <placementArea>UserCmds</placementArea><representationInContextMenu>Auto</representationInContextMenu>
+  </items>
+  <items xsi:type="form:Button">
+    <name>ЗакрытьФорму</name><id>11</id><type>UsualButton</type>
+    <title><key>ru</key><value>Закрыть</value></title>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <commandName>Form.Command.ЗакрытьФорму</commandName><representation>Auto</representation>
+    <autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><width>20</width><height>1</height>
+    <placementArea>UserCmds</placementArea><representationInContextMenu>Auto</representationInContextMenu>
+  </items>
+  <attributes><name>Объект</name><id>1</id><valueType><types>CatalogObject.АИС_ПравилаАвтоодобренияПоТипам</types></valueType><view><common>true</common></view><edit><common>true</common></edit><main>true</main></attributes>
+  <attributes><name>Авторы</name><id>2</id><valueType><types>String</types><stringQualifiers><length>1000</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></attributes>
+  <attributes><name>Контрагенты</name><id>3</id><valueType><types>String</types><stringQualifiers><length>1000</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></attributes>
+  <formCommands><name>СохранитьПравило</name><title><key>ru</key><value>Сохранить</value></title><id>10</id><use><common>true</common></use><action xsi:type="form:FormCommandHandlerContainer"><handler><name>СохранитьПравило</name></handler></action><currentRowUse>DontUse</currentRowUse></formCommands>
+  <formCommands><name>ЗакрытьФорму</name><title><key>ru</key><value>Закрыть</value></title><id>11</id><use><common>true</common></use><action xsi:type="form:FormCommandHandlerContainer"><handler><name>ЗакрытьФорму</name></handler></action><currentRowUse>DontUse</currentRowUse></formCommands>
+  <commandInterface><navigationPanel/><commandBar/></commandInterface>
+  <extInfo xsi:type="form:ObjectFormExtInfo"/>
+</form:Form>
