@@ -261,45 +261,6 @@
       </visible>
     </visibilityFragments>
     <visibilityFragments>
-      <command>Catalog.АИС_ПравилаАвтоодобренияПоТипам.StandardCommand.OpenList</command>
-      <visible>
-        <for>
-          <value>true</value>
-          <role>Role.ПолныеПрава</role>
-        </for>
-        <for>
-          <value>true</value>
-          <role>Role.АИС_АдминистраторСистемы</role>
-        </for>
-      </visible>
-    </visibilityFragments>
-    <visibilityFragments>
-      <command>Catalog.АИС_РазрешенныеАвторыАвтоодобрения.StandardCommand.OpenList</command>
-      <visible>
-        <for>
-          <value>true</value>
-          <role>Role.ПолныеПрава</role>
-        </for>
-        <for>
-          <value>true</value>
-          <role>Role.АИС_АдминистраторСистемы</role>
-        </for>
-      </visible>
-    </visibilityFragments>
-    <visibilityFragments>
-      <command>Catalog.АИС_РазрешенныеКонтрагентыАвтоодобрения.StandardCommand.OpenList</command>
-      <visible>
-        <for>
-          <value>true</value>
-          <role>Role.ПолныеПрава</role>
-        </for>
-        <for>
-          <value>true</value>
-          <role>Role.АИС_АдминистраторСистемы</role>
-        </for>
-      </visible>
-    </visibilityFragments>
-    <visibilityFragments>
       <command>InformationRegister.АИС_НормативыИИ.StandardCommand.OpenList</command>
       <visible>
         <for>
