@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:form="http://g5.1c.ru/v8/dt/form">
+  <title><key>ru</key><value>Контрагент обрабатываемого документа</value></title>
+  <autoCommandBar><name>ФормаКоманднаяПанель</name><id>-1</id><horizontalAlign>Left</horizontalAlign><autoFill>true</autoFill></autoCommandBar>
+  <autoTitle>true</autoTitle><autoUrl>true</autoUrl><group>Vertical</group><autoFillCheck>true</autoFillCheck>
+  <allowFormCustomize>true</allowFormCustomize><enabled>true</enabled><showTitle>true</showTitle><showCloseButton>true</showCloseButton>
+  <items xsi:type="form:FormField">
+    <name>Контрагент</name><id>1</id><title><key>ru</key><value>Контрагент</value></title>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath"><segments>Объект</segments><segments>Контрагент</segments></dataPath>
+    <titleLocation>Left</titleLocation><type>InputField</type><editMode>Enter</editMode>
+    <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:InputFieldExtInfo"><width>40</width><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch></extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Активность</name><id>2</id><title><key>ru</key><value>Активность</value></title>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath"><segments>Объект</segments><segments>Активность</segments></dataPath>
+    <titleLocation>Left</titleLocation><type>CheckBoxField</type>
+    <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:CheckBoxFieldExtInfo"/>
+  </items>
+  <attributes><name>Объект</name><id>1</id><valueType><types>CatalogObject.АИС_РазрешенныеКонтрагентыАвтоодобрения</types></valueType><view><common>true</common></view><edit><common>true</common></edit><main>true</main></attributes>
+  <commandInterface><navigationPanel/><commandBar/></commandInterface>
+  <extInfo xsi:type="form:ObjectFormExtInfo"/>
+</form:Form>

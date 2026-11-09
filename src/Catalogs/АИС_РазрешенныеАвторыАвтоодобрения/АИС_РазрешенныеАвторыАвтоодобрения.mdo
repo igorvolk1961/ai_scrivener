@@ -96,7 +96,7 @@
   <fullTextSearch>Use</fullTextSearch>
   <objectPresentation>
     <key>ru</key>
-    <value>Разрешённый автор</value>
+    <value>Автор обрабатываемого документа</value>
   </objectPresentation>
   <owners>Catalog.АИС_ПравилаАвтоодобренияПоТипам</owners>
   <descriptionLength>150</descriptionLength>
@@ -133,4 +133,10 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
+  <defaultObjectForm>Catalog.АИС_РазрешенныеАвторыАвтоодобрения.Form.ФормаЭлемента</defaultObjectForm>
+  <forms uuid="d38d2f71-31a5-4ad4-a20b-1746f7b0059e">
+    <name>ФормаЭлемента</name>
+    <synonym><key>ru</key><value>Автор обрабатываемого документа</value></synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+  </forms>
 </mdclass:Catalog>

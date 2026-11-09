@@ -96,7 +96,7 @@
   <fullTextSearch>Use</fullTextSearch>
   <objectPresentation>
     <key>ru</key>
-    <value>Разрешённый контрагент</value>
+    <value>Контрагент обрабатываемого документа</value>
   </objectPresentation>
   <owners>Catalog.АИС_ПравилаАвтоодобренияПоТипам</owners>
   <descriptionLength>150</descriptionLength>
@@ -133,4 +133,10 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
+  <defaultObjectForm>Catalog.АИС_РазрешенныеКонтрагентыАвтоодобрения.Form.ФормаЭлемента</defaultObjectForm>
+  <forms uuid="a055daa8-016b-4737-b6b1-511836dba26d">
+    <name>ФормаЭлемента</name>
+    <synonym><key>ru</key><value>Контрагент обрабатываемого документа</value></synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+  </forms>
 </mdclass:Catalog>
