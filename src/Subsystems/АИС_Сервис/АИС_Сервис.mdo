@@ -27,7 +27,6 @@
   <content>Catalog.АИС_ПунктыЧекЛиста</content>
   <content>Catalog.АИС_ЧерновикиДокументов</content>
   <content>Catalog.АИС_НастройкиАвтоодобрения</content>
-  <content>DataProcessor.АИС_Автоодобрение</content>
   <content>Catalog.АИС_ПравилаАвтоодобренияПоТипам</content>
   <content>Catalog.АИС_РазрешенныеАвторыАвтоодобрения</content>
   <content>Catalog.АИС_РазрешенныеКонтрагентыАвтоодобрения</content>

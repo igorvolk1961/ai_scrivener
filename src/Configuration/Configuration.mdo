@@ -79,7 +79,6 @@
   <eventSubscriptions>EventSubscription.АИС_РабочаяГруппаВОчередь</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_СостояниеДокументаВОчередь</eventSubscriptions>
   <scheduledJobs>ScheduledJob.АИС_ИндексацияRAG</scheduledJobs>
-  <dataProcessors>DataProcessor.АИС_Автоодобрение</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ДолжностныеИнструкции</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ДокументыИАдресаты</dataProcessors>
