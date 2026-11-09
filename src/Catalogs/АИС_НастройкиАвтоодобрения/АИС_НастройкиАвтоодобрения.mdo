@@ -163,4 +163,11 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
+  <defaultObjectForm>Catalog.АИС_НастройкиАвтоодобрения.Form.ФормаЭлемента</defaultObjectForm>
+  <forms uuid="53ea992a-0112-4151-899a-27f55872aebe">
+    <name>ФормаЭлемента</name>
+    <synonym><key>ru</key><value>Форма элемента</value></synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
 </mdclass:Catalog>
