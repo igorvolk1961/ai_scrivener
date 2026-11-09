@@ -4,6 +4,12 @@
     <visibilityFragments>
       <command>CommonCommand.АИС_ВопросПоБазеЗнаний</command>
       <visible>
+        <common>false</common>
+      </visible>
+    </visibilityFragments>
+    <visibilityFragments>
+      <command>DataProcessor.АИС_ВопросПоБазеЗнаний.StandardCommand.Open</command>
+      <visible>
         <common>true</common>
       </visible>
     </visibilityFragments>

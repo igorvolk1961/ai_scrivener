@@ -12,6 +12,7 @@
   <content>DataProcessor.АИС_Шаблоны</content>
   <content>DataProcessor.АИС_ПапкиДокументов</content>
   <content>DataProcessor.АИС_ИндексацияДокументов</content>
+  <content>DataProcessor.АИС_ВопросПоБазеЗнаний</content>
   <content>CommonCommand.АИС_ВопросПоБазеЗнаний</content>
   <content>CommonCommand.АИС_ОпубликоватьВRAG</content>
   <content>Catalog.АИС_ТипыДействий</content>

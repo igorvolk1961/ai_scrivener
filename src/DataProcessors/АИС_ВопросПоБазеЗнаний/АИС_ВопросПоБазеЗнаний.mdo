@@ -7,7 +7,7 @@
   <name>АИС_ВопросПоБазеЗнаний</name>
   <synonym>
     <key>ru</key>
-    <value>Вопрос по базе знаний</value>
+    <value>Вопросы по базе знаний</value>
   </synonym>
   <useStandardCommands>true</useStandardCommands>
   <defaultForm>DataProcessor.АИС_ВопросПоБазеЗнаний.Form.Форма</defaultForm>
