@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:EventSubscription xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="a1873f8f-4598-41de-98f6-b37e2aca9a9c">
+  <name>АИС_АвтоодобрениеПередЗаписью</name>
+  <synonym><key>ru</key><value>Проверка владельца правил автоодобрения</value></synonym>
+  <source>
+    <types>CatalogObject.АИС_НастройкиАвтоодобрения</types>
+    <types>CatalogObject.АИС_ПравилаАвтоодобренияПоТипам</types>
+    <types>CatalogObject.АИС_РазрешенныеАвторыАвтоодобрения</types>
+    <types>CatalogObject.АИС_РазрешенныеКонтрагентыАвтоодобрения</types>
+  </source>
+  <event>BeforeWrite</event>
+  <handler>CommonModule.АИС_АвтоодобрениеСервер.ОграничитьЧужиеПравилаПередЗаписью</handler>
+</mdclass:EventSubscription>

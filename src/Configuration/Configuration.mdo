@@ -53,6 +53,7 @@
   <constants>Constant.АИС_ПовторыRAGСервиса</constants>
   <constants>Constant.АИС_НастройкиИндексацииДокументов</constants>
   <constants>Constant.АИС_ИндексацияRAGВключена</constants>
+  <commonModules>CommonModule.АИС_АвтоодобрениеСервер</commonModules>
   <commonModules>CommonModule.УстановкаПараметровСеанса</commonModules>
   <commonModules>CommonModule.АИС_Промпты</commonModules>
   <commonCommands>CommonCommand.АИС_ВопросПоБазеЗнаний</commonCommands>
@@ -72,6 +73,7 @@
   <eventSubscriptions>EventSubscription.АИС_ВнутреннийДокументПриЗаписи</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_ДокументВПапкуПриЗаписи</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_ДокументПапкаПередЗаписью</eventSubscriptions>
+  <eventSubscriptions>EventSubscription.АИС_АвтоодобрениеПередЗаписью</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_ДокументВОчередьИндексацииПриЗаписи</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_ФайлВОчередьИндексации</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_РабочаяГруппаВОчередь</eventSubscriptions>

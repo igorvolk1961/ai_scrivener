@@ -7,9 +7,10 @@
     <name>Пользователь</name><id>1</id><title><key>ru</key><value>Пользователь</value></title>
     <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
     <dataPath xsi:type="form:DataPath"><segments>Объект</segments><segments>Пользователь</segments></dataPath>
-    <titleLocation>None</titleLocation><type>InputField</type><editMode>Enter</editMode>
+    <titleLocation>None</titleLocation><type>InputField</type>
+    <readOnly>true</readOnly><editMode>Enter</editMode>
     <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
-    <extInfo xsi:type="form:InputFieldExtInfo"><readOnly>true</readOnly><width>40</width><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch></extInfo>
+    <extInfo xsi:type="form:InputFieldExtInfo"><width>40</width><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch></extInfo>
   </items>
   <items xsi:type="form:FormField">
     <name>Включено</name><id>2</id><title><key>ru</key><value>Автоодобрение включено</value></title>
