@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="74bc118f-edc3-40aa-bdd0-4dc211059bfc">
+  <producedTypes>
+    <objectType typeId="ca78e11e-cd81-42cb-98c5-2c9da809ef7a" valueTypeId="306329dd-4c53-4aed-b153-9a765bd3ec1e"/>
+    <managerType typeId="96383db2-19ea-403d-8dcf-6e11e6bd9f59" valueTypeId="a06676d9-8ab9-476a-944a-a256eae9f5d9"/>
+  </producedTypes>
+  <name>АИС_АдминистрированиеИИ</name>
+  <synonym>
+    <key>ru</key>
+    <value>Администрирование ИИ-возможностей</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <defaultForm>DataProcessor.АИС_АдминистрированиеИИ.Form.Форма</defaultForm>
+  <forms uuid="b3fb7dad-7620-4977-9921-1b149c192b99">
+    <name>Форма</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:DataProcessor>

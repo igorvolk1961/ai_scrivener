@@ -11,6 +11,7 @@
   <content>DataProcessor.АИС_ДокументыИАдресаты</content>
   <content>DataProcessor.АИС_Шаблоны</content>
   <content>DataProcessor.АИС_ПапкиДокументов</content>
+  <content>DataProcessor.АИС_АдминистрированиеИИ</content>
   <content>DataProcessor.АИС_ИндексацияДокументов</content>
   <content>DataProcessor.АИС_ВопросПоБазеЗнаний</content>
   <content>CommonCommand.АИС_ВопросПоБазеЗнаний</content>
