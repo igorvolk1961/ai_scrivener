@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="a44f3373-91a9-4df5-afb9-7d36e4a0f12a">
+  <producedTypes>
+    <managerType typeId="930a1100-dd24-40f5-9fb9-3f2e02470451" valueTypeId="874d4d67-2535-4048-bd90-664e7025a8cf"/>
+    <valueManagerType typeId="820b3c93-140b-4fa7-b055-486230f36173" valueTypeId="ad58e0ed-702f-4ac5-a71b-c0a09066282d"/>
+    <valueKeyType typeId="31e9843d-7f7e-4bc8-9ea8-c519a5f64374" valueTypeId="f73bdbac-67a3-4450-84ef-c88ad035d47a"/>
+  </producedTypes>
+  <name>АИС_КаталогПромптовАгентов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Каталог роль-промптов агентов</value>
+  </synonym>
+  <comment>Каталог файлов system_prompts/*.md для импорта ролевых промптов сотрудников.</comment>
+  <type>
+    <types>String</types>
+    <stringQualifiers>
+      <length>500</length>
+    </stringQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

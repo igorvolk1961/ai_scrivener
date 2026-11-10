@@ -188,10 +188,39 @@
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>true</showInFooter>
       <extInfo xsi:type="form:InputFieldExtInfo">
-        <width>12</width>
+        <width>40</width>
         <autoMaxWidth>false</autoMaxWidth>
         <autoMaxHeight>true</autoMaxHeight>
-        <horizontalStretch>false</horizontalStretch>
+        <horizontalStretch>true</horizontalStretch>
+        <textEdit>true</textEdit>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>КаталогПромптовАгентов</name>
+      <id>950</id>
+      <title>
+        <key>ru</key>
+        <value>Каталог сценария (system_prompts, prompts, profiles)</value>
+      </title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible>
+        <common>true</common>
+      </userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>КаталогПромптовАгентов</segments>
+      </dataPath>
+      <titleLocation>Top</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>false</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
         <textEdit>true</textEdit>
       </extInfo>
     </items>
@@ -677,7 +706,7 @@
       <name>КнопкаСформироватьПромпты</name>
       <id>56</id>
       <type>UsualButton</type>
-      <title><key>ru</key><value>Сформировать промпты</value></title>
+      <title><key>ru</key><value>Импортировать промпты</value></title>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible><common>true</common></userVisible>
@@ -872,6 +901,22 @@
     </edit>
   </attributes>
   <attributes>
+    <name>КаталогПромптовАгентов</name>
+    <id>951</id>
+    <valueType>
+      <types>String</types>
+      <stringQualifiers>
+        <length>500</length>
+      </stringQualifiers>
+    </valueType>
+    <view>
+      <common>true</common>
+    </view>
+    <edit>
+      <common>true</common>
+    </edit>
+  </attributes>
+  <attributes>
     <name>МодельАгента</name>
     <id>11</id>
     <valueType><types>String</types><stringQualifiers><length>50</length></stringQualifiers></valueType>
@@ -1050,7 +1095,7 @@
   </formCommands>
   <formCommands>
     <name>СформироватьПромпты</name>
-    <title><key>ru</key><value>Сформировать промпты</value></title>
+    <title><key>ru</key><value>Импортировать промпты</value></title>
     <id>7</id>
     <use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>СформироватьПромпты</name></handler></action>

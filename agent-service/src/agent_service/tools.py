@@ -8,6 +8,7 @@ TOOL_DESCRIPTIONS: dict[str, str] = {
     "ask_example_changes": "Задать вопросы об изменениях образца документа.",
     "ask_decision": "Запросить решение пользователя по вариантам.",
     "complete_task": "Завершить задачу сотрудника.",
+    "list_tasks": "Показать открытые задачи сотрудника.",
     "search_example": "Найти образец документа в RAG.",
     "search_knowledge_base": "Найти сведения в базе знаний.",
     "search_internet": "Найти сведения в интернете.",
@@ -108,6 +109,10 @@ TOOL_SCHEMAS: dict[str, dict[str, Any]] = {
         "type": "object",
         "properties": {"result": {"type": "string"}},
         "required": ["result"],
+    },
+    "list_tasks": {
+        "type": "object",
+        "properties": {},
     },
     "search_example": {
         "type": "object",
@@ -252,8 +257,17 @@ TOOL_SCHEMAS: dict[str, dict[str, Any]] = {
     },
     "propose_system_prompt": {
         "type": "object",
-        "properties": {"login": {"type": "string"}},
-        "required": ["login"],
+        "properties": {
+            "login": {"type": "string"},
+            "system_prompt": {
+                "type": "string",
+                "description": (
+                    "Роль-промпт сотрудника: для управленца подробный (зона "
+                    "ответственности, решения, ориентиры, границы), для рядового краткий."
+                ),
+            },
+        },
+        "required": ["login", "system_prompt"],
     },
     "manage_document_sections": {
         "type": "object",

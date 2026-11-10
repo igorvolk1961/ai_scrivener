@@ -79,6 +79,34 @@ def test_tool_call() -> None:
     assert llm.last_request is not None
 
 
+def test_prompt_layers() -> None:
+    client, llm = make_client({"choices": [{"message": {"content": "Готово"}}]})
+    body = payload()
+    body["agent"] = {
+        "login": "ivanov",
+        "base_prompt": "БАЗОВЫЙ ПРОМПТ",
+        "company_profile": "ПРОФИЛЬ КОМПАНИИ",
+        "role_prompt": "РОЛЬ СОТРУДНИКА",
+    }
+    response = client.post(
+        "/v1/agent/step",
+        json=body,
+        headers={"X-Service-Token": TOKEN},
+    )
+    assert response.status_code == 200
+    assert llm.last_request is not None
+    messages = llm.last_request["messages"]
+    system = messages[0]
+    assert system["role"] == "system"
+    assert "БАЗОВЫЙ ПРОМПТ" in system["content"]
+    assert "ПРОФИЛЬ КОМПАНИИ" in system["content"]
+    assert "РОЛЬ СОТРУДНИКА" in system["content"]
+    user = messages[-1]["content"]
+    assert "base_prompt" not in user
+    assert "company_profile" not in user
+    assert "role_prompt" not in user
+
+
 def test_final_answer() -> None:
     client, _ = make_client({"choices": [{"message": {"content": "Готово"}}]})
     response = client.post(

@@ -39,6 +39,10 @@ def test_tool_definitions_use_specific_schemas() -> None:
         "name",
         "position",
     ]
+    assert personnel["propose_system_prompt"]["function"]["parameters"]["required"] == [
+        "login",
+        "system_prompt",
+    ]
     sections = tool_definitions(["manage_document_sections"])[0]["function"]["parameters"]
     assert sections["required"] == ["action"]
     assert len(sections["properties"]["action"]["enum"]) == 9

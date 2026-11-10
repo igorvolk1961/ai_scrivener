@@ -29,10 +29,29 @@ def _error(run_version: int, code: str, message: str) -> dict[str, Any]:
     }
 
 
+def _system_prompt(agent: dict[str, Any]) -> str:
+    base = str(agent.get("base_prompt") or "").strip() or SYSTEM_PROMPT
+    parts = [base]
+    company = str(agent.get("company_profile") or "").strip()
+    if company:
+        parts.append("Профиль компании:\n" + company)
+    role = str(agent.get("role_prompt") or "").strip()
+    if role:
+        parts.append(
+            "Описание твоей роли, подготовленное отделом кадров при найме:\n" + role
+        )
+    return "\n\n".join(parts)
+
+
 def _context_message(payload: StepRequest) -> dict[str, Any]:
+    agent = {
+        key: value
+        for key, value in payload.agent.items()
+        if key not in {"base_prompt", "company_profile", "role_prompt"}
+    }
     context = {
         "task": payload.task,
-        "agent": payload.agent,
+        "agent": agent,
         "context": payload.context,
         "policy": payload.policy,
     }
@@ -114,7 +133,7 @@ def create_app(
 
         client: LlmClient = request.app.state.llm
         messages = [
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": _system_prompt(payload.agent)},
             *payload.messages,
             _context_message(payload),
         ]
