@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="35f94bdf-b33a-43cc-abd7-038a3b65a3ec">
+  <name>АИС_АгентШаблоны</name>
+  <synonym><key>ru</key><value>Инструменты шаблонов ИИ-агента</value></synonym>
+  <server>true</server>
+  <externalConnection>false</externalConnection>
+  <clientOrdinaryApplication>false</clientOrdinaryApplication>
+  <serverCall>false</serverCall>
+</mdclass:CommonModule>

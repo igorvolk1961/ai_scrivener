@@ -22,6 +22,8 @@ TOOL_DESCRIPTIONS: dict[str, str] = {
     "create_information_request": "Создать запрос информации.",
     "submit_draft_for_review": "Отправить черновик на согласование.",
     "create_document": "Создать внутренний документ.",
+    "technical_approve_template": "Технически согласовать шаблон как Программист 1С.",
+    "approve_template": "Окончательно утвердить шаблон.",
     "approve_document": "Утвердить документ.",
     "cancel_document": "Отменить документ.",
     "hire_employee": "Принять сотрудника.",
@@ -138,6 +140,33 @@ TOOL_SCHEMAS: dict[str, dict[str, Any]] = {
             "limit": {"type": "integer", "minimum": 1, "maximum": 10},
         },
         "required": ["query"],
+    },
+    "save_external_example": {
+        "type": "object",
+        "properties": {
+            "url": {"type": "string"},
+            "title": {"type": "string"},
+            "text": {"type": "string"},
+            "document_kind": {"type": "string"},
+            "model": {"type": "string"},
+            "questions": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "code": {"type": "string"},
+                        "text": {"type": "string"},
+                        "type": {"type": "string", "enum": ["single", "multiple"]},
+                        "required": {"type": "boolean"},
+                        "hint": {"type": "string"},
+                        "placeholder": {"type": "string"},
+                        "default": {"type": "string"},
+                    },
+                    "required": ["text", "type"],
+                },
+            },
+        },
+        "required": ["url", "title", "text", "questions"],
     },
     "get_checklist": {
         "type": "object",
@@ -430,6 +459,16 @@ TOOL_SCHEMAS: dict[str, dict[str, Any]] = {
         "type": "object",
         "properties": {"document_id": DOCUMENT_ID},
         "required": ["document_id"],
+    },
+    "technical_approve_template": {
+        "type": "object",
+        "properties": {"template_id": {"type": "string"}},
+        "required": ["template_id"],
+    },
+    "approve_template": {
+        "type": "object",
+        "properties": {"template_id": {"type": "string"}},
+        "required": ["template_id"],
     },
     "cancel_document": {
         "type": "object",

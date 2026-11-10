@@ -1840,6 +1840,9 @@ requirements:
       - Вызов неизвестного инструмента отклоняется.
       - Документы и поиск работают в сквозном сценарии.
       - list_tasks показывает открытые задачи сотрудника.
+      - save_external_example сохраняет образец и вопросы, не сохраняя варианты ответов.
+      - technical_approve_template ставит автору задачу на утверждение.
+      - approve_template переводит шаблон в «Утверждён».
     design:
       - plans/2026-11-10-ai-agent-migration.md#7-инструменты-и-группы
       - plans/2026-11-10-ai-agent-migration-next-steps.md#a6-согласование-allowlist-и-реализаций

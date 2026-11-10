@@ -58,6 +58,16 @@ def test_tool_definitions_use_specific_schemas() -> None:
         "kb_register_material",
         "kb_download",
     }
+    example = tool_definitions(["save_external_example"])[0]["function"]["parameters"]
+    assert example["required"] == ["url", "title", "text", "questions"]
+    templates = tool_definitions(["technical_approve_template", "approve_template"])
+    assert {item["function"]["name"] for item in templates} == {
+        "technical_approve_template",
+        "approve_template",
+    }
+    assert all(
+        item["function"]["parameters"]["required"] == ["template_id"] for item in templates
+    )
 
 
 def test_validate_tool_name() -> None:

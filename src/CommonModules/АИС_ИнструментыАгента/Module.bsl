@@ -58,6 +58,12 @@
 		Результат = ВыполнитьПоискRAG(Аргументы, "knowledge");
 	ИначеЕсли Имя = "search_internet" Тогда
 		Результат = ВыполнитьПоискИнтернет(Аргументы);
+	ИначеЕсли Имя = "save_external_example" Тогда
+		Результат = РезультатКадров(АИС_АгентОбразцы.СохранитьВнешнийОбразец(Аргументы));
+	ИначеЕсли Имя = "technical_approve_template" Тогда
+		Результат = РезультатКадров(АИС_АгентШаблоны.СогласоватьТехнически(Аргументы));
+	ИначеЕсли Имя = "approve_template" Тогда
+		Результат = РезультатКадров(АИС_АгентШаблоны.Утвердить(Аргументы));
 	ИначеЕсли Имя = "get_checklist" Тогда
 		Результат = Успех(АИС_АгентЗнания.ЧекЛист(Аргументы));
 	ИначеЕсли Имя = "get_job_description" Тогда
@@ -305,7 +311,7 @@
 КонецФункции
 
 Функция ИнструментИзменяетДанные(Имя)
-	Изменяющие = СтрРазделить("create_draft,create_information_request,create_document,approve_document,cancel_document,hire_employee,propose_system_prompt,accounting_decision,create_department,manage_document_sections,manage_remarks,return_document,route_remarks,kb_download,kb_register_material", ",");
+	Изменяющие = СтрРазделить("save_external_example,technical_approve_template,approve_template,create_draft,create_information_request,create_document,approve_document,cancel_document,hire_employee,propose_system_prompt,accounting_decision,create_department,manage_document_sections,manage_remarks,return_document,route_remarks,kb_download,kb_register_material", ",");
 	Возврат Изменяющие.Найти(Имя) <> Неопределено;
 КонецФункции
 

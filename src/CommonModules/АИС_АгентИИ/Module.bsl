@@ -488,7 +488,7 @@
 Функция РазрешенныеИнструменты() Экспорт
 	Инструменты = АИС_ИнструментыАгента.БазовыеИнструменты();
 	Если Константы.АИС_ГруппаДокументыВключена.Получить() Тогда
-		ДобавитьИнструменты(Инструменты, "list_documents,read_document,check_document_access,create_draft,create_information_request,submit_draft_for_review,create_document,approve_document,cancel_document");
+		ДобавитьИнструменты(Инструменты, "list_documents,read_document,check_document_access,create_draft,create_information_request,submit_draft_for_review,create_document,approve_document,cancel_document,technical_approve_template,approve_template");
 	КонецЕсли;
 	Если Константы.АИС_ГруппаПоискЗнанияВключена.Получить() Тогда
 		ДобавитьИнструменты(Инструменты, "search_example,search_knowledge_base,get_checklist,get_job_description");
@@ -517,6 +517,8 @@
 	Инструменты = АИС_ИнструментыАгента.БазовыеИнструменты();
 	ДобавитьИнструменты(Инструменты, "list_documents,read_document,check_document_access,create_draft,create_information_request,submit_draft_for_review,create_document,approve_document,cancel_document");
 	ДобавитьИнструменты(Инструменты, "search_example,search_knowledge_base,get_checklist,get_job_description,search_internet");
+	ДобавитьИнструменты(Инструменты, "save_external_example");
+	ДобавитьИнструменты(Инструменты, "technical_approve_template,approve_template");
 	ДобавитьИнструменты(Инструменты, "hire_employee,propose_system_prompt,accounting_decision,list_employees,list_departments,create_department");
 	ДобавитьИнструменты(Инструменты, "manage_document_sections");
 	ДобавитьИнструменты(Инструменты, "manage_remarks,return_document,route_remarks");
