@@ -14,7 +14,7 @@ def test_tool_definitions_use_specific_schemas() -> None:
     approval = definitions["request_action_approval"]["function"]["parameters"]
     assert approval["required"] == ["completed", "intended", "question", "options"]
     create = definitions["create_document"]["function"]["parameters"]
-    assert create["required"] == ["title", "document_type"]
+    assert create["required"] == ["kind", "title", "content", "addressee"]
     more = {
         item["function"]["name"]: item
         for item in tool_definitions(

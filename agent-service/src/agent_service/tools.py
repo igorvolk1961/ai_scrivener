@@ -447,13 +447,18 @@ TOOL_SCHEMAS: dict[str, dict[str, Any]] = {
     "create_document": {
         "type": "object",
         "properties": {
+            "kind": {"type": "string", "description": "Вид документа, например «Приказ»."},
             "title": {"type": "string"},
             "content": {"type": "string"},
-            "document_type": {"type": "string"},
             "addressee": {"type": "string"},
+            "position": {"type": "string"},
+            "positions": {"type": "array", "items": {"type": "string"}},
+            "used_template": {"type": "string"},
+            "added_sections": {"type": "boolean"},
+            "document_type": {"type": "string"},
             "basis_id": DOCUMENT_ID,
         },
-        "required": ["title", "document_type"],
+        "required": ["kind", "title", "content", "addressee"],
     },
     "approve_document": {
         "type": "object",
