@@ -364,5 +364,22 @@
         </for>
       </visible>
     </visibilityFragments>
+    <visibilityFragments>
+      <command>DataProcessor.АИС_МоиЗапросыИИ.StandardCommand.Open</command>
+      <visible>
+        <for>
+          <value>true</value>
+          <role>Role.ПолныеПрава</role>
+        </for>
+        <for>
+          <value>true</value>
+          <role>Role.АИС_АдминистраторСистемы</role>
+        </for>
+        <for>
+          <value>true</value>
+          <role>Role.АИС_ДолжностноеЛицо</role>
+        </for>
+      </visible>
+    </visibilityFragments>
   </commandsVisibility>
 </cmi:CommandInterface>

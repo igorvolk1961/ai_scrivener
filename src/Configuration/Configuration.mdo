@@ -92,6 +92,7 @@
   <dataProcessors>DataProcessor.АИС_ПапкиДокументов</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ВопросПоБазеЗнаний</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ГруппыФункцийИИ</dataProcessors>
+  <dataProcessors>DataProcessor.АИС_МоиЗапросыИИ</dataProcessors>
   <dataProcessors>DataProcessor.АИС_АдминистрированиеИИ</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ИндексацияДокументов</dataProcessors>
   <subsystems>Subsystem.АИС_Сервис</subsystems>

@@ -13,6 +13,7 @@
   <content>DataProcessor.АИС_ПапкиДокументов</content>
   <content>DataProcessor.АИС_АдминистрированиеИИ</content>
   <content>DataProcessor.АИС_ГруппыФункцийИИ</content>
+  <content>DataProcessor.АИС_МоиЗапросыИИ</content>
   <content>DataProcessor.АИС_ИндексацияДокументов</content>
   <content>DataProcessor.АИС_ВопросПоБазеЗнаний</content>
   <content>CommonCommand.АИС_ВопросПоБазеЗнаний</content>
