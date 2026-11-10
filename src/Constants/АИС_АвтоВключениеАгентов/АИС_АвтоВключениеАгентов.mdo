@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="45ae5940-38d5-4dc9-917e-b0e0674b2fcf">
+  <producedTypes>
+    <managerType typeId="f3cbe451-8bf1-43f7-9d92-ea15b0827155" valueTypeId="64feb1c8-be85-4c94-b0cf-f57b0bdbc825"/>
+    <valueManagerType typeId="b018ab3d-b922-4048-8507-f405c5c7b505" valueTypeId="561ff762-d71b-4b8d-9743-0f21e8362fea"/>
+    <valueKeyType typeId="31ce050b-831a-48d1-8dee-65bdc0171d6f" valueTypeId="ef264db3-f55f-40dd-9e32-74b1a936befe"/>
+  </producedTypes>
+  <name>АИС_АвтоВключениеАгентов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Автовключение агентов</value>
+  </synonym>
+  <comment>Автоматически включать агента после успешной генерации промпта.</comment>
+  <type>
+    <types>Boolean</types>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

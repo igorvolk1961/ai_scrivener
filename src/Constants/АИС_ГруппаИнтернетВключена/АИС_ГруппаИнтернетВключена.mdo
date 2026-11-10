@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="307b88ee-7522-4d57-97b7-6d439ab7abbd">
+  <producedTypes>
+    <managerType typeId="dad7f4cc-05ac-44f0-a054-ece716154386" valueTypeId="4e573886-a5fa-4166-908e-5a988415655d"/>
+    <valueManagerType typeId="149b5109-cb03-4e34-8a73-3f3d0f99c249" valueTypeId="9a113a7a-4aff-43df-9d5c-d03285cfd177"/>
+    <valueKeyType typeId="2680725f-f86d-4686-9080-16b36a5a052f" valueTypeId="dd3eadd5-8e31-4634-a73f-e38b8d051d12"/>
+  </producedTypes>
+  <name>АИС_ГруппаИнтернетВключена</name>
+  <synonym>
+    <key>ru</key>
+    <value>Группа «Интернет» включена</value>
+  </synonym>
+  <comment>Разрешает интернет-поиск и сохранение внешних образцов.</comment>
+  <type>
+    <types>Boolean</types>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

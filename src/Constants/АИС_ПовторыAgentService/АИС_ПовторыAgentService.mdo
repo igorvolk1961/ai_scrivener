@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="3eb2b29f-697a-4090-9fec-7584b218e18e">
+  <producedTypes>
+    <managerType typeId="bcdf2730-aee8-44cb-b865-c6fadee8338a" valueTypeId="a8b26fc1-5430-4f0d-8bac-c27ca98d67ef"/>
+    <valueManagerType typeId="7e0f0ca6-7aba-4781-853c-10dae468b5f9" valueTypeId="f81dd3f5-4b87-4d7e-a95b-0a0648504e0d"/>
+    <valueKeyType typeId="df89a54b-56ad-4c31-8250-91c4243f3dd3" valueTypeId="a378bde8-7267-4ce5-9497-6ee05834ebe5"/>
+  </producedTypes>
+  <name>АИС_ПовторыAgentService</name>
+  <synonym>
+    <key>ru</key>
+    <value>Повторы agent-service</value>
+  </synonym>
+  <comment>Число повторов при сетевой ошибке или 5xx.</comment>
+  <type>
+    <types>Number</types>
+    <numberQualifiers>
+      <precision>2</precision>
+      <scale>0</scale>
+    </numberQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="c659f0c7-6fc0-4ad0-982a-07404c936ee3">
+  <producedTypes>
+    <managerType typeId="3562d417-541a-4ab3-995e-af4a08414c23" valueTypeId="5b8eb8af-bc6c-4153-8757-a73d12c6649b"/>
+    <valueManagerType typeId="8691b97a-697e-4c11-8d27-914537e4fce9" valueTypeId="8c1d5161-5d77-4cf0-bfb8-6ef8b5c443f7"/>
+    <valueKeyType typeId="19c736e6-119c-43e7-b2ab-8108f9431e53" valueTypeId="177e10a7-9a0e-46a1-bef3-77cbb84f4ffd"/>
+  </producedTypes>
+  <name>АИС_ГруппаЗамечанияВключена</name>
+  <synonym>
+    <key>ru</key>
+    <value>Группа «Замечания» включена</value>
+  </synonym>
+  <comment>Разрешает работу с замечаниями и маршрутизацией.</comment>
+  <type>
+    <types>Boolean</types>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

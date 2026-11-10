@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="cf0a485a-6eaf-4b5c-a0b7-a86d3ed5a06c">
+  <producedTypes>
+    <managerType typeId="7ad683b1-16ea-467f-9084-6bad0b943c53" valueTypeId="7ac442ca-be70-46a2-b785-46059b351559"/>
+    <valueManagerType typeId="6faa7234-188a-4d3e-827c-516dc8d81bbc" valueTypeId="e1284a5c-8917-42ec-a167-2d590b9fade5"/>
+    <valueKeyType typeId="812734ac-00b7-4571-9559-6e0c3e2763db" valueTypeId="86ec74a5-1d94-4011-bd7c-404967aa2370"/>
+  </producedTypes>
+  <name>АИС_ГруппаКорпусЗнанийВключена</name>
+  <synonym>
+    <key>ru</key>
+    <value>Группа «Корпус знаний» включена</value>
+  </synonym>
+  <comment>Разрешает скачивание и регистрацию материалов корпуса.</comment>
+  <type>
+    <types>Boolean</types>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

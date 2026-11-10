@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="d29fde4d-13a8-4a19-8d56-922d035f8ff3">
+  <producedTypes>
+    <managerType typeId="a2eebeb4-2a1e-4fea-9e89-c4f7266cea83" valueTypeId="22218798-2719-4b7f-8318-66afc27ef058"/>
+    <valueManagerType typeId="481b2c45-5636-46d0-90e0-4d691722fabf" valueTypeId="bbbfbb4e-5627-4bcc-96a0-0b9ebdc398e1"/>
+    <valueKeyType typeId="2a65d010-2146-46f9-bb72-841747b597cd" valueTypeId="19c16194-8e73-415e-b134-b25f0eb62aed"/>
+  </producedTypes>
+  <name>АИС_ГруппаПоискЗнанияВключена</name>
+  <synonym>
+    <key>ru</key>
+    <value>Группа «Поиск и знания» включена</value>
+  </synonym>
+  <comment>Разрешает RAG-поиск, чек-листы и должностные инструкции.</comment>
+  <type>
+    <types>Boolean</types>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

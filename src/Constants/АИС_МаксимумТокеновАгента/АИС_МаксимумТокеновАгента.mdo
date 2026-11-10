@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="22d4b6a0-42c7-463e-a164-47d1b35caac0">
+  <producedTypes>
+    <managerType typeId="1697a8b0-e90a-47b2-9eb7-7f4ec7423b7e" valueTypeId="4655119a-3ffd-49b7-8f63-8433e4b2a77c"/>
+    <valueManagerType typeId="5c589adc-bea4-453c-9798-0cc36ed408cd" valueTypeId="b2d3932a-8775-42ac-b578-f98dec50f227"/>
+    <valueKeyType typeId="0bc10f92-2785-4a7b-8b77-c6d224541729" valueTypeId="a3dfec89-5c85-4d91-ab5e-7e9e51099ccd"/>
+  </producedTypes>
+  <name>АИС_МаксимумТокеновАгента</name>
+  <synonym>
+    <key>ru</key>
+    <value>Максимум токенов ИИ-агента</value>
+  </synonym>
+  <comment>Максимальное число токенов ответа LLM для ИИ-агента.</comment>
+  <type>
+    <types>Number</types>
+    <numberQualifiers>
+      <precision>6</precision>
+      <scale>0</scale>
+    </numberQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="b998106e-802b-4f44-9bed-1e6cc9ce8c16">
+  <name>АИС_КлиентВнешнегоСервиса</name>
+  <synonym>
+    <key>ru</key>
+    <value>Клиент внешних ИИ-сервисов</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>false</externalConnection>
+  <clientOrdinaryApplication>false</clientOrdinaryApplication>
+  <serverCall>false</serverCall>
+</mdclass:CommonModule>

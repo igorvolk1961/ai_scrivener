@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="34c81534-7b27-44e0-852b-b86e622d4387">
+  <producedTypes>
+    <managerType typeId="19581fb4-da7a-4737-9670-495ee69e41b2" valueTypeId="43407eb7-e053-403c-8696-f1333dfaae73"/>
+    <valueManagerType typeId="7e722268-380d-4d49-a0d5-064a6d7deba9" valueTypeId="5236645d-7fcb-4f89-9367-e08a66b4e48e"/>
+    <valueKeyType typeId="adb1c756-ca91-45d9-8570-fb9eb8550e69" valueTypeId="26336d1d-0560-4453-919a-009999d5ce88"/>
+  </producedTypes>
+  <name>АИС_ТокенSearchService</name>
+  <synonym>
+    <key>ru</key>
+    <value>Токен search-service</value>
+  </synonym>
+  <comment>Service-token для запросов к search-service.</comment>
+  <type>
+    <types>String</types>
+    <stringQualifiers>
+      <length>200</length>
+    </stringQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

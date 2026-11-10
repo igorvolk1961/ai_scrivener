@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="30d11ed9-2959-45f6-be06-5982c1b36146">
+  <producedTypes>
+    <managerType typeId="43f5228d-b4fa-46c1-bc5f-d1c8a09f640b" valueTypeId="cdb1cc95-cd0f-485e-a769-7aa09dc108ec"/>
+    <valueManagerType typeId="fa95c906-fb6c-4bc0-b0e4-6c023c75d2ec" valueTypeId="b9cbc81b-558e-4967-adff-8b786d549ca3"/>
+    <valueKeyType typeId="46bcc98c-97c0-4318-a7e7-adf8bcf38813" valueTypeId="befb9b90-3e20-4af7-8731-5c8be88730e9"/>
+  </producedTypes>
+  <name>АИС_АгентВключен</name>
+  <synonym>
+    <key>ru</key>
+    <value>ИИ-агент включен</value>
+  </synonym>
+  <comment>Мастер-выключатель обработки задач ИИ-агентами.</comment>
+  <type>
+    <types>Boolean</types>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

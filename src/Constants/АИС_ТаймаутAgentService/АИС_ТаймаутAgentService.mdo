@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="445abd7f-4f97-4290-aebc-15bb467ff341">
+  <producedTypes>
+    <managerType typeId="6f39860e-361b-4221-ae3f-4642df04acae" valueTypeId="9e052085-d020-46db-adc2-441d3abd487c"/>
+    <valueManagerType typeId="a424478f-0365-4307-a35b-5ebe3e45c5ed" valueTypeId="e13e6721-f081-4275-8997-01b587e16d2f"/>
+    <valueKeyType typeId="5c69e52c-8854-4eb7-852f-7ff7819298bb" valueTypeId="9d31daf6-f763-4216-b47b-7577c90b4f6c"/>
+  </producedTypes>
+  <name>АИС_ТаймаутAgentService</name>
+  <synonym>
+    <key>ru</key>
+    <value>Таймаут agent-service, сек</value>
+  </synonym>
+  <comment>Таймаут HTTP-запроса к agent-service в секундах.</comment>
+  <type>
+    <types>Number</types>
+    <numberQualifiers>
+      <precision>5</precision>
+      <scale>0</scale>
+    </numberQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

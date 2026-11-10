@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="027d5395-22c2-46bf-bdf3-ecfd7554bb17">
+  <producedTypes>
+    <managerType typeId="8f939bb7-b189-42f5-a17a-3a2bc8ee22a8" valueTypeId="cfc3cce3-e458-4446-8263-dae821b33548"/>
+    <valueManagerType typeId="7d0a115d-7704-417c-be7f-dd597b5a6f8d" valueTypeId="03924c41-5f1a-4cff-8e0e-7e54afa8cec4"/>
+    <valueKeyType typeId="2353ef4f-ab8d-4918-89e7-771ce45b8f10" valueTypeId="801adac3-3a9a-4306-871c-fb9e740afe7c"/>
+  </producedTypes>
+  <name>АИС_ПовторыSearchService</name>
+  <synonym>
+    <key>ru</key>
+    <value>Повторы search-service</value>
+  </synonym>
+  <comment>Число повторов при сетевой ошибке или 5xx.</comment>
+  <type>
+    <types>Number</types>
+    <numberQualifiers>
+      <precision>2</precision>
+      <scale>0</scale>
+    </numberQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="30f15cde-4a0c-4bda-b592-9009b58e906d">
+  <producedTypes>
+    <managerType typeId="edd0cde6-45dc-481f-82a3-dffd72164952" valueTypeId="31c05048-deda-4026-ac06-a027faa5b9be"/>
+    <valueManagerType typeId="add9fa45-8919-476e-b26a-a86cb3669a94" valueTypeId="9b24759c-ab76-4d46-9927-642a8d53d9e9"/>
+    <valueKeyType typeId="fff1c924-8b2d-4caf-85c7-b35aad9a89ef" valueTypeId="ffb1cb41-8f02-4a1d-82fa-a11fc9c130d1"/>
+  </producedTypes>
+  <name>АИС_ГруппаПерсоналОргструктураВключена</name>
+  <synonym>
+    <key>ru</key>
+    <value>Группа «Персонал и оргструктура» включена</value>
+  </synonym>
+  <comment>Разрешает найм, зарплатные решения и оргструктуру.</comment>
+  <type>
+    <types>Boolean</types>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

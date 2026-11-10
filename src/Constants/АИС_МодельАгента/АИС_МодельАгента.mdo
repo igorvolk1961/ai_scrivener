@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="7b7b3205-ce46-4a16-9194-cd4950dedc62">
+  <producedTypes>
+    <managerType typeId="7838197d-fb88-433a-818e-7d85fd5bf68c" valueTypeId="5374edef-47f4-484d-84e7-3f081129720a"/>
+    <valueManagerType typeId="7891837e-ff5d-456e-a31a-0fd7a70de457" valueTypeId="a4067c7f-d0a7-426c-bf74-04e8c9ba0c06"/>
+    <valueKeyType typeId="00f4b0fb-dd0d-4b0a-a4b8-44200ca4de51" valueTypeId="475ecbd8-4a41-4c78-9550-7a3b5a9ae9a5"/>
+  </producedTypes>
+  <name>АИС_МодельАгента</name>
+  <synonym>
+    <key>ru</key>
+    <value>Модель ИИ-агента</value>
+  </synonym>
+  <comment>Модель LLM, передаваемая в agent-service.</comment>
+  <type>
+    <types>String</types>
+    <stringQualifiers>
+      <length>50</length>
+    </stringQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

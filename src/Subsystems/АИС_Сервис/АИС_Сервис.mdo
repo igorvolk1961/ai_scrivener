@@ -12,6 +12,7 @@
   <content>DataProcessor.АИС_Шаблоны</content>
   <content>DataProcessor.АИС_ПапкиДокументов</content>
   <content>DataProcessor.АИС_АдминистрированиеИИ</content>
+  <content>DataProcessor.АИС_ГруппыФункцийИИ</content>
   <content>DataProcessor.АИС_ИндексацияДокументов</content>
   <content>DataProcessor.АИС_ВопросПоБазеЗнаний</content>
   <content>CommonCommand.АИС_ВопросПоБазеЗнаний</content>
@@ -27,6 +28,9 @@
   <content>Catalog.АИС_ЧекЛисты</content>
   <content>Catalog.АИС_ПунктыЧекЛиста</content>
   <content>Catalog.АИС_ЧерновикиДокументов</content>
+  <content>Catalog.АИС_НастройкиАгента</content>
+  <content>Catalog.АИС_ЗапускиАгентов</content>
+  <content>Catalog.АИС_ВзаимодействияИИ</content>
   <content>Catalog.АИС_НастройкиАвтоодобрения</content>
   <content>InformationRegister.АИС_НормативыИИ</content>
   <content>InformationRegister.АИС_ИсторияДействийИИ</content>

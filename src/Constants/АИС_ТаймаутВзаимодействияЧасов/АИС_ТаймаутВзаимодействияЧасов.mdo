@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="5b1d2eb3-bb80-4475-a83b-de4d4bb146e5">
+  <producedTypes>
+    <managerType typeId="006556d8-3a3f-4a53-b1a1-29eb7edd8c4c" valueTypeId="7073bd5e-3da3-4041-a5bf-5584dbe6dd77"/>
+    <valueManagerType typeId="1da59249-2c4e-49c6-a3d1-d5071d4d65f2" valueTypeId="7bbeb505-76a0-43d1-ad06-cd65b86f7b0f"/>
+    <valueKeyType typeId="126a7902-d77e-4908-b0b7-f9333f3c1b3f" valueTypeId="464df08a-9af5-4d55-9f19-4e08fde7ed21"/>
+  </producedTypes>
+  <name>АИС_ТаймаутВзаимодействияЧасов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Таймаут запроса ИИ, часов</value>
+  </synonym>
+  <comment>Срок ожидания ответа пользователя на запрос ИИ.</comment>
+  <type>
+    <types>Number</types>
+    <numberQualifiers>
+      <precision>3</precision>
+      <scale>0</scale>
+    </numberQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

@@ -60,11 +60,15 @@
   <commonCommands>CommonCommand.АИС_ОпубликоватьВRAG</commonCommands>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
   <commonModules>CommonModule.АИС_ИнтеграцияСRAG</commonModules>
+  <commonModules>CommonModule.АИС_КлиентВнешнегоСервиса</commonModules>
+  <commonModules>CommonModule.АИС_ИнтеграцияСАгентом</commonModules>
+  <commonModules>CommonModule.АИС_ИнтеграцияСПоиском</commonModules>
   <commonModules>CommonModule.АИС_ПраваДоступа</commonModules>
   <commonModules>CommonModule.АИС_ИндексацияДокументов</commonModules>
   <commonModules>CommonModule.АИС_ОтветПоБазеЗнаний</commonModules>
   <commonModules>CommonModule.АИС_КорпусЗнаний</commonModules>
   <commonModules>CommonModule.АИС_Сотрудники</commonModules>
+  <commonModules>CommonModule.АИС_АгентИИ</commonModules>
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
   <commonModules>CommonModule.АИС_ПапкиДокументов</commonModules>
   <commonModules>CommonModule.АИС_РазделыДокументов</commonModules>
@@ -85,9 +89,31 @@
   <dataProcessors>DataProcessor.АИС_Шаблоны</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ПапкиДокументов</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ВопросПоБазеЗнаний</dataProcessors>
+  <dataProcessors>DataProcessor.АИС_ГруппыФункцийИИ</dataProcessors>
   <dataProcessors>DataProcessor.АИС_АдминистрированиеИИ</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ИндексацияДокументов</dataProcessors>
   <subsystems>Subsystem.АИС_Сервис</subsystems>
+  <constants>Constant.АИС_АдресAgentService</constants>
+  <constants>Constant.АИС_ТокенAgentService</constants>
+  <constants>Constant.АИС_ТаймаутAgentService</constants>
+  <constants>Constant.АИС_ПовторыAgentService</constants>
+  <constants>Constant.АИС_МодельАгента</constants>
+  <constants>Constant.АИС_ТемператураАгента</constants>
+  <constants>Constant.АИС_МаксимумТокеновАгента</constants>
+  <constants>Constant.АИС_АдресSearchService</constants>
+  <constants>Constant.АИС_ТокенSearchService</constants>
+  <constants>Constant.АИС_ТаймаутSearchService</constants>
+  <constants>Constant.АИС_ПовторыSearchService</constants>
+  <constants>Constant.АИС_АгентВключен</constants>
+  <constants>Constant.АИС_АвтоВключениеАгентов</constants>
+  <constants>Constant.АИС_ГруппаДокументыВключена</constants>
+  <constants>Constant.АИС_ГруппаПоискЗнанияВключена</constants>
+  <constants>Constant.АИС_ГруппаИнтернетВключена</constants>
+  <constants>Constant.АИС_ГруппаПерсоналОргструктураВключена</constants>
+  <constants>Constant.АИС_ГруппаРазделыДокументовВключена</constants>
+  <constants>Constant.АИС_ГруппаЗамечанияВключена</constants>
+  <constants>Constant.АИС_ГруппаКорпусЗнанийВключена</constants>
+  <constants>Constant.АИС_ТаймаутВзаимодействияЧасов</constants>
   <catalogs>Catalog.АИС_ТипыДействий</catalogs>
   <catalogs>Catalog.АИС_ТипыТриггеров</catalogs>
   <catalogs>Catalog.АИС_ПромптПараметры</catalogs>
@@ -104,6 +130,9 @@
   <catalogs>Catalog.АИС_ЧекЛисты</catalogs>
   <catalogs>Catalog.АИС_ПунктыЧекЛиста</catalogs>
   <catalogs>Catalog.АИС_ЧерновикиДокументов</catalogs>
+  <catalogs>Catalog.АИС_НастройкиАгента</catalogs>
+  <catalogs>Catalog.АИС_ЗапускиАгентов</catalogs>
+  <catalogs>Catalog.АИС_ВзаимодействияИИ</catalogs>
   <catalogs>Catalog.АИС_НастройкиАвтоодобрения</catalogs>
   <catalogs>Catalog.АИС_ПравилаАвтоодобренияПоТипам</catalogs>
   <catalogs>Catalog.АИС_РазрешенныеАвторыАвтоодобрения</catalogs>
@@ -127,6 +156,11 @@
   <enums>Enum.АИС_ИсточникиПривязкиДокументов</enums>
   <enums>Enum.АИС_СостоянияЗапросовОжидания</enums>
   <enums>Enum.АИС_ТипыИндексируемыхДокументов</enums>
+  <enums>Enum.АИС_ГруппыФункцийИИ</enums>
+  <enums>Enum.АИС_СостоянияЗапусковАгента</enums>
+  <enums>Enum.АИС_СостоянияВзаимодействийИИ</enums>
+  <enums>Enum.АИС_ВидыВзаимодействийИИ</enums>
+  <enums>Enum.АИС_СтатусыПромптаАгента</enums>
   <informationRegisters>InformationRegister.АИС_КонтекстЗадачИИ</informationRegisters>
   <informationRegisters>InformationRegister.АИС_СостоянияПлейсхолдеров</informationRegisters>
   <informationRegisters>InformationRegister.АИС_НормативыИИ</informationRegisters>

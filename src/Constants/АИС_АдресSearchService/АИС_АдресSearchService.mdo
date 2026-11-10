@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="b5aa8aa2-b5ad-4da3-92da-95c6e9b5c17b">
+  <producedTypes>
+    <managerType typeId="43a84184-1b5a-48c6-a898-f36c050d2228" valueTypeId="22919c49-ebf9-459f-a300-318dc65b8aee"/>
+    <valueManagerType typeId="2bf550a4-a412-43b2-8e32-a271a92eb4e1" valueTypeId="8229dce9-d5eb-4653-997e-75d539dc5872"/>
+    <valueKeyType typeId="12b3ef1a-543f-4d05-8a3f-90d70d0bd92d" valueTypeId="b25ccc20-0719-4eac-8751-588846e66212"/>
+  </producedTypes>
+  <name>АИС_АдресSearchService</name>
+  <synonym>
+    <key>ru</key>
+    <value>Адрес search-service</value>
+  </synonym>
+  <comment>Базовый URL внешнего search-service.</comment>
+  <type>
+    <types>String</types>
+    <stringQualifiers>
+      <length>200</length>
+    </stringQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

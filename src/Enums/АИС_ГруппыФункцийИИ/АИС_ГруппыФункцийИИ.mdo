@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="5ffab80e-600e-4847-a73e-7ddba2d6f884">
+  <producedTypes>
+    <refType typeId="2eae6b0a-8b28-4baa-86bd-3eb3f9afb7d8" valueTypeId="eb610415-295d-4dfa-a869-29ff53614940"/>
+    <listType typeId="55308112-5fce-4a91-a530-98bf3910d942" valueTypeId="401e1392-4155-4d99-8f48-253b8168a27f"/>
+    <managerType typeId="38174f60-c815-465a-94ac-304b076e230f" valueTypeId="ee82ec94-421c-4545-aa55-f5a13380f102"/>
+  </producedTypes>
+  <name>АИС_ГруппыФункцийИИ</name>
+  <synonym>
+    <key>ru</key>
+    <value>Группы функций ИИ-агента</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="6dcff476-eebc-4fd3-be5b-08825b5234ba">
+    <name>Документы</name>
+    <synonym>
+      <key>ru</key>
+      <value>Документы</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="d37729c4-07fd-4128-a30d-d0ee454f141f">
+    <name>ПоискЗнания</name>
+    <synonym>
+      <key>ru</key>
+      <value>Поиск и знания</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="17d51e1a-d2ce-47a6-8ada-3bf619d4d08d">
+    <name>Интернет</name>
+    <synonym>
+      <key>ru</key>
+      <value>Интернет</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="10ccb306-ba3d-4e5d-83eb-1a60e6358380">
+    <name>ПерсоналОргструктура</name>
+    <synonym>
+      <key>ru</key>
+      <value>Персонал и оргструктура</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="e2b77c3a-c120-463d-91c9-dd0da0e2d6b2">
+    <name>РазделыДокументов</name>
+    <synonym>
+      <key>ru</key>
+      <value>Разделы документов</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="d7158309-f59f-4910-b324-d3788ca7eb94">
+    <name>Замечания</name>
+    <synonym>
+      <key>ru</key>
+      <value>Замечания</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="f1ea5e46-0715-4124-994b-ce9f30aac329">
+    <name>КорпусЗнаний</name>
+    <synonym>
+      <key>ru</key>
+      <value>Корпус знаний</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

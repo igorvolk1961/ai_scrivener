@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="4634d59c-b309-4a3d-994e-66c8a0c5618b">
+  <producedTypes>
+    <refType typeId="3e2d1649-2164-40d8-a676-6b0240e2cf38" valueTypeId="62424a22-02f6-4d2a-a298-ebe17d75166e"/>
+    <listType typeId="a0e42dfd-05b4-40ea-9a3d-3a8d08f14da6" valueTypeId="6b14803d-8de6-4c60-adb2-f1e194251630"/>
+    <managerType typeId="0e3a8b93-cc5a-413f-9c90-be65cd13ee11" valueTypeId="fe8272ee-669a-4483-a1bc-92a389dbf350"/>
+  </producedTypes>
+  <name>АИС_СтатусыПромптаАгента</name>
+  <synonym>
+    <key>ru</key>
+    <value>Статусы промпта агента</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="75b53f68-bfc4-4ce4-be28-a3b21104bd23">
+    <name>НеСформирован</name>
+    <synonym>
+      <key>ru</key>
+      <value>Не сформирован</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="ef568bca-7052-4b61-9899-c7a171ef0381">
+    <name>Черновик</name>
+    <synonym>
+      <key>ru</key>
+      <value>Черновик</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="8ad5cd28-33a0-4bbd-ae93-4e7abe604a93">
+    <name>Сформирован</name>
+    <synonym>
+      <key>ru</key>
+      <value>Сформирован</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="7326779c-eb77-4be2-89de-6ef652b9fbd6">
+    <name>Ошибка</name>
+    <synonym>
+      <key>ru</key>
+      <value>Ошибка</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

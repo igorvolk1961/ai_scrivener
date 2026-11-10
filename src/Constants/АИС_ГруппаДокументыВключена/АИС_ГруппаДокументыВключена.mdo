@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="fed20816-29e9-47a7-ae32-e93020bac009">
+  <producedTypes>
+    <managerType typeId="c61632de-a205-427f-9153-a8cc035b7527" valueTypeId="6803aff7-6fc1-4e54-99bb-77e12f59bcef"/>
+    <valueManagerType typeId="7ac457fb-f0fc-4538-b73f-3d824be7f91e" valueTypeId="66386cb3-07cc-4099-bc7c-a7f72db067e0"/>
+    <valueKeyType typeId="d2b4b6cd-659e-421e-88ee-f31634ced105" valueTypeId="0836cf1b-1ffe-4462-a758-09b1125ecfaa"/>
+  </producedTypes>
+  <name>АИС_ГруппаДокументыВключена</name>
+  <synonym>
+    <key>ru</key>
+    <value>Группа «Документы» включена</value>
+  </synonym>
+  <comment>Разрешает агенту инструменты работы с документами.</comment>
+  <type>
+    <types>Boolean</types>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

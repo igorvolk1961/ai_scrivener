@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="d76b8252-e1a8-4e59-af49-3326558c1a4f">
+  <name>АИС_ИнтеграцияСАгентом</name>
+  <synonym>
+    <key>ru</key>
+    <value>Интеграция с agent-service</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>false</externalConnection>
+  <clientOrdinaryApplication>false</clientOrdinaryApplication>
+  <serverCall>false</serverCall>
+</mdclass:CommonModule>

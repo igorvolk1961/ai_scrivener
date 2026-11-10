@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="81b11598-19d8-4f80-b637-ef226ce85939">
+  <producedTypes>
+    <managerType typeId="474ce4df-90cc-4dcc-8043-f4faee4482ab" valueTypeId="d81b38c9-acf6-495d-b044-d73e1ef117a7"/>
+    <valueManagerType typeId="877c3be6-c118-44df-ab52-ea4c3da08f33" valueTypeId="003e3ce8-d9e2-4201-9cdf-67252e55b5bd"/>
+    <valueKeyType typeId="6969fdfb-3c86-4154-8302-4a25b2ae4b53" valueTypeId="12aa01ce-1e47-4195-9dc7-1c677c79d0c8"/>
+  </producedTypes>
+  <name>АИС_ТемператураАгента</name>
+  <synonym>
+    <key>ru</key>
+    <value>Температура ИИ-агента</value>
+  </synonym>
+  <comment>Температура генерации LLM для ИИ-агента.</comment>
+  <type>
+    <types>Number</types>
+    <numberQualifiers>
+      <precision>3</precision>
+      <scale>2</scale>
+    </numberQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

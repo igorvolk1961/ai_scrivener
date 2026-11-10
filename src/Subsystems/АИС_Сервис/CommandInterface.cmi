@@ -105,6 +105,19 @@
       </visible>
     </visibilityFragments>
     <visibilityFragments>
+      <command>DataProcessor.АИС_ГруппыФункцийИИ.StandardCommand.Open</command>
+      <visible>
+        <for>
+          <value>true</value>
+          <role>Role.ПолныеПрава</role>
+        </for>
+        <for>
+          <value>true</value>
+          <role>Role.АИС_АдминистраторСистемы</role>
+        </for>
+      </visible>
+    </visibilityFragments>
+    <visibilityFragments>
       <command>CommonCommand.АИС_ОпубликоватьВRAG</command>
       <visible>
         <for>

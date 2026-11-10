@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="f5784bd8-5f53-467d-9c80-300be5c83be6">
+  <producedTypes>
+    <refType typeId="dc0e965a-1835-4b3b-9507-28eef1cea771" valueTypeId="f5c78bf5-dfc6-4c87-a344-fec9c49ed146"/>
+    <listType typeId="94c6d661-f354-4c9b-8fe1-5974669778b5" valueTypeId="ccad0b31-a7db-490b-bc77-291de6608c49"/>
+    <managerType typeId="990e103d-c716-42ed-b7a5-c48f0f6bd615" valueTypeId="4da17f73-90d3-448a-a5ac-ea7bb0b9b291"/>
+  </producedTypes>
+  <name>АИС_ВидыВзаимодействийИИ</name>
+  <synonym>
+    <key>ru</key>
+    <value>Виды взаимодействий ИИ</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="81713bf3-7913-401c-a244-f28f28c23cda">
+    <name>ОдобрениеДействий</name>
+    <synonym>
+      <key>ru</key>
+      <value>Одобрение действий</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="bf2b9d0a-8f36-4f0d-a309-fcc9d87b68e0">
+    <name>Уточнение</name>
+    <synonym>
+      <key>ru</key>
+      <value>Уточнение</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="3e4cabca-1e21-42b6-8f18-b63476626b0c">
+    <name>ВопросыОбразца</name>
+    <synonym>
+      <key>ru</key>
+      <value>Вопросы образца</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="9bc3aa9f-74e2-41f6-9587-cae3baf3e5c1">
+    <name>ВопросРешение</name>
+    <synonym>
+      <key>ru</key>
+      <value>Вопрос решения</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="1380a6d8-e79a-4474-a004-baa83c4da91a">
+    <name>СогласованиеЧерновика</name>
+    <synonym>
+      <key>ru</key>
+      <value>Согласование черновика</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

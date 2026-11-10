@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="f6333aea-9d30-4f75-8c61-d7b28a4612e3">
+  <producedTypes>
+    <managerType typeId="a0f3cc6b-2162-47bd-88e1-f2800a441091" valueTypeId="9dac7364-ff13-4c01-b36e-982b7587a05c"/>
+    <valueManagerType typeId="b0140b81-10e5-4158-a929-8438e32db9a4" valueTypeId="be333f3b-8524-4c47-8cfd-8f5b1bd91b90"/>
+    <valueKeyType typeId="dbbd1de6-18ab-4e4f-94df-22c5fd31e630" valueTypeId="39673a34-7c90-4870-9214-e09a568daf5a"/>
+  </producedTypes>
+  <name>АИС_ГруппаРазделыДокументовВключена</name>
+  <synonym>
+    <key>ru</key>
+    <value>Группа «Разделы документов» включена</value>
+  </synonym>
+  <comment>Разрешает работу с деревом разделов документа.</comment>
+  <type>
+    <types>Boolean</types>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>
