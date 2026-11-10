@@ -25,3 +25,19 @@ class StepRequest(BaseModel):
     llm: LlmOptions
     allowed_tools: list[str] = Field(default_factory=list)
     policy: dict[str, Any] = Field(default_factory=dict)
+
+
+class CompleteRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    system_prompt: str = ""
+    user_prompt: str = Field(min_length=1)
+    model: str = Field(default="deepseek-chat", min_length=1, max_length=100)
+    temperature: float = Field(default=0.2, ge=0.0, le=2.0)
+    max_tokens: int = Field(default=2000, ge=1, le=100000)
+    json_mode: bool = False
+
+
+class CompleteResponse(BaseModel):
+    content: str
+    model: str

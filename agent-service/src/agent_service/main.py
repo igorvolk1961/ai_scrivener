@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 
 from agent_service.config import Settings, load_settings
 from agent_service.llm import LlmClient, LlmError
-from agent_service.models import StepRequest
+from agent_service.models import CompleteRequest, CompleteResponse, StepRequest
 from agent_service.prompts import SYSTEM_PROMPT
 from agent_service.tools import tool_definitions, validate_tool_name
 
@@ -112,6 +112,41 @@ def create_app(
             "provider": "openai-compatible",
             "key_configured": bool(current.llm_api_key),
         }
+
+    @app.post("/v1/llm/complete", response_model=None)
+    async def complete(
+        request: Request,
+        payload: CompleteRequest,
+        x_service_token: Annotated[str | None, Header()] = None,
+    ) -> CompleteResponse | JSONResponse:
+        current: Settings = request.app.state.settings
+        if not _token_valid(current, x_service_token):
+            return JSONResponse(status_code=401, content={"detail": "invalid service token"})
+        system_prompt = payload.system_prompt.strip()
+        if payload.json_mode:
+            system_prompt += "\n\nВерни только валидный JSON без markdown."
+        client: LlmClient = request.app.state.llm
+        try:
+            data = await client.complete(
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": payload.user_prompt},
+                ],
+                tools=[],
+                model=payload.model,
+                temperature=payload.temperature,
+                max_tokens=payload.max_tokens,
+            )
+        except LlmError as exc:
+            return JSONResponse(status_code=502, content={"detail": str(exc)})
+        message = _parse_response(data)
+        content = message.get("content") if message else None
+        if not isinstance(content, str) or not content.strip():
+            return JSONResponse(status_code=502, content={"detail": "empty llm response"})
+        return CompleteResponse(
+            content=content,
+            model=str(data.get("model") or payload.model),
+        )
 
     @app.post("/v1/agent/step")
     async def step(

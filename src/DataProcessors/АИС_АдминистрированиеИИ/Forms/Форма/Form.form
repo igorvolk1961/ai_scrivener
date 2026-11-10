@@ -54,36 +54,6 @@
         <textEdit>true</textEdit>
       </extInfo>
     </items>
-    <items xsi:type="form:FormField">
-      <name>КлючИИ</name>
-      <id>2</id>
-      <title>
-        <key>ru</key>
-        <value>Ключ API</value>
-      </title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible>
-        <common>true</common>
-      </userVisible>
-      <dataPath xsi:type="form:DataPath">
-        <segments>КлючИИ</segments>
-      </dataPath>
-      <titleLocation>Top</titleLocation>
-      <type>InputField</type>
-      <editMode>Enter</editMode>
-      <showInHeader>true</showInHeader>
-      <headerHorizontalAlign>Left</headerHorizontalAlign>
-      <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo">
-        <width>40</width>
-        <autoMaxWidth>false</autoMaxWidth>
-        <autoMaxHeight>true</autoMaxHeight>
-        <horizontalStretch>true</horizontalStretch>
-        <passwordMode>true</passwordMode>
-        <textEdit>true</textEdit>
-      </extInfo>
-    </items>
     <visible>true</visible>
     <enabled>true</enabled>
     <userVisible>
@@ -734,22 +704,6 @@
       <types>String</types>
       <stringQualifiers>
         <length>50</length>
-      </stringQualifiers>
-    </valueType>
-    <view>
-      <common>true</common>
-    </view>
-    <edit>
-      <common>true</common>
-    </edit>
-  </attributes>
-  <attributes>
-    <name>КлючИИ</name>
-    <id>3</id>
-    <valueType>
-      <types>String</types>
-      <stringQualifiers>
-        <length>200</length>
       </stringQualifiers>
     </valueType>
     <view>

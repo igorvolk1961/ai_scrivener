@@ -24,7 +24,7 @@
 | Production (цель) | `GigaChat/GigaChat-3-Pro` | `BAAI/bge-reranker-v2-m3` (568M, foreign <1B) | соответствует правилу «без зарубежных >1B» |
 | Development | `deepseek-chat` / `deepseek-v4-flash` | `BAAI/bge-reranker-v2-m3` | дешевле; foreign >1B допустим только вне production |
 | Текущий RAG-сервис | Cloud.ru embeddings `ai-sage/Giga-Embeddings-instruct-480M` (480M) | BAAI **включён** (15, timeout 3 с) | dev-контур собран |
-| Текущий 1С | `АИС_МодельИИ` пустая → `deepseek-chat`; ключ `АИС_КлючИИ` задан | listwise только если `diagnostics.rerank=false` | dev-контур собран |
+| Текущий 1С | `АИС_МодельИИ` пустая → `deepseek-chat`; ключ LLM только в `.env` agent-service | listwise только если `diagnostics.rerank=false` | dev-контур собран |
 
 Важно: целевая production-пара **BAAI + GigaChat-3-Pro** ещё не измерена одним прогоном. Есть две ближайшие точки: `BAAI + DeepSeek answer` (dev) и `GigaChat-3-Pro listwise + answer` (production без BAAI).
 
