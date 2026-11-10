@@ -69,6 +69,7 @@
   <commonModules>CommonModule.АИС_КорпусЗнаний</commonModules>
   <commonModules>CommonModule.АИС_Сотрудники</commonModules>
   <commonModules>CommonModule.АИС_АгентИИ</commonModules>
+  <commonModules>CommonModule.АИС_ИнструментыАгента</commonModules>
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
   <commonModules>CommonModule.АИС_ПапкиДокументов</commonModules>
   <commonModules>CommonModule.АИС_РазделыДокументов</commonModules>
@@ -83,6 +84,7 @@
   <eventSubscriptions>EventSubscription.АИС_РабочаяГруппаВОчередь</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_СостояниеДокументаВОчередь</eventSubscriptions>
   <scheduledJobs>ScheduledJob.АИС_ИндексацияRAG</scheduledJobs>
+  <scheduledJobs>ScheduledJob.АИС_АгентОчередь</scheduledJobs>
   <dataProcessors>DataProcessor.АИС_ДолжностныеИнструкции</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ДокументыИАдресаты</dataProcessors>
