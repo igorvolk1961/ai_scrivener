@@ -148,10 +148,10 @@ def test_unknown_tool_rejected() -> None:
     assert response.json()["code"] == "tool_not_allowed"
 
 
-def test_token_required() -> None:
-    client, _ = make_client({"choices": []})
+def test_no_token_required() -> None:
+    client, _ = make_client({"choices": [{"message": {"content": "Готово"}}]})
     response = client.post("/v1/agent/step", json=payload())
-    assert response.status_code == 401
+    assert response.status_code == 200
 
 
 def test_health() -> None:

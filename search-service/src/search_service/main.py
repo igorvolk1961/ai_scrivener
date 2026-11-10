@@ -1,19 +1,14 @@
 from __future__ import annotations
 
-import hmac
 import time
-from typing import Annotated, Any
+from typing import Any
 
-from fastapi import FastAPI, Header, Request
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from search_service.config import Settings, load_settings
 from search_service.models import SearchRequest, normalize_result
 from search_service.provider import DuckDuckGoProvider, SearchProvider, SearchProviderError
-
-
-def _token_valid(settings: Settings, value: str | None) -> bool:
-    return value is not None and hmac.compare_digest(value, settings.service_token)
 
 
 def create_app(settings: Settings | None = None, provider: SearchProvider | None = None) -> FastAPI:
@@ -36,11 +31,8 @@ def create_app(settings: Settings | None = None, provider: SearchProvider | None
     async def search(
         request: Request,
         payload: SearchRequest,
-        x_service_token: Annotated[str | None, Header()] = None,
     ) -> JSONResponse:
         current: Settings = request.app.state.settings
-        if not _token_valid(current, x_service_token):
-            return JSONResponse(status_code=401, content={"detail": "invalid service token"})
         started = time.monotonic()
         limit = min(payload.limit, current.max_results)
         try:

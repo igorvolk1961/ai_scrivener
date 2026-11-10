@@ -16,8 +16,6 @@ class Settings:
 def load_settings() -> Settings:
     token = os.environ.get("AGENT_SERVICE_TOKEN", "").strip()
     api_key = os.environ.get("LLM_API_KEY", "").strip()
-    if not token:
-        raise RuntimeError("AGENT_SERVICE_TOKEN is not set")
     if not api_key:
         raise RuntimeError("LLM_API_KEY is not set")
     return Settings(

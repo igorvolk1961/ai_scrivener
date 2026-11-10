@@ -73,7 +73,7 @@ flowchart TB
   EDT --> PLATFORM
   PLATFORM --> FILEBASE
   PLATFORM --> PGBASE
-  PLATFORM -->|"HTTP / X-Service-Token"| RAG
+  PLATFORM -->|"HTTP / локальная сеть"| RAG
   RAG -->|"поиск / запись"| QD
   RAG -->|"embeddings"| GC
   PLATFORM -->|"окно 1С"| GST

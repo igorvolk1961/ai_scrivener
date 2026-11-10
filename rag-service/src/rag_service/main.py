@@ -3,7 +3,6 @@ from __future__ import annotations
 import base64
 import hashlib
 import logging
-import secrets
 import tempfile
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
@@ -12,11 +11,9 @@ from typing import Annotated, Any, Protocol, cast
 from urllib.parse import quote
 
 from fastapi import (
-    Depends,
     FastAPI,
     File,
     Form,
-    Header,
     HTTPException,
     Request,
     UploadFile,
@@ -91,22 +88,6 @@ class Embedder(Protocol):
     async def probe_dimension(self) -> int: ...
 
     async def close(self) -> None: ...
-
-
-def _service_token_valid(settings: ServiceSettings, value: str | None) -> bool:
-    expected = settings.service_token.get_secret_value()
-    return value is not None and secrets.compare_digest(value, expected)
-
-
-def _require_token(
-    request: Request, x_service_token: Annotated[str | None, Header()] = None
-) -> None:
-    settings: ServiceSettings = request.app.state.settings
-    if not _service_token_valid(settings, x_service_token):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="invalid service token",
-        )
 
 
 def _embedder(request: Request) -> Embedder:
@@ -474,7 +455,6 @@ def create_app(
     @app.post(
         "/v1/admin/collections",
         response_model=CreateCollectionResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def create_collection_endpoint(
         request: Request, payload: CreateCollectionRequest
@@ -494,7 +474,6 @@ def create_app(
     @app.post(
         "/v1/admin/alias",
         response_model=SwitchAliasResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def switch_alias_endpoint(
         request: Request, payload: SwitchAliasRequest
@@ -541,7 +520,6 @@ def create_app(
     @app.get(
         "/v1/documents/{source_id}/text",
         response_model=DocumentTextResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def document_text(
         request: Request,
@@ -582,7 +560,6 @@ def create_app(
 
     @app.get(
         "/v1/documents/{source_id}/file",
-        dependencies=[Depends(_require_token)],
     )
     async def document_file(request: Request, source_id: str) -> FileResponse:
         resolver: CorpusResolver = request.app.state.corpus
@@ -600,7 +577,6 @@ def create_app(
     @app.post(
         "/v1/documents/{source_id}/pdf-link",
         response_model=PdfLinkResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def document_pdf_link(request: Request, source_id: str) -> PdfLinkResponse:
         resolver: CorpusResolver = request.app.state.corpus
@@ -620,13 +596,10 @@ def create_app(
         request: Request,
         source_id: str,
         token: str | None = None,
-        x_service_token: Annotated[str | None, Header()] = None,
     ) -> FileResponse:
         settings: ServiceSettings = request.app.state.settings
-        authorized = (
-            verify_view_token(settings.service_token.get_secret_value(), source_id, token)
-            if token is not None
-            else _service_token_valid(settings, x_service_token)
+        authorized = token is not None and verify_view_token(
+            settings.service_token.get_secret_value(), source_id, token
         )
         if not authorized:
             raise HTTPException(
@@ -658,7 +631,6 @@ def create_app(
     @app.post(
         "/v1/search",
         response_model=SearchResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def search(request: Request, payload: SearchRequest) -> SearchResponse:
         resolved_parameters = _parameters(request)
@@ -683,7 +655,6 @@ def create_app(
     @app.post(
         "/v1/retrieve",
         response_model=RetrieveResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def retrieve(request: Request, payload: RetrieveRequest) -> RetrieveResponse:
         try:
@@ -704,7 +675,6 @@ def create_app(
     @app.post(
         "/v1/index/upsert",
         response_model=IndexResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def index_upsert(request: Request, payload: IndexRequest) -> IndexResponse:
         resolved_parameters = _parameters(request)
@@ -756,7 +726,6 @@ def create_app(
     @app.post(
         "/v1/index/replace",
         response_model=IndexResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def index_replace(request: Request, payload: ReplaceRequest) -> IndexResponse:
         resolved_parameters = _parameters(request)
@@ -814,7 +783,6 @@ def create_app(
     @app.post(
         "/v1/index/document",
         response_model=DocumentIndexResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def index_document(
         request: Request,
@@ -859,7 +827,6 @@ def create_app(
     @app.post(
         "/v1/index/document/base64",
         response_model=DocumentIndexResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def index_document_base64(
         request: Request,
@@ -901,7 +868,6 @@ def create_app(
     @app.post(
         "/v1/index/metadata",
         response_model=MetadataUpdateResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def index_metadata(
         request: Request,
@@ -930,7 +896,6 @@ def create_app(
     @app.post(
         "/v1/index/chunks",
         response_model=IndexChunksResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def index_chunks(request: Request, payload: IndexChunksRequest) -> IndexChunksResponse:
         resolved_embedder = _embedder(request)
@@ -978,7 +943,6 @@ def create_app(
     @app.post(
         "/v1/index/activate",
         response_model=ActivateResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def activate_document(request: Request, payload: ActivateRequest) -> ActivateResponse:
         try:
@@ -1004,7 +968,6 @@ def create_app(
     @app.post(
         "/v1/index/cleanup",
         response_model=CleanupResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def cleanup_inactive(request: Request, payload: CleanupRequest) -> CleanupResponse:
         try:
@@ -1023,7 +986,6 @@ def create_app(
     @app.delete(
         "/v1/index/{source_type}/{source_id}",
         response_model=DeleteResponse,
-        dependencies=[Depends(_require_token)],
     )
     async def index_delete(
         request: Request,

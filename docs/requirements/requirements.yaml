@@ -2922,12 +2922,12 @@ requirements:
     status: implemented
   - id: NFR-036
     type: nonfunctional
-    title: Секреты только в env, настройки в 1С
+    title: Секреты только в env, сервисы без service-token
     description: >-
-      Токены RAG, agent-service, search-service и ключи LLM хранятся только в
-      .env сервисов и шлюза. В 1С нет токенов и секретов: форма содержит только
-      несекретные адреса, таймауты, повторы, модель, лимиты, пути и флаги.
-      Шлюз добавляет service-token из своего .env.
+      Service-token не используются. 1С обращается к RAG, agent-service и
+      search-service напрямую по локальной или частной сети. Сервисы не
+      публикуются наружу. Ключи LLM и Qdrant хранятся только в .env сервисов.
+      RAG_SERVICE_TOKEN остаётся внутренним секретом подписи PDF-ссылок.
     priority: must
     approval: approved
     source:
@@ -2936,22 +2936,26 @@ requirements:
     acceptance:
       - В 1С нет констант и полей для service-token.
       - Форма содержит только несекретные настройки.
-      - Шлюз добавляет X-Service-Token из deploy/gateway/.env.
-      - Смена токена не требует изменения 1С.
-      - Прямые вызовы сервисов без шлюза не используются агентом.
+      - Сервисы не требуют X-Service-Token.
+      - Сервисы слушают 127.0.0.1 или частную сеть и не публикуются наружу.
+      - Ключи LLM и Qdrant хранятся только в .env.
+      - RAG_SERVICE_TOKEN используется только для подписи PDF-ссылок.
     design:
       - docs/design-decisions.md#21-решения-2026-11-10-перенос-ии-агента
-      - guides/runbook.md#51-шлюз-сервисов-и-секреты
+      - guides/runbook.md#51-доступ-к-сервисам-и-секреты
     implementation:
-      - deploy/gateway/Caddyfile
-      - deploy/gateway/.env.example
       - deploy/docker-compose.yml
       - src/CommonModules/АИС_ИнтеграцияСRAG
       - src/CommonModules/АИС_ИнтеграцияСАгентом
       - src/CommonModules/АИС_ИнтеграцияСПоиском
       - src/DataProcessors/АИС_АдминистрированиеИИ
+      - agent-service/src/agent_service
+      - search-service/src/search_service
+      - rag-service/src/rag_service
     tests:
       - TEST-NFR-036-01
     test_files:
-      - tests/precommit/test_precommit_config.py
+      - agent-service/tests/test_api.py
+      - search-service/tests/test_api.py
+      - rag-service/tests/test_api.py
     status: implemented

@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-import hmac
 import json
 import secrets
-from typing import Annotated, Any
+from typing import Any
 
-from fastapi import FastAPI, Header, Request
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
 from agent_service.config import Settings, load_settings
@@ -13,10 +12,6 @@ from agent_service.llm import LlmClient, LlmError
 from agent_service.models import CompleteRequest, CompleteResponse, StepRequest
 from agent_service.prompts import SYSTEM_PROMPT
 from agent_service.tools import tool_definitions, validate_tool_name
-
-
-def _token_valid(settings: Settings, value: str | None) -> bool:
-    return value is not None and hmac.compare_digest(value, settings.service_token)
 
 
 def _error(run_version: int, code: str, message: str) -> dict[str, Any]:
@@ -117,11 +112,7 @@ def create_app(
     async def complete(
         request: Request,
         payload: CompleteRequest,
-        x_service_token: Annotated[str | None, Header()] = None,
     ) -> CompleteResponse | JSONResponse:
-        current: Settings = request.app.state.settings
-        if not _token_valid(current, x_service_token):
-            return JSONResponse(status_code=401, content={"detail": "invalid service token"})
         system_prompt = payload.system_prompt.strip()
         if payload.json_mode:
             system_prompt += "\n\nВерни только валидный JSON без markdown."
@@ -152,11 +143,7 @@ def create_app(
     async def step(
         request: Request,
         payload: StepRequest,
-        x_service_token: Annotated[str | None, Header()] = None,
     ) -> JSONResponse:
-        current: Settings = request.app.state.settings
-        if not _token_valid(current, x_service_token):
-            return JSONResponse(status_code=401, content={"detail": "invalid service token"})
         if payload.protocol_version != 1:
             return JSONResponse(
                 content=_error(

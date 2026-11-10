@@ -82,7 +82,7 @@
       <id>3</id>
       <title>
         <key>ru</key>
-        <value>Адрес RAG-сервиса (через шлюз)</value>
+        <value>Адрес RAG-сервиса</value>
       </title>
       <visible>true</visible>
       <enabled>true</enabled>
@@ -369,7 +369,7 @@
     <items xsi:type="form:FormField">
       <name>АдресAgentService</name>
       <id>74</id>
-      <title><key>ru</key><value>Адрес agent-service (через шлюз)</value></title>
+      <title><key>ru</key><value>Адрес agent-service</value></title>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible><common>true</common></userVisible>
@@ -438,7 +438,7 @@
     <items xsi:type="form:FormField">
       <name>АдресSearchService</name>
       <id>78</id>
-      <title><key>ru</key><value>Адрес search-service (через шлюз)</value></title>
+      <title><key>ru</key><value>Адрес search-service</value></title>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible><common>true</common></userVisible>

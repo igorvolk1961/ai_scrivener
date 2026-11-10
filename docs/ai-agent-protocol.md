@@ -21,7 +21,6 @@
 
 Заголовки:
 
-- `X-Service-Token: <AGENT_SERVICE_TOKEN>`;
 - `Content-Type: application/json`.
 
 Тело:

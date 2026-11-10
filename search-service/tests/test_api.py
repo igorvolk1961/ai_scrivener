@@ -47,10 +47,12 @@ def test_search_returns_normalized_results() -> None:
     assert body["results"][0]["source"] == "internet"
 
 
-def test_search_requires_token() -> None:
-    client = client_with(FakeProvider())
+def test_search_without_token() -> None:
+    client = client_with(
+        FakeProvider([{"title": "Заголовок", "url": "https://example.com", "snippet": "Фрагмент"}])
+    )
     response = client.post("/v1/search", json={"query": "тест"})
-    assert response.status_code == 401
+    assert response.status_code == 200
 
 
 def test_provider_error() -> None:
@@ -99,10 +101,10 @@ def test_load_settings_reads_env(monkeypatch: pytest.MonkeyPatch) -> None:
     )
 
 
-def test_load_settings_requires_token(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_load_settings_without_token(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("SEARCH_SERVICE_TOKEN", raising=False)
-    with pytest.raises(RuntimeError, match="SEARCH_SERVICE_TOKEN"):
-        load_settings()
+    settings = load_settings()
+    assert settings.service_token == ""
 
 
 def test_load_settings_rejects_unknown_provider(monkeypatch: pytest.MonkeyPatch) -> None:

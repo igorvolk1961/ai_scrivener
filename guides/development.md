@@ -33,8 +33,9 @@
 
 Исходный файл ключей — `.env_0`; он не коммитится. Из него локально формируются:
 
-- `rag-service/.env` — GigaChat, service-token, Qdrant;
-- `.env` — DeepSeek для BSL-вызовов `АИС_ОбщегоНазначения.ВызватьИИ` и для LLM-агентов симулятора.
+- `rag-service/.env` — GigaChat и Qdrant;
+- `agent-service/.env` — DeepSeek для агента и BSL-вызовов `АИС_ОбщегоНазначения.ВызватьИИ`;
+- `search-service/.env` — без секретов, service-token не используется.
 
 Оба файла игнорируются Git. Реальные значения в документацию и тесты не попадают. Для проверки compose использовать `docker compose ... config --quiet`: обычный `config` печатает значения переменных.
 

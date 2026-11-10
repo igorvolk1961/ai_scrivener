@@ -25,9 +25,9 @@ def test_health_is_public(client: TestClient) -> None:
     assert response.json()["qdrant"] is True
 
 
-def test_search_requires_token(client: TestClient) -> None:
+def test_search_without_token(client: TestClient) -> None:
     response = client.post("/v1/search", json={"query": "документ"})
-    assert response.status_code == 401
+    assert response.status_code == 200
 
 
 def test_index_and_search(client: TestClient, store: FakeStore) -> None:
