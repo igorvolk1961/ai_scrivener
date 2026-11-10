@@ -40,7 +40,7 @@
 - Добавлены FR-062–FR-068 и NFR-035, матрица трассируемости пересобрана.
 - Реализованы read-only инструменты `get_checklist`, `get_job_description`, `list_employees`, `list_departments` (запросы перенесены из `АИС_Симулятор`); они добавлены в allowlist и JSON-схемы agent-service.
 - Реализованы кадровые инструменты `hire_employee`, `propose_system_prompt`, `accounting_decision`, `create_department`; логика перенесена из `АИС_Симулятор`, high-risk действия требуют approval.
-- Реализованы `manage_document_sections`, `manage_remarks`, `return_document`, `route_remarks`, `kb_list_materials`, `kb_register_material`; `kb_download` пока исключён из allowlist.
+- Реализованы `manage_document_sections`, `manage_remarks`, `return_document`, `route_remarks`, `kb_list_materials`, `kb_register_material`, `kb_download`.
 - Добавлена защита от дублей запусков: после создания run активные запуски сверяются, лишние отменяются, побеждает ранний.
 - Расширение загружено в копию `ai_scrivener_stage2`; `CheckConfig` прошёл: предупреждения только по базовой конфигурации, ошибок расширения нет.
 
@@ -48,7 +48,7 @@
 
 Осталось в инкременте B: живая проверка RLS и прав на interactions в stage2.
 
-Осталось в инкременте C: `kb_download` (скачивание внешнего материала в корпус) требует отдельного решения по безопасности, лимитам и провенансу.
+Осталось: индексация examples/documents RAG и live-прогон.
 
 Осталось до приёмки: сквозной прогон на stage2 с реальным LLM и сервисами, проверка RLS на interactions и фиксация результатов в `tests/1c/test_agent.md`.
 

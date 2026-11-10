@@ -46,6 +46,7 @@
   <sessionParameters>SessionParameter.АИС_ТекущееДЛ</sessionParameters>
   <constants>Constant.АИС_КаталогКорпусаЗнаний</constants>
   <constants>Constant.АИС_КаталогПромптовАгентов</constants>
+  <constants>Constant.АИС_НастройкиКорпусаJSON</constants>
   <constants>Constant.АИС_КлючИИ</constants>
   <constants>Constant.АИС_МодельИИ</constants>
   <constants>Constant.АИС_АдресRAGСервиса</constants>

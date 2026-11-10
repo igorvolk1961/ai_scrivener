@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="06ab8e14-2696-46d1-825f-3ccfd09b82a5">
+  <producedTypes>
+    <managerType typeId="cce0a421-66a9-48ef-8faf-122a3a02749a" valueTypeId="ea1a689c-65d0-447c-a3b1-ba3519605ab4"/>
+    <valueManagerType typeId="fe983f8a-8a76-43f6-bfa9-c4ece087d9e4" valueTypeId="f0518494-c176-46ec-aee6-9c6e9d284bb0"/>
+    <valueKeyType typeId="9c580b89-757f-47e7-86fd-ce2f55a7b117" valueTypeId="611438cd-8aac-4541-928a-b78254a54d21"/>
+  </producedTypes>
+  <name>АИС_НастройкиКорпусаJSON</name>
+  <synonym>
+    <key>ru</key>
+    <value>Настройки корпуса знаний JSON</value>
+  </synonym>
+  <comment>Лимиты и разрешённые источники корпуса: max_file_mb, allowed_hosts, allowed_extensions.</comment>
+  <type>
+    <types>String</types>
+    <stringQualifiers>
+      <length>0</length>
+    </stringQualifiers>
+  </type>
+  <useStandardCommands>true</useStandardCommands>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

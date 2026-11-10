@@ -522,7 +522,7 @@
 	ДобавитьИнструменты(Инструменты, "hire_employee,propose_system_prompt,accounting_decision,list_employees,list_departments,create_department");
 	ДобавитьИнструменты(Инструменты, "manage_document_sections");
 	ДобавитьИнструменты(Инструменты, "manage_remarks,return_document,route_remarks");
-	ДобавитьИнструменты(Инструменты, "kb_list_materials,kb_register_material");
+	ДобавитьИнструменты(Инструменты, "kb_list_materials,kb_register_material,kb_download");
 	Возврат Инструменты;
 КонецФункции
 
