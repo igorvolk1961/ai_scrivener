@@ -1868,6 +1868,7 @@ requirements:
       - src/CommonModules/АИС_АгентИИ
       - src/ScheduledJobs/АИС_АгентТаймауты
       - src/DataProcessors/АИС_МоиЗапросыИИ
+      - src/Roles/АИС_ДолжностноеЛицо/Rights.rights
     tests:
       - TEST-FR-066-01
     test_files:
