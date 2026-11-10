@@ -23,6 +23,7 @@ repos:
         types_or:
           - python
           - pyi
+        exclude: ^(agent-service|search-service)/
         require_serial: true
       - id: ruff-format
         name: ruff format
@@ -31,6 +32,7 @@ repos:
         types_or:
           - python
           - pyi
+        exclude: ^(agent-service|search-service)/
       - id: mypy
         name: mypy
         entry: uv run mypy
@@ -44,6 +46,30 @@ repos:
         entry: uv run --project rag-service mypy
         language: system
         files: ^rag-service/.*\.py$
+        pass_filenames: false
+      - id: ruff-agent
+        name: ruff-agent
+        entry: uv run --project agent-service ruff check agent-service/src agent-service/tests
+        language: system
+        files: ^agent-service/.*\.py$
+        pass_filenames: false
+      - id: mypy-agent
+        name: mypy-agent
+        entry: uv run --project agent-service mypy --config-file agent-service/pyproject.toml agent-service/src agent-service/tests
+        language: system
+        files: ^agent-service/.*\.py$
+        pass_filenames: false
+      - id: ruff-search
+        name: ruff-search
+        entry: uv run --project search-service ruff check search-service/src search-service/tests
+        language: system
+        files: ^search-service/.*\.py$
+        pass_filenames: false
+      - id: mypy-search
+        name: mypy-search
+        entry: uv run --project search-service mypy --config-file search-service/pyproject.toml search-service/src search-service/tests
+        language: system
+        files: ^search-service/.*\.py$
         pass_filenames: false
       - id: yamllint
         name: yamllint
@@ -105,4 +131,16 @@ repos:
         entry: uv run --project rag-service pytest -c rag-service/pyproject.toml rag-service/tests
         language: system
         files: ^rag-service/.*\.py$
+        pass_filenames: false
+      - id: pytest-agent
+        name: pytest-agent
+        entry: uv run --project agent-service pytest -c agent-service/pyproject.toml agent-service/tests
+        language: system
+        files: ^agent-service/.*\.py$
+        pass_filenames: false
+      - id: pytest-search
+        name: pytest-search
+        entry: uv run --project search-service pytest -c search-service/pyproject.toml search-service/tests
+        language: system
+        files: ^search-service/.*\.py$
         pass_filenames: false

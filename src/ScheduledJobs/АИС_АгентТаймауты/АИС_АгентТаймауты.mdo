@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:ScheduledJob xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="1e19eda4-bce9-48a7-8199-e18c2784aa18">
+  <producedTypes>
+    <managerType typeId="6f4bbeaf-97e5-4aa5-90c7-0658dd115d08" valueTypeId="2f45f690-98cb-40c5-a0b9-87a073730e44"/>
+  </producedTypes>
+  <name>АИС_АгентТаймауты</name>
+  <synonym><key>ru</key><value>Таймауты ИИ-агентов</value></synonym>
+  <methodName>CommonModule.АИС_АгентИИ.ИстечьПросроченныеВзаимодействия</methodName>
+  <description>Переводит просроченные запросы ИИ-агента и их запуски в состояние Истек.</description>
+  <key>АИС_АгентТаймауты</key>
+  <use>true</use>
+  <predefined>false</predefined>
+  <restartCountOnFailure>3</restartCountOnFailure>
+  <restartIntervalOnFailure>10</restartIntervalOnFailure>
+</mdclass:ScheduledJob>

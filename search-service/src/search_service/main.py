@@ -2,20 +2,14 @@ from __future__ import annotations
 
 import hmac
 import time
-from dataclasses import dataclass
 from typing import Annotated, Any
 
 from fastapi import FastAPI, Header, Request
 from fastapi.responses import JSONResponse
 
+from search_service.config import Settings, load_settings
 from search_service.models import SearchRequest, normalize_result
 from search_service.provider import DuckDuckGoProvider, SearchProvider, SearchProviderError
-
-
-@dataclass(frozen=True)
-class Settings:
-    service_token: str
-    version: str = "0.1.0"
 
 
 def _token_valid(settings: Settings, value: str | None) -> bool:
@@ -24,13 +18,19 @@ def _token_valid(settings: Settings, value: str | None) -> bool:
 
 def create_app(settings: Settings | None = None, provider: SearchProvider | None = None) -> FastAPI:
     app = FastAPI(title="ai-scrivener-search", version="0.1.0")
-    app.state.settings = settings or Settings(service_token="")
-    app.state.provider = provider or DuckDuckGoProvider()
+    app.state.settings = settings or load_settings()
+    app.state.provider = provider or DuckDuckGoProvider(
+        timeout_seconds=app.state.settings.timeout_seconds
+    )
 
     @app.get("/health")
     async def health(request: Request) -> dict[str, Any]:
         current: Settings = request.app.state.settings
-        return {"status": "ok", "version": current.version, "provider": "duckduckgo"}
+        return {
+            "status": "ok",
+            "version": current.version,
+            "provider": current.provider,
+        }
 
     @app.post("/v1/search")
     async def search(
@@ -42,20 +42,21 @@ def create_app(settings: Settings | None = None, provider: SearchProvider | None
         if not _token_valid(current, x_service_token):
             return JSONResponse(status_code=401, content={"detail": "invalid service token"})
         started = time.monotonic()
+        limit = min(payload.limit, current.max_results)
         try:
             raw = await request.app.state.provider.search(
                 payload.query,
-                payload.limit,
+                limit,
                 payload.locale,
                 payload.safe_search,
             )
         except SearchProviderError as exc:
             return JSONResponse(status_code=502, content={"detail": str(exc)})
-        results = [normalize_result(item, index) for index, item in enumerate(raw)]
+        results = [normalize_result(item, index) for index, item in enumerate(raw[:limit])]
         return JSONResponse(
             content={
                 "results": results,
-                "provider": "duckduckgo",
+                "provider": current.provider,
                 "latency_ms": int((time.monotonic() - started) * 1000),
             }
         )

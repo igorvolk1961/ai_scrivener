@@ -134,6 +134,7 @@
 - `invalid_response`;
 - `tool_not_allowed`;
 - `invalid_arguments`;
+- `approval_required`;
 - `service_error`.
 
 ## 5. Результат инструмента
@@ -176,6 +177,50 @@
 ```
 
 и запускает следующий шаг с тем же `run_version + 1`.
+
+### 6.1. Контракт `request_action_approval`
+
+Обязательные аргументы:
+
+```json
+{
+  "completed": "что уже сделано",
+  "intended": "что планируется сделать",
+  "question": "вопрос пользователю",
+  "options": [
+    {"kind": "approve", "text": "Одобряю. Действуй"},
+    {"kind": "free_text", "text": "Отклонить и указать, что изменить"}
+  ],
+  "documents": [
+    {"document_id": null, "title": "...", "document_type": "...", "text": "полный текст"}
+  ],
+  "subject_kind": "documents",
+  "tool": null,
+  "arguments": null
+}
+```
+
+Для изменяющего действия без документа используется `subject_kind = "action"`, а `tool` и `arguments` обязательны. Любой свободный текст ответа трактуется как отклонение.
+
+### 6.2. Approval state в 1С
+
+`АИС_ЗапускиАгентов.ОдобрениеJSON` хранит:
+
+```json
+{
+  "subject_kind": "documents | action",
+  "tool": "create_document",
+  "args_hash": "sha256",
+  "args_json": "{...}",
+  "decision": "approved | rejected",
+  "answer_text": "",
+  "interaction_id": "uuid",
+  "consumed": false,
+  "created_at": "..."
+}
+```
+
+Для `documents` разрешены только документные инструменты; для `action` требуется совпадение инструмента и хеша аргументов. После успешного изменяющего действия `consumed = true` и требуется новое одобрение.
 
 ## 7. Снимок задачи
 

@@ -37,6 +37,44 @@ services:
       timeout: 10s
       retries: 3
 
+  agent-service:
+    build:
+      context: ..
+      dockerfile: agent-service/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ../agent-service/.env
+    ports:
+      - "127.0.0.1:8081:8081"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8081/health')
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  search-service:
+    build:
+      context: ..
+      dockerfile: search-service/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ../search-service/.env
+    ports:
+      - "127.0.0.1:8082:8082"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8082/health')
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   rag-indexer:
     profiles: ["indexer"]
     build:

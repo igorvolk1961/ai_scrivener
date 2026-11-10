@@ -673,6 +673,21 @@
       <placementArea>UserCmds</placementArea>
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
+    <items xsi:type="form:Button">
+      <name>КнопкаСформироватьПромпты</name>
+      <id>56</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Сформировать промпты</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.СформироватьПромпты</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
     <visible>true</visible>
     <enabled>true</enabled>
     <userVisible>
@@ -1031,6 +1046,14 @@
     <id>6</id>
     <use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ПроверитьПоиск</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>СформироватьПромпты</name>
+    <title><key>ru</key><value>Сформировать промпты</value></title>
+    <id>7</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>СформироватьПромпты</name></handler></action>
     <currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <commandInterface>

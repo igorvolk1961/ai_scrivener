@@ -28,3 +28,7 @@ jobs:
         run: uv run pytest
       - name: RAG tests
         run: uv run --project rag-service pytest -c rag-service/pyproject.toml rag-service/tests
+      - name: Agent service tests
+        run: uv run --project agent-service pytest -c agent-service/pyproject.toml agent-service/tests
+      - name: Search service tests
+        run: uv run --project search-service pytest -c search-service/pyproject.toml search-service/tests

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="df75e78f-187f-4735-a590-f0c50c16940a">
+  <producedTypes>
+    <objectType typeId="90ae5512-1d0a-43bf-aa2b-2b52000d3ca6" valueTypeId="74db0d25-418f-4adf-9176-391af3fba3a3"/>
+    <managerType typeId="0eb036c3-5e0d-4fe7-b95d-6f67551ec172" valueTypeId="40372902-9b41-475a-8d18-9df81e6029a0"/>
+  </producedTypes>
+  <name>АИС_МониторЗапусковИИ</name>
+  <synonym><key>ru</key><value>Монитор запусков ИИ</value></synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <defaultForm>DataProcessor.АИС_МониторЗапусковИИ.Form.Форма</defaultForm>
+  <forms uuid="ac74e55d-fa14-4631-99c3-4ea4da0f02f0">
+    <name>Форма</name>
+    <synonym><key>ru</key><value>Форма</value></synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:DataProcessor>

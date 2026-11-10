@@ -14,6 +14,8 @@
   <content>DataProcessor.АИС_АдминистрированиеИИ</content>
   <content>DataProcessor.АИС_ГруппыФункцийИИ</content>
   <content>DataProcessor.АИС_МоиЗапросыИИ</content>
+  <content>DataProcessor.АИС_ПередатьЗадачуИИ</content>
+  <content>DataProcessor.АИС_МониторЗапусковИИ</content>
   <content>DataProcessor.АИС_ИндексацияДокументов</content>
   <content>DataProcessor.АИС_ВопросПоБазеЗнаний</content>
   <content>CommonCommand.АИС_ВопросПоБазеЗнаний</content>
@@ -40,4 +42,6 @@
   <content>InformationRegister.АИС_ДокументыВПапках</content>
   <content>InformationRegister.АИС_СостоянияИндексации</content>
   <content>ScheduledJob.АИС_ИндексацияRAG</content>
+  <content>ScheduledJob.АИС_АгентОчередь</content>
+  <content>ScheduledJob.АИС_АгентТаймауты</content>
 </mdclass:Subsystem>

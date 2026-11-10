@@ -642,6 +642,28 @@
 		</right>
 	</object>
 	<object>
+		<name>DataProcessor.АИС_ПередатьЗадачуИИ</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>DataProcessor.АИС_МониторЗапусковИИ</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>HTTPService.АИС_Симулятор.URLTemplate.ДиагностикаРолей.Method.get</name>
 		<right>
 			<name>Use</name>

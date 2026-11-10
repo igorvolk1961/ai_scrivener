@@ -7,9 +7,10 @@
 
 ## Переменные окружения
 
-- `SEARCH_SERVICE_TOKEN` — service-token для 1С.
-- `SEARCH_TIMEOUT` — таймаут провайдера.
-- `SEARCH_MAX_RESULTS` — ограничение результатов.
+- `SEARCH_SERVICE_TOKEN` — service-token для 1С (обязателен).
+- `SEARCH_TIMEOUT` — таймаут провайдера, секунды (по умолчанию 20).
+- `SEARCH_MAX_RESULTS` — ограничение результатов на запрос, 1–20 (по умолчанию 10).
+- `SEARCH_PROVIDER` — провайдер поиска; на MVP поддерживается `duckduckgo`.
 
 ## Запуск
 

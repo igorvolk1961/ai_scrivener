@@ -1,6 +1,6 @@
 meta:
   version: 1
-  updated: "2026-11-08"
+  updated: "2026-11-10"
   source_of_truth: docs/requirements/requirements.yaml
 requirements:
   - id: FR-001
@@ -1714,6 +1714,257 @@ requirements:
     test_files:
       - ai-scrivener-enterprise-sim/tests/test_deepseek_agent.py
     status: in_progress
+  - id: FR-062
+    type: functional
+    title: Очередь запусков ИИ-агента
+    description: >-
+      Задача ставится в очередь после сохранения контекста в подписке на запись
+      документа, а также вручную через обработку «Передать задачу ИИ». Запуск
+      создаётся только при включённом мастере, включённом агенте сотрудника и
+      сформированном роль-промпте; повторная постановка не создаёт второй
+      активный запуск.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - plans/2026-11-10-ai-agent-migration.md#88-постановка-задач
+    acceptance:
+      - Документ с адресатом создаёт задачу, контекст и запуск в состоянии «Ожидает».
+      - Сбой постановки не блокирует запись документа.
+      - Ручная передача создаёт контекст, если его нет.
+      - Выключенный агент или пустой роль-промпт не создают запуск.
+      - Повторная передача не создаёт второй активный запуск.
+    design:
+      - plans/2026-11-10-ai-agent-migration.md#82-очередь-и-run
+      - plans/2026-11-10-ai-agent-migration-next-steps.md#a1-постановка-задач-в-очередь
+    implementation:
+      - src/CommonModules/АИС_АгентИИ
+      - src/CommonModules/АИС_Уведомления
+      - src/DataProcessors/АИС_ПередатьЗадачуИИ
+      - src/ScheduledJobs/АИС_АгентОчередь
+    tests:
+      - TEST-FR-062-01
+    test_files:
+      - tests/1c/test_agent.md
+    status: in_progress
+  - id: FR-063
+    type: functional
+    title: Генерация роль-промпта агента
+    description: >-
+      Роль-промпт формируется в 1С по действующей должностной инструкции, а при
+      её отсутствии — по названию должности. Промпт хранится в настройках агента,
+      ошибка генерации оставляет агента выключенным, автовключение выполняется
+      только после успешной генерации.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - plans/2026-11-10-ai-agent-migration.md#87-автосоздание-агентов
+    acceptance:
+      - Промпт генерируется по должностной инструкции.
+      - При отсутствии инструкции промпт строится по названию должности.
+      - Ошибка LLM сохраняется в настройке, агент остаётся выключенным.
+      - Автовключение работает только при включённом флаге и успешном промпте.
+      - Администратор может запустить backfill промптов.
+    design:
+      - plans/2026-11-10-ai-agent-migration.md#87-автосоздание-агентов
+      - plans/2026-11-10-ai-agent-migration-next-steps.md#a2-генерация-роль-промпта
+    implementation:
+      - src/CommonModules/АИС_АгентИИ
+      - src/CommonModules/АИС_Промпты
+      - src/DataProcessors/АИС_АдминистрированиеИИ
+    tests:
+      - TEST-FR-063-01
+    test_files:
+      - tests/1c/test_agent.md
+    status: in_progress
+  - id: FR-064
+    type: functional
+    title: Approval по инструменту и аргументам
+    description: >-
+      Одобрение изменяющего действия хранит вид действия, инструмент и хеш
+      аргументов. Для документных действий разрешены только документные
+      инструменты; для прочих действий требуется точное совпадение инструмента и
+      аргументов. После успешного изменения одобрение расходуется, high-risk
+      инструменты не автоодобряются.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - plans/2026-11-10-ai-agent-migration.md#85-approval
+    acceptance:
+      - Одобрение одного инструмента не разрешает другой.
+      - Изменение аргументов требует нового одобрения.
+      - После успешного изменяющего действия одобрение расходуется.
+      - High-risk инструменты всегда требуют interaction.
+      - Отклонение не разрешает действие.
+    design:
+      - plans/2026-11-10-ai-agent-migration.md#85-approval
+      - docs/ai-agent-protocol.md#62-approval-state-в-1с
+    implementation:
+      - src/CommonModules/АИС_АгентИИ
+      - src/CommonModules/АИС_ИнструментыАгента
+      - src/CommonModules/АИС_АвтоодобрениеСервер
+      - src/DataProcessors/АИС_МоиЗапросыИИ
+    tests:
+      - TEST-FR-064-01
+      - TEST-FR-064-02
+    test_files:
+      - tests/1c/test_agent.md
+    status: in_progress
+  - id: FR-065
+    type: functional
+    title: Инструменты агента и согласование allowlist
+    description: >-
+      Агент получает только инструменты включённых групп, для которых есть
+      реализация в 1С. В MVP работают документы, поиск/знания и интернет; группы
+      без реализаций не попадают в allowlist.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - plans/2026-11-10-ai-agent-migration.md#7-инструменты-и-группы
+    acceptance:
+      - Выключенная группа запрещает свои инструменты.
+      - Нереализованные инструменты не попадают в allowlist.
+      - Вызов неизвестного инструмента отклоняется.
+      - Документы и поиск работают в сквозном сценарии.
+    design:
+      - plans/2026-11-10-ai-agent-migration.md#7-инструменты-и-группы
+      - plans/2026-11-10-ai-agent-migration-next-steps.md#a6-согласование-allowlist-и-реализаций
+    implementation:
+      - src/CommonModules/АИС_АгентИИ
+      - src/CommonModules/АИС_ИнструментыАгента
+      - src/CommonModules/АИС_АгентКадры
+      - src/CommonModules/АИС_АгентЗнания
+    tests:
+      - TEST-FR-065-01
+    test_files:
+      - tests/1c/test_agent.md
+    status: in_progress
+  - id: FR-066
+    type: functional
+    title: Взаимодействия с пользователем и таймауты
+    description: >-
+      Вопросы, согласование и одобрение создают запись взаимодействия и
+      останавливают запуск. По истечении срока ответа взаимодействие и запуск
+      переводятся в «Истек», задача-уведомление закрывается, исходная задача
+      остаётся открытой.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - plans/2026-11-10-ai-agent-migration.md#86-interactions
+    acceptance:
+      - Агент останавливается до ответа пользователя.
+      - Ответ продолжает запуск без дублей.
+      - Просроченный запрос переводится в «Истек».
+      - Запуск и задача-уведомление закрываются согласованно.
+      - Исходная задача остаётся открытой.
+    design:
+      - plans/2026-11-10-ai-agent-migration.md#86-interactions
+      - plans/2026-11-10-ai-agent-migration-next-steps.md#b1-таймауты-interactions
+    implementation:
+      - src/CommonModules/АИС_АгентИИ
+      - src/ScheduledJobs/АИС_АгентТаймауты
+      - src/DataProcessors/АИС_МоиЗапросыИИ
+    tests:
+      - TEST-FR-066-01
+    test_files:
+      - tests/1c/test_agent.md
+    status: in_progress
+  - id: FR-067
+    type: functional
+    title: Аудит и идемпотентность вызовов инструментов
+    description: >-
+      Каждый вызов инструмента записывается в историю действий ИИ с запуском,
+      шагом, инструментом, группой, аргументами, результатом, ошибкой и
+      длительностью. Для изменяющих инструментов ключ запуск+шаг+инструмент+хеш
+      аргументов предотвращает повторное создание данных.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - plans/2026-11-10-ai-agent-migration.md#44-расширение-аудита
+    acceptance:
+      - Успешный вызов инструмента попадает в аудит.
+      - Отказ по ACL или approval попадает в аудит.
+      - Ошибка инструмента содержит код и текст.
+      - Повторный вызов с тем же ключом возвращает сохранённый результат.
+      - Незавершённая изменяющая операция не повторяется автоматически.
+    design:
+      - plans/2026-11-10-ai-agent-migration.md#44-расширение-аудита
+      - plans/2026-11-10-ai-agent-migration-next-steps.md#b4-идемпотентность-инструментов
+    implementation:
+      - src/InformationRegisters/АИС_ИсторияДействийИИ
+      - src/CommonModules/АИС_АгентИИ
+      - src/CommonModules/АИС_ИнструментыАгента
+    tests:
+      - TEST-FR-067-01
+    test_files:
+      - tests/1c/test_agent.md
+    status: in_progress
+  - id: FR-068
+    type: functional
+    title: Монитор запусков ИИ
+    description: >-
+      Администратор видит запуски за период, их состояние, шаг, попытки и ошибку,
+      может повторно поставить запуск в очередь или отменить его. Отмена
+      закрывает открытые взаимодействия.
+    priority: should
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - plans/2026-11-10-ai-agent-migration.md#56-запуски-агентов
+    acceptance:
+      - Монитор показывает запуски за 90 дней.
+      - Повторная постановка сбрасывает ошибку и попытки.
+      - Отмена закрывает открытые взаимодействия.
+      - Завершённый запуск нельзя отменить или повторить.
+    design:
+      - plans/2026-11-10-ai-agent-migration.md#56-запуски-агентов
+      - plans/2026-11-10-ai-agent-migration-next-steps.md#b6-ui-и-права
+    implementation:
+      - src/DataProcessors/АИС_МониторЗапусковИИ
+      - src/CommonModules/АИС_АгентИИ
+    tests:
+      - TEST-FR-068-01
+    test_files:
+      - tests/1c/test_agent.md
+    status: in_progress
+  - id: FR-069
+    type: functional
+    title: Кадровые инструменты ИИ-агента
+    description: >-
+      Агент получает список сотрудников и подразделений, может принять
+      сотрудника, создать подразделение, принять решение бухгалтера по заявке на
+      найм и сформировать роль-промпт. Кадровые изменения выполняются только
+      после одобрения пользователя.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - plans/2026-11-10-ai-agent-migration.md#персонал-и-оргструктура
+    acceptance:
+      - Список сотрудников содержит логин, должность, подразделение и руководителя.
+      - Список подразделений содержит родителя и руководителя.
+      - Найм сотрудника создаёт пользователя и настройки агента.
+      - Создание подразделения обновляет оргструктуру и подчиненность.
+      - Решение бухгалтера меняет статус заявки и уведомляет автора.
+      - Кадровые изменения требуют approval и не автоодобряются.
+    design:
+      - plans/2026-11-10-ai-agent-migration.md#персонал-и-оргструктура
+      - plans/2026-11-10-ai-agent-migration-next-steps.md#c1-персонал-и-оргструктура
+    implementation:
+      - src/CommonModules/АИС_АгентКадры
+      - src/CommonModules/АИС_ИнструментыАгента
+      - src/CommonModules/АИС_Сотрудники
+      - src/HTTPServices/АИС_Симулятор
+    tests:
+      - TEST-FR-069-01
+    test_files:
+      - tests/1c/test_agent.md
+    status: in_progress
   - id: NFR-001
     type: nonfunctional
     title: Отклик интерфейса не более 2 секунд
@@ -2578,4 +2829,34 @@ requirements:
       - TEST-NFR-034-01
     test_files:
       - tests/precommit/test_precommit_config.py
+    status: implemented
+  - id: NFR-035
+    type: nonfunctional
+    title: Stateless внешние сервисы агента
+    description: >-
+      agent-service и search-service не хранят состояние задач, документов и
+      одобрений. Источником истины остаётся 1С; сервисы получают снимок и
+      возвращают один шаг или результаты поиска. Токены и ключи передаются только
+      через переменные окружения.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - plans/2026-11-10-ai-agent-migration.md#61-agent-service
+    acceptance:
+      - Сервисы не пишут в базу 1С.
+      - Снимок и результаты не сохраняются между запросами.
+      - Токены и ключи читаются из env.
+      - При отсутствии обязательного токена сервис не стартует.
+    design:
+      - plans/2026-11-10-ai-agent-migration.md#61-agent-service
+      - docs/design-decisions.md#21-решения-2026-11-10-перенос-ии-агента
+    implementation:
+      - agent-service/src/agent_service
+      - search-service/src/search_service
+    tests:
+      - TEST-NFR-035-01
+    test_files:
+      - agent-service/tests/test_api.py
+      - search-service/tests/test_api.py
     status: implemented

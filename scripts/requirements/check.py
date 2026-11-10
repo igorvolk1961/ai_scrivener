@@ -43,6 +43,10 @@ IMPLEMENTATION_PREFIXES = (
     "src",
     "rag-service/",
     "rag-service",
+    "agent-service/",
+    "agent-service",
+    "search-service/",
+    "search-service",
     "config/",
     "config",
     "scripts/",
@@ -63,6 +67,8 @@ IMPLEMENTATION_PREFIXES = (
 TEST_FILE_PREFIXES = (
     "tests/",
     "rag-service/tests/",
+    "agent-service/tests/",
+    "search-service/tests/",
     "ai-scrivener-enterprise-sim/tests/",
 )
 

@@ -31,6 +31,14 @@ def _target_url(href: str) -> str:
 
 
 class DuckDuckGoProvider:
+    def __init__(
+        self,
+        timeout_seconds: float = 20.0,
+        user_agent: str = "ai-scrivener-search/0.1",
+    ) -> None:
+        self._timeout_seconds = timeout_seconds
+        self._user_agent = user_agent
+
     async def search(
         self, query: str, limit: int, locale: str, safe_search: bool
     ) -> list[dict[str, Any]]:
@@ -38,11 +46,11 @@ class DuckDuckGoProvider:
         if safe_search:
             params["kp"] = "1"
         try:
-            async with httpx.AsyncClient(timeout=20.0) as client:
+            async with httpx.AsyncClient(timeout=self._timeout_seconds) as client:
                 response = await client.get(
                     "https://html.duckduckgo.com/html/",
                     params=params,
-                    headers={"User-Agent": "ai-scrivener-search/0.1"},
+                    headers={"User-Agent": self._user_agent},
                 )
                 response.raise_for_status()
         except httpx.HTTPError as exc:
