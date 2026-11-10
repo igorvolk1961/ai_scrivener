@@ -34,6 +34,13 @@ def test_tool_definitions_use_specific_schemas() -> None:
             ["hire_employee", "create_department", "accounting_decision", "propose_system_prompt"]
         )
     }
+    internet = tool_definitions(["search_internet"])[0]["function"]["parameters"]
+    assert internet["required"] == ["category", "query"]
+    assert internet["properties"]["category"]["enum"] == [
+        "example",
+        "knowledge",
+        "materials",
+    ]
     assert personnel["hire_employee"]["function"]["parameters"]["required"] == [
         "login",
         "name",

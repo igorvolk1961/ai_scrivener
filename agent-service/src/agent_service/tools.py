@@ -136,10 +136,18 @@ TOOL_SCHEMAS: dict[str, dict[str, Any]] = {
     "search_internet": {
         "type": "object",
         "properties": {
+            "category": {
+                "type": "string",
+                "enum": ["example", "knowledge", "materials"],
+                "description": (
+                    "example/knowledge — только после пустого RAG-результата; "
+                    "materials — только для задач наполнения корпуса."
+                ),
+            },
             "query": {"type": "string"},
             "limit": {"type": "integer", "minimum": 1, "maximum": 10},
         },
-        "required": ["query"],
+        "required": ["category", "query"],
     },
     "save_external_example": {
         "type": "object",

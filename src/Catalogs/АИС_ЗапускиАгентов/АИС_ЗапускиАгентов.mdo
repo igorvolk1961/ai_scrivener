@@ -145,6 +145,17 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
+  <attributes uuid="0b557d8d-78e7-4bc8-986a-9e6ad7e1cd53">
+    <name>ФлагиПоискаJSON</name>
+    <synonym><key>ru</key><value>Флаги поиска JSON</value></synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers><length>0</length></stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
   <attributes uuid="30283938-5c09-404c-9357-291253d3cc74">
     <name>ВерсияКонтекста</name>
     <synonym><key>ru</key><value>Версия контекста</value></synonym>

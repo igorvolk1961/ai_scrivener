@@ -1844,6 +1844,7 @@ requirements:
       - technical_approve_template ставит автору задачу на утверждение.
       - approve_template переводит шаблон в «Утверждён».
       - create_document заполняет должность, запрашиваемые должности и использованный шаблон.
+      - search_internet требует category и разрешает example/knowledge только после пустого RAG.
     design:
       - plans/2026-11-10-ai-agent-migration.md#7-инструменты-и-группы
       - plans/2026-11-10-ai-agent-migration-next-steps.md#a6-согласование-allowlist-и-реализаций
