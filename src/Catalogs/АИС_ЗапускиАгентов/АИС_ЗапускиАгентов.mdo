@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="3ba1090c-23b8-4f34-9350-00c77d546f03">
+  <producedTypes>
+    <objectType typeId="c00b3b88-da50-4d1b-a097-9b316578b5cf" valueTypeId="3def767b-1a1c-4fe2-9cb2-c4c32c73a8e9"/>
+    <refType typeId="c37d88a3-9ab0-4d0f-b23e-d45c796393e0" valueTypeId="74cf5e9d-5f5e-43a4-9ecf-8e82445d6c8c"/>
+    <selectionType typeId="2b635488-ca17-401b-af4d-a7e64168f602" valueTypeId="71aae54c-923d-44ba-ae2d-157e75dde35f"/>
+    <listType typeId="ae4e261d-7679-4522-af4c-3c8d28d8cc90" valueTypeId="4a2c613f-8abf-4d19-88f0-23bbfeb3335c"/>
+    <managerType typeId="afed7942-1196-44d7-8323-5a397898c997" valueTypeId="686fbb9c-9212-4948-af28-91f28061050c"/>
+  </producedTypes>
+  <name>АИС_ЗапускиАгентов</name>
+  <synonym><key>ru</key><value>Запуски ИИ-агентов</value></synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Catalog.АИС_ЗапускиАгентов.StandardAttribute.Description</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory><name>PredefinedDataName</name>
+    <fillValue xsi:type="core:UndefinedValue"/><fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory><name>Predefined</name>
+    <fillValue xsi:type="core:UndefinedValue"/><fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory><name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/><fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory><name>DeletionMark</name>
+    <fillValue xsi:type="core:UndefinedValue"/><fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory><name>IsFolder</name>
+    <fillValue xsi:type="core:UndefinedValue"/><fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory><name>Owner</name>
+    <fillFromFillingValue>true</fillFromFillingValue><fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>ShowError</fillChecking><fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory><name>Parent</name>
+    <fillFromFillingValue>true</fillFromFillingValue><fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch><minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory><name>Description</name>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>ShowError</fillChecking>
+    <fullTextSearch>Use</fullTextSearch><minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory><name>Code</name>
+    <fillValue xsi:type="core:UndefinedValue"/><fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <objectPresentation><key>ru</key><value>Запуск ИИ-агента</value></objectPresentation>
+  <descriptionLength>150</descriptionLength>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <attributes uuid="b5440540-9446-4314-9a0e-bbe88b15ace5">
+    <name>Задача</name>
+    <synonym><key>ru</key><value>Задача</value></synonym>
+    <type>
+      <types>TaskRef.ЗадачаИсполнителя</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <indexing>Index</indexing>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="53c996c4-f92f-42e3-9d21-149f89075142">
+    <name>Сотрудник</name>
+    <synonym><key>ru</key><value>Сотрудник</value></synonym>
+    <type>
+      <types>CatalogRef.Пользователи</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <indexing>Index</indexing>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="85bf9ae4-5868-4c3f-a983-13c79a9bedbf">
+    <name>Состояние</name>
+    <synonym><key>ru</key><value>Состояние</value></synonym>
+    <type>
+      <types>EnumRef.АИС_СостоянияЗапусковАгента</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <indexing>Index</indexing>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="29bdfc28-1cdf-4f73-a92f-9c6111b4d0a8">
+    <name>Шаг</name>
+    <synonym><key>ru</key><value>Шаг</value></synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers><precision>5</precision><scale>0</scale></numberQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="ea245ca5-8e16-4015-9359-5e0c5138752c">
+    <name>МаксШагов</name>
+    <synonym><key>ru</key><value>Максимум шагов</value></synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers><precision>3</precision><scale>0</scale></numberQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="6aee818d-baf2-4f0d-823e-0c3a453ccda9">
+    <name>СообщенияJSON</name>
+    <synonym><key>ru</key><value>История сообщений JSON</value></synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers><length>0</length></stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="b8838de5-2c4d-4dab-8244-1cd55af3c9ac">
+    <name>ОдобрениеJSON</name>
+    <synonym><key>ru</key><value>Состояние approval JSON</value></synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers><length>0</length></stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="30283938-5c09-404c-9357-291253d3cc74">
+    <name>ВерсияКонтекста</name>
+    <synonym><key>ru</key><value>Версия контекста</value></synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers><precision>10</precision><scale>0</scale></numberQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="3e1e3cac-865c-4eb6-8cc0-fe952963e318">
+    <name>Попытки</name>
+    <synonym><key>ru</key><value>Попытки</value></synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers><precision>3</precision><scale>0</scale></numberQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="bf24a261-1d43-4c0e-ba7a-b68eec0b86d3">
+    <name>СледующаяПопытка</name>
+    <synonym><key>ru</key><value>Следующая попытка</value></synonym>
+    <type>
+      <types>Date</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="e43b64ed-6a6a-4cbc-b981-c666073e48a9">
+    <name>Ошибка</name>
+    <synonym><key>ru</key><value>Ошибка</value></synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers><length>0</length></stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="a5b6c995-d073-4379-bc36-98b625b91971">
+    <name>ДатаНачала</name>
+    <synonym><key>ru</key><value>Дата начала</value></synonym>
+    <type>
+      <types>Date</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="504e6c63-a33c-4f96-a33d-62406c9d0b26">
+    <name>ДатаОбновления</name>
+    <synonym><key>ru</key><value>Дата обновления</value></synonym>
+    <type>
+      <types>Date</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="04472c33-7138-4278-a868-df5b40db03c3">
+    <name>ДатаЗавершения</name>
+    <synonym><key>ru</key><value>Дата завершения</value></synonym>
+    <type>
+      <types>Date</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="e6b674c5-e354-4118-892e-bd468e8dd3d7">
+    <name>Заблокирован</name>
+    <synonym><key>ru</key><value>Заблокирован</value></synonym>
+    <type>
+      <types>Boolean</types>
+    </type>
+    <fillValue xsi:type="core:BooleanValue"><value>false</value></fillValue>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="60f1f1f5-6819-4d59-9937-472b01eeb057">
+    <name>КлючБлокировки</name>
+    <synonym><key>ru</key><value>Ключ блокировки</value></synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers><length>36</length></stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="50094c9c-709d-439c-bbaf-7c8b391bb19d">
+    <name>КлючИдемпотентности</name>
+    <synonym><key>ru</key><value>Ключ идемпотентности</value></synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers><length>100</length></stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+</mdclass:Catalog>
