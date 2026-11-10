@@ -112,7 +112,7 @@
       <id>3</id>
       <title>
         <key>ru</key>
-        <value>Адрес RAG-сервиса</value>
+        <value>Адрес RAG-сервиса (через шлюз)</value>
       </title>
       <visible>true</visible>
       <enabled>true</enabled>
@@ -133,36 +133,6 @@
         <autoMaxWidth>false</autoMaxWidth>
         <autoMaxHeight>true</autoMaxHeight>
         <horizontalStretch>true</horizontalStretch>
-        <textEdit>true</textEdit>
-      </extInfo>
-    </items>
-    <items xsi:type="form:FormField">
-      <name>ТокенRAGСервиса</name>
-      <id>4</id>
-      <title>
-        <key>ru</key>
-        <value>Токен RAG-сервиса</value>
-      </title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible>
-        <common>true</common>
-      </userVisible>
-      <dataPath xsi:type="form:DataPath">
-        <segments>ТокенRAGСервиса</segments>
-      </dataPath>
-      <titleLocation>Top</titleLocation>
-      <type>InputField</type>
-      <editMode>Enter</editMode>
-      <showInHeader>true</showInHeader>
-      <headerHorizontalAlign>Left</headerHorizontalAlign>
-      <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo">
-        <width>40</width>
-        <autoMaxWidth>false</autoMaxWidth>
-        <autoMaxHeight>true</autoMaxHeight>
-        <horizontalStretch>true</horizontalStretch>
-        <passwordMode>true</passwordMode>
         <textEdit>true</textEdit>
       </extInfo>
     </items>
@@ -429,7 +399,7 @@
     <items xsi:type="form:FormField">
       <name>АдресAgentService</name>
       <id>74</id>
-      <title><key>ru</key><value>Адрес agent-service</value></title>
+      <title><key>ru</key><value>Адрес agent-service (через шлюз)</value></title>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible><common>true</common></userVisible>
@@ -446,29 +416,6 @@
         <autoMaxHeight>true</autoMaxHeight>
         <horizontalStretch>true</horizontalStretch>
 
-        <textEdit>true</textEdit>
-      </extInfo>
-    </items>
-    <items xsi:type="form:FormField">
-      <name>ТокенAgentService</name>
-      <id>75</id>
-      <title><key>ru</key><value>Токен agent-service</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <dataPath xsi:type="form:DataPath"><segments>ТокенAgentService</segments></dataPath>
-      <titleLocation>Top</titleLocation>
-      <type>InputField</type>
-      <editMode>Enter</editMode>
-      <showInHeader>true</showInHeader>
-      <headerHorizontalAlign>Left</headerHorizontalAlign>
-      <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo">
-        <width>40</width>
-        <autoMaxWidth>false</autoMaxWidth>
-        <autoMaxHeight>true</autoMaxHeight>
-        <horizontalStretch>true</horizontalStretch>
-        <passwordMode>true</passwordMode>
         <textEdit>true</textEdit>
       </extInfo>
     </items>
@@ -521,7 +468,7 @@
     <items xsi:type="form:FormField">
       <name>АдресSearchService</name>
       <id>78</id>
-      <title><key>ru</key><value>Адрес search-service</value></title>
+      <title><key>ru</key><value>Адрес search-service (через шлюз)</value></title>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible><common>true</common></userVisible>
@@ -538,29 +485,6 @@
         <autoMaxHeight>true</autoMaxHeight>
         <horizontalStretch>true</horizontalStretch>
 
-        <textEdit>true</textEdit>
-      </extInfo>
-    </items>
-    <items xsi:type="form:FormField">
-      <name>ТокенSearchService</name>
-      <id>79</id>
-      <title><key>ru</key><value>Токен search-service</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <dataPath xsi:type="form:DataPath"><segments>ТокенSearchService</segments></dataPath>
-      <titleLocation>Top</titleLocation>
-      <type>InputField</type>
-      <editMode>Enter</editMode>
-      <showInHeader>true</showInHeader>
-      <headerHorizontalAlign>Left</headerHorizontalAlign>
-      <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo">
-        <width>40</width>
-        <autoMaxWidth>false</autoMaxWidth>
-        <autoMaxHeight>true</autoMaxHeight>
-        <horizontalStretch>true</horizontalStretch>
-        <passwordMode>true</passwordMode>
         <textEdit>true</textEdit>
       </extInfo>
     </items>
@@ -852,22 +776,6 @@
     </edit>
   </attributes>
   <attributes>
-    <name>ТокенRAGСервиса</name>
-    <id>5</id>
-    <valueType>
-      <types>String</types>
-      <stringQualifiers>
-        <length>200</length>
-      </stringQualifiers>
-    </valueType>
-    <view>
-      <common>true</common>
-    </view>
-    <edit>
-      <common>true</common>
-    </edit>
-  </attributes>
-  <attributes>
     <name>ТаймаутRAGСервиса</name>
     <id>6</id>
     <valueType>
@@ -991,13 +899,6 @@
     <edit><common>true</common></edit>
   </attributes>
   <attributes>
-    <name>ТокенAgentService</name>
-    <id>15</id>
-    <valueType><types>String</types><stringQualifiers><length>200</length></stringQualifiers></valueType>
-    <view><common>true</common></view>
-    <edit><common>true</common></edit>
-  </attributes>
-  <attributes>
     <name>ТаймаутAgentService</name>
     <id>16</id>
     <valueType><types>Number</types><numberQualifiers><precision>5</precision><scale>0</scale></numberQualifiers></valueType>
@@ -1014,13 +915,6 @@
   <attributes>
     <name>АдресSearchService</name>
     <id>18</id>
-    <valueType><types>String</types><stringQualifiers><length>200</length></stringQualifiers></valueType>
-    <view><common>true</common></view>
-    <edit><common>true</common></edit>
-  </attributes>
-  <attributes>
-    <name>ТокенSearchService</name>
-    <id>19</id>
     <valueType><types>String</types><stringQualifiers><length>200</length></stringQualifiers></valueType>
     <view><common>true</common></view>
     <edit><common>true</common></edit>

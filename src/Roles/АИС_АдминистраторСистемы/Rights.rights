@@ -765,12 +765,6 @@
 		<right><name>Update</name><value>true</value></right>
 	</object>
 	<object>
-		<name>Constant.АИС_ТокенRAGСервиса</name>
-		<right><name>Read</name><value>true</value></right>
-		<right><name>View</name><value>true</value></right>
-		<right><name>Update</name><value>true</value></right>
-	</object>
-	<object>
 		<name>Constant.АИС_ТаймаутRAGСервиса</name>
 		<right><name>Read</name><value>true</value></right>
 		<right><name>View</name><value>true</value></right>
@@ -1015,12 +1009,6 @@
 		<right><name>Update</name><value>true</value></right>
 	</object>
 	<object>
-		<name>Constant.АИС_ТокенAgentService</name>
-		<right><name>Read</name><value>true</value></right>
-		<right><name>View</name><value>true</value></right>
-		<right><name>Update</name><value>true</value></right>
-	</object>
-	<object>
 		<name>Constant.АИС_ТаймаутAgentService</name>
 		<right><name>Read</name><value>true</value></right>
 		<right><name>View</name><value>true</value></right>
@@ -1052,12 +1040,6 @@
 	</object>
 	<object>
 		<name>Constant.АИС_АдресSearchService</name>
-		<right><name>Read</name><value>true</value></right>
-		<right><name>View</name><value>true</value></right>
-		<right><name>Update</name><value>true</value></right>
-	</object>
-	<object>
-		<name>Constant.АИС_ТокенSearchService</name>
 		<right><name>Read</name><value>true</value></right>
 		<right><name>View</name><value>true</value></right>
 		<right><name>Update</name><value>true</value></right>

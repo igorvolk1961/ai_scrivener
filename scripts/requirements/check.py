@@ -47,6 +47,8 @@ IMPLEMENTATION_PREFIXES = (
     "agent-service",
     "search-service/",
     "search-service",
+    "deploy/",
+    "deploy",
     "config/",
     "config",
     "scripts/",

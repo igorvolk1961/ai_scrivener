@@ -50,7 +50,6 @@
   <constants>Constant.АИС_КлючИИ</constants>
   <constants>Constant.АИС_МодельИИ</constants>
   <constants>Constant.АИС_АдресRAGСервиса</constants>
-  <constants>Constant.АИС_ТокенRAGСервиса</constants>
   <constants>Constant.АИС_ТаймаутRAGСервиса</constants>
   <constants>Constant.АИС_ПовторыRAGСервиса</constants>
   <constants>Constant.АИС_НастройкиИндексацииДокументов</constants>
@@ -109,14 +108,12 @@
   <dataProcessors>DataProcessor.АИС_ИндексацияДокументов</dataProcessors>
   <subsystems>Subsystem.АИС_Сервис</subsystems>
   <constants>Constant.АИС_АдресAgentService</constants>
-  <constants>Constant.АИС_ТокенAgentService</constants>
   <constants>Constant.АИС_ТаймаутAgentService</constants>
   <constants>Constant.АИС_ПовторыAgentService</constants>
   <constants>Constant.АИС_МодельАгента</constants>
   <constants>Constant.АИС_ТемператураАгента</constants>
   <constants>Constant.АИС_МаксимумТокеновАгента</constants>
   <constants>Constant.АИС_АдресSearchService</constants>
-  <constants>Constant.АИС_ТокенSearchService</constants>
   <constants>Constant.АИС_ТаймаутSearchService</constants>
   <constants>Constant.АИС_ПовторыSearchService</constants>
   <constants>Constant.АИС_АгентВключен</constants>

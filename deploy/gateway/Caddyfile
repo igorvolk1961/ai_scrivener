@@ -1,0 +1,17 @@
+:8090 {
+	reverse_proxy rag-service:8080 {
+		header_up X-Service-Token {$RAG_SERVICE_TOKEN}
+	}
+}
+
+:8091 {
+	reverse_proxy agent-service:8081 {
+		header_up X-Service-Token {$AGENT_SERVICE_TOKEN}
+	}
+}
+
+:8092 {
+	reverse_proxy search-service:8082 {
+		header_up X-Service-Token {$SEARCH_SERVICE_TOKEN}
+	}
+}

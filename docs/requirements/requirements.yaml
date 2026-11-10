@@ -2920,3 +2920,38 @@ requirements:
       - agent-service/tests/test_api.py
       - search-service/tests/test_api.py
     status: implemented
+  - id: NFR-036
+    type: nonfunctional
+    title: Секреты только в env, настройки в 1С
+    description: >-
+      Токены RAG, agent-service, search-service и ключи LLM хранятся только в
+      .env сервисов и шлюза. В 1С нет токенов и секретов: форма содержит только
+      несекретные адреса, таймауты, повторы, модель, лимиты, пути и флаги.
+      Шлюз добавляет service-token из своего .env.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - docs/design-decisions.md#21-решения-2026-11-10-перенос-ии-агента
+    acceptance:
+      - В 1С нет констант и полей для service-token.
+      - Форма содержит только несекретные настройки.
+      - Шлюз добавляет X-Service-Token из deploy/gateway/.env.
+      - Смена токена не требует изменения 1С.
+      - Прямые вызовы сервисов без шлюза не используются агентом.
+    design:
+      - docs/design-decisions.md#21-решения-2026-11-10-перенос-ии-агента
+      - guides/runbook.md#51-шлюз-сервисов-и-секреты
+    implementation:
+      - deploy/gateway/Caddyfile
+      - deploy/gateway/.env.example
+      - deploy/docker-compose.yml
+      - src/CommonModules/АИС_ИнтеграцияСRAG
+      - src/CommonModules/АИС_ИнтеграцияСАгентом
+      - src/CommonModules/АИС_ИнтеграцияСПоиском
+      - src/DataProcessors/АИС_АдминистрированиеИИ
+    tests:
+      - TEST-NFR-036-01
+    test_files:
+      - tests/precommit/test_precommit_config.py
+    status: implemented
