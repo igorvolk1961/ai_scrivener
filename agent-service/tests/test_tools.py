@@ -39,6 +39,21 @@ def test_tool_definitions_use_specific_schemas() -> None:
         "name",
         "position",
     ]
+    sections = tool_definitions(["manage_document_sections"])[0]["function"]["parameters"]
+    assert sections["required"] == ["action"]
+    assert len(sections["properties"]["action"]["enum"]) == 9
+    remarks = tool_definitions(["manage_remarks", "return_document", "route_remarks"])
+    assert {item["function"]["name"] for item in remarks} == {
+        "manage_remarks",
+        "return_document",
+        "route_remarks",
+    }
+    corpus = tool_definitions(["kb_list_materials", "kb_register_material", "kb_download"])
+    assert {item["function"]["name"] for item in corpus} == {
+        "kb_list_materials",
+        "kb_register_material",
+        "kb_download",
+    }
 
 
 def test_validate_tool_name() -> None:

@@ -1965,6 +1965,46 @@ requirements:
     test_files:
       - tests/1c/test_agent.md
     status: in_progress
+  - id: FR-070
+    type: functional
+    title: Инструменты разделов, замечаний и корпуса знаний
+    description: >-
+      Агент управляет разделами документа, структурированными замечаниями,
+      возвратом документа на доработку и поручениями по замечаниям. В корпусе
+      знаний доступны каталог материалов и регистрация файла из хранилища;
+      скачивание внешнего материала отложено до решения по безопасности.
+    priority: must
+    approval: approved
+    source:
+      - user-requirement:2026-11-10
+      - plans/2026-11-10-ai-agent-migration.md#разделы-документов
+      - plans/2026-11-10-ai-agent-migration.md#замечания
+      - plans/2026-11-10-ai-agent-migration.md#корпус-знаний
+    acceptance:
+      - Черновик создаётся с укрупнёнными разделами, не более 7.
+      - Распоряжение по разделу издаётся только после approval.
+      - Замечания создаются, назначаются и обновляются структурированно.
+      - Возврат на доработку создаёт заключение и замечания адресату.
+      - Поручение направляет выбранные замечания владельцу раздела.
+      - Каталог корпуса показывает материалы и отмечает уже загруженные.
+      - Регистрация материала допускает только путь внутри корпуса.
+      - kb_download не входит в allowlist до отдельного решения.
+    design:
+      - plans/2026-11-10-ai-agent-migration.md#разделы-документов
+      - plans/2026-11-10-ai-agent-migration.md#замечания
+      - plans/2026-11-10-ai-agent-migration.md#корпус-знаний
+      - plans/2026-11-10-ai-agent-migration-next-steps.md#c2-разделы-документов
+    implementation:
+      - src/CommonModules/АИС_АгентРазделы
+      - src/CommonModules/АИС_АгентЗамечания
+      - src/CommonModules/АИС_АгентКорпус
+      - src/CommonModules/АИС_ИнструментыАгента
+      - src/CommonModules/АИС_КорпусЗнаний
+    tests:
+      - TEST-FR-070-01
+    test_files:
+      - tests/1c/test_agent.md
+    status: in_progress
   - id: NFR-001
     type: nonfunctional
     title: Отклик интерфейса не более 2 секунд

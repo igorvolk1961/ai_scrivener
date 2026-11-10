@@ -72,6 +72,9 @@
   <commonModules>CommonModule.АИС_ИнструментыАгента</commonModules>
   <commonModules>CommonModule.АИС_АгентКадры</commonModules>
   <commonModules>CommonModule.АИС_АгентЗнания</commonModules>
+  <commonModules>CommonModule.АИС_АгентРазделы</commonModules>
+  <commonModules>CommonModule.АИС_АгентЗамечания</commonModules>
+  <commonModules>CommonModule.АИС_АгентКорпус</commonModules>
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
   <commonModules>CommonModule.АИС_ПапкиДокументов</commonModules>
   <commonModules>CommonModule.АИС_РазделыДокументов</commonModules>
