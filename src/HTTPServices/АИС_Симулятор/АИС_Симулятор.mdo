@@ -427,6 +427,50 @@
       <handler>УстановитьНастройкиИИ_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="8430d5f3-1a9d-44b9-8893-1907ac7a5ef3">
+    <name>НастроитьАгента</name>
+    <synonym><key>ru</key><value>Настроить агента</value></synonym>
+    <template>/agent-setup</template>
+    <methods uuid="6f0d1455-9935-46ec-97ae-eca205eaf032">
+      <name>post</name>
+      <synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>НастроитьАгента_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="0626c607-7f23-4f68-844b-d19aaa8901b0">
+    <name>ОчередьАгента</name>
+    <synonym><key>ru</key><value>Очередь агента</value></synonym>
+    <template>/agent-queue</template>
+    <methods uuid="c154dd78-b975-4e55-ae21-862b90675f60">
+      <name>post</name>
+      <synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ОбработатьОчередьАгента_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="cc965792-12db-4dec-a5f7-b5a220180e8c">
+    <name>ПовторитьЗапуски</name>
+    <synonym><key>ru</key><value>Повторить запуски</value></synonym>
+    <template>/agent-retry</template>
+    <methods uuid="e95ee38e-81ed-4de4-8a32-dd4357a6a0ad">
+      <name>post</name>
+      <synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ПовторитьЗапускиАгента_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="39581da0-9693-4206-865b-6fcd47e86551">
+    <name>СостояниеАгента</name>
+    <synonym><key>ru</key><value>Состояние агента</value></synonym>
+    <template>/agent-state</template>
+    <methods uuid="542ee2c5-b18b-4fd5-bc50-1cc9ad112014">
+      <name>get</name>
+      <synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>СостояниеАгента_GET</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="c6ee8832-558f-42be-82c3-ac33b390f5b2">
     <name>ПапкиСотрудника</name>
     <synonym>
