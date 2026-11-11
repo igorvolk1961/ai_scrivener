@@ -504,6 +504,28 @@
       <handler>РегламентныеЗаданияАгента_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="418e4c47-ec65-4f3b-989d-2f331fd1e15f">
+    <name>ПромптАгента</name>
+    <synonym><key>ru</key><value>Промпт агента</value></synonym>
+    <template>/agent-prompt</template>
+    <methods uuid="3effefd3-9764-47f9-afcc-26f8e9400986">
+      <name>get</name>
+      <synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПромптАгента_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="f147c67b-dd53-4d40-a9ce-30a80ced4e62">
+    <name>ПередатьЗадачуАгенту</name>
+    <synonym><key>ru</key><value>Передать задачу агенту</value></synonym>
+    <template>/agent-task</template>
+    <methods uuid="e59cae9f-043a-4782-958d-6552ca25ddbf">
+      <name>post</name>
+      <synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ПередатьЗадачуАгенту_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="c6ee8832-558f-42be-82c3-ac33b390f5b2">
     <name>ПапкиСотрудника</name>
     <synonym>
