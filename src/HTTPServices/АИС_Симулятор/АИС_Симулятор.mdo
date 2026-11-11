@@ -460,6 +460,28 @@
       <handler>ПовторитьЗапускиАгента_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="f2fc6702-d007-4901-8bc9-8c491cc03119">
+    <name>ПересоздатьЗапуски</name>
+    <synonym><key>ru</key><value>Пересоздать запуски</value></synonym>
+    <template>/agent-recreate</template>
+    <methods uuid="3deb8e7c-82fe-4d4f-bc35-fcc03755dfe7">
+      <name>post</name>
+      <synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ПересоздатьЗапускиАгента_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="063f2a45-6eab-4aca-95ac-ae6f4df850d8">
+    <name>ВозобновитьЗапуск</name>
+    <synonym><key>ru</key><value>Возобновить запуск</value></synonym>
+    <template>/agent-resume</template>
+    <methods uuid="4bf2f997-5fab-4fd4-8eb9-b0c2fc59edf3">
+      <name>post</name>
+      <synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ВозобновитьЗапуск_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="39581da0-9693-4206-865b-6fcd47e86551">
     <name>СостояниеАгента</name>
     <synonym><key>ru</key><value>Состояние агента</value></synonym>
