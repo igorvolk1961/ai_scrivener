@@ -9,7 +9,7 @@
   <description>Выполняет по одному шагу для ожидающих запусков ИИ-агентов.</description>
   <key>АИС_АгентОчередь</key>
   <use>true</use>
-  <predefined>false</predefined>
+  <predefined>true</predefined>
   <restartCountOnFailure>3</restartCountOnFailure>
   <restartIntervalOnFailure>10</restartIntervalOnFailure>
 </mdclass:ScheduledJob>

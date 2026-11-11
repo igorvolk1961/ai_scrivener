@@ -9,7 +9,7 @@
   <description>Переводит просроченные запросы ИИ-агента и их запуски в состояние Истек.</description>
   <key>АИС_АгентТаймауты</key>
   <use>true</use>
-  <predefined>false</predefined>
+  <predefined>true</predefined>
   <restartCountOnFailure>3</restartCountOnFailure>
   <restartIntervalOnFailure>10</restartIntervalOnFailure>
 </mdclass:ScheduledJob>

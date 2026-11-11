@@ -493,6 +493,17 @@
       <handler>СостояниеАгента_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="626c7c87-241b-492f-b830-6580d2dce233">
+    <name>РегламентныеЗаданияАгента</name>
+    <synonym><key>ru</key><value>Расписания заданий агента</value></synonym>
+    <template>/agent-jobs</template>
+    <methods uuid="c8c734b9-ea3d-4f33-b8f1-84fb1aefccd8">
+      <name>get</name>
+      <synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>РегламентныеЗаданияАгента_GET</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="c6ee8832-558f-42be-82c3-ac33b390f5b2">
     <name>ПапкиСотрудника</name>
     <synonym>

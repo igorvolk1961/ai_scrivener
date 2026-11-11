@@ -12,7 +12,7 @@
   <description>Разбирает очередь индексации документов документооборота в RAG.</description>
   <key>АИС_ИндексацияRAG</key>
   <use>true</use>
-  <predefined>false</predefined>
+  <predefined>true</predefined>
   <restartCountOnFailure>3</restartCountOnFailure>
   <restartIntervalOnFailure>10</restartIntervalOnFailure>
 </mdclass:ScheduledJob>
