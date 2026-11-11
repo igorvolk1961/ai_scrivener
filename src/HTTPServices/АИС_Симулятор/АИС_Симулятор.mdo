@@ -120,6 +120,23 @@
       <handler>ПолучитьСтатусПриказа_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="3eca4766-1691-4c0c-acfb-55cf32144418">
+    <name>ЗакрытьПриказы</name>
+    <synonym>
+      <key>ru</key>
+      <value>Закрыть исполненные приказы</value>
+    </synonym>
+    <template>/orders/close</template>
+    <methods uuid="2f1b1107-a55f-47a1-a018-72ccc454f536">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>ЗакрытьПриказы_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="afc40eb9-e082-45e1-b58f-5b031e2bde58">
     <name>СвязатьДокументы</name>
     <synonym>

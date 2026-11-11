@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:ScheduledJob xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="f5a74bcf-2f2d-49c9-b5b2-c1a97ab8bcc8">
+  <producedTypes>
+    <managerType typeId="69d29eba-1c2c-4193-86fa-e692b2a2f0fe" valueTypeId="baccedd2-74de-4d5d-b58c-5d19536990d6"/>
+  </producedTypes>
+  <name>АИС_ЗакрытиеПриказов</name>
+  <synonym><key>ru</key><value>Закрытие исполненных приказов</value></synonym>
+  <methodName>CommonModule.АИС_ОбщегоНазначения.ЗакрытьИсполненныеПриказы</methodName>
+  <description>Закрывает приказы, у которых выполнены все задачи и есть закрывающий результат.</description>
+  <key>АИС_ЗакрытиеПриказов</key>
+  <use>true</use>
+  <predefined>true</predefined>
+  <restartCountOnFailure>3</restartCountOnFailure>
+  <restartIntervalOnFailure>10</restartIntervalOnFailure>
+</mdclass:ScheduledJob>
