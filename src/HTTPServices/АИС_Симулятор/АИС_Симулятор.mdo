@@ -186,6 +186,15 @@
       <httpMethod>POST</httpMethod><handler>ОчиститьТестовыеОбъекты_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="90dec517-8984-407e-a33c-e9ea82b224c5">
+    <name>ОтветственныеВходящих</name>
+    <synonym><key>ru</key><value>Переназначить ответственных входящих</value></synonym>
+    <template>/debug/incoming-responsible</template>
+    <methods uuid="5d148bca-d2ba-46db-8311-d41c4fb336c4">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>НазначитьОтветственныхВходящих_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
     <name>Сеансы</name>
     <synonym>
