@@ -78,6 +78,7 @@
   <commonModules>CommonModule.АИС_АгентОбразцы</commonModules>
   <commonModules>CommonModule.АИС_АгентШаблоны</commonModules>
   <commonModules>CommonModule.АИС_Уведомления</commonModules>
+  <commonModules>CommonModule.АИС_Рассылки</commonModules>
   <commonModules>CommonModule.АИС_ПапкиДокументов</commonModules>
   <commonModules>CommonModule.АИС_РазделыДокументов</commonModules>
   <commonModules>CommonModule.АИС_ЗамечанияДокументов</commonModules>
@@ -93,6 +94,7 @@
   <scheduledJobs>ScheduledJob.АИС_ИндексацияRAG</scheduledJobs>
   <scheduledJobs>ScheduledJob.АИС_АгентОчередь</scheduledJobs>
   <scheduledJobs>ScheduledJob.АИС_ЗакрытиеПриказов</scheduledJobs>
+  <scheduledJobs>ScheduledJob.АИС_КонтрольРассылок</scheduledJobs>
   <scheduledJobs>ScheduledJob.АИС_АгентТаймауты</scheduledJobs>
   <dataProcessors>DataProcessor.АИС_ДолжностныеИнструкции</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
@@ -146,6 +148,8 @@
   <catalogs>Catalog.АИС_ЗапускиАгентов</catalogs>
   <catalogs>Catalog.АИС_ВзаимодействияИИ</catalogs>
   <catalogs>Catalog.АИС_НастройкиАвтоодобрения</catalogs>
+  <catalogs>Catalog.АИС_ТипыРассылок</catalogs>
+  <catalogs>Catalog.АИС_Рассылки</catalogs>
   <catalogs>Catalog.АИС_ПравилаАвтоодобренияПоТипам</catalogs>
   <catalogs>Catalog.АИС_РазрешенныеАвторыАвтоодобрения</catalogs>
   <catalogs>Catalog.АИС_РазрешенныеКонтрагентыАвтоодобрения</catalogs>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="e0a4f8f0-6f2d-4f7d-9f4a-6f2d4f7d9f4a">
+  <producedTypes>
+    <objectType typeId="e1b5a9e1-7a3e-4a8e-af5b-7a3e4a8eaf5b" valueTypeId="e2c6baf2-8b4f-4b9f-b06c-8b4f4b9fb06c"/>
+    <refType typeId="e3d7cbf3-9c5a-4ca0-c17d-9c5a4ca0c17d" valueTypeId="e4e8dc04-ad6b-4db1-d28e-ad6b4db1d28e"/>
+    <selectionType typeId="e5f9ed15-be7c-4ec2-e39f-be7c4ec2e39f" valueTypeId="e60afe26-cf8d-4fd3-f4a0-cf8d4fd3f4a0"/>
+    <listType typeId="e71b0f37-d09e-4ae4-05b1-d09e4ae405b1" valueTypeId="e82c1a48-e1af-4bf5-16c2-e1af4bf516c2"/>
+    <managerType typeId="e93d2b59-f2b0-4c06-27d3-f2b04c0627d3" valueTypeId="ea4e3c6a-03c1-4d17-38e4-03c14d1738e4"/>
+  </producedTypes>
+  <name>АИС_Рассылки</name>
+  <synonym><key>ru</key><value>Рассылки с ожиданием результатов</value></synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <objectPresentation><key>ru</key><value>Рассылка</value></objectPresentation>
+  <descriptionLength>150</descriptionLength>
+  <codeType>String</codeType>
+  <codeLength>50</codeLength>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <attributes uuid="f0a1b2c3-d4e5-4f60-7182-93a4b5c6d7e8">
+    <name>ТипРассылки</name>
+    <synonym><key>ru</key><value>Тип рассылки</value></synonym>
+    <type><types>CatalogRef.АИС_ТипыРассылок</types></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>ShowError</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="f1b2c3d4-e5f6-4071-8293-a4b5c6d7e8f9">
+    <name>ПолитикаJSON</name>
+    <synonym><key>ru</key><value>Снимок политики JSON</value></synonym>
+    <type><types>String</types><stringQualifiers><length>0</length></stringQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="f2c3d4e5-f607-4182-93a4-b5c6d7e8f901">
+    <name>ПолучателиJSON</name>
+    <synonym><key>ru</key><value>Получатели JSON</value></synonym>
+    <type><types>String</types><stringQualifiers><length>0</length></stringQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="f3d4e5f6-0718-4293-a4b5-c6d7e8f90112">
+    <name>Статус</name>
+    <synonym><key>ru</key><value>Статус</value></synonym>
+    <type><types>String</types><stringQualifiers><length>30</length></stringQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="f4e5f607-1829-43a4-b5c6-d7e8f9011223">
+    <name>Ответственный</name>
+    <synonym><key>ru</key><value>Ответственный</value></synonym>
+    <type><types>CatalogRef.Пользователи</types></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="f5f60718-293a-44b5-c6d7-e8f901122334">
+    <name>Контролер</name>
+    <synonym><key>ru</key><value>Контролёр</value></synonym>
+    <type><types>CatalogRef.Пользователи</types></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="f6071829-3a4b-45c6-d7e8-f90112233445">
+    <name>ОснованиеUUID</name>
+    <synonym><key>ru</key><value>UUID основания</value></synonym>
+    <type><types>String</types><stringQualifiers><length>36</length></stringQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="f718293a-4b5c-46d7-e8f9-011223344556">
+    <name>ОснованиеЗаголовок</name>
+    <synonym><key>ru</key><value>Основание</value></synonym>
+    <type><types>String</types><stringQualifiers><length>200</length></stringQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="f8293a4b-5c6d-47e8-f901-122334455667">
+    <name>ДатаОтправки</name>
+    <synonym><key>ru</key><value>Дата отправки</value></synonym>
+    <type><types>Date</types><dateQualifiers><dateFractions>DateTime</dateFractions></dateQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="f93a4b5c-6d7e-48f9-0112-233445566778">
+    <name>СрокОтвета</name>
+    <synonym><key>ru</key><value>Срок ответа</value></synonym>
+    <type><types>Date</types><dateQualifiers><dateFractions>DateTime</dateFractions></dateQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="fa4b5c6d-7e8f-4901-1223-344556677889">
+    <name>ДатаНапоминания</name>
+    <synonym><key>ru</key><value>Дата напоминания</value></synonym>
+    <type><types>Date</types><dateQualifiers><dateFractions>DateTime</dateFractions></dateQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="fb5c6d7e-8f90-4a12-2334-455667788990">
+    <name>ДатаЭскалации</name>
+    <synonym><key>ru</key><value>Дата эскалации</value></synonym>
+    <type><types>Date</types><dateQualifiers><dateFractions>DateTime</dateFractions></dateQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="fc6d7e8f-90a1-4b23-3445-566778899001">
+    <name>ДатаЗавершения</name>
+    <synonym><key>ru</key><value>Дата завершения сбора</value></synonym>
+    <type><types>Date</types><dateQualifiers><dateFractions>DateTime</dateFractions></dateQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="fd7e8f90-a1b2-4c34-4556-677889900112">
+    <name>Комментарий</name>
+    <synonym><key>ru</key><value>Комментарий</value></synonym>
+    <type><types>String</types><stringQualifiers><length>0</length></stringQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+</mdclass:Catalog>

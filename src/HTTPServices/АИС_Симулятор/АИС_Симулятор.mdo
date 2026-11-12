@@ -128,6 +128,37 @@
       <handler>СоздатьВходящийДокумент_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="d486f7a8-4e55-4368-aafe-f36676905a24">
+    <name>Рассылки</name>
+    <synonym><key>ru</key><value>Рассылки</value></synonym>
+    <template>/mailings</template>
+    <methods uuid="9b346883-ede9-4454-8fa6-1bcdbdaba9b0">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПолучитьРассылки_GET</handler>
+    </methods>
+    <methods uuid="344d22b5-f08c-4079-b2c1-87d4e4aee500">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>СоздатьРассылку_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="513f5bc6-8d1e-43d2-b251-e279641b9158">
+    <name>ПроверитьРассылки</name>
+    <synonym><key>ru</key><value>Проверить рассылки</value></synonym>
+    <template>/mailings/check</template>
+    <methods uuid="2799bcea-7a0c-42b5-958e-0006bda55ca1">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ПроверитьРассылки_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="507bb1eb-a7d9-4b0a-b5bc-57b6c3cf11a8">
+    <name>ОтветРассылки</name>
+    <synonym><key>ru</key><value>Зарегистрировать ответ рассылки</value></synonym>
+    <template>/mailings/response</template>
+    <methods uuid="ce10af1a-1fd2-4186-9750-f3077ff3f0c6">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ЗарегистрироватьОтвет_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
     <name>Сеансы</name>
     <synonym>

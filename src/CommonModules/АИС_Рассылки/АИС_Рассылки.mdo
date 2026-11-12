@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="37e45b33-5d4a-4771-8519-6b9825b8f3ce">
+  <name>АИС_Рассылки</name>
+  <synonym><key>ru</key><value>Рассылки с ожиданием результатов</value></synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+  <serverCall>false</serverCall>
+</mdclass:CommonModule>

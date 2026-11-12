@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="1fb6abbd-a333-4bc2-a442-d964e7cf189e">
+  <producedTypes>
+    <objectType typeId="f80bdeba-713d-4f4d-ace2-62887ae065fe" valueTypeId="7dc921ea-11c5-4ff1-930a-ed4cbc99376c"/>
+    <refType typeId="b77b6230-6fbf-4c59-b74e-0b5b68c34c1f" valueTypeId="15c3102e-5665-433f-96a2-16616a7a8647"/>
+    <selectionType typeId="be868f0a-cb52-49f3-8632-780db3f0d46a" valueTypeId="0828f6b5-6e5d-4b7c-8ea4-5e2e737f8a13"/>
+    <listType typeId="23a9c275-fcea-4a37-b579-df6e1b07a313" valueTypeId="6fe49de1-704a-427b-843d-01aabbd73f34"/>
+    <managerType typeId="d6c3438e-aef0-4f35-83f3-9fba8946aec8" valueTypeId="095c1b73-a623-422c-9f87-767632c91c1f"/>
+  </producedTypes>
+  <name>АИС_ТипыРассылок</name>
+  <synonym><key>ru</key><value>Типы рассылок</value></synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <objectPresentation><key>ru</key><value>Тип рассылки</value></objectPresentation>
+  <descriptionLength>150</descriptionLength>
+  <codeType>String</codeType>
+  <codeLength>50</codeLength>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <attributes uuid="9c67dd0d-dd45-4d90-9bea-7796b71c55db">
+    <name>ПолитикаJSON</name>
+    <synonym><key>ru</key><value>Политика рассылки JSON</value></synonym>
+    <type><types>String</types><stringQualifiers><length>0</length></stringQualifiers></type>
+    <minValue xsi:type="core:UndefinedValue"/><maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/><fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+</mdclass:Catalog>

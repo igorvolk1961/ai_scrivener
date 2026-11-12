@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:ScheduledJob xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="5bba0241-76f2-47c8-ad09-708ed5727a0d">
+  <producedTypes>
+    <managerType typeId="65c5cf4d-0dc8-44c6-8dcd-28c2d1d8d0ca" valueTypeId="80c25432-ef5a-4103-a86e-28ae40e75b2e"/>
+  </producedTypes>
+  <name>АИС_КонтрольРассылок</name>
+  <synonym><key>ru</key><value>Контроль рассылок с ожиданием результатов</value></synonym>
+  <methodName>CommonModule.АИС_Рассылки.ПроверитьРассылки</methodName>
+  <description>Напоминания, просрочки, кворум и задачи по рассылкам.</description>
+  <key>АИС_КонтрольРассылок</key>
+  <use>true</use>
+  <predefined>true</predefined>
+  <restartCountOnFailure>3</restartCountOnFailure>
+  <restartIntervalOnFailure>10</restartIntervalOnFailure>
+</mdclass:ScheduledJob>
