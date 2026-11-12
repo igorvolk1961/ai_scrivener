@@ -195,6 +195,15 @@
       <httpMethod>POST</httpMethod><handler>НазначитьОтветственныхВходящих_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="bcfce2ca-f74f-4cbf-81af-3bcc3b98a0ac">
+    <name>ОчисткаЗадачАдминистратора</name>
+    <synonym><key>ru</key><value>Очистка задач, созданных администратором</value></synonym>
+    <template>/debug/cleanup-admin-incoming-tasks</template>
+    <methods uuid="da331c93-a5d6-4f5c-b273-39d43879587c">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ОчиститьЗадачиАдминистратора_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
     <name>Сеансы</name>
     <synonym>
