@@ -177,6 +177,15 @@
       <httpMethod>POST</httpMethod><handler>ПринятьРешениеРассылки_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="bedf56a7-c942-40ba-af7d-163bd8188a89">
+    <name>ОчисткаТестовыхОбъектов</name>
+    <synonym><key>ru</key><value>Очистка тестовых объектов</value></synonym>
+    <template>/debug/cleanup-tests</template>
+    <methods uuid="38c6c6bd-8935-4244-bd87-df927de66237">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ОчиститьТестовыеОбъекты_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
     <name>Сеансы</name>
     <synonym>
