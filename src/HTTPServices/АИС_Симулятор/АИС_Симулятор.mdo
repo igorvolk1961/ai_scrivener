@@ -77,6 +77,57 @@
       <handler>СоздатьИсходящийДокумент_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="ef2a3db0-32b1-4d41-8d76-70f0ab0706d4">
+    <name>Контрагенты</name>
+    <synonym><key>ru</key><value>Контрагенты</value></synonym>
+    <template>/counterparties</template>
+    <methods uuid="f3c768f4-0e4c-4fdf-aabb-aa14fa582396">
+      <name>get</name>
+      <synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьКонтрагентов_GET</handler>
+    </methods>
+    <methods uuid="aab56a67-0cd3-4df4-b597-c6a332d82611">
+      <name>post</name>
+      <synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СоздатьКонтрагента_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="98f14b5a-704c-42bd-84c0-555408f8885f">
+    <name>Номенклатура</name>
+    <synonym><key>ru</key><value>Номенклатура</value></synonym>
+    <template>/nomenclature</template>
+    <methods uuid="f6fb30d1-1b8a-4196-8ae5-c952d71cedf6">
+      <name>get</name>
+      <synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьНоменклатуру_GET</handler>
+    </methods>
+    <methods uuid="580c682e-810e-408f-b93d-58f3a1e4c6dd">
+      <name>post</name>
+      <synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СоздатьНоменклатуру_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="71a57427-3b5c-48fc-a46c-1d8a54fa267d">
+    <name>ВходящиеДокументы</name>
+    <synonym><key>ru</key><value>Входящие документы</value></synonym>
+    <template>/incoming-documents</template>
+    <methods uuid="1561110c-e350-4302-96a1-374c41a51841">
+      <name>get</name>
+      <synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod>
+      <handler>ПолучитьВходящиеДокументы_GET</handler>
+    </methods>
+    <methods uuid="c8bb667d-df4f-4d7f-a63a-3344391c4b75">
+      <name>post</name>
+      <synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СоздатьВходящийДокумент_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
     <name>Сеансы</name>
     <synonym>
