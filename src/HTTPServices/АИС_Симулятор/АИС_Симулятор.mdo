@@ -60,6 +60,23 @@
       <handler>ПолучитьВнутренниеДокументы_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="9c6b93ee-67e2-4d94-a4e1-64d841fff2c7">
+    <name>ИсходящиеДокументы</name>
+    <synonym>
+      <key>ru</key>
+      <value>Исходящие документы</value>
+    </synonym>
+    <template>/outgoing-documents</template>
+    <methods uuid="53ce8481-c9a4-40b6-b79a-923b99f6506a">
+      <name>post</name>
+      <synonym>
+        <key>ru</key>
+        <value>Post</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>СоздатьИсходящийДокумент_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
     <name>Сеансы</name>
     <synonym>
