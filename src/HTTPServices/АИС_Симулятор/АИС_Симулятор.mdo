@@ -168,6 +168,15 @@
       <httpMethod>POST</httpMethod><handler>ПерезапуститьВходящие_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="08548a28-78de-448d-bec7-016be344218f">
+    <name>РешениеРассылки</name>
+    <synonym><key>ru</key><value>Досрочное решение рассылки</value></synonym>
+    <template>/mailings/decide</template>
+    <methods uuid="3c568667-7149-40d1-a93e-ab4fb3ef2424">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ПринятьРешениеРассылки_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
     <name>Сеансы</name>
     <synonym>
