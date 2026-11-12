@@ -159,6 +159,15 @@
       <httpMethod>POST</httpMethod><handler>ЗарегистрироватьОтвет_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="e6f95f94-c12e-495f-bb68-7f49166abc84">
+    <name>ПерезапуститьВходящие</name>
+    <synonym><key>ru</key><value>Перезапустить обработку входящих</value></synonym>
+    <template>/incoming-documents/reprocess</template>
+    <methods uuid="20ca2b46-6afb-4a16-a629-f9007b424654">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ПерезапуститьВходящие_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
     <name>Сеансы</name>
     <synonym>
