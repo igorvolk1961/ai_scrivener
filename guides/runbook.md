@@ -59,13 +59,13 @@ export PROJ=/home/igorvolk/PycharmProjects/ai_scrivener
 
 ```bash
 bash scripts/run/1c.sh            # окно запуска
-bash scripts/run/1c.sh designer   # Конфигуратор (по умолчанию Администратор)
-bash scripts/run/1c.sh enterprise # 1С:Предприятие (по умолчанию Администратор)
+bash scripts/run/1c.sh designer   # Конфигуратор (без логина — окно входа)
+bash scripts/run/1c.sh enterprise # 1С:Предприятие (без логина — окно входа)
 bash scripts/run/1c.sh enterprise ГенДиректор  # под другим пользователем
 bash scripts/run/1c.sh check      # CheckConfig
 ```
 
-По умолчанию `scripts/run/1c.sh` использует `ai_scrivener_stage2` (расширение `ai_scrivener` активно). Для демо-базы: `IB=/home/igorvolk/1C/ai_scrivener_docmng bash scripts/run/1c.sh enterprise`. Раздел расширения в интерфейсе называется **«ИИ-Помощник»** (имя подсистемы — `АИС_Сервис`); если расширение в выбранной базе выключено, скрипт выводит предупреждение.
+По умолчанию `scripts/run/1c.sh` использует `ai_scrivener_stage2` (расширение `ai_scrivener` активно). Для демо-базы: `IB=/home/igorvolk/1C/ai_scrivener_docmng bash scripts/run/1c.sh enterprise`. Раздел расширения в интерфейсе называется **«ИИ-Помощник»** (имя подсистемы — `АИС_Сервис`); если расширение в выбранной базе выключено, скрипт предупреждает и переключается на `ai_scrivener_stage2`. Если и там расширение выключено, запуск завершается ошибкой.
 
 Логины сотрудников: `Собственник`, `ГенДиректор`, `ГлавныйИнженер`, `ГлавныйБухгалтер`, `ДиректорПоПерсоналу`, `Программист1С`. Пароли пустые.
 

@@ -8,14 +8,14 @@ IB_PASSWORD=${AIS_IB_PASSWORD:-${IB_PASSWORD:-}}
 PG_SERVER=${PG_SERVER:-localhost:1541}
 PG_BASE=${PG_BASE:-ai_scrivener_fixed}
 LOG_DIR=${AIS_LOG_DIR:-${TMPDIR:-/tmp}/kilo}
-LOGIN=${2:-$IB_USER}
+LOGIN=${2:-}
 
 usage() {
   printf '%s\n' "Usage: $0 [launcher|designer [login]|enterprise [login]|check|pg-enterprise [login]|pg-designer [login]|pg-check|pg-db]" >&2
   printf '%s\n' "  launcher      - окно запуска 1С" >&2
-  printf '%s\n' "  designer      - Конфигуратор на файловой базе" >&2
-  printf '%s\n' "  enterprise    - 1С:Предприятие на файловой базе (логин по умолчанию: Администратор)" >&2
-  printf '%s\n' "  check         - CheckConfig файловой базы" >&2
+  printf '%s\n' "  designer      - Конфигуратор на файловой базе (без логина — окно входа)" >&2
+  printf '%s\n' "  enterprise    - 1С:Предприятие на файловой базе (без логина — окно входа)" >&2
+  printf '%s\n' "  check         - CheckConfig файловой базы (по умолчанию Администратор)" >&2
   printf '%s\n' "  pg-enterprise - 1С:Предприятие на серверной базе PostgreSQL" >&2
   printf '%s\n' "  pg-designer   - Конфигуратор на серверной базе PostgreSQL" >&2
   printf '%s\n' "  pg-check      - CheckConfig серверной базы PostgreSQL" >&2
@@ -31,23 +31,42 @@ if [[ ! -x "$ONEC" ]]; then
   exit 1
 fi
 
-AUTH_ARGS=(/N "$LOGIN")
-if [[ -n "$IB_PASSWORD" ]]; then
-  AUTH_ARGS+=(/P "$IB_PASSWORD")
+AUTH_ARGS=()
+if [[ -n "$LOGIN" ]]; then
+  AUTH_ARGS=(/N "$LOGIN")
+  if [[ -n "$IB_PASSWORD" ]]; then
+    AUTH_ARGS+=(/P "$IB_PASSWORD")
+  fi
 fi
 
-warn_inactive_extension() {
-  local ibcmd
+CHECK_AUTH_ARGS=(/N "${LOGIN:-$IB_USER}")
+if [[ -n "$IB_PASSWORD" ]]; then
+  CHECK_AUTH_ARGS+=(/P "$IB_PASSWORD")
+fi
+
+extension_active() {
+  local ib=$1 ibcmd active
   ibcmd=$(dirname -- "$ONEC")/ibcmd
-  [[ -x "$ibcmd" && -d "$IB" ]] || return 0
-  local active
-  active=$(timeout 3 "$ibcmd" infobase config extension list \
-    --db-path="$IB" --user="$IB_USER" </dev/null 2>/dev/null \
+  [[ -x "$ibcmd" && -d "$ib" ]] || { echo unknown; return; }
+  active=$(timeout 5 "$ibcmd" infobase config extension list \
+    --db-path="$ib" --user="$IB_USER" </dev/null 2>/dev/null \
     | awk '/name/{name=$3} /active/{if(name=="\"ai_scrivener\""){print $3; exit}}' || true)
-  if [[ "$active" == "no" ]]; then
-    echo "WARNING: расширение ai_scrivener выключено в $IB — раздел «ИИ-Помощник» (АИС_Сервис) будет скрыт." >&2
-    echo "         Включите расширение или используйте базу ai_scrivener_stage2." >&2
+  echo "${active:-unknown}"
+}
+
+ensure_active_extension() {
+  local active fallback=/home/igorvolk/1C/ai_scrivener_stage2
+  active=$(extension_active "$IB")
+  [[ "$active" != "no" ]] && return 0
+  if [[ "$IB" != "$fallback" && -d "$fallback" ]]; then
+    echo "WARNING: расширение ai_scrivener выключено в $IB." >&2
+    echo "         Переключаюсь на $fallback, где расширение активно." >&2
+    IB=$fallback
+    return 0
   fi
+  echo "ERROR: расширение ai_scrivener выключено в $IB — раздел «ИИ-Помощник» (АИС_Сервис) будет скрыт." >&2
+  echo "       Включите расширение в Конфигураторе или задайте IB=$fallback." >&2
+  exit 1
 }
 
 require_file_base() {
@@ -63,19 +82,19 @@ case "${1:-launcher}" in
     ;;
   designer)
     require_file_base
-    warn_inactive_extension
+    ensure_active_extension
     exec "$ONEC" DESIGNER /F"$IB" "${AUTH_ARGS[@]}"
     ;;
   enterprise)
     require_file_base
-    warn_inactive_extension
+    ensure_active_extension
     exec "$ONEC" ENTERPRISE /F"$IB" "${AUTH_ARGS[@]}"
     ;;
   check)
     require_file_base
-    warn_inactive_extension
+    ensure_active_extension
     mkdir -p "$LOG_DIR"
-    exec "$ONEC" DESIGNER /F"$IB" "${AUTH_ARGS[@]}" \
+    exec "$ONEC" DESIGNER /F"$IB" "${CHECK_AUTH_ARGS[@]}" \
       /CheckConfig /Out "$LOG_DIR/check.log" \
       /DisableStartupDialogs /DisableStartupMessages
     ;;
@@ -87,7 +106,7 @@ case "${1:-launcher}" in
     ;;
   pg-check)
     mkdir -p "$LOG_DIR"
-    exec "$ONEC" DESIGNER /S"$PG_SERVER/$PG_BASE" "${AUTH_ARGS[@]}" \
+    exec "$ONEC" DESIGNER /S"$PG_SERVER/$PG_BASE" "${CHECK_AUTH_ARGS[@]}" \
       /CheckConfig /Out "$LOG_DIR/check_pg.log" \
       /DisableStartupDialogs /DisableStartupMessages
     ;;
