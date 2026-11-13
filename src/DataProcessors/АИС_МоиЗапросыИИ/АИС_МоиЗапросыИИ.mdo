@@ -5,12 +5,12 @@
     <managerType typeId="7ba5e9b0-34e8-465d-bb76-93ab990921ec" valueTypeId="222fba4a-1dcc-4914-9b6f-656e547f33fa"/>
   </producedTypes>
   <name>АИС_МоиЗапросыИИ</name>
-  <synonym><key>ru</key><value>Мои запросы ИИ</value></synonym>
+  <synonym><key>ru</key><value>Запросы ИИ ко мне</value></synonym>
   <useStandardCommands>true</useStandardCommands>
   <defaultForm>DataProcessor.АИС_МоиЗапросыИИ.Form.Форма</defaultForm>
   <forms uuid="9afadd35-0406-4f4b-aa27-24e9ab2896d9">
     <name>Форма</name>
-    <synonym><key>ru</key><value>Форма</value></synonym>
+    <synonym><key>ru</key><value>Запросы ИИ ко мне</value></synonym>
     <usePurposes>PersonalComputer</usePurposes>
     <usePurposes>MobileDevice</usePurposes>
   </forms>
