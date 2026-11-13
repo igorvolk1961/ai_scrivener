@@ -204,6 +204,15 @@
       <httpMethod>POST</httpMethod><handler>ОчиститьЗадачиАдминистратора_POST</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="9dea667b-40f3-4beb-a39d-6c5cb153ef72">
+    <name>ОчисткаЗадачОтветитьИИ</name>
+    <synonym><key>ru</key><value>Очистка задач "Ответить ИИ"</value></synonym>
+    <template>/debug/cleanup-ai-answer-tasks</template>
+    <methods uuid="4d2f3b32-ea7f-425d-9ccd-18f3abd96dfc">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>ОчиститьЗадачиОтветитьИИ_POST</handler>
+    </methods>
+  </urlTemplates>
   <urlTemplates uuid="1a4a4a0b-6a1a-4e8a-9f4a-6a1a4e8a9f4a">
     <name>Сеансы</name>
     <synonym>
