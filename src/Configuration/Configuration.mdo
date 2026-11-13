@@ -160,6 +160,7 @@
   <catalogs>Catalog.ШаблоныВнутреннихДокументов</catalogs>
   <catalogs>Catalog.ИсточникиДанных</catalogs>
   <catalogs>Catalog.ВнутренниеДокументы</catalogs>
+  <catalogs>Catalog.ВидыВнутреннихДокументов</catalogs>
   <catalogs>Catalog.Файлы</catalogs>
   <catalogs>Catalog.ВерсииФайлов</catalogs>
   <enums>Enum.АИС_СпособыЗаполнения</enums>
@@ -190,4 +191,5 @@
   <informationRegisters>InformationRegister.АИС_РазрешенияОбменаИнформацией</informationRegisters>
   <informationRegisters>InformationRegister.РабочиеГруппы</informationRegisters>
   <informationRegisters>InformationRegister.СостоянияДокументов</informationRegisters>
+  <informationRegisters>InformationRegister.ОбщиеРеквизитыДокументов</informationRegisters>
 </mdclass:Configuration>

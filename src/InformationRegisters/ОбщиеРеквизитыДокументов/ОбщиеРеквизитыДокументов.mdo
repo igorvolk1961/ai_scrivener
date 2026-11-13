@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="b45d5a21-159a-4006-a3b3-5284e861e8e1" extendedConfigurationObject="750f3331-145d-4d67-8e20-9e2b81a0a4f3">
+  <producedTypes>
+    <selectionType typeId="aa065f62-fbbc-4519-98a1-6980e713873b" valueTypeId="8cd942ca-96fb-46af-b223-bfd2e5af2567"/>
+    <listType typeId="40ee4b09-1d56-41cc-baf6-1b1c3ebb8832" valueTypeId="9098d45a-ca2f-4827-882d-c3bb4e270c54"/>
+    <managerType typeId="a5eff135-485e-43a5-bbe4-0655bfa427d7" valueTypeId="cd3ff09f-64c3-4fc6-a960-729b0745c984"/>
+    <recordSetType typeId="1e387d1e-1188-4668-bd5d-379c9a6bdaaf" valueTypeId="2ccfe3f9-4273-4396-9a1e-017a9586c347"/>
+    <recordKeyType typeId="18f592dc-961c-4955-9a28-c666fde6d20d" valueTypeId="8f9a43c6-f4ab-446a-80c4-9b7b2efc3752"/>
+    <recordType typeId="f6d06d92-84b4-4294-a547-e95d014f99a9" valueTypeId="8a08c408-9501-49c3-a2f8-130f2778934a"/>
+    <recordManagerType typeId="d89a1147-d6c1-48e8-86c6-ab814c2579b8" valueTypeId="c245e6e8-0ba0-407a-b813-b8b22466ab31"/>
+  </producedTypes>
+  <name>ОбщиеРеквизитыДокументов</name>
+  <synonym><key>ru</key><value>Общие реквизиты документов</value></synonym>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:InformationRegisterExtension">
+    <extendedConfigurationObject>Checked</extendedConfigurationObject>
+  </extension>
+</mdclass:InformationRegister>
