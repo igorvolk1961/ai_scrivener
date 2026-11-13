@@ -16,9 +16,11 @@
   <content>DataProcessor.АИС_МоиЗапросыИИ</content>
   <content>DataProcessor.АИС_ПередатьЗадачуИИ</content>
   <content>DataProcessor.АИС_МониторЗапусковИИ</content>
+  <content>DataProcessor.АИС_ДосрочноеРешениеРассылки</content>
   <content>DataProcessor.АИС_ИндексацияДокументов</content>
   <content>DataProcessor.АИС_ВопросПоБазеЗнаний</content>
   <content>CommonCommand.АИС_ВопросПоБазеЗнаний</content>
+  <content>CommonCommand.АИС_ДосрочноеРешениеРассылки</content>
   <content>CommonCommand.АИС_ОпубликоватьВRAG</content>
   <content>Catalog.АИС_ТипыДействий</content>
   <content>Catalog.АИС_ТипыТриггеров</content>

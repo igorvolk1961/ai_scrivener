@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonCommand xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="24ba58a7-8f97-4499-827b-17f9913098db">
+  <name>АИС_ДосрочноеРешениеРассылки</name>
+  <synonym><key>ru</key><value>Досрочное решение рассылки</value></synonym>
+  <group>NavigationPanelOrdinary</group>
+  <commandParameterType/>
+  <parameterUse>Optional</parameterUse>
+  <modifiesSavedData>true</modifiesSavedData>
+</mdclass:CommonCommand>

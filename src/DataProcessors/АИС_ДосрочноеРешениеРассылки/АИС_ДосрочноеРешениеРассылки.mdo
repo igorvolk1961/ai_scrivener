@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="afb9b60f-9f42-4b09-9b3f-b22aa5e0f550">
+  <producedTypes>
+    <objectType typeId="b5c6a206-b5df-45dd-82e3-453fceb49ca9" valueTypeId="71fb52aa-05c1-4507-9922-190abf31c4dc"/>
+    <managerType typeId="65724019-d7fa-4cd3-b864-901984fc250c" valueTypeId="399c16d2-4fa1-46de-95f7-56c378cd1e8f"/>
+  </producedTypes>
+  <name>АИС_ДосрочноеРешениеРассылки</name>
+  <synonym><key>ru</key><value>Досрочное решение рассылки</value></synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <defaultForm>DataProcessor.АИС_ДосрочноеРешениеРассылки.Form.Форма</defaultForm>
+  <forms uuid="1b90af91-a391-495c-858a-2db5e69d212c">
+    <name>Форма</name>
+    <synonym><key>ru</key><value>Форма</value></synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:DataProcessor>

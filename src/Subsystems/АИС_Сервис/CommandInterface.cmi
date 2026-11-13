@@ -381,5 +381,17 @@
         </for>
       </visible>
     </visibilityFragments>
+    <visibilityFragments>
+      <command>DataProcessor.АИС_ДосрочноеРешениеРассылки.StandardCommand.Open</command>
+      <visible>
+        <common>true</common>
+      </visible>
+    </visibilityFragments>
+    <visibilityFragments>
+      <command>CommonCommand.АИС_ДосрочноеРешениеРассылки</command>
+      <visible>
+        <common>true</common>
+      </visible>
+    </visibilityFragments>
   </commandsVisibility>
 </cmi:CommandInterface>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:form="http://g5.1c.ru/v8/dt/form">
+  <title><key>ru</key><value>Досрочное решение рассылки</value></title>
+  <autoCommandBar><name>ФормаКоманднаяПанель</name><id>-1</id><horizontalAlign>Left</horizontalAlign><autoFill>true</autoFill></autoCommandBar>
+  <handlers><event>OnCreateAtServer</event><name>ПриСозданииНаСервере</name></handlers>
+  <autoTitle>true</autoTitle><autoUrl>true</autoUrl><group>Vertical</group><autoFillCheck>true</autoFillCheck>
+  <allowFormCustomize>true</allowFormCustomize><enabled>true</enabled><showTitle>true</showTitle><showCloseButton>true</showCloseButton>
+  <items xsi:type="form:FormGroup">
+    <name>ГруппаОсновная</name><id>10</id>
+    <items xsi:type="form:FormField">
+      <name>Статус</name><id>11</id>
+      <title><key>ru</key><value>Состояние</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>Статус</segments></dataPath>
+      <titleLocation>Top</titleLocation><type>InputField</type><editMode>Enter</editMode>
+      <showInHeader>false</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>false</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
+    </items>
+    <items xsi:type="form:FormGroup">
+      <name>ГруппаКнопки</name><id>20</id>
+      <items xsi:type="form:Button">
+        <name>КнопкаПринять</name><id>21</id><type>UsualButton</type>
+        <title><key>ru</key><value>Принять решение досрочно</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <commandName>Form.Command.Принять</commandName>
+        <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <placementArea>UserCmds</placementArea><representationInContextMenu>Auto</representationInContextMenu>
+      </items>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <horizontalStretch>true</horizontalStretch><verticalStretch>false</verticalStretch><type>UsualGroup</type>
+      <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+    </items>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
+    <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+  </items>
+  <attributes>
+    <name>Статус</name><id>1</id>
+    <valueType><types>String</types><stringQualifiers><length>1000</length></stringQualifiers></valueType>
+    <view><common>true</common></view><edit><common>true</common></edit>
+  </attributes>
+  <formCommands>
+    <name>Принять</name><title><key>ru</key><value>Принять решение досрочно</value></title><id>1</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Принять</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <commandInterface><navigationPanel/><commandBar/></commandInterface>
+  <extInfo xsi:type="form:ObjectFormExtInfo"/>
+</form:Form>

@@ -190,6 +190,21 @@
       <placementArea>UserCmds</placementArea>
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
+    <items xsi:type="form:Button">
+      <name>КнопкаДосрочно</name>
+      <id>35</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Досрочное решение рассылки</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.ДосрочноеРешение</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
     <visible>true</visible>
     <enabled>true</enabled>
     <userVisible><common>true</common></userVisible>
@@ -283,6 +298,14 @@
     <id>2</id>
     <use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Передать</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ДосрочноеРешение</name>
+    <title><key>ru</key><value>Досрочное решение рассылки</value></title>
+    <id>3</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ОткрытьДосрочноеРешение</name></handler></action>
     <currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <commandInterface><navigationPanel/><commandBar/></commandInterface>
