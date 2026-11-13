@@ -115,8 +115,11 @@
     <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
   </items>
   <items xsi:type="form:FormGroup">
-    <name>ГруппаДетали</name>
-    <id>20</id>
+    <name>ГруппаКонтент</name>
+    <id>40</id>
+    <items xsi:type="form:FormGroup">
+      <name>ГруппаЛевая</name>
+      <id>41</id>
     <items xsi:type="form:FormField">
       <name>ТекстЗапроса</name>
       <id>21</id>
@@ -132,51 +135,6 @@
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>true</showInFooter>
       <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
-    </items>
-    <items xsi:type="form:Table">
-      <name>ТаблицаДокументов</name>
-      <id>30</id>
-      <title><key>ru</key><value>Документы для просмотра</value></title>
-      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-      <dataPath xsi:type="form:DataPath"><segments>ТаблицаДокументов</segments></dataPath>
-      <titleLocation>Top</titleLocation>
-      <items xsi:type="form:FormField">
-        <name>ТаблицаДокументовЗаголовок</name><id>31</id>
-        <title><key>ru</key><value>Документ</value></title>
-        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-        <dataPath xsi:type="form:DataPath"><segments>ТаблицаДокументов.Заголовок</segments></dataPath>
-        <titleLocation>Top</titleLocation><type>InputField</type><editMode>Enter</editMode>
-        <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
-        <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
-      </items>
-      <items xsi:type="form:FormField">
-        <name>ТаблицаДокументовВид</name><id>32</id>
-        <title><key>ru</key><value>Вид</value></title>
-        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-        <dataPath xsi:type="form:DataPath"><segments>ТаблицаДокументов.Вид</segments></dataPath>
-        <titleLocation>Top</titleLocation><type>InputField</type><editMode>Enter</editMode>
-        <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
-        <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
-      </items>
-      <handlers><event>OnActivateRow</event><name>ТаблицаДокументовПриАктивизацииСтроки</name></handlers>
-      <horizontalStretch>true</horizontalStretch><verticalStretch>false</verticalStretch><height>5</height><type>Table</type>
-    </items>
-    <items xsi:type="form:FormField">
-      <name>ТекстДокумента</name>
-      <id>19</id>
-      <title><key>ru</key><value>Документы к запросу (тексты)</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <dataPath xsi:type="form:DataPath"><segments>ТекстДокумента</segments></dataPath>
-      <titleLocation>Top</titleLocation>
-      <type>InputField</type>
-      <editMode>Enter</editMode>
-      <showInHeader>false</showInHeader>
-      <headerHorizontalAlign>Left</headerHorizontalAlign>
-      <showInFooter>false</showInFooter>
-      <height>15</height>
-      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>80</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
     </items>
     <items xsi:type="form:FormField">
       <name>ТекстОтвета</name>
@@ -210,14 +168,6 @@
       <showInFooter>true</showInFooter>
       <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
     </items>
-    <visible>true</visible>
-    <enabled>true</enabled>
-    <userVisible><common>true</common></userVisible>
-    <horizontalStretch>true</horizontalStretch>
-    <verticalStretch>false</verticalStretch>
-    <type>UsualGroup</type>
-    <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
-  </items>
   <items xsi:type="form:FormGroup">
     <name>ГруппаКнопки</name>
     <id>30</id>
@@ -303,6 +253,67 @@
     <verticalStretch>false</verticalStretch>
     <type>UsualGroup</type>
     <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+  </items>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
+      <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+    </items>
+    <items xsi:type="form:FormGroup">
+      <name>ГруппаПравая</name>
+      <id>42</id>
+    <items xsi:type="form:Table">
+      <name>ТаблицаДокументов</name>
+      <id>50</id>
+      <title><key>ru</key><value>Документы для просмотра</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>ТаблицаДокументов</segments></dataPath>
+      <titleLocation>Top</titleLocation>
+      <items xsi:type="form:FormField">
+        <name>ТаблицаДокументовЗаголовок</name><id>51</id>
+        <title><key>ru</key><value>Документ</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <dataPath xsi:type="form:DataPath"><segments>ТаблицаДокументов.Заголовок</segments></dataPath>
+        <titleLocation>Top</titleLocation><type>InputField</type><editMode>Enter</editMode>
+        <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
+      </items>
+      <items xsi:type="form:FormField">
+        <name>ТаблицаДокументовВид</name><id>52</id>
+        <title><key>ru</key><value>Вид</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <dataPath xsi:type="form:DataPath"><segments>ТаблицаДокументов.Вид</segments></dataPath>
+        <titleLocation>Top</titleLocation><type>InputField</type><editMode>Enter</editMode>
+        <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
+      </items>
+      <handlers><event>OnActivateRow</event><name>ТаблицаДокументовПриАктивизацииСтроки</name></handlers>
+      <horizontalStretch>true</horizontalStretch><verticalStretch>false</verticalStretch><height>5</height><type>Table</type>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>ТекстДокумента</name>
+      <id>19</id>
+      <title><key>ru</key><value>Текст выбранного документа</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>ТекстДокумента</segments></dataPath>
+      <titleLocation>Top</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>false</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>false</showInFooter>
+      <height>15</height>
+      <verticalStretch>true</verticalStretch>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>80</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
+    </items>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
+      <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+    </items>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
+    <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
   </items>
   <attributes>
     <name>Объект</name>
