@@ -26,7 +26,7 @@
       <items xsi:type="form:FormField">
         <name>ТаблицаЗапросовЗаголовок</name>
         <id>12</id>
-        <title><key>ru</key><value>Запрос</value></title>
+        <title><key>ru</key><value>Тема</value></title>
         <visible>true</visible>
         <enabled>true</enabled>
         <userVisible><common>true</common></userVisible>
@@ -40,9 +40,25 @@
         <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
       </items>
       <items xsi:type="form:FormField">
+        <name>ТаблицаЗапросовСуть</name>
+        <id>18</id>
+        <title><key>ru</key><value>Суть</value></title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible><common>true</common></userVisible>
+        <dataPath xsi:type="form:DataPath"><segments>ТаблицаЗапросов.Суть</segments></dataPath>
+        <titleLocation>Top</titleLocation>
+        <type>InputField</type>
+        <editMode>Enter</editMode>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
+      </items>
+      <items xsi:type="form:FormField">
         <name>ТаблицаЗапросовВид</name>
         <id>13</id>
-        <title><key>ru</key><value>Вид</value></title>
+        <title><key>ru</key><value>Тип запроса</value></title>
         <visible>true</visible>
         <enabled>true</enabled>
         <userVisible><common>true</common></userVisible>
@@ -58,7 +74,7 @@
       <items xsi:type="form:FormField">
         <name>ТаблицаЗапросовСрок</name>
         <id>14</id>
-        <title><key>ru</key><value>Срок</value></title>
+        <title><key>ru</key><value>Ответить до</value></title>
         <visible>true</visible>
         <enabled>true</enabled>
         <userVisible><common>true</common></userVisible>
@@ -253,6 +269,13 @@
       <name>Заголовок</name>
       <id>2</id>
       <valueType><types>String</types><stringQualifiers><length>150</length></stringQualifiers></valueType>
+      <view><common>true</common></view>
+      <edit><common>true</common></edit>
+    </columns>
+    <columns>
+      <name>Суть</name>
+      <id>5</id>
+      <valueType><types>String</types><stringQualifiers><length>200</length></stringQualifiers></valueType>
       <view><common>true</common></view>
       <edit><common>true</common></edit>
     </columns>
