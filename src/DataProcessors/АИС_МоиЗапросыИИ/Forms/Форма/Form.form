@@ -133,21 +133,50 @@
       <showInFooter>true</showInFooter>
       <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
     </items>
+    <items xsi:type="form:Table">
+      <name>ТаблицаДокументов</name>
+      <id>30</id>
+      <title><key>ru</key><value>Документы для просмотра</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>ТаблицаДокументов</segments></dataPath>
+      <titleLocation>Top</titleLocation>
+      <items xsi:type="form:FormField">
+        <name>ТаблицаДокументовЗаголовок</name><id>31</id>
+        <title><key>ru</key><value>Документ</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <dataPath xsi:type="form:DataPath"><segments>ТаблицаДокументов.Заголовок</segments></dataPath>
+        <titleLocation>Top</titleLocation><type>InputField</type><editMode>Enter</editMode>
+        <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
+      </items>
+      <items xsi:type="form:FormField">
+        <name>ТаблицаДокументовВид</name><id>32</id>
+        <title><key>ru</key><value>Вид</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <dataPath xsi:type="form:DataPath"><segments>ТаблицаДокументов.Вид</segments></dataPath>
+        <titleLocation>Top</titleLocation><type>InputField</type><editMode>Enter</editMode>
+        <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
+      </items>
+      <handlers><event>OnActivateRow</event><name>ТаблицаДокументовПриАктивизацииСтроки</name></handlers>
+      <horizontalStretch>true</horizontalStretch><verticalStretch>false</verticalStretch><height>5</height><type>Table</type>
+    </items>
     <items xsi:type="form:FormField">
-      <name>ТекстДокументов</name>
+      <name>ТекстДокумента</name>
       <id>19</id>
       <title><key>ru</key><value>Документы к запросу (тексты)</value></title>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible><common>true</common></userVisible>
-      <dataPath xsi:type="form:DataPath"><segments>ТекстДокументов</segments></dataPath>
+      <dataPath xsi:type="form:DataPath"><segments>ТекстДокумента</segments></dataPath>
       <titleLocation>Top</titleLocation>
       <type>InputField</type>
       <editMode>Enter</editMode>
       <showInHeader>false</showInHeader>
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>false</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
+      <height>15</height>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>80</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
     </items>
     <items xsi:type="form:FormField">
       <name>ТекстОтвета</name>
@@ -340,7 +369,17 @@
     <edit><common>true</common></edit>
   </attributes>
   <attributes>
-    <name>ТекстДокументов</name>
+    <name>ТаблицаДокументов</name>
+    <id>9</id>
+    <valueType><types>ValueTable</types></valueType>
+    <view><common>true</common></view><edit><common>true</common></edit>
+    <columns><name>Документ</name><id>1</id><valueType><types>CatalogRef.ВнутренниеДокументы</types></valueType><view><common>true</common></view><edit><common>true</common></edit></columns>
+    <columns><name>Заголовок</name><id>2</id><valueType><types>String</types><stringQualifiers><length>200</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></columns>
+    <columns><name>Вид</name><id>3</id><valueType><types>String</types><stringQualifiers><length>100</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></columns>
+    <columns><name>Текст</name><id>4</id><valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></columns>
+  </attributes>
+  <attributes>
+    <name>ТекстДокумента</name>
     <id>8</id>
     <valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType>
     <view><common>true</common></view>
