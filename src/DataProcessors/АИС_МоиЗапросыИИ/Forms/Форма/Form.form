@@ -22,7 +22,7 @@
       <enabled>true</enabled>
       <userVisible><common>true</common></userVisible>
       <dataPath xsi:type="form:DataPath"><segments>ТаблицаЗапросов</segments></dataPath>
-      <titleLocation>None</titleLocation>
+      <titleLocation>Top</titleLocation>
       <items xsi:type="form:FormField">
         <name>ТаблицаЗапросовЗаголовок</name>
         <id>12</id>
@@ -105,18 +105,25 @@
       </items>
       <autoCommandBar><name>ТаблицаЗапросовКоманднаяПанель</name><id>16</id><horizontalAlign>Left</horizontalAlign><autoFill>true</autoFill></autoCommandBar>
       <handlers><event>OnActivateRow</event><name>ТаблицаЗапросовПриАктивизацииСтроки</name></handlers>
+      <horizontalStretch>false</horizontalStretch><width>70</width><verticalStretch>false</verticalStretch><height>5</height><type>Table</type>
     </items>
     <visible>true</visible>
     <enabled>true</enabled>
     <userVisible><common>true</common></userVisible>
     <horizontalStretch>true</horizontalStretch>
-    <verticalStretch>true</verticalStretch>
+    <verticalStretch>false</verticalStretch>
     <type>UsualGroup</type>
     <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
   </items>
   <items xsi:type="form:FormGroup">
-    <name>ГруппаТулбар</name>
-    <id>60</id>
+    <name>ГруппаКонтент</name>
+    <id>40</id>
+    <items xsi:type="form:FormGroup">
+      <name>ГруппаЛевая</name>
+      <id>41</id>
+      <items xsi:type="form:FormGroup">
+        <name>ГруппаТулбарЛевая</name>
+        <id>62</id>
     <items xsi:type="form:Button">
       <name>КнопкаОбновить</name>
       <id>31</id>
@@ -132,31 +139,10 @@
       <placementArea>UserCmds</placementArea>
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
-    <items xsi:type="form:Button">
-      <name>КнопкаПросмотр</name>
-      <id>36</id>
-      <type>UsualButton</type>
-      <title><key>ru</key><value>Просмотреть документы</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <commandName>Form.Command.Просмотр</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
-    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-    <horizontalStretch>false</horizontalStretch><verticalStretch>false</verticalStretch><type>UsualGroup</type>
-    <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
-  </items>
-  <items xsi:type="form:FormGroup">
-    <name>ГруппаКонтент</name>
-    <id>40</id>
-    <items xsi:type="form:FormGroup">
-      <name>ГруппаЛевая</name>
-      <id>41</id>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <horizontalStretch>false</horizontalStretch><verticalStretch>false</verticalStretch><type>UsualGroup</type>
+        <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+      </items>
     <items xsi:type="form:FormField">
       <name>ТекстЗапроса</name>
       <id>21</id>
@@ -171,7 +157,7 @@
       <showInHeader>true</showInHeader>
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
+      <extInfo xsi:type="form:InputFieldExtInfo"><height>9</height><autoMaxWidth>false</autoMaxWidth><width>110</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
     </items>
     <items xsi:type="form:FormField">
       <name>ТекстОтвета</name>
@@ -187,28 +173,64 @@
       <showInHeader>true</showInHeader>
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>true</textEdit></extInfo>
+      <extInfo xsi:type="form:InputFieldExtInfo"><height>9</height><autoMaxWidth>false</autoMaxWidth><width>110</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>true</textEdit></extInfo>
     </items>
-    <items xsi:type="form:FormField">
-      <name>Статус</name>
-      <id>23</id>
-      <title><key>ru</key><value>Статус</value></title>
+  <items xsi:type="form:FormGroup">
+    <name>ГруппаДействия</name>
+    <id>61</id>
+
+    <items xsi:type="form:Button">
+      <name>КнопкаОдобрить</name>
+      <id>33</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Одобряю. Действуй</value></title>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible><common>true</common></userVisible>
-      <dataPath xsi:type="form:DataPath"><segments>Статус</segments></dataPath>
-      <titleLocation>Left</titleLocation>
-      <type>InputField</type>
-      <editMode>Enter</editMode>
-      <showInHeader>true</showInHeader>
-      <headerHorizontalAlign>Left</headerHorizontalAlign>
-      <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
+      <commandName>Form.Command.Одобрить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
     </items>
-
+    <items xsi:type="form:Button">
+      <name>КнопкаОтклонить</name>
+      <id>34</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Отклонить и указать, что изменить</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Отклонить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
+      <name>КнопкаОтветить</name>
+      <id>32</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Ответить</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Ответить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <horizontalStretch>false</horizontalStretch><width>70</width><verticalStretch>false</verticalStretch><groupHorizontalAlign>Left</groupHorizontalAlign><type>UsualGroup</type>
+    <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><united>true</united><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+  </items>
       <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-      <horizontalStretch>false</horizontalStretch><width>75</width><verticalStretch>true</verticalStretch><type>UsualGroup</type>
-      <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+      <horizontalStretch>false</horizontalStretch><width>120</width><verticalStretch>true</verticalStretch><groupVerticalAlign>Top</groupVerticalAlign><type>UsualGroup</type>
+      <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
     </items>
     <items xsi:type="form:FormGroup">
       <name>ГруппаПравая</name>
@@ -255,70 +277,32 @@
       <showInHeader>false</showInHeader>
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>false</showInFooter>
-      <height>0</height>
-      <verticalStretch>true</verticalStretch>
-      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>220</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
+      <extInfo xsi:type="form:InputFieldExtInfo"><height>9</height><autoMaxWidth>false</autoMaxWidth><width>200</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
     </items>
       <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-      <horizontalStretch>false</horizontalStretch><width>120</width><verticalStretch>true</verticalStretch><type>UsualGroup</type>
+      <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
       <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
     </items>
     <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
     <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
-    <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
-  </items>
-  <items xsi:type="form:FormGroup">
-    <name>ГруппаДействия</name>
-    <id>61</id>
-    <items xsi:type="form:Button">
-      <name>КнопкаОтветить</name>
-      <id>32</id>
-      <type>UsualButton</type>
-      <title><key>ru</key><value>Ответить</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <commandName>Form.Command.Ответить</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
-    <items xsi:type="form:Button">
-      <name>КнопкаОдобрить</name>
-      <id>33</id>
-      <type>UsualButton</type>
-      <title><key>ru</key><value>Одобряю. Действуй</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <commandName>Form.Command.Одобрить</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
-    <items xsi:type="form:Button">
-      <name>КнопкаОтклонить</name>
-      <id>34</id>
-      <type>UsualButton</type>
-      <title><key>ru</key><value>Отклонить и указать, что изменить</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <commandName>Form.Command.Отклонить</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
-    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-    <horizontalStretch>false</horizontalStretch><verticalStretch>false</verticalStretch><type>UsualGroup</type>
     <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
   </items>
+    <items xsi:type="form:FormField">
+      <name>Статус</name>
+      <id>23</id>
+      <title><key>ru</key><value>Статус</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>Статус</segments></dataPath>
+      <titleLocation>Left</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>100</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
+    </items>
   <attributes>
     <name>Объект</name>
     <id>1</id>
@@ -453,14 +437,7 @@
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Отклонить</name></handler></action>
     <currentRowUse>DontUse</currentRowUse>
   </formCommands>
-  <formCommands>
-    <name>Просмотр</name>
-    <title><key>ru</key><value>Просмотреть документы</value></title>
-    <id>6</id>
-    <use><common>true</common></use>
-    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Просмотреть</name></handler></action>
-    <currentRowUse>DontUse</currentRowUse>
-  </formCommands>
+
   <commandInterface><navigationPanel/><commandBar/></commandInterface>
   <extInfo xsi:type="form:ObjectFormExtInfo"/>
 </form:Form>
