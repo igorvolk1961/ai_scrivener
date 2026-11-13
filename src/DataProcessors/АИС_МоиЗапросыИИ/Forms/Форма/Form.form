@@ -44,7 +44,7 @@
             <showInHeader>true</showInHeader>
             <headerHorizontalAlign>Left</headerHorizontalAlign>
             <showInFooter>true</showInFooter>
-            <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>10</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
+            <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>8</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
           </items>
           <items xsi:type="form:FormField">
             <name>ТаблицаЗапросовСуть</name>
@@ -60,7 +60,7 @@
             <showInHeader>true</showInHeader>
             <headerHorizontalAlign>Left</headerHorizontalAlign>
             <showInFooter>true</showInFooter>
-            <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>12</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
+            <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>10</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
           </items>
           <items xsi:type="form:FormField">
             <name>ТаблицаЗапросовВид</name>
@@ -76,7 +76,7 @@
             <showInHeader>true</showInHeader>
             <headerHorizontalAlign>Left</headerHorizontalAlign>
             <showInFooter>true</showInFooter>
-            <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>6</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
+            <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>5</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
           </items>
           <items xsi:type="form:FormField">
             <name>ТаблицаЗапросовСрок</name>
@@ -92,7 +92,7 @@
             <showInHeader>true</showInHeader>
             <headerHorizontalAlign>Left</headerHorizontalAlign>
             <showInFooter>true</showInFooter>
-            <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>8</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
+            <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>7</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
           </items>
           <items xsi:type="form:FormField">
             <name>ТаблицаЗапросовЗапрос</name>
@@ -112,37 +112,15 @@
           </items>
           <autoCommandBar><name>ТаблицаЗапросовКоманднаяПанель</name><id>16</id><horizontalAlign>Left</horizontalAlign><autoFill>true</autoFill></autoCommandBar>
           <handlers><event>OnActivateRow</event><name>ТаблицаЗапросовПриАктивизацииСтроки</name></handlers>
-          <horizontalStretch>true</horizontalStretch><width>36</width><verticalStretch>false</verticalStretch><height>5</height><type>Table</type>
+          <horizontalStretch>true</horizontalStretch><width>30</width><verticalStretch>false</verticalStretch><height>5</height><type>Table</type>
         </items>
         <visible>true</visible>
         <enabled>true</enabled>
         <userVisible><common>true</common></userVisible>
         <horizontalStretch>true</horizontalStretch>
         <verticalStretch>false</verticalStretch>
-        <type>UsualGroup</type>
+              <groupVerticalAlign>Top</groupVerticalAlign><type>UsualGroup</type>
         <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
-      </items>
-      <items xsi:type="form:FormGroup">
-        <name>ГруппаТулбарЛевая</name>
-        <id>62</id>
-        <items xsi:type="form:Button">
-          <name>КнопкаОбновить</name>
-          <id>31</id>
-          <type>UsualButton</type>
-          <title><key>ru</key><value>Обновить</value></title>
-          <visible>true</visible>
-          <enabled>true</enabled>
-          <userVisible><common>true</common></userVisible>
-          <commandName>Form.Command.Обновить</commandName>
-          <representation>Auto</representation>
-          <autoMaxWidth>true</autoMaxWidth>
-          <autoMaxHeight>true</autoMaxHeight>
-          <placementArea>UserCmds</placementArea>
-          <representationInContextMenu>Auto</representationInContextMenu>
-        </items>
-        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-        <horizontalStretch>true</horizontalStretch><verticalStretch>false</verticalStretch><groupVerticalAlign>Top</groupVerticalAlign><type>UsualGroup</type>
-        <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
       </items>
       <items xsi:type="form:FormField">
         <name>ТекстЗапроса</name>
@@ -153,12 +131,13 @@
       <userVisible><common>true</common></userVisible>
       <dataPath xsi:type="form:DataPath"><segments>ТекстЗапроса</segments></dataPath>
       <titleLocation>Top</titleLocation>
+      <groupVerticalAlign>Top</groupVerticalAlign>
       <type>InputField</type>
       <editMode>Enter</editMode>
       <showInHeader>true</showInHeader>
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo"><height>8</height><autoMaxWidth>false</autoMaxWidth><width>36</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
+      <extInfo xsi:type="form:InputFieldExtInfo"><height>8</height><autoMaxWidth>false</autoMaxWidth><width>30</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
     </items>
     <items xsi:type="form:FormField">
       <name>ТекстОтвета</name>
@@ -169,12 +148,12 @@
       <userVisible><common>true</common></userVisible>
       <dataPath xsi:type="form:DataPath"><segments>ТекстОтвета</segments></dataPath>
       <titleLocation>Top</titleLocation>
-      <type>InputField</type>
+            <type>InputField</type>
       <editMode>Enter</editMode>
       <showInHeader>true</showInHeader>
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo"><height>8</height><autoMaxWidth>false</autoMaxWidth><width>36</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>true</textEdit></extInfo>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>30</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>true</textEdit></extInfo>
     </items>
   <items xsi:type="form:FormGroup">
     <name>ГруппаДействия</name>
@@ -225,8 +204,24 @@
       <placementArea>UserCmds</placementArea>
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
+    <items xsi:type="form:Button">
+      <name>КнопкаОбновить</name>
+      <id>31</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Обновить</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <groupHorizontalAlign>Right</groupHorizontalAlign>
+      <commandName>Form.Command.Обновить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
     <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-    <horizontalStretch>true</horizontalStretch><width>50</width><verticalStretch>false</verticalStretch><groupHorizontalAlign>Left</groupHorizontalAlign><type>UsualGroup</type>
+    <horizontalStretch>true</horizontalStretch><width>50</width><verticalStretch>false</verticalStretch><groupHorizontalAlign>Left</groupHorizontalAlign>      <groupVerticalAlign>Bottom</groupVerticalAlign><type>UsualGroup</type>
     <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><united>true</united><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
   </items>
       <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
@@ -250,7 +245,7 @@
         <dataPath xsi:type="form:DataPath"><segments>ТаблицаДокументов.Заголовок</segments></dataPath>
         <titleLocation>Top</titleLocation><type>InputField</type><editMode>Enter</editMode>
         <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>true</showInFooter>
-        <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>36</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
+        <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>18</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
       </items>
       <items xsi:type="form:FormField">
         <name>ТаблицаДокументовВид</name><id>52</id>
@@ -262,7 +257,7 @@
         <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>12</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
       </items>
       <handlers><event>OnActivateRow</event><name>ТаблицаДокументовПриАктивизацииСтроки</name></handlers>
-      <horizontalStretch>true</horizontalStretch><width>50</width><verticalStretch>false</verticalStretch><height>5</height><type>Table</type>
+      <horizontalStretch>true</horizontalStretch><width>30</width><verticalStretch>false</verticalStretch><height>5</height><type>Table</type>
     </items>
     <items xsi:type="form:FormField">
       <name>ТекстДокумента</name>
@@ -273,15 +268,15 @@
       <userVisible><common>true</common></userVisible>
       <dataPath xsi:type="form:DataPath"><segments>ТекстДокумента</segments></dataPath>
       <titleLocation>Top</titleLocation>
-      <type>InputField</type>
+            <type>InputField</type>
       <editMode>Enter</editMode>
       <showInHeader>false</showInHeader>
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>false</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo"><height>8</height><autoMaxWidth>false</autoMaxWidth><width>36</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>30</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
     </items>
       <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-      <horizontalStretch>false</horizontalStretch><width>50</width><verticalStretch>false</verticalStretch><groupVerticalAlign>Top</groupVerticalAlign><type>UsualGroup</type>
+      <horizontalStretch>false</horizontalStretch><width>50</width><verticalStretch>true</verticalStretch><groupVerticalAlign>Top</groupVerticalAlign><type>UsualGroup</type>
       <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
     </items>
     <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>

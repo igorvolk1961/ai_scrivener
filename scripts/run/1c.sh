@@ -57,16 +57,23 @@ extension_active() {
 ensure_active_extension() {
   local active fallback=/home/igorvolk/1C/ai_scrivener_stage2
   active=$(extension_active "$IB")
-  [[ "$active" != "no" ]] && return 0
+  [[ "$active" == "yes" ]] && return 0
   if [[ "$IB" != "$fallback" && -d "$fallback" ]]; then
-    echo "WARNING: расширение ai_scrivener выключено в $IB." >&2
-    echo "         Переключаюсь на $fallback, где расширение активно." >&2
+    if [[ "$active" == "no" ]]; then
+      echo "WARNING: расширение ai_scrivener выключено в $IB." >&2
+    else
+      echo "WARNING: не удалось проверить расширение ai_scrivener в $IB." >&2
+    fi
+    echo "         Открываю $fallback, где расширение заведомо активно." >&2
     IB=$fallback
     return 0
   fi
-  echo "ERROR: расширение ai_scrivener выключено в $IB — раздел «ИИ-Помощник» (АИС_Сервис) будет скрыт." >&2
-  echo "       Включите расширение в Конфигураторе или задайте IB=$fallback." >&2
-  exit 1
+  if [[ "$active" == "no" ]]; then
+    echo "ERROR: расширение ai_scrivener выключено в $IB — раздел «ИИ-Помощник» (АИС_Сервис) будет скрыт." >&2
+    echo "       Включите расширение в Конфигураторе или задайте IB=$fallback." >&2
+    exit 1
+  fi
+  return 0
 }
 
 require_file_base() {

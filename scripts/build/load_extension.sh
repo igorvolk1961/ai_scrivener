@@ -53,6 +53,12 @@ cleanup() {
 }
 trap cleanup EXIT
 
+if pgrep -u "$(id -un)" -x 1cv8 >/dev/null || pgrep -u "$(id -un)" -x 1cv8c >/dev/null; then
+  echo "ERROR: 1C client or Designer is running; close all 1C windows before loading the extension." >&2
+  echo "       Otherwise /UpdateDBCfg cannot apply the form and the old form remains in the base." >&2
+  exit 1
+fi
+
 mkdir -p "$(dirname -- "$LOG")"
 rm -f "$LOG"
 
