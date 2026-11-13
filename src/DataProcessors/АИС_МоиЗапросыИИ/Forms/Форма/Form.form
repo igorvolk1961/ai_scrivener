@@ -134,6 +134,22 @@
       <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
     </items>
     <items xsi:type="form:FormField">
+      <name>ТекстДокументов</name>
+      <id>19</id>
+      <title><key>ru</key><value>Документы к запросу (тексты)</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>ТекстДокументов</segments></dataPath>
+      <titleLocation>Top</titleLocation>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>false</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>false</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
+    </items>
+    <items xsi:type="form:FormField">
       <name>ТекстОтвета</name>
       <id>22</id>
       <title><key>ru</key><value>Ответ / комментарий</value></title>
@@ -185,6 +201,21 @@
       <enabled>true</enabled>
       <userVisible><common>true</common></userVisible>
       <commandName>Form.Command.Обновить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
+      <name>КнопкаПросмотр</name>
+      <id>36</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Просмотреть документы</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Просмотр</commandName>
       <representation>Auto</representation>
       <autoMaxWidth>true</autoMaxWidth>
       <autoMaxHeight>true</autoMaxHeight>
@@ -309,6 +340,13 @@
     <edit><common>true</common></edit>
   </attributes>
   <attributes>
+    <name>ТекстДокументов</name>
+    <id>8</id>
+    <valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType>
+    <view><common>true</common></view>
+    <edit><common>true</common></edit>
+  </attributes>
+  <attributes>
     <name>ТекстОтвета</name>
     <id>5</id>
     <valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType>
@@ -359,6 +397,14 @@
     <id>4</id>
     <use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Отклонить</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>Просмотр</name>
+    <title><key>ru</key><value>Просмотреть документы</value></title>
+    <id>6</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Просмотреть</name></handler></action>
     <currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <commandInterface><navigationPanel/><commandBar/></commandInterface>
