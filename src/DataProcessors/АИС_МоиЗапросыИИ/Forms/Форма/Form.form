@@ -115,6 +115,43 @@
     <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
   </items>
   <items xsi:type="form:FormGroup">
+    <name>ГруппаТулбар</name>
+    <id>60</id>
+    <items xsi:type="form:Button">
+      <name>КнопкаОбновить</name>
+      <id>31</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Обновить</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Обновить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
+      <name>КнопкаПросмотр</name>
+      <id>36</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Просмотреть документы</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Просмотр</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <horizontalStretch>false</horizontalStretch><verticalStretch>false</verticalStretch><type>UsualGroup</type>
+    <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+  </items>
+  <items xsi:type="form:FormGroup">
     <name>ГруппаКонтент</name>
     <id>40</id>
     <items xsi:type="form:FormGroup">
@@ -168,94 +205,9 @@
       <showInFooter>true</showInFooter>
       <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><textEdit>false</textEdit></extInfo>
     </items>
-  <items xsi:type="form:FormGroup">
-    <name>ГруппаКнопки</name>
-    <id>30</id>
-    <items xsi:type="form:Button">
-      <name>КнопкаОбновить</name>
-      <id>31</id>
-      <type>UsualButton</type>
-      <title><key>ru</key><value>Обновить</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <commandName>Form.Command.Обновить</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
-    <items xsi:type="form:Button">
-      <name>КнопкаПросмотр</name>
-      <id>36</id>
-      <type>UsualButton</type>
-      <title><key>ru</key><value>Просмотреть документы</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <commandName>Form.Command.Просмотр</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
-    <items xsi:type="form:Button">
-      <name>КнопкаОтветить</name>
-      <id>32</id>
-      <type>UsualButton</type>
-      <title><key>ru</key><value>Ответить</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <commandName>Form.Command.Ответить</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
-    <items xsi:type="form:Button">
-      <name>КнопкаОдобрить</name>
-      <id>33</id>
-      <type>UsualButton</type>
-      <title><key>ru</key><value>Одобряю. Действуй</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <commandName>Form.Command.Одобрить</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
-    <items xsi:type="form:Button">
-      <name>КнопкаОтклонить</name>
-      <id>34</id>
-      <type>UsualButton</type>
-      <title><key>ru</key><value>Отклонить и указать, что изменить</value></title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible><common>true</common></userVisible>
-      <commandName>Form.Command.Отклонить</commandName>
-      <representation>Auto</representation>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <placementArea>UserCmds</placementArea>
-      <representationInContextMenu>Auto</representationInContextMenu>
-    </items>
-    <visible>true</visible>
-    <enabled>true</enabled>
-    <userVisible><common>true</common></userVisible>
-    <horizontalStretch>true</horizontalStretch>
-    <verticalStretch>false</verticalStretch>
-    <type>UsualGroup</type>
-    <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
-  </items>
+
       <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-      <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
+      <horizontalStretch>false</horizontalStretch><width>75</width><verticalStretch>true</verticalStretch><type>UsualGroup</type>
       <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
     </items>
     <items xsi:type="form:FormGroup">
@@ -303,17 +255,69 @@
       <showInHeader>false</showInHeader>
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>false</showInFooter>
-      <height>15</height>
+      <height>0</height>
       <verticalStretch>true</verticalStretch>
-      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>80</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>false</autoMaxWidth><width>220</width><autoMaxHeight>true</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
     </items>
       <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
-      <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
+      <horizontalStretch>false</horizontalStretch><width>120</width><verticalStretch>true</verticalStretch><type>UsualGroup</type>
       <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
     </items>
     <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
     <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
     <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+  </items>
+  <items xsi:type="form:FormGroup">
+    <name>ГруппаДействия</name>
+    <id>61</id>
+    <items xsi:type="form:Button">
+      <name>КнопкаОтветить</name>
+      <id>32</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Ответить</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Ответить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
+      <name>КнопкаОдобрить</name>
+      <id>33</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Одобряю. Действуй</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Одобрить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
+      <name>КнопкаОтклонить</name>
+      <id>34</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Отклонить и указать, что изменить</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Отклонить</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <horizontalStretch>false</horizontalStretch><verticalStretch>false</verticalStretch><type>UsualGroup</type>
+    <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
   </items>
   <attributes>
     <name>Объект</name>
