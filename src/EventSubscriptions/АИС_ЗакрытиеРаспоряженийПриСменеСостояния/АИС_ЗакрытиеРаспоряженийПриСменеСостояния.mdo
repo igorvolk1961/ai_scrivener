@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:EventSubscription xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="c9678f1c-5cfb-4c87-ac74-c4ebd0bb7021">
+  <name>АИС_ЗакрытиеРаспоряженийПриСменеСостояния</name>
+  <synonym>
+    <key>ru</key>
+    <value>Закрытие распоряжений при смене состояния приказа</value>
+  </synonym>
+  <source>
+    <types>InformationRegisterRecordSet.СостоянияДокументов</types>
+  </source>
+  <event>OnWrite</event>
+  <handler>CommonModule.АИС_ОбщегоНазначения.ЗакрытьРаспоряженияПриСменеСостояния</handler>
+</mdclass:EventSubscription>

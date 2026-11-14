@@ -92,6 +92,7 @@
   <eventSubscriptions>EventSubscription.АИС_ФайлВОчередьИндексации</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_РабочаяГруппаВОчередь</eventSubscriptions>
   <eventSubscriptions>EventSubscription.АИС_СостояниеДокументаВОчередь</eventSubscriptions>
+  <eventSubscriptions>EventSubscription.АИС_ЗакрытиеРаспоряженийПриСменеСостояния</eventSubscriptions>
   <scheduledJobs>ScheduledJob.АИС_ИндексацияRAG</scheduledJobs>
   <scheduledJobs>ScheduledJob.АИС_АгентОчередь</scheduledJobs>
   <scheduledJobs>ScheduledJob.АИС_ЗакрытиеПриказов</scheduledJobs>

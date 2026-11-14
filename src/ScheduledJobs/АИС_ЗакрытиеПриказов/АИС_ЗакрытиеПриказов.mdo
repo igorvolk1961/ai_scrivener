@@ -4,9 +4,9 @@
     <managerType typeId="69d29eba-1c2c-4193-86fa-e692b2a2f0fe" valueTypeId="baccedd2-74de-4d5d-b58c-5d19536990d6"/>
   </producedTypes>
   <name>АИС_ЗакрытиеПриказов</name>
-  <synonym><key>ru</key><value>Закрытие исполненных приказов</value></synonym>
+  <synonym><key>ru</key><value>Закрытие исполненных документов</value></synonym>
   <methodName>CommonModule.АИС_ОбщегоНазначения.ЗакрытьИсполненныеПриказы</methodName>
-  <description>Закрывает приказы, у которых выполнены все задачи и есть закрывающий результат.</description>
+  <description>Закрывает приказы и распоряжения, у которых выполнены все задачи и есть закрывающий результат.</description>
   <key>АИС_ЗакрытиеПриказов</key>
   <use>true</use>
   <predefined>true</predefined>
