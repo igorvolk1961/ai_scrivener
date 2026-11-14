@@ -14,7 +14,7 @@ usage() {
   printf '%s\n' "Usage: $0 [launcher|designer [login]|enterprise [login]|check|pg-enterprise [login]|pg-designer [login]|pg-check|pg-db]" >&2
   printf '%s\n' "  launcher      - окно запуска 1С" >&2
   printf '%s\n' "  designer      - Конфигуратор на файловой базе (без логина — окно входа)" >&2
-  printf '%s\n' "  enterprise    - 1С:Предприятие на файловой базе (без логина — окно входа)" >&2
+  printf '%s\n' "  enterprise    - 1С:Предприятие на файловой базе (без логина — окно входа; клиент выполняет регламентные задания, пока открыт)" >&2
   printf '%s\n' "  check         - CheckConfig файловой базы (по умолчанию Администратор)" >&2
   printf '%s\n' "  pg-enterprise - 1С:Предприятие на серверной базе PostgreSQL" >&2
   printf '%s\n' "  pg-designer   - Конфигуратор на серверной базе PostgreSQL" >&2
@@ -95,7 +95,9 @@ case "${1:-launcher}" in
   enterprise)
     require_file_base
     ensure_active_extension
-    exec "$ONEC" ENTERPRISE /F"$IB" "${AUTH_ARGS[@]}"
+    # В файловой базе регламентные задания выполняет клиентский сеанс.
+    # Флаг назначает этот клиент исполнителем, пока он открыт.
+    exec "$ONEC" ENTERPRISE /F"$IB" "${AUTH_ARGS[@]}" /AllowExecuteScheduledJobs
     ;;
   check)
     require_file_base
