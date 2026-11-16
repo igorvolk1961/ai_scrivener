@@ -152,10 +152,11 @@
     <extInfo xsi:type="form:InputFieldExtInfo">
       <width>100</width>
       <height>20</height>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
+      <autoMaxWidth>false</autoMaxWidth>
+      <autoMaxHeight>false</autoMaxHeight>
       <horizontalStretch>true</horizontalStretch>
       <verticalStretch>true</verticalStretch>
+      <wrap>true</wrap>
       <multiLine>true</multiLine>
     </extInfo>
   </items>
