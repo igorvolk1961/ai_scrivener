@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="5fda38dd-7c9b-4cf8-bbc8-b60d1c534d4b" extendedConfigurationObject="a2a78913-a418-40c8-afce-3f3bb2e516cd">
+  <producedTypes>
+    <selectionType typeId="0bc01ce5-953f-4216-a36e-14dbc61f02dd" valueTypeId="25b7e557-2007-4656-b300-4e7d3518ec84"/>
+    <listType typeId="d80e3e93-7bbf-4240-bc7b-be3489dba09b" valueTypeId="e05a5f97-14c3-4ec9-94fb-ba28acfd5a6e"/>
+    <managerType typeId="b211aeb2-3110-479e-9f96-742cac51cabb" valueTypeId="0fbcadb2-b66c-4bc2-b6b6-905f4c7adf1c"/>
+    <recordSetType typeId="d62b5f1b-7ce5-41bc-9bb7-0b9f84365c2c" valueTypeId="04f25c84-9d42-429d-9c00-b6934512fb1d"/>
+    <recordKeyType typeId="fd462749-0dee-4847-aa47-c34d7d59985a" valueTypeId="dfd5a5a1-5285-455e-b979-209c5b745463"/>
+    <recordType typeId="5b164d60-a8e0-4b83-854e-0225432742b0" valueTypeId="2602fbff-e023-4abc-82e2-a6b7752d06a1"/>
+    <recordManagerType typeId="6b062512-dc6c-426d-87af-6cbe333aeb66" valueTypeId="ac82f365-5d73-425e-b0a5-b9c27125ea93"/>
+  </producedTypes>
+  <name>СведенияОФайлахДокументооборот</name>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:InformationRegisterExtension">
+    <extendedConfigurationObject>Checked</extendedConfigurationObject>
+  </extension>
+</mdclass:InformationRegister>

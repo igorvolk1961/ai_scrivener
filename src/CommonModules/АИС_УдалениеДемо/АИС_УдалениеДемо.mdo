@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="a3bf74de-9664-4b01-8769-a247474eb3b2">
+  <name>АИС_УдалениеДемо</name>
+  <synonym>
+    <key>ru</key>
+    <value>Удаление демонстрационных объектов</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>false</externalConnection>
+  <clientOrdinaryApplication>false</clientOrdinaryApplication>
+  <serverCall>false</serverCall>
+</mdclass:CommonModule>

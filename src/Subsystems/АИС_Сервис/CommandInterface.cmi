@@ -393,5 +393,57 @@
         <common>true</common>
       </visible>
     </visibilityFragments>
+    <visibilityFragments>
+      <command>Catalog.АИС_ВзаимодействияИИ.StandardCommand.OpenList</command>
+      <visible>
+        <for>
+          <value>true</value>
+          <role>Role.ПолныеПрава</role>
+        </for>
+        <for>
+          <value>true</value>
+          <role>Role.АИС_АдминистраторСистемы</role>
+        </for>
+      </visible>
+    </visibilityFragments>
+    <visibilityFragments>
+      <command>Catalog.АИС_ЗапускиАгентов.StandardCommand.OpenList</command>
+      <visible>
+        <for>
+          <value>true</value>
+          <role>Role.ПолныеПрава</role>
+        </for>
+        <for>
+          <value>true</value>
+          <role>Role.АИС_АдминистраторСистемы</role>
+        </for>
+      </visible>
+    </visibilityFragments>
+    <visibilityFragments>
+      <command>Catalog.АИС_НастройкиАгента.StandardCommand.OpenList</command>
+      <visible>
+        <for>
+          <value>true</value>
+          <role>Role.ПолныеПрава</role>
+        </for>
+        <for>
+          <value>true</value>
+          <role>Role.АИС_АдминистраторСистемы</role>
+        </for>
+      </visible>
+    </visibilityFragments>
+    <visibilityFragments>
+      <command>DataProcessor.АИС_МониторЗапусковИИ.StandardCommand.Open</command>
+      <visible>
+        <for>
+          <value>true</value>
+          <role>Role.ПолныеПрава</role>
+        </for>
+        <for>
+          <value>true</value>
+          <role>Role.АИС_АдминистраторСистемы</role>
+        </for>
+      </visible>
+    </visibilityFragments>
   </commandsVisibility>
 </cmi:CommandInterface>

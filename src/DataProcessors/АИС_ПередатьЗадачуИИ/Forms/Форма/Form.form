@@ -74,7 +74,7 @@
       <items xsi:type="form:FormField">
         <name>ТаблицаЗадачСостояние</name>
         <id>15</id>
-        <title><key>ru</key><value>Состояние ИИ</value></title>
+        <title><key>ru</key><value>Статус ИИ</value></title>
         <visible>true</visible>
         <enabled>true</enabled>
         <userVisible><common>true</common></userVisible>

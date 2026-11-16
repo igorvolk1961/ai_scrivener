@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="871a7215-c078-487a-8e26-a1a86fa04182" extendedConfigurationObject="7e94dde5-8474-4386-b0b1-881450b9bb9c">
+  <producedTypes>
+    <selectionType typeId="5a4dfd14-b22a-4d1f-a3c2-76ffab16e2bc" valueTypeId="e19030b1-655b-4eb1-835a-c67c76fc9582"/>
+    <listType typeId="69ea8546-280d-45a4-aad6-7e815ad69d59" valueTypeId="db797c8b-2ab8-4b5a-b44a-a5e2d7268749"/>
+    <managerType typeId="8b6c848f-ee8b-421c-8a89-00db78f715b5" valueTypeId="bb633e8b-e767-452f-8cc9-c959419e05c9"/>
+    <recordSetType typeId="3641760e-71cd-48d2-aa09-6f9feb490b50" valueTypeId="0af29c17-2bf3-45cf-97a6-413cd0e2c712"/>
+    <recordKeyType typeId="7c5a7fe7-32dc-4cdf-aac4-a4856088c262" valueTypeId="c1c92c72-6dae-4217-bb5a-75b6146514c9"/>
+    <recordType typeId="01f5744c-55ae-4265-8974-0fe71f34e997" valueTypeId="8c02c5b9-e57d-437f-a31a-e55403afffc3"/>
+    <recordManagerType typeId="23b24025-d793-4840-a0c1-d2ab6cf7d64b" valueTypeId="f403dd28-3206-4da4-aebb-87c6e0d37fd7"/>
+  </producedTypes>
+  <name>СвязиДокументов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Связи документов</value>
+  </synonym>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:InformationRegisterExtension">
+    <extendedConfigurationObject>Checked</extendedConfigurationObject>
+  </extension>
+</mdclass:InformationRegister>

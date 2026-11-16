@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:ScheduledJob xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="7a3238fe-1eda-4c26-89ce-41f9d6f69cde">
+  <producedTypes>
+    <managerType typeId="bd435e17-b11a-4465-8ad1-9907414c2f68" valueTypeId="7ba2173f-ced1-4b46-95e7-f5190016514c"/>
+  </producedTypes>
+  <name>АИС_УдалениеДемо</name>
+  <synonym><key>ru</key><value>Удаление демонстрационных объектов</value></synonym>
+  <methodName>CommonModule.АИС_УдалениеДемо.УдалитьДемоОбъекты</methodName>
+  <description>Удаляет две последние задачи Юриста и распоряжение "О договоре купли-продажи имущества".</description>
+  <key>АИС_УдалениеДемо</key>
+  <use>false</use>
+  <predefined>true</predefined>
+  <restartCountOnFailure>0</restartCountOnFailure>
+  <restartIntervalOnFailure>0</restartIntervalOnFailure>
+</mdclass:ScheduledJob>

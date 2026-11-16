@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="4f339752-19ba-4eaa-9171-2c1796feef7b" extendedConfigurationObject="0808aa0e-1918-43a2-b35c-b7fe18a950e4">
+  <producedTypes>
+    <objectType typeId="42c0bfea-1503-41d5-8e87-1d0629fdcf74" valueTypeId="2d2f65dd-d552-426b-b044-b6566d9e90ca"/>
+    <refType typeId="f33fc6bc-9070-48be-8422-320315522a87" valueTypeId="e232e94d-33a1-4b38-9a97-2a4ffd961d66"/>
+    <selectionType typeId="cf1d4898-d2ac-45d3-8c0a-11bc441edd3d" valueTypeId="44e612aa-53c9-4598-954c-65cb24c7837c"/>
+    <listType typeId="019eda2c-84cd-4a1b-bd14-ce801d20368a" valueTypeId="7158834e-c3ac-4666-a3aa-701aa8e540d6"/>
+    <managerType typeId="ba34faae-e724-421a-99bd-1d189aa7b8f6" valueTypeId="220370c9-316c-420c-b3f5-fb1ace28873a"/>
+  </producedTypes>
+  <name>Резолюции</name>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:CatalogExtension">
+    <extendedConfigurationObject>Checked</extendedConfigurationObject>
+  </extension>
+</mdclass:Catalog>

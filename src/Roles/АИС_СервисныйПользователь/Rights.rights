@@ -246,6 +246,11 @@
 		</right>
 	</object>
 	<object>
+		<name>Constant.АИС_МодельИИ</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
 		<name>Constant.АИС_АдресRAGСервиса</name>
 		<right><name>Read</name><value>true</value></right>
 		<right><name>View</name><value>true</value></right>
@@ -569,5 +574,70 @@
 		<right><name>View</name><value>true</value></right>
 		<right><name>Insert</name><value>true</value></right>
 		<right><name>Update</name><value>true</value></right>
+	</object>
+	<object>
+		<name>InformationRegister.СвязиДокументов</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Catalog.Файлы</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Catalog.ВерсииФайлов</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>InformationRegister.ФайлыСозданныеПоШаблону</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>InformationRegister.СведенияОФайлахДокументооборот</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>InformationRegister.КешИнформацииОбОбъектах</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>InformationRegister.ЖурналПередачиДокументов</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>InformationRegister.СостоянияДокументов</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>InformationRegister.РабочиеГруппы</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>InformationRegister.ОбщиеРеквизитыДокументов</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Catalog.ТомаХраненияФайлов</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Catalog.Резолюции</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Catalog.Валюты</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
 	</object>
 </Rights>
