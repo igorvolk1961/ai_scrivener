@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="c82ec94d-67cb-4c76-96f0-5cba89cac19f">
+  <producedTypes>
+    <objectType typeId="6e3e967f-d642-42f7-a2aa-f4af0614db0e" valueTypeId="1b964e96-16e0-4f7c-97a3-913be0d041e3"/>
+    <managerType typeId="dec2fdbb-35f5-4f62-954f-72a3596f56cd" valueTypeId="6645b7ae-172d-4f50-b5e0-957886f1fd93"/>
+  </producedTypes>
+  <name>АИС_ТриггерыАгента</name>
+  <synonym><key>ru</key><value>Триггеры моего агента</value></synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <defaultForm>DataProcessor.АИС_ТриггерыАгента.Form.Форма</defaultForm>
+  <forms uuid="10012d61-c026-47e4-97c7-a4e01b9b187d">
+    <name>Форма</name>
+    <synonym><key>ru</key><value>Триггеры моего агента</value></synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:DataProcessor>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:form="http://g5.1c.ru/v8/dt/form">
+  <title><key>ru</key><value>Мои настройки ИИ-агента</value></title>
+  <autoCommandBar><name>ФормаКоманднаяПанель</name><id>-1</id><horizontalAlign>Left</horizontalAlign><autoFill>true</autoFill></autoCommandBar>
+  <handlers><event>OnCreateAtServer</event><name>ПриСозданииНаСервере</name></handlers>
+  <autoTitle>true</autoTitle><autoUrl>true</autoUrl><group>Vertical</group><autoFillCheck>true</autoFillCheck>
+  <allowFormCustomize>true</allowFormCustomize><enabled>true</enabled><showTitle>true</showTitle><showCloseButton>true</showCloseButton>
+  <items xsi:type="form:FormGroup">
+    <name>ГруппаОсновная</name><id>10</id>
+    <items xsi:type="form:FormField">
+      <name>ПолеВключен</name><id>13</id>
+      <title><key>ru</key><value>Агент включен</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>Включен</segments></dataPath>
+      <titleLocation>Left</titleLocation><type>InputField</type><editMode>EnterOnInput</editMode>
+      <showInHeader>false</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>false</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>ПолеПромпт</name><id>14</id>
+      <title><key>ru</key><value>Роль-промпт агента</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>РольПромпт</segments></dataPath>
+      <titleLocation>Top</titleLocation><type>InputField</type><editMode>EnterOnInput</editMode>
+      <showInHeader>false</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>false</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>100</width><height>8</height><autoMaxWidth>false</autoMaxWidth><autoMaxHeight>false</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch><verticalStretch>false</verticalStretch><wrap>true</wrap><multiLine>true</multiLine><textEdit>true</textEdit>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>ПолеАвтоТриггеры</name><id>15</id>
+      <title><key>ru</key><value>Автоматически реагировать на триггеры</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>АвтоТриггерыВключены</segments></dataPath>
+      <titleLocation>Left</titleLocation><type>InputField</type><editMode>EnterOnInput</editMode>
+      <showInHeader>false</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>false</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>false</textEdit></extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>ПолеИнтервал</name><id>16</id>
+      <title><key>ru</key><value>Интервал проверки триггеров, мин</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>ИнтервалПроверкиТриггеров</segments></dataPath>
+      <titleLocation>Left</titleLocation><type>InputField</type><editMode>EnterOnInput</editMode>
+      <showInHeader>false</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>false</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>true</textEdit></extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>ПолеМаксШагов</name><id>17</id>
+      <title><key>ru</key><value>Максимум шагов агента</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>МаксШагов</segments></dataPath>
+      <titleLocation>Left</titleLocation><type>InputField</type><editMode>EnterOnInput</editMode>
+      <showInHeader>false</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>false</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight><horizontalStretch>false</horizontalStretch><textEdit>true</textEdit></extInfo>
+    </items>
+
+            <items xsi:type="form:FormGroup">
+      <name>ГруппаКнопки</name><id>20</id>
+      <items xsi:type="form:Button">
+        <name>КнопкаСохранить</name><id>23</id><type>UsualButton</type>
+        <title><key>ru</key><value>Сохранить</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <groupHorizontalAlign>Left</groupHorizontalAlign>
+        <commandName>Form.Command.ЗаписатьНастройки</commandName>
+        <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <representationInContextMenu>Auto</representationInContextMenu>
+      </items>
+      <items xsi:type="form:Button">
+        <name>КнопкаСоздать</name><id>21</id><type>UsualButton</type>
+        <title><key>ru</key><value>Создать агента</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <groupHorizontalAlign>Left</groupHorizontalAlign>
+        <commandName>Form.Command.СоздатьАгента</commandName>
+        <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <representationInContextMenu>Auto</representationInContextMenu>
+      </items>
+      <items xsi:type="form:Button">
+        <name>КнопкаСформировать</name><id>22</id><type>UsualButton</type>
+        <title><key>ru</key><value>Сформировать промпт</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <groupHorizontalAlign>Left</groupHorizontalAlign>
+        <commandName>Form.Command.СформироватьПромпт</commandName>
+        <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <representationInContextMenu>Auto</representationInContextMenu>
+      </items>
+      <items xsi:type="form:Button">
+        <name>КнопкаВыполнить</name><id>24</id><type>UsualButton</type>
+        <title><key>ru</key><value>Выполнить триггеры сейчас</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <groupHorizontalAlign>Left</groupHorizontalAlign>
+        <commandName>Form.Command.ВыполнитьТриггеры</commandName>
+        <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <representationInContextMenu>Auto</representationInContextMenu>
+      </items>
+      <items xsi:type="form:Button">
+        <name>КнопкаТриггеры</name><id>28</id><type>UsualButton</type>
+        <title><key>ru</key><value>Триггеры агента</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <groupHorizontalAlign>Left</groupHorizontalAlign>
+        <commandName>Form.Command.ТриггерыАгента</commandName>
+        <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <representationInContextMenu>Auto</representationInContextMenu>
+      </items>
+      <items xsi:type="form:Button">
+        <name>КнопкаИстория</name><id>29</id><type>UsualButton</type>
+        <title><key>ru</key><value>История действий</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <groupHorizontalAlign>Left</groupHorizontalAlign>
+        <commandName>Form.Command.ИсторияДействий</commandName>
+        <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <representationInContextMenu>Auto</representationInContextMenu>
+      </items>
+      <items xsi:type="form:Button">
+        <name>КнопкаОбновить</name><id>25</id><type>UsualButton</type>
+        <title><key>ru</key><value>Обновить</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <groupHorizontalAlign>Left</groupHorizontalAlign>
+        <commandName>Form.Command.Обновить</commandName>
+        <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <representationInContextMenu>Auto</representationInContextMenu>
+      </items>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <groupHorizontalAlign>Left</groupHorizontalAlign>
+      <horizontalStretch>false</horizontalStretch><verticalStretch>false</verticalStretch><type>UsualGroup</type>
+      <extInfo xsi:type="form:UsualGroupExtInfo"><group>AlwaysHorizontal</group><united>true</united><throughAlign>DontUse</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+    </items>
+<items xsi:type="form:FormField">
+      <name>ПолеПодвал</name><id>30</id>
+      <title><key>ru</key><value>Статус</value></title>
+      <visible>true</visible><enabled>false</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>Подвал</segments></dataPath>
+      <titleLocation>Top</titleLocation><type>InputField</type><editMode>EnterOnInput</editMode>
+      <showInHeader>false</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>false</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>100</width><height>4</height><autoMaxWidth>false</autoMaxWidth><autoMaxHeight>false</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch><verticalStretch>false</verticalStretch><wrap>true</wrap><multiLine>true</multiLine>
+      </extInfo>
+    </items>
+
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
+      <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+  </items>
+  <attributes><name>Включен</name><id>1</id><valueType><types>Boolean</types></valueType><view><common>true</common></view><edit><common>true</common></edit></attributes>
+  <attributes><name>РольПромпт</name><id>2</id><valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></attributes>
+  <attributes><name>СтатусПромпта</name><id>3</id><valueType><types>String</types><stringQualifiers><length>100</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>false</common></edit></attributes>
+  <attributes><name>ОшибкаГенерации</name><id>4</id><valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>false</common></edit></attributes>
+  <attributes><name>АвтоТриггерыВключены</name><id>5</id><valueType><types>Boolean</types></valueType><view><common>true</common></view><edit><common>true</common></edit></attributes>
+  <attributes><name>ИнтервалПроверкиТриггеров</name><id>6</id><valueType><types>Number</types><numberQualifiers><precision>5</precision><scale>0</scale></numberQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></attributes>
+  <attributes><name>МаксШагов</name><id>7</id><valueType><types>Number</types><numberQualifiers><precision>3</precision><scale>0</scale></numberQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></attributes>
+  <attributes><name>Сообщение</name><id>8</id><valueType><types>String</types><stringQualifiers><length>1000</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>false</common></edit></attributes>
+  <attributes><name>ЕстьАгент</name><id>9</id><valueType><types>Boolean</types></valueType><view><common>true</common></view><edit><common>true</common></edit></attributes>
+  <attributes><name>Подвал</name><id>10</id><valueType><types>String</types><stringQualifiers><length>2000</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>false</common></edit></attributes>
+  <attributes><name>МожноСформировать</name><id>11</id><valueType><types>Boolean</types></valueType><view><common>true</common></view><edit><common>true</common></edit></attributes>
+  <formCommands>
+    <name>СоздатьАгента</name><title><key>ru</key><value>Создать агента</value></title><id>1</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>СоздатьАгента</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>СформироватьПромпт</name><title><key>ru</key><value>Сформировать промпт</value></title><id>2</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>СформироватьПромпт</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ЗаписатьНастройки</name><title><key>ru</key><value>Сохранить</value></title><id>3</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Сохранить</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ВыполнитьТриггеры</name><title><key>ru</key><value>Выполнить триггеры сейчас</value></title><id>4</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ВыполнитьТриггеры</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>Обновить</name><title><key>ru</key><value>Обновить</value></title><id>5</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Обновить</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ТриггерыАгента</name><title><key>ru</key><value>Триггеры агента</value></title><id>6</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ТриггерыАгента</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ИсторияДействий</name><title><key>ru</key><value>История действий</value></title><id>7</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ИсторияДействий</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <commandInterface><navigationPanel/><commandBar/></commandInterface>
+  <extInfo xsi:type="form:ObjectFormExtInfo"/>
+</form:Form>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:form="http://g5.1c.ru/v8/dt/form">
+  <title><key>ru</key><value>Триггеры моего агента</value></title>
+  <autoCommandBar><name>ФормаКоманднаяПанель</name><id>-1</id><horizontalAlign>Left</horizontalAlign><autoFill>true</autoFill></autoCommandBar>
+  <handlers><event>OnCreateAtServer</event><name>ПриСозданииНаСервере</name></handlers>
+  <autoTitle>true</autoTitle><autoUrl>true</autoUrl><group>Vertical</group><autoFillCheck>true</autoFillCheck>
+  <allowFormCustomize>true</allowFormCustomize><enabled>true</enabled><showTitle>true</showTitle><showCloseButton>true</showCloseButton>
+  <items xsi:type="form:FormGroup">
+    <name>ГруппаОсновная</name><id>10</id>
+    <items xsi:type="form:FormField">
+      <name>ПолеТриггеры</name><id>11</id>
+      <title><key>ru</key><value>Триггеры</value></title>
+      <visible>true</visible><enabled>false</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>Триггеры</segments></dataPath>
+      <titleLocation>Top</titleLocation><type>InputField</type><editMode>Enter</editMode>
+      <showInHeader>false</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign><showInFooter>false</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>100</width><height>25</height><autoMaxWidth>false</autoMaxWidth><autoMaxHeight>false</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><wrap>true</wrap><multiLine>true</multiLine>
+      </extInfo>
+    </items>
+    <items xsi:type="form:Button">
+      <name>КнопкаОбновить</name><id>12</id><type>UsualButton</type>
+      <title><key>ru</key><value>Обновить</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.Обновить</commandName>
+      <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea><representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch><type>UsualGroup</type>
+    <extInfo xsi:type="form:UsualGroupExtInfo"><group>Vertical</group><throughAlign>Auto</throughAlign><currentRowUse>Auto</currentRowUse></extInfo>
+  </items>
+  <attributes>
+    <name>Объект</name><id>100</id>
+    <valueType><types>DataProcessorObject.АИС_ТриггерыАгента</types></valueType>
+    <view><common>true</common></view><edit><common>true</common></edit><main>true</main>
+  </attributes>
+  <attributes><name>Триггеры</name><id>1</id><valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>false</common></edit></attributes>
+  <formCommands>
+    <name>Обновить</name><title><key>ru</key><value>Обновить</value></title><id>1</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Обновить</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <commandInterface><navigationPanel/><commandBar/></commandInterface>
+  <extInfo xsi:type="form:ObjectFormExtInfo"/>
+</form:Form>

@@ -145,13 +145,7 @@
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+				<condition>Сотрудник = &amp;АИС_ТекущееДЛ</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -162,13 +156,7 @@
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+				<condition>Сотрудник = &amp;АИС_ТекущееДЛ</condition>
 			</restrictionByCondition>
 		</right>
 	</object>
@@ -178,13 +166,7 @@
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+				<condition>Сотрудник = &amp;АИС_ТекущееДЛ</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -195,13 +177,7 @@
 			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+				<condition>Сотрудник = &amp;АИС_ТекущееДЛ</condition>
 			</restrictionByCondition>
 		</right>
 	</object>
@@ -222,13 +198,7 @@
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+				<condition>Сотрудник = &amp;АИС_ТекущееДЛ</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
@@ -679,6 +649,36 @@
 		<name>HTTPService.АИС_Симулятор.URLTemplate.АвтоодобрениеВсеТипы.Method.post</name>
 		<right>
 			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.АИС_НастройкиАгента</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+		<right><name>Insert</name><value>true</value></right>
+		<right><name>Update</name><value>true</value></right>
+	</object>
+	<object>
+		<name>Catalog.АИС_ЗапускиАгентов</name>
+		<right><name>Read</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+		<right><name>Insert</name><value>true</value></right>
+		<right><name>Update</name><value>true</value></right>
+	</object>
+	<object>
+		<name>DataProcessor.АИС_ТриггерыАгента</name>
+		<right><name>Use</name><value>true</value></right>
+		<right><name>View</name><value>true</value></right>
+	</object>
+	<object>
+		<name>DataProcessor.АИС_МоиНастройкиАгента</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>View</name>
 			<value>true</value>
 		</right>
 	</object>

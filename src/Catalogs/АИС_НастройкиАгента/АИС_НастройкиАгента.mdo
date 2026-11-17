@@ -163,4 +163,46 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
+  <attributes uuid="5567fbac-3d53-4b5a-a99f-c550a3cc88f1">
+    <name>АвтоТриггерыВключены</name>
+    <synonym><key>ru</key><value>Автоматические триггеры включены</value></synonym>
+    <type>
+      <types>Boolean</types>
+    </type>
+    <fillValue xsi:type="core:BooleanValue"><value>false</value></fillValue>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="2bcd3e89-5c2a-4c16-a356-fe700b1a6aaa">
+    <name>ИнтервалПроверкиТриггеров</name>
+    <synonym><key>ru</key><value>Интервал проверки триггеров, мин</value></synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers><precision>5</precision><scale>0</scale></numberQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="4532055a-f631-4954-81f6-59dc8c3488f7">
+    <name>ДатаПоследнейПроверкиТриггеров</name>
+    <synonym><key>ru</key><value>Дата последней проверки триггеров</value></synonym>
+    <type>
+      <types>Date</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="9fb7e31c-a83b-4822-90e6-eb65b5a0a02f">
+    <name>ХешДолжностнойИнструкции</name>
+    <synonym><key>ru</key><value>Хеш должностной инструкции при формировании промпта</value></synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers><length>64</length></stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
 </mdclass:Catalog>

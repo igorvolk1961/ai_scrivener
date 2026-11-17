@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DataProcessor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="cbc6b80c-d218-4679-874d-83e03cfbb8dd">
+  <producedTypes>
+    <objectType typeId="e64e01b3-e72d-40ce-a47a-849fabc053b7" valueTypeId="75362f60-a57e-454d-8939-ca74f1f690a3"/>
+    <managerType typeId="4ac8528c-dfd4-47cf-8c7e-4bab3b75c137" valueTypeId="59dbca3e-7c5b-4123-b80c-35b330b190ba"/>
+  </producedTypes>
+  <name>АИС_МоиНастройкиАгента</name>
+  <synonym><key>ru</key><value>Мои настройки ИИ-агента</value></synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <defaultForm>DataProcessor.АИС_МоиНастройкиАгента.Form.Форма</defaultForm>
+  <forms uuid="7c8b94c2-f636-474e-87a2-9387989967f1">
+    <name>Форма</name>
+    <synonym><key>ru</key><value>Мои настройки ИИ-агента</value></synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:DataProcessor>

@@ -109,6 +109,8 @@
   <dataProcessors>DataProcessor.АИС_ВопросПоБазеЗнаний</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ГруппыФункцийИИ</dataProcessors>
   <dataProcessors>DataProcessor.АИС_МоиЗапросыИИ</dataProcessors>
+  <dataProcessors>DataProcessor.АИС_МоиНастройкиАгента</dataProcessors>
+  <dataProcessors>DataProcessor.АИС_ТриггерыАгента</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ПередатьЗадачуИИ</dataProcessors>
   <dataProcessors>DataProcessor.АИС_МониторЗапусковИИ</dataProcessors>
   <dataProcessors>DataProcessor.АИС_АдминистрированиеИИ</dataProcessors>

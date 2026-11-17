@@ -219,13 +219,7 @@
 			<name>Read</name>
 			<value>true</value>
 			<restrictionByCondition>
-				<condition>Задача В
-    (ВЫБРАТЬ
-        Задачи.Ссылка
-    ИЗ
-        Задача.ЗадачаИсполнителя КАК Задачи
-    ГДЕ
-        Задачи.Исполнитель = &amp;АИС_ТекущееДЛ)</condition>
+				<condition>Сотрудник = &amp;АИС_ТекущееДЛ</condition>
 			</restrictionByCondition>
 		</right>
 		<right>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:form="http://g5.1c.ru/v8/dt/form">
+  <items xsi:type="form:FormField">
+    <name>ПолеРезультата</name><id>1</id>
+    <title><key>ru</key><value>Результат</value></title>
+    <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+    <dataPath xsi:type="form:DataPath"><segments>ТекстРезультата</segments></dataPath>
+    <readOnly>true</readOnly>
+    <width>100</width><height>20</height>
+    <autoMaxWidth>false</autoMaxWidth><autoMaxHeight>false</autoMaxHeight>
+    <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch>
+    <wrap>true</wrap><multiLine>true</multiLine><textEdit>true</textEdit>
+    <type>InputField</type>
+    <extInfo xsi:type="form:InputFieldExtInfo">
+      <autoMaxWidth>false</autoMaxWidth><autoMaxHeight>false</autoMaxHeight>
+      <horizontalStretch>true</horizontalStretch><verticalStretch>true</verticalStretch>
+      <textEdit>true</textEdit><multiLine>true</multiLine><wrap>true</wrap>
+    </extInfo>
+  </items>
+  <autoCommandBar><name>ФормаКоманднаяПанель</name><id>-1</id><horizontalAlign>Left</horizontalAlign><autoFill>false</autoFill></autoCommandBar>
+  <handlers><event>OnCreateAtServer</event><name>ПриСозданииНаСервере</name></handlers>
+  <autoTitle>false</autoTitle><autoUrl>true</autoUrl><group>Vertical</group><autoFillCheck>true</autoFillCheck>
+  <allowFormCustomize>true</allowFormCustomize><enabled>true</enabled><showTitle>true</showTitle><showCloseButton>true</showCloseButton>
+  <windowOpeningMode>OpenInSeparateWindow</windowOpeningMode>
+  <attributes>
+    <name>ТекстРезультата</name><id>1</id>
+    <valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType>
+    <view><common>true</common></view><edit><common>true</common></edit>
+  </attributes>
+  <commandInterface><navigationPanel/><commandBar/></commandInterface>
+  <extInfo xsi:type="form:FormExtInfo"/>
+</form:Form>

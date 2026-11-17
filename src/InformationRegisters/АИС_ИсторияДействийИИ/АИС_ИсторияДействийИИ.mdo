@@ -16,6 +16,7 @@
   </synonym>
   <useStandardCommands>true</useStandardCommands>
   <editType>InDialog</editType>
+  <defaultListForm>InformationRegister.АИС_ИсторияДействийИИ.Form.ФормаИсторииАгента</defaultListForm>
   <standardAttributes>
     <dataHistory>Use</dataHistory>
     <name>Active</name>
@@ -383,6 +384,21 @@
     <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:StringValue"/>
   </resources>
+  <resources uuid="65c3d919-5412-46c9-8baf-65938fd89668">
+    <name>Сотрудник</name>
+    <synonym>
+      <key>ru</key>
+      <value>Сотрудник</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.Пользователи</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:UndefinedValue"/>
+  </resources>
   <dimensions uuid="56e433c1-30cc-439f-bd1c-e50ba9e8b4a0">
     <name>ИдентификаторЗаписи</name>
     <synonym>
@@ -404,4 +420,31 @@
     <master>true</master>
     <mainFilter>true</mainFilter>
   </dimensions>
+  <forms uuid="4a71f66d-08a3-47b7-8c43-20f021076847">
+    <name>ФормаСписка</name>
+    <synonym>
+      <key>ru</key>
+      <value>История действий ИИ</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+  <forms uuid="e5e4ccc2-3d5a-4eb3-8ade-c80cac584ecd">
+    <name>ФормаИсторииАгента</name>
+    <synonym>
+      <key>ru</key>
+      <value>История действий ИИ</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+  <forms uuid="e166db9d-4dcf-4d5e-891c-67d30b71fa9d">
+    <name>ФормаРезультата</name>
+    <synonym>
+      <key>ru</key>
+      <value>Результат</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
 </mdclass:InformationRegister>
