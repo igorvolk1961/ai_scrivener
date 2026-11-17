@@ -19,6 +19,17 @@
       <extInfo xsi:type="form:LabelFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight></extInfo>
     </items>
     <items xsi:type="form:FormField">
+      <name>Пользователь</name><id>11</id>
+      <title><key>ru</key><value>Пользователь</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <dataPath xsi:type="form:DataPath"><segments>Данные.Пользователь</segments></dataPath>
+      <defaultItem>true</defaultItem>
+      <type>LabelField</type><editMode>Enter</editMode>
+      <showInHeader>true</showInHeader><headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:LabelFieldExtInfo"><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight></extInfo>
+    </items>
+    <items xsi:type="form:FormField">
       <name>Задача</name><id>3</id>
       <title><key>ru</key><value>Задача</value></title>
       <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
@@ -124,6 +135,22 @@
       <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
       <placementArea>UserCmds</placementArea><representationInContextMenu>Auto</representationInContextMenu>
     </items>
+    <items xsi:type="form:Button">
+      <name>ФормаСортДата</name><id>302</id>
+      <title><key>ru</key><value>По дате</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.СортДата</commandName>
+      <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea><representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
+      <name>ФормаСортПользователь</name><id>303</id>
+      <title><key>ru</key><value>По пользователю и дате</value></title>
+      <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.СортПользователь</commandName>
+      <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+      <placementArea>UserCmds</placementArea><representationInContextMenu>Auto</representationInContextMenu>
+    </items>
     <horizontalAlign>Left</horizontalAlign><autoFill>false</autoFill>
   </autoCommandBar>
   <handlers><event>OnCreateAtServer</event><name>ПриСозданииНаСервере</name></handlers>
@@ -133,6 +160,7 @@
     <name>Данные</name><id>1</id><valueType><types>ValueTable</types></valueType>
     <view><common>true</common></view><edit><common>true</common></edit>
     <columns><name>ДатаВремя</name><title><key>ru</key><value>Дата и время</value></title><id>1</id><valueType><types>Date</types></valueType><view><common>true</common></view><edit><common>true</common></edit></columns>
+    <columns><name>Пользователь</name><title><key>ru</key><value>Пользователь</value></title><id>12</id><valueType><types>String</types><stringQualifiers><length>150</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></columns>
     <columns><name>Задача</name><title><key>ru</key><value>Задача</value></title><id>2</id><valueType><types>String</types><stringQualifiers><length>0</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></columns>
     <columns><name>Инструмент</name><title><key>ru</key><value>Инструмент</value></title><id>4</id><valueType><types>String</types><stringQualifiers><length>100</length></stringQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></columns>
     <columns><name>Шаг</name><title><key>ru</key><value>Шаг запуска</value></title><id>5</id><valueType><types>Number</types><numberQualifiers><precision>10</precision><scale>0</scale></numberQualifiers></valueType><view><common>true</common></view><edit><common>true</common></edit></columns>
@@ -152,6 +180,16 @@
     <valueType><types>Date</types></valueType>
     <view><common>true</common></view><edit><common>true</common></edit>
   </attributes>
+  <attributes>
+    <name>ПолеСортировки</name><id>4</id>
+    <valueType><types>String</types><stringQualifiers><length>50</length></stringQualifiers></valueType>
+    <view><common>true</common></view><edit><common>true</common></edit>
+  </attributes>
+  <attributes>
+    <name>НаправлениеСортировки</name><id>5</id>
+    <valueType><types>Boolean</types></valueType>
+    <view><common>true</common></view><edit><common>true</common></edit>
+  </attributes>
   <formCommands>
     <name>Обновить</name><title><key>ru</key><value>Обновить</value></title><id>1</id><use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Обновить</name></handler></action><currentRowUse>DontUse</currentRowUse>
@@ -159,6 +197,14 @@
   <formCommands>
     <name>ОткрытьЗапись</name><title><key>ru</key><value>Показать результат</value></title><id>2</id><use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ОткрытьЗапись</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>СортДата</name><title><key>ru</key><value>По дате</value></title><id>3</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>СортДата</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>СортПользователь</name><title><key>ru</key><value>По пользователю и дате</value></title><id>4</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>СортПользователь</name></handler></action><currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <commandInterface><navigationPanel/><commandBar/></commandInterface>
   <extInfo xsi:type="form:FormExtInfo"/>
