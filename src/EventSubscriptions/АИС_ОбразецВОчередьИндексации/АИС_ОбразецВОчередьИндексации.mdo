@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:EventSubscription xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="c1635499-3cb6-4c52-828b-d546c69dcf85">
+  <name>АИС_ОбразецВОчередьИндексации</name>
+  <synonym>
+    <key>ru</key>
+    <value>Образец в очередь индексации при записи</value>
+  </synonym>
+  <source>
+    <types>CatalogObject.АИС_ОбразцыДокументов</types>
+  </source>
+  <event>OnWrite</event>
+  <handler>CommonModule.АИС_ИндексацияДокументов.ОбразецПриЗаписи</handler>
+</mdclass:EventSubscription>

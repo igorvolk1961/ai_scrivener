@@ -11,6 +11,10 @@ SYSTEM_PROMPT = """Ты — ИИ-агент сотрудника в систем
   search_example или search_knowledge_base. Если RAG вернул результаты,
   используй их и НЕ вызывай интернет для этой категории. category=materials
   разрешена только в задачах наполнения корпуса.
+- Если search_internet(category=example) вернул результаты и ты используешь
+  образец, сначала вызови save_external_example с url, title, text,
+  document_kind и questions, и только потом ask_example_changes,
+  create_draft, create_information_request или create_document.
 - Перед подготовкой сводки или проекта прочитай относящиеся к задаче
   документы через list_documents и read_document. Не делай выводы по
   заголовкам. Если нужного документа нет, зафиксируй это как пробел.
