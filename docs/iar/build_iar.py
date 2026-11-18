@@ -25,7 +25,7 @@ from weasyprint import HTML
 ROOT = Path(__file__).resolve().parents[2]
 DOCS = ROOT / "docs" / "iar"
 OUT = ROOT / "artifacts" / "iar"
-BUILD = OUT / "_build"
+BUILD = OUT / "_service" / "_build"
 CHROME = shutil.which("google-chrome") or shutil.which("chromium") or "google-chrome"
 SOFFICE = shutil.which("soffice") or shutil.which("libreoffice")
 
@@ -1160,7 +1160,9 @@ def build_html_presentation() -> Path:
 
 
 def make_zip(files: list[Path]) -> Path:
-    zip_path = OUT / "ИАР_комплект_без_видео.zip"
+    service = OUT / "_service"
+    service.mkdir(parents=True, exist_ok=True)
+    zip_path = service / "ИАР_архив_с_исходниками.zip"
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         for f in files:
             z.write(f, f.name)
@@ -1201,18 +1203,21 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     for legacy_name in (
         "05_Реестр_артефактов_СА.pdf",
+        "05_Приложения_ИАР.pdf",
         "06_Приложения_ИАР.pdf",
+        "06_Сопроводительные_документы.pdf",
         "07_Сопроводительные_документы.pdf",
+        "README.md",
+        "ИАР_комплект_без_видео.zip",
     ):
         (OUT / legacy_name).unlink(missing_ok=True)
+    shutil.rmtree(OUT / "_build", ignore_errors=True)
     pdfs = []
     mapping = [
         ("00_passport.md", "00_Паспорт_ИАР.pdf"),
         ("01_report.md", "01_Пояснительная_записка_ИАР.pdf"),
         ("03_demo_scenario.md", "03_Сценарий_демонстрации.pdf"),
         ("04_analyst_package.md", "04_Реестр_артефактов_СА.pdf"),
-        ("05_appendices.md", "05_Приложения_ИАР.pdf"),
-        ("06_cover_documents.md", "06_Сопроводительные_документы.pdf"),
     ]
     for src, dst in mapping:
         pdf = OUT / dst
@@ -1222,8 +1227,9 @@ def main() -> None:
     pres_pdf = build_html_presentation()
     pdfs.append(pres_pdf)
 
-    shutil.copy2(DOCS / "README.md", OUT / "README.md")
-    files = [*pdfs, OUT / "README.md"]
+    (OUT / "_service").mkdir(parents=True, exist_ok=True)
+    shutil.copy2(DOCS / "README.md", OUT / "_service" / "README.md")
+    files = [*pdfs, OUT / "_service" / "README.md"]
     make_zip(files)
     print("\nГотово:", OUT)
 
