@@ -307,9 +307,12 @@ TSV без строк уровня «Ошибка» или «Критическ�
 
 ```bash
 ./scripts/build/export_extension.sh      # src → EDT-копия → artifacts/extension-xml
+./scripts/build/load_extension.sh file   # XML → рабочая файловая база stage2
 ./scripts/build/load_extension.sh server # XML → серверная база
 ./scripts/build/dump_extension.sh server # расширение из базы → artifacts/base-extension-xml
 ```
+
+После правок BSL/форм цикл такой: `export_extension.sh` → закрыть клиент 1С (при открытом клиенте загрузка блокируется) → `load_extension.sh file` → запустить клиент заново. Скрипт загрузки сам клиент не закрывает.
 
 Проверки:
 
