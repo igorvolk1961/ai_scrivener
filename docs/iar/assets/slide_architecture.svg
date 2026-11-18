@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs>
+  <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+    <path d="M0,0 L12,6 L0,12 z" fill="#445566"/>
+  </marker>
+</defs>
+<rect width="1600" height="900" fill="#ffffff"/>
+<text x="800" y="60" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="30" font-weight="bold" fill="#16324F">Контроль остаётся в 1С, модели — снаружи</text>
+
+<rect x="40" y="300" width="250" height="250" rx="14" fill="#F4F7F9" stroke="#B8C4CF" stroke-width="2"/>
+<text x="165" y="345" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="24" font-weight="bold" fill="#16324F">Пользователи</text>
+<text x="165" y="395" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="20" fill="#1F2A36">Должностное лицо</text>
+<text x="165" y="435" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="20" fill="#1F2A36">Администратор</text>
+<text x="165" y="475" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="20" fill="#1F2A36">Аудитор</text>
+
+<rect x="360" y="255" width="560" height="350" rx="14" fill="#FFF3E0" stroke="#E67E22" stroke-width="3"/>
+<text x="640" y="305" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="25" font-weight="bold" fill="#8A4B12">1С:Документооборот</text>
+<text x="640" y="345" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="22" font-weight="bold" fill="#8A4B12">Расширение ai_scrivener</text>
+<text x="640" y="400" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="20" fill="#1F2A36">документы · задачи · права</text>
+<text x="640" y="440" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="20" fill="#1F2A36">approval · история · настройки</text>
+<text x="640" y="480" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="20" fill="#1F2A36">инструменты и аудит</text>
+
+<line x1="290" y1="425" x2="355" y2="425" stroke="#445566" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="322" y="410" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="16" fill="#5A6B7B">клиент</text>
+
+<rect x="1010" y="110" width="260" height="110" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2.5"/>
+<text x="1140" y="155" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="23" font-weight="bold" fill="#1B5E20">agent-service</text>
+<text x="1140" y="190" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="18" fill="#1F2A36">один шаг агента</text>
+
+<rect x="1320" y="110" width="240" height="110" rx="12" fill="#ECEFF1" stroke="#546E7A" stroke-width="2.5"/>
+<text x="1440" y="160" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="24" font-weight="bold" fill="#263238">LLM</text>
+<text x="1440" y="195" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="18" fill="#263238">через API</text>
+
+<rect x="1010" y="385" width="260" height="110" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2.5"/>
+<text x="1140" y="430" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="22" font-weight="bold" fill="#1B5E20">search-service</text>
+<text x="1140" y="465" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="18" fill="#1F2A36">внешние образцы</text>
+
+<rect x="1010" y="610" width="260" height="110" rx="12" fill="#E8F5E9" stroke="#2E7D32" stroke-width="2.5"/>
+<text x="1140" y="655" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="23" font-weight="bold" fill="#1B5E20">RAG-сервис</text>
+<text x="1140" y="690" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="18" fill="#1F2A36">retrieval · индексация</text>
+
+<rect x="1320" y="610" width="240" height="110" rx="12" fill="#ECEFF1" stroke="#546E7A" stroke-width="2.5"/>
+<text x="1440" y="660" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="23" font-weight="bold" fill="#263238">Qdrant</text>
+<text x="1440" y="695" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="18" fill="#263238">векторы</text>
+
+<line x1="920" y1="330" x2="1005" y2="175" stroke="#445566" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="950" y="230" font-family="DejaVu Sans, Arial" font-size="16" fill="#5A6B7B">шаг</text>
+<line x1="1270" y1="165" x2="1315" y2="165" stroke="#445566" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="1292" y="150" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="16" fill="#5A6B7B">LLM</text>
+
+<line x1="920" y1="430" x2="1005" y2="435" stroke="#445566" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="958" y="418" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="16" fill="#5A6B7B">поиск</text>
+
+<line x1="920" y1="530" x2="1005" y2="650" stroke="#445566" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="955" y="600" font-family="DejaVu Sans, Arial" font-size="16" fill="#5A6B7B">retrieval</text>
+<line x1="1270" y1="665" x2="1315" y2="665" stroke="#445566" stroke-width="2.5" marker-end="url(#arrow)"/>
+<text x="1292" y="650" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="16" fill="#5A6B7B">поиск</text>
+
+<text x="800" y="810" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="20" fill="#5A6B7B">Изменяющие действия выполняет 1С — только после approval или разрешённого автоодобрения</text>
+<text x="800" y="850" text-anchor="middle" font-family="DejaVu Sans, Arial" font-size="17" fill="#8A97A3">Ключи LLM и Qdrant хранятся в .env сервисов и не передаются в 1С</text>
+</svg>

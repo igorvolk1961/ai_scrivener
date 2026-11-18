@@ -2031,6 +2031,120 @@ requirements:
     test_files:
       - tests/1c/test_agent.md
     status: in_progress
+  - id: FR-071
+    type: functional
+    title: Единая обработка внутренних и внешних документов как триггеров
+    description: >-
+      Внутренний и входящий (внешний) документ приводятся к одному
+      нормализованному событию. Для расширения тип документа является атрибутом
+      источника, а не отдельной веткой сценария: одинаковые проверки, запуск
+      агента, approval, аудит и постановка в очередь.
+    priority: must
+    approval: proposed
+    source:
+      - user-requirement:2026-11-18
+      - docs/data-model.md#7-триггеры
+    acceptance:
+      - Внутренний и входящий документ создают событие одного вида.
+      - Жизненный цикл запуска, approval и истории одинаков для обоих источников.
+      - Тип источника сохраняется в событии и доступен фильтрам, но не меняет сценарий.
+    design:
+      - docs/data-model.md#7-триггеры
+      - docs/process-diagrams.md#14-целевой-процесс-шаблон--поиск--плейсхолдеры
+    implementation:
+      - src/EventSubscriptions/АИС_ВнутреннийДокументПриЗаписи
+      - src/CommonModules/АИС_Уведомления
+      - src/CommonModules/АИС_ИндексацияДокументов
+    tests:
+      - TEST-FR-071-01
+    test_files:
+      - tests/1c/test_triggers.md
+    status: in_progress
+  - id: FR-072
+    type: functional
+    title: Целевые шаблоны с плейсхолдерами и поиском по корпусу
+    description: >-
+      Целевой ИИ-шаблон задаёт структуру документа, плейсхолдеры и для каждого
+      плейсхолдера — источник и фильтры поиска: тип документа, период, автор,
+      статус, доступ, связи. Значение не копируется по жёсткой ссылке между
+      полями, а находится гибридным поиском; найденные источники и цитаты
+      сохраняются для проверки человеком.
+    priority: must
+    approval: proposed
+    source:
+      - user-requirement:2026-11-18
+      - docs/system-analysis/view-and-scope.md#1-видение-vision
+    acceptance:
+      - Шаблон содержит структуру и перечень плейсхолдеров.
+      - Для каждого плейсхолдера заданы запрос и хотя бы один фильтр.
+      - Заполнение сопровождается ссылками на источники и цитатами.
+      - Незаполненные и конфликтующие плейсхолдеры выделяются человеку.
+    design:
+      - docs/data-model.md#171-шаблон-с-поиском-вместо-жёстких-связей
+      - docs/process-diagrams.md#14-целевой-процесс-шаблон--поиск--плейсхолдеры
+    implementation:
+      - docs/data-model.md
+      - docs/process-diagrams.md
+    tests:
+      - TEST-FR-072-01
+    test_files:
+      - tests/1c/test_target_templates.md
+    status: planned
+  - id: FR-073
+    type: functional
+    title: Регламентный триггер по должностным обязанностям
+    description: >-
+      Целевой триггер запускает агента по расписанию или сроку на основе
+      должностных обязанностей ДЛ. В текущем MVP третий тип триггера не
+      реализован: работают документы и задачи.
+    priority: must
+    approval: proposed
+    source:
+      - user-requirement:2026-11-18
+    acceptance:
+      - Обязанность связывается с расписанием или сроком.
+      - Событие создаётся без входящего документа и без ручной задачи.
+      - Запуск использует тот же контур approval, аудита и истории.
+    design:
+      - docs/data-model.md#7-триггеры
+      - docs/data-model.md#172-режимы-mvp-и-целевой-системы
+    implementation:
+      - docs/data-model.md
+    tests:
+      - TEST-FR-073-01
+    test_files:
+      - tests/1c/test_scheduled_triggers.md
+    status: planned
+  - id: FR-074
+    type: functional
+    title: Синтетический корпус и временное автоодобрение
+    description: >-
+      Для накопления корпуса агент генерирует синтетические документы, которые
+      проходят контроль человека. Автоодобрение допускается как временный режим
+      ускорения набора данных и должно быть отключаемым; в целевой системе
+      автоодобрения нет, изменяющие действия подтверждает человек.
+    priority: must
+    approval: proposed
+    source:
+      - user-requirement:2026-11-18
+      - docs/ai-agent-protocol.md#64-автоодобрение
+    acceptance:
+      - Синтетические документы помечаются происхождением и статусом проверки.
+      - Автоодобрение включается и выключается администратором.
+      - Отклонённые и автоодобренные документы различимы в корпусе.
+      - В целевой конфигурации автоодобрение отключено.
+    design:
+      - docs/system-analysis/use-cases.md#uc-18-накопление-синтетического-корпуса
+      - docs/data-model.md#172-режимы-mvp-и-целевой-системы
+    implementation:
+      - src/CommonModules/АИС_АгентИИ
+      - src/CommonModules/АИС_АвтоодобрениеСервер
+      - src/DataProcessors/АИС_АдминистрированиеИИ
+    tests:
+      - TEST-FR-074-01
+    test_files:
+      - tests/1c/test_synthetic_corpus.md
+    status: in_progress
   - id: NFR-001
     type: nonfunctional
     title: Отклик интерфейса не более 2 секунд

@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ИИ-агент в документообороте — сценарии работы</title>
+<style>
+:root{
+  --navy:#10224f; --navy-2:#1d3d8f; --ink:#172033; --muted:#5b6577;
+  --line:#dbe2ee; --paper:#ffffff; --soft:#f6f8fc; --green:#0f9d58; --amber:#b45309; --red:#e11d48;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{
+  background:#0b1730;color:var(--ink);
+  font:18px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+}
+.deck{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform:translate(-50%,-50%) scale(var(--scale,1));transform-origin:center center}
+.slide{
+  position:absolute;inset:0;display:none;flex-direction:column;
+  padding:48px 72px 92px;background:var(--paper);overflow:hidden;
+}
+.slide.active{display:flex;animation:enter .45s ease both}
+@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.slide::before{
+  content:"";position:absolute;left:0;top:0;height:5px;width:100%;
+  background:linear-gradient(90deg,var(--navy) 0,var(--navy-2) 55%,var(--green) 100%);
+}
+.head{flex:0 0 auto}
+.kicker{
+  font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--green);margin-bottom:8px;
+}
+h1{font-size:64px;line-height:1.03;letter-spacing:-.03em;margin:0 0 18px;color:#fff}
+h2{font-size:44px;line-height:1.08;letter-spacing:-.025em;margin:0 0 12px;color:var(--navy)}
+.lead{font-size:19px;color:var(--muted);max-width:1080px;margin:0}
+.body{flex:1 1 auto;min-height:0;margin-top:24px;display:flex;align-items:center}
+.split{display:grid;grid-template-columns:1.7fr .85fr;gap:38px;align-items:center;width:100%}
+.split.wide{grid-template-columns:1fr 1fr}
+.split.three{grid-template-columns:repeat(3,1fr);gap:18px}
+.split.three .card p{font-size:16px}
+.media{position:relative;min-width:0}
+.imgbox{position:relative}
+.media img{
+  display:block;width:100%;max-height:330px;object-fit:contain;margin:0 auto;
+  border-radius:14px;border:1px solid var(--line);background:#fff;
+  box-shadow:0 18px 44px rgba(16,34,79,.16);
+}
+.media .caption{font-size:13px;color:var(--muted);margin-top:8px;text-align:center}
+.side{min-width:0}
+.points{margin:0;padding-left:22px}
+.points li{margin:12px 0;font-size:18px}
+.points b{color:var(--navy)}
+.pill{
+  display:inline-block;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:700;
+  background:#e8f7ee;color:#0b6b3d;border:1px solid #b7e4c9;margin-bottom:14px;
+}
+.quote-card{
+  background:var(--soft);border:1px solid var(--line);border-left:4px solid var(--green);
+  border-radius:12px;padding:14px 16px;font-size:15px;color:#40506a;margin-top:16px;
+}
+.bridge{
+  flex:0 0 auto;margin-top:10px;border-top:1px solid var(--line);padding-top:10px;
+  display:flex;justify-content:space-between;gap:24px;align-items:center;
+  font-size:15px;color:#40506a;
+}
+.bridge b{color:var(--green);white-space:nowrap}
+.bridge.light{border-color:rgba(255,255,255,.25);color:#dce6ff}
+.bridge.light b{color:#8ef0bb}
+
+/* title */
+.slide.title{
+  background:
+    radial-gradient(900px 480px at 88% -10%,rgba(15,157,88,.45),transparent 60%),
+    radial-gradient(800px 500px at 0% 110%,rgba(59,130,246,.35),transparent 55%),
+    linear-gradient(135deg,#0c1b3d 0,#10224f 45%,#1d3d8f 100%);
+  color:#fff;justify-content:center;padding:80px 90px;
+}
+.slide.title::before{display:none}
+.title .eyebrow{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#8ef0bb;font-weight:800}
+.title .lead{color:#d7e2ec;font-size:22px;max-width:880px;margin-top:6px}
+.title .chips{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.title .chips span{
+  border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 16px;
+  font-size:14px;color:#eef4fb;background:rgba(255,255,255,.06);
+}
+.title .hint{margin-top:44px;font-size:13px;color:#a9bdd2}
+.title .hint kbd{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:5px;padding:1px 6px}
+
+/* section divider */
+.slide.divider{
+  background:
+    radial-gradient(900px 520px at 100% 0,rgba(15,157,88,.38),transparent 58%),
+    linear-gradient(135deg,#0b1a3b 0,#10224f 55%,#17357a 100%);
+  color:#fff;justify-content:center;padding:80px 90px;
+}
+.slide.divider::before{background:linear-gradient(90deg,#8ef0bb,#0f9d58 40%,transparent)}
+.divider .num{font-size:130px;line-height:.8;font-weight:800;color:rgba(255,255,255,.12);letter-spacing:-.05em}
+.divider h2{color:#fff;font-size:58px;margin-top:18px}
+.divider .quote{font-size:23px;line-height:1.4;color:#dce6ff;max-width:920px;margin-top:8px}
+.flow{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.flow span{
+  border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:9px 16px;
+  font-size:15px;color:#eef4fb;background:rgba(255,255,255,.06);
+}
+.flow i{color:#8ef0bb;font-style:normal;align-self:center}
+
+/* final */
+.slide.final{
+  background:
+    radial-gradient(900px 520px at 100% 100%,rgba(15,157,88,.4),transparent 60%),
+    linear-gradient(135deg,#0b1a3b,#10224f 60%,#0f3b2a 120%);
+  color:#fff;justify-content:center;padding:80px 90px;
+}
+.slide.final::before{display:none}
+.final h2{color:#fff;font-size:52px;max-width:1000px}
+.final .lead{color:#d7e2ec;font-size:22px;max-width:900px}
+.final .chips{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+.final .chips span{border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:8px 16px;font-size:14px;color:#eef4fb;background:rgba(255,255,255,.07)}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;width:100%;margin-top:8px}
+.cards.four{grid-template-columns:repeat(4,1fr)}
+.dense h2{font-size:38px}
+.dense .lead{font-size:17px}
+.dense .card{padding:18px 20px}
+.dense .card h3{font-size:20px;margin:6px 0}
+.dense .points li{font-size:14px;line-height:1.32;margin:6px 0}
+.card{background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:22px 22px 20px}
+.card .n{font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--green);text-transform:uppercase}
+.card h3{font-size:21px;margin:8px 0 6px;color:var(--navy)}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.outcomes{grid-template-columns:repeat(2,1fr);gap:14px}
+.outcomes .card{padding:18px 20px}
+.outcomes .card h3{font-size:22px;margin:4px 0 4px}
+.outcomes .card p{font-size:14px}
+
+/* callouts */
+.callout{
+  position:absolute;left:var(--l);top:var(--t);width:var(--w);height:var(--h);
+  border:3px solid var(--green);border-radius:6px;
+  box-shadow:0 0 0 4px rgba(15,157,88,.16);pointer-events:none;
+}
+.callout span{
+  position:absolute;left:-3px;top:-30px;background:var(--green);color:#fff;
+  font-size:12px;font-weight:800;padding:4px 9px;border-radius:6px;white-space:nowrap;
+}
+.callout.red{border-color:var(--red);box-shadow:0 0 0 4px rgba(225,29,72,.14)}
+.callout.red span{background:var(--red)}
+
+/* solo full-form slides */
+.solo{padding:38px 60px 80px}
+.solo h2{font-size:36px}
+.solo .lead{font-size:17px;max-width:1100px}
+.solo .body{justify-content:center;margin-top:10px}
+.solo .media{width:100%;max-width:1180px;margin:0 auto;text-align:center}
+.solo .imgbox{width:fit-content;margin:0 auto;position:relative}
+.solo .media img{width:auto;max-width:100%;max-height:390px;margin:0 auto;display:block}
+
+/* metrics */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%}
+.metric{background:var(--soft);border:1px solid var(--line);border-radius:16px;padding:16px 14px;text-align:center}
+.metric .name{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--navy);margin-bottom:8px}
+.metric .val{font-size:38px;font-weight:800;line-height:1;color:var(--green)}
+.metric p{font-size:12px;line-height:1.35;color:var(--muted);margin:8px 0 0}
+.metrics-secondary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:100%;margin-top:14px}
+.metrics-secondary div{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;color:#40506a;text-align:center}
+.metrics-note{font-size:13px;color:var(--muted);background:#fff9e9;border:1px solid #f0dfb4;border-radius:12px;padding:9px 12px;margin-top:14px;text-align:left}
+
+/* controls */
+.controls{position:fixed;right:22px;bottom:20px;display:flex;gap:8px;z-index:40}
+.controls button{
+  width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
+  background:rgba(11,23,48,.72);color:#fff;font-size:18px;cursor:pointer;
+  backdrop-filter:blur(8px);
+}
+.controls button:hover{background:rgba(29,61,143,.9)}
+.counter{
+  position:fixed;left:24px;bottom:22px;z-index:40;color:#dce6ff;
+  font-size:13px;letter-spacing:.06em;background:rgba(11,23,48,.55);
+  border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:6px 12px;
+}
+.section-tag{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:40;
+  color:#cfe0f5;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  background:rgba(11,23,48,.5);border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;padding:6px 14px;white-space:nowrap;
+}
+.progress{position:fixed;left:0;bottom:0;height:4px;width:0;background:var(--green);z-index:50;transition:width .25s ease}
+
+/* notes */
+.notes{display:none}
+.notes-on .slide.active .notes{
+  display:block;position:fixed;left:0;right:0;bottom:0;z-index:60;
+  max-height:32%;overflow:auto;background:rgba(8,18,38,.94);color:#eaf2fb;
+  padding:16px 24px;font-size:14px;line-height:1.5;border-top:2px solid var(--green);
+}
+.notes b{color:#8ef0bb}
+
+@media (prefers-reduced-motion: reduce){ .slide.active{animation:none} }
+
+@media screen and (max-width: 980px){
+  .slide{padding:38px 40px}
+  h1{font-size:44px} h2{font-size:32px}
+  .split{grid-template-columns:1fr;gap:18px}
+  .cards{grid-template-columns:1fr}
+  .media img{max-height:42vh}
+}
+
+@media print{
+  @page{size:13.333in 7.5in;margin:0}
+  .slide,.slide.title,.slide.divider,.slide.final{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .slide.title{background:#10224f!important}
+  .slide.divider{background:#10224f!important}
+  .slide.final{background:#10224f!important}
+  html,body{overflow:visible;background:#fff}
+  .deck{position:static;left:auto;top:auto;width:auto;height:auto;transform:none}
+  .slide, .slide.title, .slide.divider, .slide.final{
+    display:flex!important;position:relative;inset:auto;width:13.333in;height:7.5in;
+    page-break-after:always;break-after:page;animation:none;opacity:1!important;visibility:visible!important;
+  }
+  .controls,.counter,.section-tag,.progress{display:none!important}
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<section class="slide title" data-section="Начало">
+  <div class="eyebrow">1С:Документооборот · ИИ-Помощник</div>
+  <h1>ИИ-агент<br>в документообороте</h1>
+  <p class="lead">Как должностное лицо находит нужные сведения, готовит документ и подтверждает действие ИИ-помощника — не выходя из 1С.</p>
+  <div class="chips"><span>Информация</span><span>Документ</span><span>Решение</span><span>След</span></div>
+  <div class="hint">Навигация: <kbd>←</kbd> <kbd>→</kbd> или <kbd>пробел</kbd> · <kbd>N</kbd> — заметки</div>
+  <aside class="notes"><b>Вступление.</b> Это не рассказ о технологиях, а путь одного рабочего решения: от вопроса к документу и подтверждению. Показываем, что видит должностное лицо и как сохраняется контроль.</aside>
+</section>
+
+<section class="slide" data-section="Зачем">
+  <div class="head">
+    <div class="kicker">Зачем</div>
+    <h2>Рутину — ИИ, решение — человеку</h2>
+    <p class="lead">Поиск нужных сведений и подготовка документов отнимают время. ИИ-помощник делает черновик и показывает источники, а решение остаётся за должностным лицом.</p>
+  </div>
+  <div class="body" style="flex-direction:column;align-items:stretch;justify-content:center">
+    <div class="cards">
+      <div class="card"><div class="n">01</div><h3>Найти сведения</h3><p>Приказы, договоры и прежние решения — поиск по смыслу, а не только по точным словам. Полнотекстовый поиск 1С остаётся, но его возможностей не всегда хватает.</p></div>
+      <div class="card"><div class="n">02</div><h3>Подготовить проект</h3><p>Текст, разделы и адресаты — в штатной карточке документа.</p></div>
+      <div class="card"><div class="n">03</div><h3>Принять решение</h3><p>1С выполняет изменяющее действие только после подтверждения человеком.</p></div>
+    </div>
+  </div>
+  <div class="bridge"><span>С чего начинается работа? С нужных сведений.</span><b>К поиску →</b></div>
+  <aside class="notes">Три шага, знакомые любому должностному лицу: найти сведения, подготовить проект, принять решение. Помощник ускоряет первые два, третий остаётся за человеком.</aside>
+</section>
+
+<section class="slide dense" data-section="Замысел">
+  <div class="head">
+    <div class="kicker">Замысел</div>
+    <h2>MVP — это фундамент для развития целевого проекта</h2>
+    <p class="lead">Сегодняшний контур решает две задачи: проверить RAG и накопить корпус документов. Целевая система будет собирать документы по шаблонам, которые знают, где искать данные.</p>
+  </div>
+  <div class="body">
+    <div class="split wide">
+      <div class="card" style="padding:22px 24px">
+        <div class="n">Сегодня</div>
+        <h3>Работающий ИИ-помощник</h3>
+        <ul class="points" style="margin-top:6px">
+          <li>RAG с цитатами и ссылками на источники</li>
+          <li>ИИ-агент готовит черновики по триггеру (документу или задаче) на основе поиска в базе знаний или в интернете; роль-промпт ИИ-агента строится на должностных обязанностях</li>
+          <li>Человек одобряет подготовленные документы или возвращает их на доработку с указанием замечаний</li>
+          <li>По мере повышения качества генерации подключается автоодобрение для ускорения набора корпуса</li>
+          <li>Результат — синтетический корпус документов, основа следующего этапа: шаблоны и работа с ними</li>
+          <li>ИИ-помощником можно пользоваться уже сейчас, но при одобрении или возврате требуется больше внимания человека</li>
+        </ul>
+      </div>
+      <div class="card" style="padding:22px 24px;border-color:#b7e4c9">
+        <div class="n">Цель</div>
+        <h3>Разработка документов по гибким шаблонам</h3>
+        <ul class="points" style="margin-top:6px">
+          <li>Гибкие шаблоны с плейсхолдерами: не жёсткие ссылки на поля, а промпты и фильтры гибридного поиска</li>
+          <li>ИИ-агент готовит черновики по триггеру (документу, задаче или регламенту) на основе гибкого шаблона</li>
+          <li>ИИ-агент при необходимости готовит запрос необходимой информации у другого должностного лица</li>
+          <li>ИИ-агент при необходимости собирает исходные данные для автоматических расчётов</li>
+          <li>Человек одобряет подготовленные документы или возвращает их на доработку с указанием замечаний или подтверждает запрос информации у другого ДЛ</li>
+          <li>Автоодобрение в целевом контуре отключено</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Сначала — где помощник живёт в интерфейсе 1С.</span><b>Интерфейс →</b></div>
+  <aside class="notes">Рамка всего рассказа: показываем работающий MVP, но не выдаём его за финальную систему. Целевая система — шаблоны с поиском и фильтрами.</aside>
+</section>
+
+
+
+<section class="slide" data-section="Интерфейс">
+  <div class="head">
+    <div class="kicker">Интерфейс</div>
+    <h2>Привычный интерфейс 1С:ДО</h2>
+    <p class="lead">ИИ-Помощник не замещает документооборот: разделы, документы, задачи и формы остаются на месте.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/03_sections_focus.png" alt="Раздел Главное в 1С:Документооборот">
+        <div class="caption">Раздел «Главное»: привычные разделы и команды 1С:ДО</div>
+      </div>
+      <div class="side">
+        <span class="pill">Расширение ИИ-Помощник не изменяет, но дополняет пользовательчкий интерфейс</span>
+        <ul class="points">
+          <li><b>Главное</b> — привычная начальная страница.</li>
+          <li><b>Совместная работа</b> — задачи и процессы.</li>
+          <li><b>ИИ-Помощник</b> — отдельный раздел рядом.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Посмотрим, что находится в разделе «ИИ-Помощник».</span><b>ИИ-Помощник →</b></div>
+  <aside class="notes">Сначала показываем привычный интерфейс 1С:ДО: помощник не создаёт отдельную систему и не меняет штатные разделы.</aside>
+</section>
+
+<section class="slide" data-section="Интерфейс">
+  <div class="head">
+    <div class="kicker">Интерфейс</div>
+    <h2>ИИ-Помощник рядом</h2>
+    <p class="lead">Отдельный раздел с командами ИИ-Помощника. Всё остальное — штатный 1С:Документооборот.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/04_ai_section_focus.png" alt="Раздел ИИ-Помощник с командами">
+        <div class="caption">Раздел «ИИ-Помощник»: команды для должностного лица</div>
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Вопросы по базе знаний</b> — поиск информации по смыслу.</li>
+          <li><b>Запросы ИИ ко мне</b> — одобрение действий и вопросы со стороны ИИ-агента.</li>
+          <li><b>Передать задачу ИИ</b> — запуск ИИ-агента для вполнения задачи.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Интерфейс понятен. Теперь — как искать информацию.</span><b>К поиску →</b></div>
+  <aside class="notes">Здесь важно: в разделе только команды помощника. Никакой отдельной «второй 1С» нет.</aside>
+</section>
+
+<section class="slide divider" data-section="Найти информацию">
+  <div class="num">01</div>
+  <h2>Найти информацию</h2>
+  <p class="quote">Прежде чем готовить документ, должностное лицо ищет нужные сведения и источники. Они должны быть найдены, проверены и изучены.</p>
+  <div class="flow"><span>Вопрос</span><i>→</i><span>Источники</span><i>→</i><span>Цитата</span></div>
+  <div class="bridge light"><span>Начнём с первого вопроса.</span><b>К вопросу →</b></div>
+  <aside class="notes">Раздел 1. Показываем поиск: вопрос, источники, первоисточник.</aside>
+</section>
+
+<section class="slide" data-section="Найти информацию">
+  <div class="head">
+    <div class="kicker">Найти информацию</div>
+    <h2>Спросите обычным языком</h2>
+    <p class="lead">Не нужно помнить реквизиты и названия файлов: вопрос формулируется так, как он звучит в работе.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/05_knowledge_question_clean.png" alt="Вопрос по базе знаний">
+        <div class="caption">Вопрос по базе знаний организации</div>
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Поиск по смыслу</b> — не только по точным словам.</li>
+          <li><b>Коллекция</b> — база знаний или документы 1С:ДО.</li>
+          <li><b>Ответ по найденным материалам</b> — с цитатами и ссылками.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Получим ответ</span><b>Источники →</b></div>
+  <aside class="notes">Акцент: вопрос не требует знания структуры хранения. Это снижает порог входа.</aside>
+</section>
+
+<section class="slide" data-section="Найти информацию">
+  <div class="head">
+    <div class="kicker">Найти информацию</div>
+    <h2>Ответ с опорой на источники</h2>
+    <p class="lead">Агент не просто отвечает — он показывает документы и фрагменты, на которых основан ответ.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/06_knowledge_answer_clean.png" alt="Ответ по базе знаний с цитатами">
+        <div class="caption">Ответ и цитаты по найденным материалам</div>
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Цитаты</b> рядом с ответом.</li>
+          <li><b>Ссылки на источники</b> — можно проверить.</li>
+          <li><b>Диалог сохраняется</b> — можно вернуться к ответу.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Проверим первоисточник.</span><b>Открыть документ →</b></div>
+  <aside class="notes">Ключевая ценность: ответ можно проверить, а не принимать на веру.</aside>
+</section>
+
+<section class="slide" data-section="Найти информацию">
+  <div class="head">
+    <div class="kicker">Найти информацию</div>
+    <h2>Первоисточник рядом</h2>
+    <p class="lead">Один переход — и перед должностным лицом исходный документ, а не пересказ.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/07_knowledge_source_clean.png" alt="Первоисточник из RAG">
+        <div class="caption">Исходный документ открывается из ответа</div>
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Страница и пункт</b> — видно, где именно найдено.</li>
+          <li><b>Полный текст</b> — без потери контекста.</li>
+          <li><b>Один клик</b> — от ответа к документу.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Если документ живёт в 1С — ищем в контуре.</span><b>Поиск в 1С →</b></div>
+  <aside class="notes">Здесь снимаем главное возражение: «откуда модель это взяла».</aside>
+</section>
+
+<section class="slide" data-section="Найти информацию">
+  <div class="head">
+    <div class="kicker">Найти информацию</div>
+    <h2>Поиск по документам 1С</h2>
+    <p class="lead">Тот же вопрос можно задать по документам предприятия: агент учитывает доступные права и карточки.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/08_knowledge_search_1c_clean.png" alt="Поиск с включённым режимом Искать в 1С">
+        <div class="caption">Поиск с включённым режимом «Искать в 1С»</div>
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Документы предприятия</b> — в том же поиске.</li>
+          <li><b>Права доступа</b> — только для документов 1С.</li>
+          <li><b>«Открыть источник»</b> — переход к карточке документа.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Откроем карточку документа.</span><b>Карточка →</b></div>
+  <aside class="notes">Показываем, что поиск не ограничен внешним корпусом: штатные документы тоже доступны. Права доступа применяются именно к документам 1С.</aside>
+</section>
+<section class="slide" data-section="Найти информацию">
+  <div class="head">
+    <div class="kicker">Найти информацию</div>
+    <h2>Карточка документа</h2>
+    <p class="lead">«Открыть источник» ведёт в штатную карточку документа 1С:ДО, а не в отдельное представление.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/09_source_document_clean.png" alt="Карточка документа 1С:ДО">
+        <div class="caption">Штатная карточка документа: реквизиты, файлы и связи</div>
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Реквизиты и файлы</b> — в привычной карточке.</li>
+          <li><b>Связи</b> — с другими документами.</li>
+          <li><b>Доступ</b> — по штатным правам 1С.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Информация найдена. Оценим качество поиска.</span><b>К проекту →</b></div>
+  <aside class="notes">Подчёркиваем: кнопка «Открыть источник» открывает именно карточку документа 1С:ДО, без параллельного интерфейса.</aside>
+</section>
+
+
+<section class="slide" data-section="Найти информацию">
+  <div class="head">
+    <div class="kicker">Найти информацию</div>
+    <h2>Качество поиска: 70 кейсов</h2>
+    <p class="lead">Проверили на наборе из 70 кейсов: 60 с ожидаемым ответом и 10 без ответа.</p>
+  </div>
+  <div class="body" style="flex-direction:column;align-items:stretch;justify-content:center">
+    <div class="metrics">
+      <div class="metric"><div class="name">Recall@10</div><div class="val">1,00</div><p>Все релевантные источники попали в топ-10</p></div>
+      <div class="metric"><div class="name">Корректность</div><div class="val">0,94</div><p>Ответы признаны корректными</p></div>
+      <div class="metric"><div class="name">Опора на контекст</div><div class="val">0,95</div><p>Ответ не выходит за найденные источники</p></div>
+      <div class="metric"><div class="name">Точность цитат</div><div class="val">0,88</div><p>Ссылки ведут на релевантные фрагменты</p></div>
+    </div>
+    <div class="metrics" style="margin-top:14px">
+      <div class="metric"><div class="name">Точность отказа</div><div class="val">0,91</div><p>Доля корректных отказов</p></div>
+      <div class="metric"><div class="name">Полнота отказа</div><div class="val">1,00</div><p>Все кейсы без ответа распознаны</p></div>
+      <div class="metric"><div class="name">E2E p50</div><div class="val">3,18 с</div><p>Медианное время ответа</p></div>
+      <div class="metric"><div class="name">E2E p95</div><div class="val">6,22 с</div><p>95-й процентиль времени</p></div>
+    </div>
+  </div>
+  <div class="bridge"><span>Теперь — как должностное лицо создаёт событие.</span><b>К событию →</b></div>
+  <aside class="notes">Метрики показывают работоспособность поиска и ответов: источник находится, ответ опирается на контекст, ссылки проверяемы. Ограничения набора проговариваем честно.</aside>
+</section>
+
+<section class="slide divider" data-section="Создать событие">
+  <div class="num">02</div>
+  <h2>Создать событие</h2>
+  <p class="quote">Должностное лицо создаёт документ и маршрут в штатном 1С:ДО. Это событие-триггер для ИИ-агента адресата.</p>
+  <div class="flow"><span>Документ</span><i>→</i><span>Маршрут</span><i>→</i><span>Событие</span></div>
+  <div class="bridge light"><span>Посмотрим штатную карточку документа.</span><b>Документ →</b></div>
+  <aside class="notes">Раздел 2. Это не работа агента: человек создаёт событие, которое затем запускает агента у адресата.</aside>
+</section>
+
+<section class="slide" data-section="Создать событие">
+  <div class="head">
+    <div class="kicker">Создать событие</div>
+    <h2>Проект распоряжения</h2>
+    <p class="lead">Должностное лицо готовит проект в штатной карточке 1С:ДО: текст, реквизиты, адресаты. ИИ-агент в этом шаге не участвует.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/11_order_card_project_clean.png" alt="Карточка распоряжения: проект">
+        <div class="caption">Проект распоряжения в карточке документа</div>
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Штатная карточка документа</b> — как обычно в 1С:ДО.</li>
+          <li><b>Начальное состояние и реквизиты</b> — заполняет должностное лицо.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Документ готов. Кому и когда исполнять?</span><b>Маршрут →</b></div>
+  <aside class="notes">Подчёркиваем: документ остаётся штатным. Это событие для агента у адресата, а не работа агента.</aside>
+</section>
+
+<section class="slide" data-section="Создать событие">
+  <div class="head">
+    <div class="kicker">Создать событие</div>
+    <h2>Маршрут и исполнитель</h2>
+    <p class="lead">Должностное лицо выбирает маршрут и исполнителя в штатном 1С:ДО. Это создаёт задачу-событие для ИИ-агента.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/15_executor_picker_clean.png" alt="Подбор исполнителей">
+        <div class="caption">Выбор исполнителя и запуск процесса</div>
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Исполнитель</b> выбирается из оргструктуры предприятия.</li>
+          <li><b>Срок и процесс</b> — штатный маршрут 1С.</li>
+          <li><b>Событие</b> — задача у адресата.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Событие создано. Дальше — работа ИИ-агента адресата.</span><b>К агенту →</b></div>
+  <aside class="notes">Завершаем раздел: документ и маршрут готовы, задача создана. Агент подключается у адресата.</aside>
+</section>
+
+<section class="slide divider" data-section="Подтвердить действие">
+  <div class="num">03</div>
+  <h2>Подтвердить действие</h2>
+  <p class="quote">ИИ-агент предлагает. Должностное лицо решает. Изменяющее действие выполняется только после ответа человека.</p>
+  <div class="flow"><span>Предложение</span><i>→</i><span>Проверка</span><i>→</i><span>Одобрение</span></div>
+  <div class="bridge light"><span>Сначала — как задаются рамки поведения ИИ-агента.</span><b>Настройка →</b></div>
+  <aside class="notes">Раздел 3 — контроль. Это ключевая часть: агент не действует молча.</aside>
+</section>
+
+<section class="slide" data-section="Подтвердить действие">
+  <div class="head">
+    <div class="kicker">Подтвердить действие</div>
+    <h2>Персональные настройки ИИ-агента</h2>
+    <p class="lead">Должностное лицо задаёт рамки: роль-промпт, автоматические триггеры, интервал проверки и максимум шагов.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/37_gen_director_triggers_button_clean.png" alt="Мои настройки ИИ-агента">
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Промпт (роль и границы)</b> — что ИИ-агент делает от имени должностного лица.
+            Промпт автоматически генерируется на основе должностных обязанностей ДЛ, но может быть вручную скорректирован</li>
+          <li><b>Автотриггеры</b> — можно ли ИИ-агенту самому начинать действовать при наступлении события.</li>
+          <li><b>Ручной запуск</b> — когда реакция нужна прямо сейчас, не дожидаясь регламентного времени.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Пользователь сам определяет, разрешать ли ИИ-агенту самостоятельно приступать к работе.</span><b>Триггеры →</b></div>
+  <aside class="notes">Показываем, что поведение агента настраивается пользователем, а не «зашито» в систему.</aside>
+</section>
+
+<section class="slide" data-section="Подтвердить действие">
+  <div class="head">
+    <div class="kicker">Подтвердить действие</div>
+    <h2>Триггеры: что запускает агента</h2>
+    <p class="lead">Документ и задача уже работают. Регламентное событие — следующий шаг, которого в MVP пока нет.</p>
+  </div>
+  <div class="body" style="flex-direction:column;align-items:stretch;padding-top:10px">
+    <div class="cards">
+      <div class="card"><div class="n">MVP</div><h3>Документ</h3><p>Внутренний или входящий — один сценарий. Тип документа является атрибутом события.</p></div>
+      <div class="card"><div class="n">MVP</div><h3>Задача</h3><p>Поставлена самому себе или пришла из процесса — путь обработки одинаковый.</p></div>
+      <div class="card" style="border-color:#f1d39a"><div class="n" style="color:#b45309">Цель</div><h3>Регламент</h3><p>Таймер по должностным обязанностям. Появится в целевой системе.</p></div>
+    </div>
+    <div class="quote-card" style="width:100%;margin-top:22px">Сейчас работают документы и задачи. Регламентное событие — следующий шаг целевой системы.</div>
+  </div>
+  <div class="bridge"><span>Пока событие приходит от документа или задачи — проверим передачу задачи.</span><b>Передать задачу →</b></div>
+  <aside class="notes">Триггеры — это не «магия», а понятные события. Документ внутренний или внешний — для расширения одно событие. Таймер по обязанностям — цель, не MVP.</aside>
+</section>
+
+<section class="slide" data-section="Подтвердить действие">
+  <div class="head">
+    <div class="kicker">Подтвердить действие</div>
+    <h2>Передать задачу агенту</h2>
+    <p class="lead">Должностное лицо выбирает задачу и передаёт её ИИ-агенту — с контекстом, сроком и статусом,
+      либо разрешает ИИ-агенту самому брать очередную задачу в работу.</p>
+  </div>
+  <div class="body" style="flex-direction:column;align-items:stretch;padding-top:10px">
+    <div class="cards">
+      <div class="card"><div class="n">01</div><h3>Выбрать задачу</h3><p>Должностное лицо открывает задачу, которую нужно передать ИИ-агенту.</p></div>
+      <div class="card"><div class="n">02</div><h3>Проверить контекст</h3><p>Видны срок, предмет и текущий статус передачи.</p></div>
+      <div class="card"><div class="n">03</div><h3>Передать агенту</h3><p>ИИ-агент получает задачу и готовит следующий шаг.</p></div>
+    </div>
+  </div>
+  <div class="bridge"><span>ИИ-агент подготовил действие — слово должностному лицу.</span><b>Запрос на решение →</b></div>
+  <aside class="notes">Здесь появляется человек: агент подготовил, но не выполнил действие без подтверждения.</aside>
+</section>
+
+<section class="slide solo" data-section="Подтвердить действие">
+  <div class="head">
+    <div class="kicker">Подтвердить действие</div>
+    <h2>Запрос на решение</h2>
+    <p class="lead">Перед изменяющим действием ИИ-агент показывает, что сделано и что планируется сделать.</p>
+  </div>
+  <div class="body">
+    <div class="media">
+      <div class="imgbox">
+        <img src="screenshots/41_reject_full_clean.png" alt="Форма запроса: документы, тексты и кнопки решения">
+        <div class="callout red" style="--l:8.9%;--t:89.35%;--w:13.2%;--h:2.85%"><span>Отклонить и уточнить</span></div>
+      </div>
+      <div class="caption">В форме видны документы, их тексты, вопрос агента и кнопки решения</div>
+    </div>
+  </div>
+  <div class="bridge"><span>Если нужно изменить — отклонение с комментарием.</span><b>Одобрение →</b></div>
+  <aside class="notes">Ключевой экран контроля: видно источники, действие и поле для замечания. Дальше покажем повторное одобрение.</aside>
+</section>
+
+<section class="slide solo" data-section="Подтвердить действие">
+  <div class="head">
+    <div class="kicker">Подтвердить действие</div>
+    <h2>Одобрение и доработка</h2>
+    <p class="lead">После доработки — повторное одобрение. Документы и их тексты остаются в форме.</p>
+  </div>
+  <div class="body">
+    <div class="media">
+      <div class="imgbox">
+        <img src="screenshots/42_approve_full_clean.png" alt="Форма одобрения: документы, тексты и кнопка Одобрию. Действуй">
+        <div class="callout" style="--l:0.65%;--t:89.35%;--w:7.85%;--h:2.85%"><span>Одобрить</span></div>
+      </div>
+      <div class="caption">В форме видны документы и их тексты; комментарий при одобрении не пересылается</div>
+    </div>
+  </div>
+  <div class="bridge"><span>Решение принято. Все шаги остаются в истории.</span><b>История →</b></div>
+  <aside class="notes">Правило, которое важно проговорить: одобрение подтверждает действие, а замечания передаются через отклонение. Так решение однозначно.</aside>
+</section>
+
+<section class="slide divider" data-section="Проверить и управлять">
+  <div class="num">04</div>
+  <h2>Проверить и управлять</h2>
+  <p class="quote">Прозрачность — часть результата. Должностное лицо и администратор видят, что произошло и почему.</p>
+  <div class="flow"><span>История</span><i>→</i><span>Взаимодействия</span><i>→</i><span>Настройки</span></div>
+  <div class="bridge light"><span>Начнём с полного следа действий.</span><b>История →</b></div>
+  <aside class="notes">Раздел 4. Переходим к аудиту и администрированию.</aside>
+</section>
+
+<section class="slide" data-section="Проверить и управлять">
+  <div class="head">
+    <div class="kicker">Проверить и управлять</div>
+    <h2>История действий</h2>
+    <p class="lead">Каждый шаг агента фиксируется: задача, дата, тип действия, модель, токены и результат.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/28_admin_ai_history_clean.png" alt="История действий ИИ">
+        <div class="caption">Запросы, ответы, модель, токены и результат</div>
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Полный след</b> — без реконструкции переписки.</li>
+          <li><b>Разбор ошибок</b> — видно, где и почему.</li>
+          <li><b>Данные для аудита</b> — события сохранены.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Администратор видит картину целиком.</span><b>Администрирование →</b></div>
+  <aside class="notes">История — доказательная база: можно разобрать действие и ответить на вопросы аудита.</aside>
+</section>
+
+<section class="slide" data-section="Проверить и управлять">
+  <div class="head">
+    <div class="kicker">Проверить и управлять</div>
+    <h2>Администрирование</h2>
+    <p class="lead">Модель, адреса сервисов, индексация знаний, температура и лимиты — в одной форме.</p>
+  </div>
+  <div class="body">
+    <div class="split">
+      <div class="media">
+        <img src="screenshots/46_admin_ai_form_focus.png" alt="Администрирование ИИ-возможностей">
+        <div class="caption">Параметры модели, поиска и сервисов</div>
+      </div>
+      <div class="side">
+        <ul class="points">
+          <li><b>Модель и сервисы</b> — куда обращается 1С.</li>
+          <li><b>Индексация знаний</b> — что доступно агенту.</li>
+          <li><b>Лимиты</b> — токены, таймауты, повторы.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>И взаимодействия сотрудников.</span><b>Прозрачность →</b></div>
+  <aside class="notes">Административная форма — единая точка управления контуром, без правок кода.</aside>
+</section>
+
+<section class="slide" data-section="Проверить и управлять">
+  <div class="head">
+    <div class="kicker">Проверить и управлять</div>
+    <h2>Взаимодействия и папки</h2>
+    <p class="lead">Администратор видит, кто инициировал запрос, в каком он статусе, и где лежат документы сотрудника.</p>
+  </div>
+  <div class="body">
+    <div class="split wide">
+      <div class="media">
+        <img src="screenshots/47_admin_ai_interactions_clean.png" alt="Журнал взаимодействий ИИ">
+        <div class="caption">Кто инициировал, статус и текст запроса</div>
+      </div>
+      <div class="media">
+        <img src="screenshots/49_admin_employee_folders_clean.png" alt="Папки документов сотрудников">
+        <div class="caption">Документы сотрудника по папкам</div>
+      </div>
+    </div>
+  </div>
+  <div class="bridge"><span>Текущий контур показан. Теперь — куда движется проект.</span><b>К цели →</b></div>
+  <aside class="notes">Завершаем контур управления: видно и запросы, и документы.</aside>
+</section>
+
+<section class="slide divider" data-section="Целевая система">
+  <div class="num">05</div>
+  <h2>Куда движется проект</h2>
+  <p class="quote">От свободного черновика — к шаблону, который знает, где искать данные. От накопления корпуса — к управляемой подготовке документов.</p>
+  <div class="flow"><span>Шаблон</span><i>→</i><span>Поиск</span><i>→</i><span>Плейсхолдеры</span><i>→</i><span>Решение</span></div>
+  <div class="bridge light"><span>Главная развилка — шаблон.</span><b>Целевой шаблон →</b></div>
+  <aside class="notes">Раздел 5. Здесь отделяем текущий MVP от целевой системы. Это не обещание, что всё уже работает, а направление развития.</aside>
+</section>
+
+<section class="slide" data-section="Целевая система">
+  <div class="head">
+    <div class="kicker">Целевая система</div>
+    <h2>Шаблон, который знает, где искать</h2>
+    <p class="lead">Вместо жёстких ссылок между полями — структура, плейсхолдеры и правила поиска с фильтрами.</p>
+  </div>
+  <div class="body" style="flex-direction:column;align-items:stretch;padding-top:10px">
+    <div class="cards four">
+      <div class="card"><div class="n">01</div><h3>Структура</h3><p>Шаблон задаёт разделы и смысл документа.</p></div>
+      <div class="card"><div class="n">02</div><h3>Плейсхолдеры</h3><p>Что именно нужно найти для каждого поля.</p></div>
+      <div class="card"><div class="n">03</div><h3>Целевые фильтры</h3><p>В перспективе: тип, период, автор, доступ, связи. Сейчас доступны права и коллекция.</p></div>
+      <div class="card"><div class="n">04</div><h3>Проверка</h3><p>Источники, цитаты и решение человека.</p></div>
+    </div>
+    <div class="quote-card" style="width:100%;margin-top:22px">Фильтры заменяют жёсткие связи: шаблон не ломается при изменении структуры документа.</div>
+  </div>
+  <div class="bridge"><span>Для этого нужен зрелый RAG и большой корпус.</span><b>Корпус →</b></div>
+  <aside class="notes">Целевая концепция: шаблон описывает, что искать и по каким ограничениям, а не где именно лежит значение. Поэтому нужен агентский RAG и корпус.</aside>
+</section>
+
+<section class="slide" data-section="Целевая система">
+  <div class="head">
+    <div class="kicker">Целевая система</div>
+    <h2>Корпус как топливо</h2>
+    <p class="lead">Свободная генерация нужна, чтобы накопить документы для RAG и будущих шаблонов. Это промежуточный этап, а не целевой режим.</p>
+  </div>
+  <div class="body" style="flex-direction:column;align-items:stretch;padding-top:10px">
+    <div class="cards">
+      <div class="card"><div class="n">01</div><h3>Генерация</h3><p>Агент предлагает документы без жёсткой схемы — так быстрее набрать материал.</p></div>
+      <div class="card"><div class="n">02</div><h3>Контроль</h3><p>Человек одобряет или возвращает на доработку. Контроль остаётся и в целевой системе.</p></div>
+      <div class="card" style="border-color:#f1d39a"><div class="n" style="color:#b45309">Временно</div><h3>Автоодобрение</h3><p>Ускоряет набор данных, когда качество генерации уже приемлемо.</p></div>
+    </div>
+    <div class="quote-card" style="width:100%;margin-top:22px">В целевой системе автоодобрения нет: изменяющие действия подтверждает человек.</div>
+  </div>
+  <div class="bridge"><span>Что это даёт в ежедневной работе?</span><b>Результат →</b></div>
+  <aside class="notes">Ключевое разграничение: свободная генерация и автоодобрение — инструменты накопления корпуса. В целевой системе автоодобрения быть не должно.</aside>
+</section>
+
+<section class="slide" data-section="Результат">
+  <div class="head">
+    <div class="kicker">Результат</div>
+    <h2>Что получает должностное лицо</h2>
+    <p class="lead">Четыре эффекта, которые видны в ежедневной работе — без изменения привычных документов и задач.</p>
+  </div>
+  <div class="body">
+    <div class="cards outcomes">
+      <div class="card"><h3>Время</h3><p>Меньше поиска и переноса текста: агент собирает контекст и проект.</p></div>
+      <div class="card"><h3>Источники</h3><p>Ответ и документ опираются на источники, которые можно открыть и проверить.</p></div>
+      <div class="card"><h3>Контроль</h3><p>Изменяющие действия выполняются только после решения человека.</p></div>
+      <div class="card"><h3>След</h3><p>История и атрибуция позволяют разобрать действие и ответить на вопросы аудита.</p></div>
+    </div>
+  </div>
+  <div class="bridge"><span>Главный принцип: решение остаётся за человеком.</span><b>Итог →</b></div>
+  <aside class="notes">Сводим ценность к четырём пунктам: время, источники, контроль, след.</aside>
+</section>
+
+<section class="slide final" data-section="Итог">
+  <h2>Агент предлагает.<br>Должностное лицо решает.</h2>
+  <p class="lead">ИИ берёт на себя поиск и подготовку, а решение и ответственность остаются за человеком.</p>
+  <div class="chips"><span>Информация</span><span>Документ</span><span>Решение</span><span>След</span></div>
+  <aside class="notes">Финальный тезис. Поблагодарить и перейти к вопросам.</aside>
+</section>
+
+</div>
+
+<div class="counter" id="counter">01 / 23</div>
+<div class="section-tag" id="sectionTag">Начало</div>
+<div class="controls">
+  <button id="prev" aria-label="Назад">←</button>
+  <button id="next" aria-label="Вперёд">→</button>
+</div>
+<div class="progress" id="progress"></div>
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const counter = document.getElementById('counter');
+const sectionTag = document.getElementById('sectionTag');
+const progress = document.getElementById('progress');
+let index = 0;
+
+function pad(n){ return String(n).padStart(2, '0'); }
+
+function show(n, push = true){
+  index = Math.max(0, Math.min(slides.length - 1, n));
+  slides.forEach((s, i) => s.classList.toggle('active', i === index));
+  counter.textContent = pad(index + 1) + ' / ' + pad(slides.length);
+  sectionTag.textContent = slides[index].dataset.section || '';
+  progress.style.width = ((index + 1) / slides.length * 100) + '%';
+  document.title = (slides[index].dataset.section || 'ИИ-агент') + ' — ИИ-агент в документообороте';
+  if (push) history.replaceState(null, '', '#s' + (index + 1));
+}
+
+function next(){ show(index + 1); }
+function prev(){ show(index - 1); }
+
+document.getElementById('next').addEventListener('click', next);
+document.getElementById('prev').addEventListener('click', prev);
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+    e.preventDefault(); next();
+  } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+    e.preventDefault(); prev();
+  } else if (e.key === 'Home') {
+    e.preventDefault(); show(0);
+  } else if (e.key === 'End') {
+    e.preventDefault(); show(slides.length - 1);
+  } else if (e.key.toLowerCase() === 'n') {
+    document.body.classList.toggle('notes-on');
+  } else if (e.key.toLowerCase() === 'f') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+    else document.exitFullscreen?.();
+  }
+});
+
+let touchX = null;
+document.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend', (e) => {
+  if (touchX === null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 50) (dx < 0 ? next() : prev());
+  touchX = null;
+}, {passive:true});
+
+function fit(){
+  const scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
+  document.documentElement.style.setProperty('--scale', scale);
+}
+window.addEventListener('resize', fit);
+fit();
+
+const fromHash = parseInt((location.hash || '').replace('#s', ''), 10);
+show(Number.isFinite(fromHash) && fromHash > 0 ? fromHash - 1 : 0, false);
+</script>
+</body>
+</html>
