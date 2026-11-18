@@ -10,6 +10,7 @@
 - `docs/system-analysis/stakeholder-map.md` — карта стейкхолдеров.
 - `docs/system-analysis/use-cases.md` — варианты использования и диаграммы UC.
 - `docs/system-analysis/c4-model.md` — C4-модель: контекст, контейнеры и компоненты.
+- `docs/system-analysis/competitive_analysis.md` — анализ конкурентов и позиционирование проекта.
 - `docs/requirements/functional_requirements.md` — функциональные требования.
 - `docs/requirements/nonfunctional_requirements.md` — нефункциональные требования.
 - `docs/requirements/traceability_matrix.md` — матрица трассируемости.
