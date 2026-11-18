@@ -8,12 +8,12 @@
 |---|---|---|
 | `00_passport.md` | Паспорт ИАР | Markdown → PDF |
 | `01_report.md` | Пояснительная записка | Markdown → PDF |
-| `02_presentation_outline.md` | Структура презентации | Markdown |
+| `02_Презентация_ИАР.pdf` | Презентация (собирается из `presentation/extension-presentation.html`) | PDF |
 | `03_demo_scenario.md` | Сценарий демонстрации | Markdown → PDF |
-| `05_analyst_package.md` | Реестр артефактов системного аналитика | Markdown → PDF |
-| `06_appendices.md` | Приложения: метрики, инструменты, экраны | Markdown → PDF |
-| `07_cover_documents.md` | Сопроводительные шаблоны | Markdown → PDF |
-| `build_iar.py` | Сборка PDF/HTML/ZIP | Python |
+| `04_analyst_package.md` | Реестр артефактов системного аналитика | Markdown → PDF |
+| `05_appendices.md` | Приложения: метрики, инструменты, экраны | Markdown → PDF |
+| `06_cover_documents.md` | Сопроводительные шаблоны | Markdown → PDF |
+| `build_iar.py` | Сборка PDF/ZIP | Python |
 | `assets/` | Диаграммы и экраны | PNG |
 
 Готовые файлы собираются в `artifacts/iar/` (каталог `artifacts/` исключён из Git).
@@ -30,7 +30,7 @@ uv run --with markdown --with python-pptx --with pillow --with weasyprint \
 Скрипт:
 
 1. конвертирует Markdown в HTML и PDF (Chrome, A4);
-2. собирает автономный HTML-файл презентации и PDF из `docs/iar/presentation/extension-presentation.html`;
+2. собирает PDF презентации из `docs/iar/presentation/extension-presentation.html`;
 3. формирует ZIP-комплект без видеовизитки.
 
 ## Перед защитой
@@ -38,7 +38,7 @@ uv run --with markdown --with python-pptx --with pillow --with weasyprint \
 - заполнить ФИО, группу, руководителя, город и год на титульных листах и в шаблонах;
 - проверить актуальность метрик и ограничений;
 - провести репетицию на 10 минут, оставить 5 минут на вопросы;
-- проверить офлайн-резерв: PDF, HTML, записи экрана;
+- проверить офлайн-резерв: PDF и записи экрана;
 - не показывать реальные ПДн и ключи; использовать демонстрационную базу.
 
 ## Ограничения

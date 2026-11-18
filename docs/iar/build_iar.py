@@ -1116,8 +1116,8 @@ def convert_pptx(pptx: Path) -> Path:
 OWNER_DECK = ROOT / "docs" / "iar" / "presentation" / "extension-presentation.html"
 
 
-def build_html_presentation() -> tuple[Path, Path]:
-    """Берёт актуальную HTML-презентацию и делает автономный HTML + PDF."""
+def build_html_presentation() -> Path:
+    """Собирает PDF презентации из HTML-исходника; HTML в комплект не входит."""
     html = OWNER_DECK.read_text(encoding="utf-8")
 
     def embed(match: re.Match[str]) -> str:
@@ -1127,7 +1127,8 @@ def build_html_presentation() -> tuple[Path, Path]:
         return f'src="data:image/png;base64,{data}"'
 
     html = re.sub(r'src="screenshots/([^"]+)"', embed, html)
-    html_path = OUT / "02_Презентация_ИАР.html"
+    BUILD.mkdir(parents=True, exist_ok=True)
+    html_path = BUILD / "presentation_standalone.html"
     html_path.write_text(html, encoding="utf-8")
 
     pdf_path = OUT / "02_Презентация_ИАР.pdf"
@@ -1148,11 +1149,14 @@ def build_html_presentation() -> tuple[Path, Path]:
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )
-    legacy = OUT / "02_Презентация_ИАР.pptx"
-    legacy.unlink(missing_ok=True)
-    print(f"HTML {html_path.name:45s} {html_path.stat().st_size / 1024:8.1f} KB")
+    for legacy_name in (
+        "02_Презентация_ИАР.pptx",
+        "02_Презентация_ИАР.html",
+        "02_Структура_презентации.pdf",
+    ):
+        (OUT / legacy_name).unlink(missing_ok=True)
     print(f"PDF  {pdf_path.name:45s} {pdf_path.stat().st_size / 1024:8.1f} KB")
-    return html_path, pdf_path
+    return pdf_path
 
 
 def make_zip(files: list[Path]) -> Path:
@@ -1195,26 +1199,31 @@ def make_zip(files: list[Path]) -> Path:
 
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
+    for legacy_name in (
+        "05_Реестр_артефактов_СА.pdf",
+        "06_Приложения_ИАР.pdf",
+        "07_Сопроводительные_документы.pdf",
+    ):
+        (OUT / legacy_name).unlink(missing_ok=True)
     pdfs = []
     mapping = [
         ("00_passport.md", "00_Паспорт_ИАР.pdf"),
         ("01_report.md", "01_Пояснительная_записка_ИАР.pdf"),
         ("03_demo_scenario.md", "03_Сценарий_демонстрации.pdf"),
-        ("05_analyst_package.md", "05_Реестр_артефактов_СА.pdf"),
-        ("06_appendices.md", "06_Приложения_ИАР.pdf"),
-        ("07_cover_documents.md", "07_Сопроводительные_документы.pdf"),
-        ("02_presentation_outline.md", "02_Структура_презентации.pdf"),
+        ("04_analyst_package.md", "04_Реестр_артефактов_СА.pdf"),
+        ("05_appendices.md", "05_Приложения_ИАР.pdf"),
+        ("06_cover_documents.md", "06_Сопроводительные_документы.pdf"),
     ]
     for src, dst in mapping:
         pdf = OUT / dst
         html_to_pdf(DOCS / src, pdf)
         pdfs.append(pdf)
 
-    html_pres, pres_pdf = build_html_presentation()
+    pres_pdf = build_html_presentation()
     pdfs.append(pres_pdf)
 
     shutil.copy2(DOCS / "README.md", OUT / "README.md")
-    files = [*pdfs, html_pres, OUT / "README.md"]
+    files = [*pdfs, OUT / "README.md"]
     make_zip(files)
     print("\nГотово:", OUT)
 
