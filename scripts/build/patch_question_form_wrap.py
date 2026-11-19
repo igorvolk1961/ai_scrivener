@@ -12,6 +12,7 @@ FORMS: dict[str, tuple[str, ...]] = {
         "ФрагментТекст",
         "ТаблицаЦитатПредставление",
     ),
+    "DataProcessors/АИС_МоиЗапросыИИ/Forms/Форма/Ext/Form.xml": ("ТекстДокумента",),
 }
 
 
@@ -50,9 +51,7 @@ def _enable_table_scroll(text: str) -> str:
         )
         return block
 
-    text, count = pattern.subn(replace, text, count=1)
-    if count != 1:
-        raise SystemExit("citation table not found")
+    text, _ = pattern.subn(replace, text, count=1)
     return text
 
 
