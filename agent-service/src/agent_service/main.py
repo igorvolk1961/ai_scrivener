@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import secrets
 from typing import Any
 
@@ -12,6 +13,8 @@ from agent_service.llm import LlmClient, LlmError
 from agent_service.models import CompleteRequest, CompleteResponse, StepRequest
 from agent_service.prompts import SYSTEM_PROMPT
 from agent_service.tools import tool_definitions, validate_tool_name
+
+logger = logging.getLogger("uvicorn.error")
 
 
 def _error(run_version: int, code: str, message: str) -> dict[str, Any]:
@@ -54,6 +57,46 @@ def _context_message(payload: StepRequest) -> dict[str, Any]:
         "role": "user",
         "content": json.dumps(context, ensure_ascii=False),
     }
+
+
+def _drop_unresolved_tool_calls(
+    messages: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Remove assistant tool calls that have no matching tool result.
+
+    A run resumed after its approval interaction expired keeps the last
+    assistant message with a tool call but no tool response. LLM providers
+    reject such a history with HTTP 400, so the retry never reaches the model.
+    """
+
+    resolved = {
+        str(message["tool_call_id"])
+        for message in messages
+        if message.get("role") == "tool" and message.get("tool_call_id")
+    }
+    sanitized: list[dict[str, Any]] = []
+    for message in messages:
+        tool_calls = message.get("tool_calls")
+        if message.get("role") != "assistant" or not isinstance(tool_calls, list):
+            sanitized.append(message)
+            continue
+        kept = [
+            call
+            for call in tool_calls
+            if isinstance(call, dict) and str(call.get("id")) in resolved
+        ]
+        if not kept:
+            content = message.get("content")
+            if isinstance(content, str) and content.strip():
+                copy = dict(message)
+                copy.pop("tool_calls", None)
+                sanitized.append(copy)
+            continue
+        if len(kept) == len(tool_calls):
+            sanitized.append(message)
+        else:
+            sanitized.append({**message, "tool_calls": kept})
+    return sanitized
 
 
 def _parse_arguments(value: Any) -> dict[str, Any] | None:
@@ -156,10 +199,16 @@ def create_app(
         client: LlmClient = request.app.state.llm
         messages = [
             {"role": "system", "content": _system_prompt(payload.agent)},
-            *payload.messages,
+            *_drop_unresolved_tool_calls(payload.messages),
             _context_message(payload),
         ]
         tools = tool_definitions(payload.allowed_tools)
+        logger.info(
+            "agent step run_version=%s model=%s messages=%s",
+            payload.run_version,
+            payload.llm.model,
+            len(messages),
+        )
         try:
             data = await client.complete(
                 messages=messages,
@@ -210,6 +259,12 @@ def create_app(
                         "invalid tool arguments",
                     )
                 )
+            logger.info(
+                "agent step run_version=%s tool=%s arguments=%s",
+                payload.run_version,
+                name,
+                json.dumps(arguments, ensure_ascii=False)[:1000],
+            )
             return JSONResponse(
                 content={
                     "protocol_version": 1,

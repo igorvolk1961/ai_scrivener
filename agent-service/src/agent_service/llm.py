@@ -52,7 +52,11 @@ class HttpLlmClient:
                     headers={"Authorization": f"Bearer {self._api_key}"},
                     json=payload,
                 )
-                response.raise_for_status()
+                if response.is_error:
+                    raise LlmError(
+                        "llm request failed: "
+                        f"{response.status_code}: {response.text[:1000]}"
+                    )
                 data = response.json()
         except httpx.HTTPError as exc:
             raise LlmError(f"llm request failed: {exc}") from exc

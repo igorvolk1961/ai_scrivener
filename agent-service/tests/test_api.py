@@ -148,6 +148,69 @@ def test_unknown_tool_rejected() -> None:
     assert response.json()["code"] == "tool_not_allowed"
 
 
+def test_dangling_tool_call_removed_after_expired_approval() -> None:
+    client, llm = make_client({"choices": [{"message": {"content": "Готово"}}]})
+    body = payload()
+    body["messages"] = [
+        {
+            "role": "assistant",
+            "content": "",
+            "tool_calls": [
+                {
+                    "id": "call_pending",
+                    "type": "function",
+                    "function": {
+                        "name": "request_action_approval",
+                        "arguments": "{}",
+                    },
+                }
+            ],
+        }
+    ]
+    response = client.post(
+        "/v1/agent/step",
+        json=body,
+        headers={"X-Service-Token": TOKEN},
+    )
+    assert response.status_code == 200
+    assert llm.last_request is not None
+    messages = llm.last_request["messages"]
+    assert all(message.get("tool_calls") is None for message in messages)
+    assert messages[-1]["role"] == "user"
+
+
+def test_resolved_tool_call_kept() -> None:
+    client, llm = make_client({"choices": [{"message": {"content": "Готово"}}]})
+    body = payload()
+    body["messages"] = [
+        {
+            "role": "assistant",
+            "content": "",
+            "tool_calls": [
+                {
+                    "id": "call_done",
+                    "type": "function",
+                    "function": {"name": "search_example", "arguments": "{}"},
+                }
+            ],
+        },
+        {
+            "role": "tool",
+            "tool_call_id": "call_done",
+            "content": '{"ok": true, "data": {}}',
+        },
+    ]
+    response = client.post(
+        "/v1/agent/step",
+        json=body,
+        headers={"X-Service-Token": TOKEN},
+    )
+    assert response.status_code == 200
+    assert llm.last_request is not None
+    messages = llm.last_request["messages"]
+    assert messages[1]["tool_calls"][0]["id"] == "call_done"
+
+
 def test_no_token_required() -> None:
     client, _ = make_client({"choices": [{"message": {"content": "Готово"}}]})
     response = client.post("/v1/agent/step", json=payload())
