@@ -137,7 +137,7 @@
       <showInHeader>true</showInHeader>
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo"><height>8</height><autoMaxWidth>false</autoMaxWidth><width>0</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
+      <extInfo xsi:type="form:InputFieldExtInfo"><height>8</height><autoMaxWidth>false</autoMaxWidth><width>0</width><autoMaxHeight>false</autoMaxHeight><horizontalStretch>true</horizontalStretch><wrap>true</wrap><multiLine>true</multiLine><textEdit>false</textEdit></extInfo>
     </items>
     <items xsi:type="form:FormField">
       <name>ТекстОтвета</name>
