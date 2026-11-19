@@ -121,6 +121,15 @@
         <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
         <representationInContextMenu>Auto</representationInContextMenu>
       </items>
+      <items xsi:type="form:Button">
+        <name>КнопкаАвтоодобрение</name><id>31</id><type>UsualButton</type>
+        <title><key>ru</key><value>Автоодобрение</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <groupHorizontalAlign>Left</groupHorizontalAlign>
+        <commandName>Form.Command.Автоодобрение</commandName>
+        <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <representationInContextMenu>Auto</representationInContextMenu>
+      </items>
       <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
       <groupHorizontalAlign>Left</groupHorizontalAlign>
       <horizontalStretch>false</horizontalStretch><verticalStretch>false</verticalStretch><type>UsualGroup</type>
@@ -181,6 +190,10 @@
   <formCommands>
     <name>ИсторияДействий</name><title><key>ru</key><value>История действий</value></title><id>7</id><use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ИсторияДействий</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>Автоодобрение</name><title><key>ru</key><value>Автоодобрение</value></title><id>8</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Автоодобрение</name></handler></action><currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <commandInterface><navigationPanel/><commandBar/></commandInterface>
   <extInfo xsi:type="form:ObjectFormExtInfo"/>
