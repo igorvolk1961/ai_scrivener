@@ -47,4 +47,5 @@
   <content>ScheduledJob.АИС_ИндексацияRAG</content>
   <content>ScheduledJob.АИС_АгентОчередь</content>
   <content>ScheduledJob.АИС_АгентТаймауты</content>
+  <content>ScheduledJob.АИС_ГенерацияТриггеровПоТаймеру</content>
 </mdclass:Subsystem>

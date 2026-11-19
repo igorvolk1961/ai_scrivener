@@ -59,6 +59,8 @@
   <commonCommands>CommonCommand.АИС_ВопросПоБазеЗнаний</commonCommands>
   <commonCommands>CommonCommand.АИС_ДосрочноеРешениеРассылки</commonCommands>
   <commonCommands>CommonCommand.АИС_ОпубликоватьВRAG</commonCommands>
+  <commonCommands>CommonCommand.АИС_СгенерироватьПромптРеакции</commonCommands>
+  <commonModules>CommonModule.АИС_РасписанияТриггеров</commonModules>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
   <commonModules>CommonModule.АИС_ИнтеграцияСRAG</commonModules>
   <commonModules>CommonModule.АИС_КлиентВнешнегоСервиса</commonModules>
@@ -101,6 +103,7 @@
   <scheduledJobs>ScheduledJob.АИС_УдалениеДемо</scheduledJobs>
   <scheduledJobs>ScheduledJob.АИС_КонтрольРассылок</scheduledJobs>
   <scheduledJobs>ScheduledJob.АИС_АгентТаймауты</scheduledJobs>
+  <scheduledJobs>ScheduledJob.АИС_ГенерацияТриггеровПоТаймеру</scheduledJobs>
   <dataProcessors>DataProcessor.АИС_ДолжностныеИнструкции</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ДокументыИАдресаты</dataProcessors>
@@ -172,6 +175,7 @@
   <catalogs>Catalog.Резолюции</catalogs>
   <catalogs>Catalog.ТомаХраненияФайлов</catalogs>
   <catalogs>Catalog.ВерсииФайлов</catalogs>
+  <enums>Enum.АИС_ВидыПериодичностиТриггеров</enums>
   <enums>Enum.АИС_СпособыЗаполнения</enums>
   <enums>Enum.АИС_СостоянияЗадач</enums>
   <enums>Enum.АИС_СостоянияРазделов</enums>

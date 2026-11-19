@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:form="http://g5.1c.ru/v8/dt/form">
+  <autoCommandBar>
+    <name>ФормаКоманднаяПанель</name>
+    <id>-1</id>
+    <horizontalAlign>Left</horizontalAlign>
+    <autoFill>true</autoFill>
+  </autoCommandBar>
+  <autoTitle>true</autoTitle>
+  <autoUrl>true</autoUrl>
+  <group>Vertical</group>
+  <autoFillCheck>true</autoFillCheck>
+  <allowFormCustomize>true</allowFormCustomize>
+  <enabled>true</enabled>
+  <showTitle>true</showTitle>
+  <showCloseButton>true</showCloseButton>
+  <items xsi:type="form:FormField">
+    <name>Наименование</name>
+    <id>1</id>
+    <title>
+      <key>ru</key>
+      <value>Наименование</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>Наименование</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>ТипТриггера</name>
+    <id>2</id>
+    <title>
+      <key>ru</key>
+      <value>Тип триггера</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>ТипТриггера</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>ДЛ</name>
+    <id>3</id>
+    <title>
+      <key>ru</key>
+      <value>Должностное лицо</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>ДЛ</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Должность</name>
+    <id>4</id>
+    <title>
+      <key>ru</key>
+      <value>Должность</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>Должность</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Распоряжение</name>
+    <id>5</id>
+    <title>
+      <key>ru</key>
+      <value>Распоряжение-основание</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>Распоряжение</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>ПравилоМаршрутизации</name>
+    <id>6</id>
+    <title>
+      <key>ru</key>
+      <value>Правило маршрутизации ИИ</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>ПравилоМаршрутизации</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Активность</name>
+    <id>7</id>
+    <title>
+      <key>ru</key>
+      <value>Активность</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>Активность</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>CheckBoxField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:CheckBoxFieldExtInfo">
+        <width>10</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Периодичность</name>
+    <id>8</id>
+    <title>
+      <key>ru</key>
+      <value>Периодичность</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>Периодичность</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>ВремяЗапуска</name>
+    <id>9</id>
+    <title>
+      <key>ru</key>
+      <value>Время запуска (ЧЧ:ММ, несколько через запятую)</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>ВремяЗапуска</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>ДеньНедели</name>
+    <id>10</id>
+    <title>
+      <key>ru</key>
+      <value>День недели (1 - понедельник ... 7 - воскресенье)</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>ДеньНедели</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>ДеньМесяца</name>
+    <id>11</id>
+    <title>
+      <key>ru</key>
+      <value>День месяца (1-31, 0 - последний день)</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>ДеньМесяца</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>МесяцКвартала</name>
+    <id>12</id>
+    <title>
+      <key>ru</key>
+      <value>Месяц квартала (1-3)</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>МесяцКвартала</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>CronВыражение</name>
+    <id>13</id>
+    <title>
+      <key>ru</key>
+      <value>Cron-выражение (5 полей)</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>CronВыражение</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>СрокИсполненияМинут</name>
+    <id>14</id>
+    <title>
+      <key>ru</key>
+      <value>Срок исполнения, минут</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>СрокИсполненияМинут</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>СледующийЗапуск</name>
+    <id>15</id>
+    <title>
+      <key>ru</key>
+      <value>Следующий запуск (рассчитывается автоматически)</value>
+    </title>
+    <visible>true</visible>
+    <enabled>false</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>СледующийЗапуск</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Автор</name>
+    <id>16</id>
+    <title>
+      <key>ru</key>
+      <value>Автор настройки</value>
+    </title>
+    <visible>true</visible>
+    <enabled>false</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>Автор</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>40</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>ОписаниеТриггера</name>
+    <id>17</id>
+    <title>
+      <key>ru</key>
+      <value>Описание триггера</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>ОписаниеТриггера</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <height>6</height>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>false</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+        <verticalStretch>true</verticalStretch>
+        <wrap>true</wrap>
+        <multiLine>true</multiLine>
+      </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>ПромптРеакции</name>
+    <id>18</id>
+    <title>
+      <key>ru</key>
+      <value>Промпт реакции ИИ-агента</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+<segments>Объект</segments><segments>ПромптРеакции</segments>
+    </dataPath>
+    <titleLocation>Top</titleLocation>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <height>15</height>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>false</autoMaxHeight>
+        <horizontalStretch>true</horizontalStretch>
+        <verticalStretch>true</verticalStretch>
+        <wrap>true</wrap>
+        <multiLine>true</multiLine>
+      </extInfo>
+  </items>
+  <items xsi:type="form:Button">
+    <name>СгенерироватьПромпт</name>
+    <id>100</id>
+    <type>UsualButton</type>
+    <title>
+      <key>ru</key>
+      <value>Сгенерировать промпт реакции</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <commandName>Form.Command.СгенерироватьПромпт</commandName>
+    <representation>Auto</representation>
+    <autoMaxWidth>true</autoMaxWidth>
+    <autoMaxHeight>true</autoMaxHeight>
+    <width>30</width>
+    <height>1</height>
+  </items>
+  <attributes>
+    <name>Объект</name>
+    <id>1</id>
+    <valueType>
+      <types>CatalogObject.АИС_РасписаниеТриггеров</types>
+    </valueType>
+    <view>
+      <common>true</common>
+    </view>
+    <edit>
+      <common>true</common>
+    </edit>
+    <main>true</main>
+  </attributes>
+  <commandInterface>
+    <navigationPanel/>
+    <commandBar/>
+  </commandInterface>
+  <formCommands>
+    <name>СгенерироватьПромпт</name>
+    <title>
+      <key>ru</key>
+      <value>Сгенерировать промпт реакции</value>
+    </title>
+    <id>1</id>
+    <use>
+      <common>true</common>
+    </use>
+    <action xsi:type="form:FormCommandHandlerContainer">
+      <handler>
+        <name>СгенерироватьПромпт</name>
+      </handler>
+    </action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <extInfo xsi:type="form:ObjectFormExtInfo"/>
+</form:Form>

@@ -168,7 +168,7 @@
     <name>Расписание</name>
     <synonym>
       <key>ru</key>
-      <value>Расписание (cron-подобное)</value>
+      <value>Расписание (служебное, формируется автоматически)</value>
     </synonym>
     <type>
       <types>String</types>
@@ -186,7 +186,7 @@
     <name>СледующийЗапуск</name>
     <synonym>
       <key>ru</key>
-      <value>Следующий запуск</value>
+      <value>Следующий запуск (рассчитывается автоматически)</value>
     </synonym>
     <type>
       <types>Date</types>
@@ -207,10 +207,189 @@
     <type>
       <types>Boolean</types>
     </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
     <fillValue xsi:type="core:BooleanValue"/>
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
+  <attributes uuid="58affe70-cc0e-4ef7-897b-9b2b28d833b6">
+    <name>Периодичность</name>
+    <synonym>
+      <key>ru</key>
+      <value>Периодичность</value>
+    </synonym>
+    <type>
+      <types>EnumRef.АИС_ВидыПериодичностиТриггеров</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>ShowError</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="35472e34-ce94-4ce9-82e6-68e94df993c1">
+    <name>ВремяЗапуска</name>
+    <synonym>
+      <key>ru</key>
+      <value>Время запуска (ЧЧ:ММ, несколько через запятую)</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>200</length>
+      </stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="a464d9ca-6c8b-4e66-b4d5-7976ecda4332">
+    <name>ДеньНедели</name>
+    <synonym>
+      <key>ru</key>
+      <value>День недели (1 — понедельник … 7 — воскресенье)</value>
+    </synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers>
+        <precision>1</precision>
+        <scale>0</scale>
+      </numberQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="1f28cce7-5d97-49b9-bff5-c64da5ff1fe7">
+    <name>ДеньМесяца</name>
+    <synonym>
+      <key>ru</key>
+      <value>День месяца (1–31, 0 — последний день)</value>
+    </synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers>
+        <precision>2</precision>
+        <scale>0</scale>
+      </numberQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="8c0091a1-af5b-4c32-b022-b812b021898f">
+    <name>МесяцКвартала</name>
+    <synonym>
+      <key>ru</key>
+      <value>Месяц квартала (1–3)</value>
+    </synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers>
+        <precision>1</precision>
+        <scale>0</scale>
+      </numberQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="358b9be4-a130-44f8-a1ce-473f4a8e606e">
+    <name>CronВыражение</name>
+    <synonym>
+      <key>ru</key>
+      <value>Cron-выражение (5 полей)</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>100</length>
+      </stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="015c4dde-479d-442d-9d18-af67735f39a0">
+    <name>ОписаниеТриггера</name>
+    <synonym>
+      <key>ru</key>
+      <value>Описание триггера</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="f415fa9d-ba12-41f7-aea5-ffae3f81a784">
+    <name>ПромптРеакции</name>
+    <synonym>
+      <key>ru</key>
+      <value>Промпт реакции ИИ-агента</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>0</length>
+      </stringQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="ad8d9095-0051-43b1-8495-f1bbce7cfabd">
+    <name>СрокИсполненияМинут</name>
+    <synonym>
+      <key>ru</key>
+      <value>Срок исполнения, минут</value>
+    </synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers>
+        <precision>5</precision>
+        <scale>0</scale>
+      </numberQualifiers>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="ccdace18-dcda-4bc2-b53d-8ccba3e8513e">
+    <name>ПравилоМаршрутизации</name>
+    <synonym>
+      <key>ru</key>
+      <value>Правило маршрутизации ИИ</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.АИС_ДолжностныеОбязанности</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <attributes uuid="a16b31bd-4fa9-4682-b375-14fb62555fd7">
+    <name>Автор</name>
+    <synonym>
+      <key>ru</key>
+      <value>Автор настройки</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.Пользователи</types>
+    </type>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>DontCheck</fillChecking>
+    <fullTextSearch>Use</fullTextSearch>
+  </attributes>
+  <defaultObjectForm>Catalog.АИС_РасписаниеТриггеров.Form.Форма</defaultObjectForm>
+  <forms uuid="f141e118-9c61-4a64-bc14-0263ed79b403">
+    <name>Форма</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма расписания триггера</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
 </mdclass:Catalog>

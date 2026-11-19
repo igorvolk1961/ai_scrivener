@@ -124,6 +124,42 @@
 			<name>View</name>
 			<value>true</value>
 		</right>
+		<right>
+			<name>Add</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveAdd</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>Change</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Автор = &amp;АИС_ТекущееДЛ ИЛИ ДЛ = &amp;АИС_ТекущееДЛ</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>InteractiveChange</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Автор = &amp;АИС_ТекущееДЛ ИЛИ ДЛ = &amp;АИС_ТекущееДЛ</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>Delete</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Автор = &amp;АИС_ТекущееДЛ ИЛИ ДЛ = &amp;АИС_ТекущееДЛ</condition>
+			</restrictionByCondition>
+		</right>
+		<right>
+			<name>InteractiveDelete</name>
+			<value>true</value>
+			<restrictionByCondition>
+				<condition>Автор = &amp;АИС_ТекущееДЛ ИЛИ ДЛ = &amp;АИС_ТекущееДЛ</condition>
+			</restrictionByCondition>
+		</right>
 	</object>
 	<object>
 		<name>InformationRegister.АИС_КонтекстЗадачИИ</name>

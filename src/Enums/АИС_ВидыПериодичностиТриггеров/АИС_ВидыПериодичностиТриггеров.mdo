@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="3ed80ec2-1c71-4cfc-b553-7dfbc4ce0e44">
+  <producedTypes>
+    <refType typeId="f8af8140-8483-4806-844e-915b677a2dd5" valueTypeId="1bd10835-6a06-4051-8fe7-531f3f00b086"/>
+    <listType typeId="21cef3c4-6e41-447e-8cb4-6339d7813907" valueTypeId="3e8f72b9-9883-4868-8f14-86576af79be4"/>
+    <managerType typeId="63b5dc6a-af8c-4e80-9c9b-d3c59f99c7db" valueTypeId="6f9d90eb-efdf-484c-b080-a58a743416a5"/>
+  </producedTypes>
+  <name>АИС_ВидыПериодичностиТриггеров</name>
+  <synonym>
+    <key>ru</key>
+    <value>Виды периодичности триггеров</value>
+  </synonym>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="ca131e78-ff81-4f70-bfd3-4638a4056cdb">
+    <name>Ежедневно</name>
+    <synonym>
+      <key>ru</key>
+      <value>Ежедневно</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="745144f9-d543-4c23-9354-df3ee21c015e">
+    <name>Еженедельно</name>
+    <synonym>
+      <key>ru</key>
+      <value>Еженедельно</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="71c6ef75-b42c-4d64-b233-0f93e16f05ca">
+    <name>Ежемесячно</name>
+    <synonym>
+      <key>ru</key>
+      <value>Ежемесячно</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="f410e23c-600b-450a-bc4e-d0a23826d82f">
+    <name>Ежеквартально</name>
+    <synonym>
+      <key>ru</key>
+      <value>Ежеквартально</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="48f3fe81-d7a4-41f4-ad93-27186ca69675">
+    <name>Cron</name>
+    <synonym>
+      <key>ru</key>
+      <value>Cron-выражение</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

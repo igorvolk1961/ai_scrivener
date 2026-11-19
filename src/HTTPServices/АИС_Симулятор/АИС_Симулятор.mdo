@@ -255,6 +255,15 @@
       <httpMethod>POST</httpMethod>
       <handler>СоздатьЗадачу_POST</handler>
     </methods>
+    <methods uuid="316bc98a-b417-4483-a362-48be8c23c417">
+      <name>delete</name>
+      <synonym>
+        <key>ru</key>
+        <value>Delete</value>
+      </synonym>
+      <httpMethod>DELETE</httpMethod>
+      <handler>УдалитьЗадачу_DELETE</handler>
+    </methods>
   </urlTemplates>
   <urlTemplates uuid="0c3d236a-df01-4948-adac-8b3763310bea">
     <name>СтатусПриказа</name>
@@ -1095,6 +1104,50 @@
     <methods uuid="3e1edae5-4705-493c-870a-78b5ed9f9cd5">
       <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
       <httpMethod>POST</httpMethod><handler>ВыдатьПраваЗапускаКлиентов_POST</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="711e07d3-49b5-4b63-95b4-4a16e98a05a6">
+    <name>ПредпросмотрРасписания</name>
+    <synonym><key>ru</key><value>Предпросмотр расписания триггера</value></synonym>
+    <template>/schedule-preview</template>
+    <methods uuid="005d6b5c-c087-4aa6-af03-f3d69a41da18">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПредпросмотрРасписания_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="b5c24b13-2be8-46f0-a8b6-6641ed16c979">
+    <name>РасписанияТриггеров</name>
+    <synonym><key>ru</key><value>Расписания триггеров</value></synonym>
+    <template>/schedules</template>
+    <methods uuid="07593cd1-118d-4c73-94f8-b05c9128cbb5">
+      <name>post</name><synonym><key>ru</key><value>Post</value></synonym>
+      <httpMethod>POST</httpMethod><handler>СоздатьРасписаниеТриггера_POST</handler>
+    </methods>
+    <methods uuid="6b5c067a-3912-44b9-942f-88b534d62f51">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ВыполнитьТаймеры_GET</handler>
+    </methods>
+    <methods uuid="0e1fbf65-d3bd-4170-b836-878ea444e058">
+      <name>delete</name><synonym><key>ru</key><value>Delete</value></synonym>
+      <httpMethod>DELETE</httpMethod><handler>УдалитьРасписаниеТриггера_DELETE</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="2d94067d-6693-4004-b06a-2f144b526359">
+    <name>ЗапускАгента</name>
+    <synonym><key>ru</key><value>Запуск агента</value></synonym>
+    <template>/agent-run</template>
+    <methods uuid="d5f0e35f-7a0b-4f4d-9b6c-2b2f2e6f3c1a">
+      <name>delete</name><synonym><key>ru</key><value>Delete</value></synonym>
+      <httpMethod>DELETE</httpMethod><handler>УдалитьЗапускАгента_DELETE</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="4d05428f-9faa-4cab-9100-0c4ec04f9ccb">
+    <name>ПромптРасписания</name>
+    <synonym><key>ru</key><value>Промпт реакции расписания</value></synonym>
+    <template>/schedule-prompt</template>
+    <methods uuid="dd6aeb65-d066-477a-ad63-f3ab2cb9d2f0">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>СгенерироватьПромптРасписания_GET</handler>
     </methods>
   </urlTemplates>
 </mdclass:HTTPService>
