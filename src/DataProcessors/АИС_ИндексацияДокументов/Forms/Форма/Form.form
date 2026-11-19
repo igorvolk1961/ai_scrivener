@@ -128,6 +128,40 @@
       <placementArea>UserCmds</placementArea>
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
+    <items xsi:type="form:Button">
+      <name>ОткрытьДокументОчереди</name>
+      <id>32</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Открыть документ</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.ОткрытьДокументОчереди</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <width>20</width>
+      <height>1</height>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
+    <items xsi:type="form:Button">
+      <name>ОткрытьДокументВерсии</name>
+      <id>33</id>
+      <type>UsualButton</type>
+      <title><key>ru</key><value>Открыть версию</value></title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible><common>true</common></userVisible>
+      <commandName>Form.Command.ОткрытьДокументВерсии</commandName>
+      <representation>Auto</representation>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <width>20</width>
+      <height>1</height>
+      <placementArea>UserCmds</placementArea>
+      <representationInContextMenu>Auto</representationInContextMenu>
+    </items>
   </items>
   <items xsi:type="form:FormField">
     <name>МаксимумЗаписей</name>
@@ -209,10 +243,6 @@
       <segments>ТаблицаОчереди</segments>
     </dataPath>
     <titleLocation>None</titleLocation>
-    <handlers>
-      <event>OnActivateRow</event>
-      <name>ТаблицаОчередиПриАктивизацииСтроки</name>
-    </handlers>
     <items xsi:type="form:FormField">
       <name>ТипИсточника</name>
       <id>12</id>
@@ -400,10 +430,6 @@
       <segments>ТаблицаВерсий</segments>
     </dataPath>
     <titleLocation>None</titleLocation>
-    <handlers>
-      <event>OnActivateRow</event>
-      <name>ТаблицаВерсийПриАктивизацииСтроки</name>
-    </handlers>
     <items xsi:type="form:FormField">
       <name>Заголовок</name>
       <id>21</id>
@@ -734,6 +760,22 @@
     <id>15</id>
     <use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>СухойПрогон</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ОткрытьДокументОчереди</name>
+    <title><key>ru</key><value>Открыть документ</value></title>
+    <id>16</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ОткрытьДокументОчереди</name></handler></action>
+    <currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ОткрытьДокументВерсии</name>
+    <title><key>ru</key><value>Открыть версию</value></title>
+    <id>17</id>
+    <use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>ОткрытьДокументВерсии</name></handler></action>
     <currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <extInfo xsi:type="form:ObjectFormExtInfo"/>
