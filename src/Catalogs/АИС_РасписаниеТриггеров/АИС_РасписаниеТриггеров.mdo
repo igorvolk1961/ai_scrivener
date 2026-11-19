@@ -382,12 +382,22 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
-  <defaultObjectForm>Catalog.АИС_РасписаниеТриггеров.Form.Форма</defaultObjectForm>
+  <defaultObjectForm>Catalog.АИС_РасписаниеТриггеров.Form.ФормаЭлемента</defaultObjectForm>
+  <defaultListForm>Catalog.АИС_РасписаниеТриггеров.Form.ФормаСписка</defaultListForm>
   <forms uuid="f141e118-9c61-4a64-bc14-0263ed79b403">
-    <name>Форма</name>
+    <name>ФормаЭлемента</name>
     <synonym>
       <key>ru</key>
-      <value>Форма расписания триггера</value>
+      <value>Форма элемента расписания триггера</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+  <forms uuid="313df4e4-a9a9-47f4-a380-22b2766cc8c1">
+    <name>ФормаСписка</name>
+    <synonym>
+      <key>ru</key>
+      <value>Расписание триггеров</value>
     </synonym>
     <usePurposes>PersonalComputer</usePurposes>
     <usePurposes>MobileDevice</usePurposes>

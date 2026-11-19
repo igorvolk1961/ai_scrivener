@@ -59,6 +59,15 @@
             <items xsi:type="form:FormGroup">
       <name>ГруппаКнопки</name><id>20</id>
       <items xsi:type="form:Button">
+        <name>КнопкаРасписаниеТриггеров</name><id>32</id><type>UsualButton</type>
+        <title><key>ru</key><value>Расписание триггеров</value></title>
+        <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
+        <groupHorizontalAlign>Left</groupHorizontalAlign>
+        <commandName>Form.Command.РасписаниеТриггеров</commandName>
+        <representation>Auto</representation><autoMaxWidth>true</autoMaxWidth><autoMaxHeight>true</autoMaxHeight>
+        <representationInContextMenu>Auto</representationInContextMenu>
+      </items>
+      <items xsi:type="form:Button">
         <name>КнопкаСохранить</name><id>23</id><type>UsualButton</type>
         <title><key>ru</key><value>Сохранить</value></title>
         <visible>true</visible><enabled>true</enabled><userVisible><common>true</common></userVisible>
@@ -194,6 +203,10 @@
   <formCommands>
     <name>Автоодобрение</name><title><key>ru</key><value>Автоодобрение</value></title><id>8</id><use><common>true</common></use>
     <action xsi:type="form:FormCommandHandlerContainer"><handler><name>Автоодобрение</name></handler></action><currentRowUse>DontUse</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>РасписаниеТриггеров</name><title><key>ru</key><value>Расписание триггеров</value></title><id>9</id><use><common>true</common></use>
+    <action xsi:type="form:FormCommandHandlerContainer"><handler><name>РасписаниеТриггеров</name></handler></action><currentRowUse>DontUse</currentRowUse>
   </formCommands>
   <commandInterface><navigationPanel/><commandBar/></commandInterface>
   <extInfo xsi:type="form:ObjectFormExtInfo"/>
