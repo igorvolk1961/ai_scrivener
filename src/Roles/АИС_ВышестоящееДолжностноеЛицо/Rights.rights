@@ -24,6 +24,14 @@
 			<name>View</name>
 			<value>true</value>
 		</right>
+		<right>
+			<name>Add</name>
+			<value>true</value>
+		</right>
+		<right>
+			<name>InteractiveAdd</name>
+			<value>true</value>
+		</right>
 	</object>
 	<object>
 		<name>Catalog.АИС_ДолжностныеОбязанности</name>

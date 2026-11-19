@@ -1150,4 +1150,13 @@
       <httpMethod>GET</httpMethod><handler>СгенерироватьПромптРасписания_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="f5701d5e-5d83-497f-982d-b5b6f35528fa">
+    <name>ПраваТекущегоПользователя</name>
+    <synonym><key>ru</key><value>Права текущего пользователя</value></synonym>
+    <template>/debug/right</template>
+    <methods uuid="86375c94-a710-4d1d-b874-50d94296f192">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ПроверитьПраво_GET</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>
