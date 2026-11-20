@@ -61,6 +61,7 @@
   <commonCommands>CommonCommand.АИС_ОпубликоватьВRAG</commonCommands>
   <commonCommands>CommonCommand.АИС_СгенерироватьПромптРеакции</commonCommands>
   <commonModules>CommonModule.АИС_РасписанияТриггеров</commonModules>
+  <commonModules>CommonModule.АИС_ТриггерыПоРаспоряжениям</commonModules>
   <commonModules>CommonModule.АИС_ОбщегоНазначения</commonModules>
   <commonModules>CommonModule.АИС_ИнтеграцияСRAG</commonModules>
   <commonModules>CommonModule.АИС_КлиентВнешнегоСервиса</commonModules>
@@ -104,6 +105,7 @@
   <scheduledJobs>ScheduledJob.АИС_КонтрольРассылок</scheduledJobs>
   <scheduledJobs>ScheduledJob.АИС_АгентТаймауты</scheduledJobs>
   <scheduledJobs>ScheduledJob.АИС_ГенерацияТриггеровПоТаймеру</scheduledJobs>
+  <scheduledJobs>ScheduledJob.АИС_СозданиеТриггеровПоРаспоряжениям</scheduledJobs>
   <dataProcessors>DataProcessor.АИС_ДолжностныеИнструкции</dataProcessors>
   <dataProcessors>DataProcessor.АИС_Оргструктура</dataProcessors>
   <dataProcessors>DataProcessor.АИС_ДокументыИАдресаты</dataProcessors>
@@ -210,4 +212,5 @@
   <informationRegisters>InformationRegister.КешИнформацииОбОбъектах</informationRegisters>
   <informationRegisters>InformationRegister.СведенияОФайлахДокументооборот</informationRegisters>
   <informationRegisters>InformationRegister.ФайлыСозданныеПоШаблону</informationRegisters>
+  <informationRegisters>InformationRegister.АИС_ОбработанныеРаспоряжения</informationRegisters>
 </mdclass:Configuration>

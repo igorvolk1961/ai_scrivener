@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:ScheduledJob xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="fbc8d1cd-835b-4472-acb0-afaf5aa41e72">
+  <producedTypes>
+    <managerType typeId="a8a76fa0-097e-492e-b7ac-0cbeb04f8410" valueTypeId="5e2ce14c-bb90-41a6-95f4-90312801a3c6"/>
+  </producedTypes>
+  <name>АИС_СозданиеТриггеровПоРаспоряжениям</name>
+  <synonym>
+    <key>ru</key>
+    <value>Создание триггеров по распоряжениям</value>
+  </synonym>
+  <methodName>CommonModule.АИС_ТриггерыПоРаспоряжениям.ВыполнитьОбработку</methodName>
+  <description>Создаёт расписания триггеров по утверждённым распоряжениям вышестоящих должностных лиц.</description>
+  <key>АИС_СозданиеТриггеровПоРаспоряжениям</key>
+  <use>true</use>
+  <predefined>true</predefined>
+  <restartCountOnFailure>3</restartCountOnFailure>
+  <restartIntervalOnFailure>10</restartIntervalOnFailure>
+</mdclass:ScheduledJob>

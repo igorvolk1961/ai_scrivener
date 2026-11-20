@@ -48,4 +48,6 @@
   <content>ScheduledJob.АИС_АгентОчередь</content>
   <content>ScheduledJob.АИС_АгентТаймауты</content>
   <content>ScheduledJob.АИС_ГенерацияТриггеровПоТаймеру</content>
+  <content>ScheduledJob.АИС_СозданиеТриггеровПоРаспоряжениям</content>
+  <content>InformationRegister.АИС_ОбработанныеРаспоряжения</content>
 </mdclass:Subsystem>

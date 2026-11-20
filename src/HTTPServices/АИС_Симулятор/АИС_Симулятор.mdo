@@ -1159,4 +1159,31 @@
       <httpMethod>GET</httpMethod><handler>ПроверитьПраво_GET</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="1e834938-db5a-4874-8e8f-cc46397ad889">
+    <name>АвтоТриггеры</name>
+    <synonym><key>ru</key><value>Автоматические триггеры по распоряжениям</value></synonym>
+    <template>/auto-triggers/run</template>
+    <methods uuid="1a57dde6-8bb1-46f1-8402-87328fe8acbd">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>ВыполнитьАвтоТриггеры_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="9f7adacb-6917-466c-a69b-0b909277b591">
+    <name>СтатусАвтоТриггеров</name>
+    <synonym><key>ru</key><value>Статус автогенерации триггеров</value></synonym>
+    <template>/auto-triggers/status</template>
+    <methods uuid="cfe8643c-788b-4555-941d-29b3e3ddba3a">
+      <name>get</name><synonym><key>ru</key><value>Get</value></synonym>
+      <httpMethod>GET</httpMethod><handler>СтатусАвтоТриггеров_GET</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d">
+    <name>ТестовоеРаспоряжение</name>
+    <synonym><key>ru</key><value>Удаление тестового распоряжения</value></synonym>
+    <template>/auto-triggers/test</template>
+    <methods uuid="23f9f256-e287-4ee2-812f-aadbca9e88f3">
+      <name>delete</name><synonym><key>ru</key><value>Delete</value></synonym>
+      <httpMethod>DELETE</httpMethod><handler>УдалитьТестовоеРаспоряжение_DELETE</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>

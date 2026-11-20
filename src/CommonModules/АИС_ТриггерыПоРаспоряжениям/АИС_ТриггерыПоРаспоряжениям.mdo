@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="25ba5359-7c0a-483b-a235-81f2c93f87ff">
+  <name>АИС_ТриггерыПоРаспоряжениям</name>
+  <synonym>
+    <key>ru</key>
+    <value>Автоматические триггеры по распоряжениям</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>false</externalConnection>
+  <clientOrdinaryApplication>false</clientOrdinaryApplication>
+  <serverCall>false</serverCall>
+</mdclass:CommonModule>
