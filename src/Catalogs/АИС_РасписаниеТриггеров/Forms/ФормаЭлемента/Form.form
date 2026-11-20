@@ -6,6 +6,14 @@
     <horizontalAlign>Left</horizontalAlign>
     <autoFill>true</autoFill>
   </autoCommandBar>
+  <handlers>
+    <event>OnCreateAtServer</event>
+    <name>ПриСозданииНаСервере</name>
+  </handlers>
+  <handlers>
+    <event>BeforeWriteAtServer</event>
+    <name>ПередЗаписьюНаСервере</name>
+  </handlers>
   <autoTitle>true</autoTitle>
   <autoUrl>true</autoUrl>
   <group>Vertical</group>
@@ -50,7 +58,7 @@
       <value>Тип триггера</value>
     </title>
     <visible>true</visible>
-    <enabled>true</enabled>
+    <enabled>false</enabled>
     <userVisible>
       <common>true</common>
     </userVisible>
@@ -140,34 +148,6 @@
     </userVisible>
     <dataPath xsi:type="form:DataPath">
 <segments>Объект</segments><segments>Распоряжение</segments>
-    </dataPath>
-    <titleLocation>Top</titleLocation>
-    <type>InputField</type>
-    <editMode>Enter</editMode>
-    <showInHeader>true</showInHeader>
-    <headerHorizontalAlign>Left</headerHorizontalAlign>
-    <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo">
-        <width>40</width>
-        <autoMaxWidth>true</autoMaxWidth>
-        <autoMaxHeight>true</autoMaxHeight>
-        <horizontalStretch>true</horizontalStretch>
-      </extInfo>
-  </items>
-  <items xsi:type="form:FormField">
-    <name>ПравилоМаршрутизации</name>
-    <id>6</id>
-    <title>
-      <key>ru</key>
-      <value>Правило маршрутизации ИИ</value>
-    </title>
-    <visible>true</visible>
-    <enabled>true</enabled>
-    <userVisible>
-      <common>true</common>
-    </userVisible>
-    <dataPath xsi:type="form:DataPath">
-<segments>Объект</segments><segments>ПравилоМаршрутизации</segments>
     </dataPath>
     <titleLocation>Top</titleLocation>
     <type>InputField</type>
@@ -529,7 +509,7 @@
     <type>UsualButton</type>
     <title>
       <key>ru</key>
-      <value>Сгенерировать промпт реакции</value>
+      <value>Сгенерировать промпт и наименование</value>
     </title>
     <visible>true</visible>
     <enabled>true</enabled>
@@ -565,7 +545,7 @@
     <name>СгенерироватьПромпт</name>
     <title>
       <key>ru</key>
-      <value>Сгенерировать промпт реакции</value>
+      <value>Сгенерировать промпт и наименование</value>
     </title>
     <id>1</id>
     <use>

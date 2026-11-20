@@ -3,7 +3,7 @@
   <name>АИС_СгенерироватьПромптРеакции</name>
   <synonym>
     <key>ru</key>
-    <value>Сгенерировать промпт реакции</value>
+    <value>Сгенерировать промпт и наименование</value>
   </synonym>
   <group>FormCommandBarImportant</group>
   <commandParameterType>

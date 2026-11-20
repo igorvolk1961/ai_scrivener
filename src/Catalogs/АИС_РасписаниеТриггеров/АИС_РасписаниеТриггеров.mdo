@@ -356,19 +356,6 @@
     <fillChecking>DontCheck</fillChecking>
     <fullTextSearch>Use</fullTextSearch>
   </attributes>
-  <attributes uuid="ccdace18-dcda-4bc2-b53d-8ccba3e8513e">
-    <name>ПравилоМаршрутизации</name>
-    <synonym>
-      <key>ru</key>
-      <value>Правило маршрутизации ИИ</value>
-    </synonym>
-    <type>
-      <types>CatalogRef.АИС_ДолжностныеОбязанности</types>
-    </type>
-    <fillValue xsi:type="core:UndefinedValue"/>
-    <fillChecking>DontCheck</fillChecking>
-    <fullTextSearch>Use</fullTextSearch>
-  </attributes>
   <attributes uuid="a16b31bd-4fa9-4682-b375-14fb62555fd7">
     <name>Автор</name>
     <synonym>

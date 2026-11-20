@@ -25,11 +25,11 @@
 			<value>true</value>
 		</right>
 		<right>
-			<name>Add</name>
+			<name>Insert</name>
 			<value>true</value>
 		</right>
 		<right>
-			<name>InteractiveAdd</name>
+			<name>InteractiveInsert</name>
 			<value>true</value>
 		</right>
 	</object>
@@ -133,22 +133,22 @@
 			<value>true</value>
 		</right>
 		<right>
-			<name>Add</name>
+			<name>Insert</name>
 			<value>true</value>
 		</right>
 		<right>
-			<name>InteractiveAdd</name>
+			<name>InteractiveInsert</name>
 			<value>true</value>
 		</right>
 		<right>
-			<name>Change</name>
+			<name>Update</name>
 			<value>true</value>
 			<restrictionByCondition>
 				<condition>Автор = &amp;АИС_ТекущееДЛ ИЛИ ДЛ = &amp;АИС_ТекущееДЛ</condition>
 			</restrictionByCondition>
 		</right>
 		<right>
-			<name>InteractiveChange</name>
+			<name>InteractiveUpdate</name>
 			<value>true</value>
 			<restrictionByCondition>
 				<condition>Автор = &amp;АИС_ТекущееДЛ ИЛИ ДЛ = &amp;АИС_ТекущееДЛ</condition>
@@ -391,7 +391,14 @@
 		</right>
 	</object>
 	<object>
-		<name>HTTPService.АИС_Симулятор.URLTemplate.РешениеБухгалтера.Method.post</name>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.АвтоодобрениеВсеТипы.Method.post</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>HTTPService.АИС_Симулятор.URLTemplate.ПраваТекущегоПользователя.Method.get</name>
 		<right>
 			<name>Use</name>
 			<value>true</value>
